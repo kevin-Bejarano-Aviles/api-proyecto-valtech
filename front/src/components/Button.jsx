@@ -1,6 +1,8 @@
-function Button() {
+function Button({type,nombre,handleFunction}) {
+  //hice que la funcion no este aun para que no afecte en el renderizado
+
   return (
-    <div>Button</div>
+    <button type={type} onClick={handleFunction}>{nombre}</button>
   )
 }
 
