@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import OrientedSignUpPage from './pages/OrientedSignUpPage';
 import Button from './components/Button';
-import Header from './components/Header';
+import Header from './components/HeaderPublic';
 import OrientedList from './components/OrientedList';
 import Oriented from './components/Oriented';
 
@@ -17,7 +17,7 @@ function App() {
 
       {/*  Las Rutas de abajo son sólo temporales por si necesitan ir viendo lo que crean */}
       <Route path={'/button'} element={<Button />} />
-      <Route path={'/header'} element={<Header />} />
+      <Route path={'/header-public'} element={<Header />} />
       <Route path={'/oriented-list'} element={<OrientedList />} />
       <Route path={'/oriented'} element={<Oriented />} />
     </Routes>
