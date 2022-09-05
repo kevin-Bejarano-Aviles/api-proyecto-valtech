@@ -2,17 +2,18 @@ import React from "react";
 import { useState } from "react";
 import Button from "../components/Button";
 import Oriented from "../components/Oriented";
+import { Link } from "react-router-dom";
 
 
 function HomePage() {
 
   const Array = () => {
     const [persons] = useState([
-  
+
     {
       'name':'Julián Martinez',
       'institution': 'Inst. Inmaculada',
-      'image':'https://pbs.twimg.com/media/EUCh095XQAIXfbM.jpg'
+      'picture':'https://pbs.twimg.com/media/EUCh095XQAIXfbM.jpg'
     }
   ])}
 
@@ -24,9 +25,10 @@ function HomePage() {
       <Button type="button" nombre="Agregar orientado"/>
 
       {Array.map (person => {
-        return <Oriented image={person.image} name={person.name} institution={person.institution} />
+        return <Oriented picture={person.picture} name={person.name} institution={person.institution} />
       })}
 
+      <Link to={"/"}/>
     </div>
   )
 }
