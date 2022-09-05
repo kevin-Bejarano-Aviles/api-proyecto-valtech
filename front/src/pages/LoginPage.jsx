@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 
 function LoginPage() {
-
+  const [errorPassword,SetErrorPassword]=useState(true);
+  const [errorEmail,SetErrorEmail]=useState(true);
   const [datos,setDatos] = useState({
     email:'',
     password:''
-  })
+  });
 
   const alerta = (e)=>{
     e.preventDefault();
@@ -14,12 +15,13 @@ function LoginPage() {
   }
 
   const handleInput= (ev)=>{
-
     setDatos({
       ...datos,
       [ev.target.name]:ev.target.value
     })
   }
+
+  
 
   return (
     <div className="">
