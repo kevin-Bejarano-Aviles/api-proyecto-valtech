@@ -11,7 +11,6 @@ function LoginPage() {
 
   const alerta = (e)=>{
     e.preventDefault();
-    console.log(errorEmail)
   }
 
   const handleInput= (ev)=>{
@@ -19,8 +18,23 @@ function LoginPage() {
       ...datos,
       [ev.target.name]:ev.target.value
     })
-    if(ev.target.name==='email' && ev.target.value.length<1){
+    if(ev.target.name==='password' && ev.target.value.length<1 && errorPassword===false){
+      SetErrorPassword(true)
+      console.log('el campo contraseña no puede estar vacio');
+    }
+    else if(ev.target.name==='password' && ev.target.value.length>1 && errorPassword===true){
+      SetErrorPassword(false)
+      console.log('el campo contraseña esta lleno');
+
+    }
+    
+    if(ev.target.name==='email' && ev.target.value.length<1 && errorEmail===false){
+      SetErrorEmail(true)
       console.log('el campo email no puede estar vacio');
+    }
+    else if(ev.target.name==='email' && ev.target.value.length>1 && errorEmail===true){
+      SetErrorEmail(false)
+      console.log('el campo email esta lleno');
     }
   }
 
@@ -29,7 +43,10 @@ function LoginPage() {
     <div className="">
       <form onSubmit={alerta}>
         <input type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
+        <p className={`${!errorEmail ? 'hidden' : 'block'}`}>El campo email no debe estar vacio</p>
+        
         <input type="password" name="password" placeholder="password" value={datos.password} onChange={handleInput}/>
+        <p className={`${!errorPassword ? 'hidden' : 'block'}`}>El campo contraseña no debe estar vacio</p>
         <Button type="submit" name="log in" handleFunction={()=>console.log("boton")} disabled={false}/>
       </form>    
     </div>
