@@ -10,6 +10,7 @@ module.exports = {
         footer: '#2E384D',
         letrafooter: '#1EC5BB',
         graybackground:'#DADEEB',
+        imgheader: '#DADEEB',
       }
     },
   },

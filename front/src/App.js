@@ -9,6 +9,7 @@ import HeaderAdmin from './components/HeaderAdmin';
 import OrientedList from './components/OrientedList';
 import Oriented from './components/Oriented';
 import  Footer from './components/Footer'
+import Error from './pages/Error';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path={'/oriented-list'} element={<OrientedList />} />
       <Route path={'/oriented'} element={<Oriented />} />
       <Route path={'/footer'} element={<Footer />} />
+      <Route path={'/404'} element={<Error />} />
     </Routes>
   );
 }
