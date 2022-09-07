@@ -8,6 +8,7 @@ import HeaderPublic from './components/HeaderPublic';
 import HeaderAdmin from './components/HeaderAdmin';
 import OrientedList from './components/OrientedList';
 import Oriented from './components/Oriented';
+import  Footer from './components/Footer'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path={'/header-admin'} element={<HeaderAdmin />} />
       <Route path={'/oriented-list'} element={<OrientedList />} />
       <Route path={'/oriented'} element={<Oriented />} />
+      <Route path={'/footer'} element={<Footer />} />
     </Routes>
   );
 }
