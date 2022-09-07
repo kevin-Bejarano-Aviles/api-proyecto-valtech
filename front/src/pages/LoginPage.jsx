@@ -44,23 +44,24 @@ function LoginPage() {
  
   return (
     <div className="flex">
-      <div className="bg-graybackground h-screen w-2/5 flex flex-col	justify-center">
+      <div className="bg-graybackground h-screen w-3/5 flex flex-col justify-center">
         <img className="w-48" src={title} alt="v-camp"/>
         <img className="" src={ilustration} alt="ilustracion"/>
       </div>
-      <form className="flex flex-col  justify-center h-screen w-full ml-10" onSubmit={alerta}>
-        <h1>Ingresá a tu portal</h1>
-        <label className="flex flex-col">
-          Email
-          <input className="bg-graybackground pl-3 h-10 w-80 rounded-lg border-slate-300  focus:outline-none	focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
+      {/* Es donde empieza el fomr */}
+      <form className="flex flex-col justify-center h-screen w-4/5 ml-20" onSubmit={alerta}>
+        <h2 className="text-2xl	font-semibold mb-8">Ingresá a tu portal</h2>
+        <label className="flex flex-col mt-2 mb-5">
+          <p className="font-semibold">Email</p>
+          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none	focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
         </label>
-        <p className={`${!errorEmail ? 'hidden' : 'block'}`}>El campo email no debe estar vacio</p>
+        <p className={`${!errorEmail ? 'hidden' : 'block'} text-red-500	`}>*El campo email no debe estar vacio</p>
         
-        <label className="flex flex-col">
-          Contraseña
-          <input className="bg-graybackground pl-3 h-10 w-80 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="password" placeholder="password" value={datos.password} onChange={handleInput}/>
+        <label className="flex flex-col mt-2 mb-5">
+        <p className="font-semibold">Contraseña</p>
+          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="password" placeholder="password" value={datos.password} onChange={handleInput}/>
         </label>
-        <p className={`${!errorPassword ? 'hidden' : 'block'}`}>El campo contraseña no debe estar vacio</p>
+        <p className={`${!errorPassword ? 'hidden' : 'block'} text-red-500`}>*El campo contraseña no debe estar vacio</p>
         <div className="mt-5">
         <Button type="submit" name="log in" handleFunction={()=>console.log("boton")} disabled={!errorEmail && !errorPassword ? false : true}/>        
         </div>
