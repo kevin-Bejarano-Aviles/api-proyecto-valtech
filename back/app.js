@@ -3,10 +3,9 @@ const app = express();
 const db = require('./database/db');
 const dotenv = require('dotenv');
 const session = require('express-session');
-const methodOverride = require('method-override');
+/* const methodOverride = require('method-override'); */
 const port = 8000;
 const cors = require('cors');
-const exampleRoutes = require('./routes/example');
 const cookie = require('cookie-parser');
 
 //Use express static to declare our public folder
@@ -30,10 +29,9 @@ app.use(session({
 }));
 app.use(cookie())
 app.use(express.json());
-app.use(methodOverride('_method'));
+/* app.use(methodOverride('_method')); */
 
 
-app.use('/example',exampleRoutes);
 
 try {
   db.authenticate()
