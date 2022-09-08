@@ -1,0 +1,34 @@
+{
+  "admins": [
+    {
+      "id": 1,
+      "email": "Sincere@april.biz",
+      "password": "123456789"
+    },
+    {
+      "id": 2,
+      "email": "Shanna@melissa.tv",
+      "password": "987654321"
+    },
+    {
+      "id": 3,
+      "email": "Nathan@yesenia.net",
+      "password": "741852963"
+    },
+    {
+      "id": 4,
+      "email": "Julianne.OConner@kory.org",
+      "password": "369258147"
+    },
+    {
+      "id": 5,
+      "email": "Lucio_Hettinger@annie.ca",
+      "password": "987654321"
+    },
+    {
+      "id": 6,
+      "email": "Karley_Dach@jasper.info",
+      "password": "963852741"
+    }
+  ]
+}
