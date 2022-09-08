@@ -1,11 +1,19 @@
+import axios from "axios";
+import adminServices from '../services/admins';
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
 
 function LoginPage() {
+  //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
   const [errorEmail,SetErrorEmail]=useState(false);
+
+    //state variables showing error message
+  const [incorrectPassword,SetIncorrectPassword]=useState(false);
+  const [incorrectEmail,SetIncorretEmail]=useState(false);
+
   const [datos,setDatos] = useState({
     email:'',
     password:''
@@ -23,6 +31,7 @@ function LoginPage() {
     
   }
 
+  // check that the field is not empty
   const setErrors=()=>{
     if(datos.password.length<1 && !errorPassword){
       SetErrorPassword(true)
@@ -42,13 +51,19 @@ function LoginPage() {
     setErrors();
   },[datos])
  
+  adminServices.getAll()
+
+
+  //viendo si lo que pido me lo tira por consola
+
   return (
     <div className="flex">
+      
       <div className="bg-graybackground h-screen w-3/5 flex flex-col justify-center">
         <img className="w-48" src={title} alt="v-camp"/>
         <img className="" src={ilustration} alt="ilustracion"/>
       </div>
-      {/* Es donde empieza el fomr */}
+      {/* start form */}
       <form className="flex flex-col justify-center h-screen w-4/5 ml-20" onSubmit={alerta}>
         <h2 className="text-2xl	font-semibold mb-8">Ingresá a tu portal</h2>
         <label className="flex flex-col mt-2 mb-5">
