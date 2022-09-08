@@ -7,6 +7,7 @@ const session = require('express-session');
 const port = 8000;
 const cors = require('cors');
 const cookie = require('cookie-parser');
+const adminRoutes = require('./routes/admin.js')
 
 //Use express static to declare our public folder
 app.use(express.static('public'))
@@ -31,7 +32,7 @@ app.use(cookie())
 app.use(express.json());
 /* app.use(methodOverride('_method')); */
 
-
+app.use('/admin',adminRoutes);
 
 try {
   db.authenticate()
