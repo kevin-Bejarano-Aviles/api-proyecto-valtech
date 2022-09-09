@@ -4,9 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import OrientedSignUpPage from './pages/OrientedSignUpPage';
-import Events from './pages/Events';
+import EventsPage from './pages/EventsPage';
 import WelcomePage from './pages/WelcomePage';
-import Error from './pages/Error';
+import ErrorPage from './pages/ErrorPage';
 import ProfilePage from './pages/ProfilePage';
 import OrientedsPage from './pages/OrientedsPage';
 import OrientedPage from './pages/OrientedPage';
@@ -36,10 +36,10 @@ function App() {
       <Route path='/orientados/:id' element={<OrientedPage />} />
       <Route path='/orientados/:id/asignar-orientador' element={<AssignCounselorPage />} />
 
-      <Route path='/eventos' element={<Events/>} />
+      <Route path='/eventos' element={<EventsPage/>} />
       <Route path='/eventos/crear-evento' element={<CreateEventPage />} />
 
-      <Route path={'/*'} element={<Error />} />
+      <Route path={'/*'} element={<ErrorPage />} />
 
       {/*  Las Rutas de abajo son sólo temporales por si necesitan ir viendo lo que crean */}
       <Route path={'/button'} element={<Button />} />
@@ -48,7 +48,7 @@ function App() {
       <Route path={'/oriented-list'} element={<OrientedList />} />
       <Route path={'/oriented'} element={<Oriented />} />
       <Route path={'/footer'} element={<Footer />} />
-      <Route path={'/404'} element={<Error />} />
+      <Route path={'/404'} element={<ErrorPage />} />
       <Route path={'/pr'} element={<Proposal />} />
       <Route path={'/prb'} element={<ProposalBox />} />
     </Routes>
