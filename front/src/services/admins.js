@@ -2,13 +2,15 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/admins'
 
-const getAll = () => {
-    const request = axios.get(baseUrl)
+const postData = (datos) => {
+
+    const request = axios.post(baseUrl,datos)
     request.then(response=>{
         console.log(response)
+        console.log(datos.email);
       })
     return request.then(response => response.data)
   }
 
-  export default { getAll }
+  export default { postData }
   

@@ -15,12 +15,16 @@ function LoginPage() {
   const [incorrectEmail,SetIncorretEmail]=useState(false);
 
   const [datos,setDatos] = useState({
+    id:11,
     email:'',
     password:''
   });
 
   const alerta = (e)=>{
     e.preventDefault();
+    //
+    adminServices.postData(datos)
+    //me manda los datos al servidor falso 
   }
 
   const handleInput= (ev)=>{
@@ -51,8 +55,6 @@ function LoginPage() {
     setErrors();
   },[datos])
  
-  adminServices.getAll()
-
 
   //viendo si lo que pido me lo tira por consola
 
