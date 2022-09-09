@@ -17,7 +17,7 @@ function OrientedList() {
 
       <ul>
 
-      <li> 
+      <li>
         {persons.map (person => {
         return <Oriented picture={person.picture} name={person.name} institution={person.institution} />
         })}

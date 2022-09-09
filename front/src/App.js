@@ -16,9 +16,21 @@ import ProposalBox from './components/ProposalBox';
 function App() {
   return (
     <Routes>
-      <Route path={'/'} element={<HomePage />} />
-      <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'/new-oriented'} element={<OrientedSignUpPage />} />
+      <Route path='/' element={<p>Welcome</p>} />
+      <Route path='/login' element={<LoginPage />} />
+
+      <Route path='/inicio' element={<HomePage />} />
+      <Route path='/inicio/mi-perfil' element={<p>Mi perfil</p>} />
+
+      <Route path='/orientados' element={<p>Orientados</p>} />
+      <Route path='/orientados/alta-orientado' element={<OrientedSignUpPage />} />
+      <Route path='/orientados/:id' element={<p>Orientado</p>} />
+      <Route path='/orientados/:id/asignar-orientador' element={<p>Asignar Orientador</p>} />
+
+      <Route path='/eventos' element={<p>Eventos</p>} />
+      <Route path='/eventos/crear-evento' element={<p>Crear Evento</p>} />
+
+      <Route path={'/*'} element={<div>Not Found</div>} />
 
       {/*  Las Rutas de abajo son sólo temporales por si necesitan ir viendo lo que crean */}
       <Route path={'/button'} element={<Button />} />
