@@ -11,22 +11,23 @@ function OrientedSignUpPage() {
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm({
-    defaultValues: {
-      avatar: '/avatar.png',
-      fullName: 'Lautaro Coria',
-      phoneNumber: '1128816544',
-      mail: 'lautaro.coria@proton.me',
-      program: 'ov',
-      dni: '39370581',
-      school: 'Alte. Brown',
-      age: '26',
-      address: 'Av. Córdoba 3751',
-      motive: 'Porque sí...',
-      user: 'lautaro.coria',
-      pass: '123'
-    }
-  });
+  } = useForm(
+    // {
+    //   defaultValues: {
+    //     fullName: 'Lautaro Coria',
+    //     phoneNumber: '1128816544',
+    //     mail: 'lautaro.coria@proton.me',
+    //     program: 'orientacion-vocacional',
+    //     dni: '39370581',
+    //     school: 'Alte. Brown',
+    //     age: '26',
+    //     address: 'Av. Córdoba 3751',
+    //     motive: 'Porque sí...',
+    //     user: 'lautaro.coria',
+    //     pass: '123'
+    //   }
+    // }
+  );
 
   const onSubmit = async (data, e) => {
     console.log(data);
@@ -58,8 +59,8 @@ function OrientedSignUpPage() {
     }
   };
 
-  console.log(errors);
-  console.log(watch());
+  // console.log(errors);
+  // console.log(watch());
 
   return (
     <Fragment>
@@ -70,7 +71,7 @@ function OrientedSignUpPage() {
           <div className='flex '>
             <label htmlFor='add-avatar'>
               <input
-                {...register('avatar')}
+                {...register('avatar', {required: 'Imagen requerida'})}
                 type='file'
                 accept='image/*'
                 id='add-avatar'
@@ -81,62 +82,72 @@ function OrientedSignUpPage() {
                 alt='avatar'
                 className='mr-4 w-16 h-16'
               />
-              <p>{errors.avatar?.message}</p>
+              <p className='text-red-500'>{errors.avatar?.message}</p>
             </label>
             <div className='mr-4'>
               <div className='flex flex-col'>
                 <label htmlFor='full-name'>Nombre y Apellido</label>
                 <input
                   {...register('fullName', {
-                    required: 'Campo requerido.',
+                    required: 'Campo requerido',
                     pattern: {
-                      value: /^[A-Za-z ]{2,500}$/,
-                      message: "Campo inválido."
+                      value: /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                      message: 'Campo inválido'
                     }
                   })}
-                  className='border-2'
+                  className={`border-2 ${errors.fullName ? 'border-red-500' : ''}`}
                   type='text'
                   id='full-name'
                 />
-                <p>{errors.fullName?.message}</p>
+                <p className='text-red-500'>{errors.fullName?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='phone'>Teléfono</label>
                 <input
-                  {...register('phoneNumber', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('phoneNumber', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[0-9]{10,50}$/i,
+                      message: 'Entre 10 y 50 dígitos'
+                    }
+                  })}
+                  className={`border-2 ${errors.phoneNumber ? 'border-red-500' : ''}`}
                   type='number'
                   id='phone'
                 />
-                <p>{errors.phoneNumber?.message}</p>
+                <p className='text-red-500'>{errors.phoneNumber?.message}</p>
               </div>
             </div>
             <div>
               <div className='flex flex-col'>
                 <label htmlFor='mail'>Mail</label>
                 <input
-                  {...register('mail', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('mail', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,500}$/i,
+                      message: 'Email inválido'
+                    }
+                  })}
+                  className={`border-2 ${errors.mail ? 'border-red-500' : ''}`}
                   type='mail'
                   id='mail'
                 />
-                <p>{errors.mail?.message}</p>
+                <p className='text-red-500'>{errors.mail?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='program'>Programa</label>
                 <select
-                  {...register('program', {required: 'This is required'})}
+                  {...register('program')}
                   className='border-2 pb-1'
                   id='program'
-                  defaultValue={'default'}
                 >
-                  <option value='default' disabled>Seleccionar opción</option>
-                  <option value='ov'>Orientación vocacional</option>
-                  <option value='ro'>Reorientación vocacional</option>
-                  <option value='tm'>Taller de matemáticas</option>
-                  <option value='me'>Métodos de estudio</option>
+                  <option value='orientacion-vocacional'>Orientación vocacional</option>
+                  <option value='reorientacion-vocacional'>Reorientación vocacional</option>
+                  <option value='taller-de-matematicas'>Taller de matemáticas</option>
+                  <option value='metodos-de-estudio'>Métodos de estudio</option>
                 </select>
-                <p>{errors.program?.message}</p>
+                <p className='text-red-500'>{errors.program?.message}</p>
               </div>
             </div>
           </div>
@@ -148,57 +159,95 @@ function OrientedSignUpPage() {
               <div className='flex flex-col'>
                 <label htmlFor='dni'>Número de DNI</label>
                 <input
-                  {...register('dni', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('dni', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[0-9]{8,50}$/i,
+                      message: 'Entre 8 y 50 dígitos'
+                    }
+                  })}
+                  className={`border-2 ${errors.dni ? 'border-red-500' : ''}`}
                   type='number'
                   id='dni'
                 />
-                <p>{errors.dni?.message}</p>
+                <p className='text-red-500'>{errors.dni?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='school'>Colegio</label>
                 <input
-                  {...register('school', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('school', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[A-Za-z.ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                      message: 'Campo inválido'
+                    }
+                  })}
+                  className={`border-2 ${errors.school ? 'border-red-500' : ''}`}
                   type='text'
                   id='school'
                 />
-                <p>{errors.school?.message}</p>
+                <p className='text-red-500'>{errors.school?.message}</p>
               </div>
             </div>
             <div>
               <div className='flex flex-col'>
                 <label htmlFor='age'>Edad</label>
                 <input
-                  {...register('age', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('age', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[0-9]{2}$/i,
+                      message: 'Sólo números'
+                    },
+                    min: {
+                      value: 18,
+                      message: 'Mínimo valor: 18'
+                    },
+                    max: {
+                      value: 99,
+                      message: 'Máximo valor: 99'
+                    }
+                  })}
+                  className={`border-2 ${errors.age ? 'border-red-500' : ''}`}
                   type='number'
                   id='age'
                 />
-                <p>{errors.age?.message}</p>
+                <p className='text-red-500'>{errors.age?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='address'>Domicilio</label>
                 <input
-                  {...register('address', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('address', {
+                    required: 'Campo requerido',
+                    pattern: {
+                      value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                      message: 'Campo inválido'
+                    }
+                  })}
+                  className={`border-2 ${errors.address ? 'border-red-500' : ''}`}
                   type='text'
                   id='address'
                 />
-                <p>{errors.address?.message}</p>
+                <p className='text-red-500'>{errors.address?.message}</p>
               </div>
             </div>
           </div>
           <div className='flex flex-col'>
             <label htmlFor='reason'>¿Por qué se acercó a nuestra institución?</label>
             <textarea
-              {...register('motive', {required: 'This is required'})}
-              className='max-w-xl border-2'
+              {...register('motive', {
+                required: 'Campo requerido',
+                pattern: {
+                  value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ. ]{2,500}$/,
+                  message: 'Campo inválido'
+                }
+              })}
+              className={`border-2 max-w-xl ${errors.motive ? 'border-red-500' : ''}`}
               id='reason'
               cols='60'
               rows='5'
             ></textarea>
-            <p>{errors.motive?.message}</p>
+            <p className='text-red-500'>{errors.motive?.message}</p>
           </div>
         </section>
         <section> {/* Crear usuario y contraseña */}
@@ -208,30 +257,42 @@ function OrientedSignUpPage() {
               <div className='flex flex-col'>
                 <label htmlFor='username'>Usuario</label>
                 <input
-                  {...register('user', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('user', {required: 'Campo requerido'})}
+                  className={`border-2 ${errors.user ? 'border-red-500' : ''}`}
                   type='text'
                   id='username'
                 />
-                <p>{errors.user?.message}</p>
+                <p className='text-red-500'>{errors.user?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='password'>Nueva contraseña</label>
                 <input
-                  {...register('pass', {required: 'This is required'})}
-                  className='border-2'
+                  {...register('pass', {
+                    required: 'Contraseña requerida',
+                    minLength: {
+                      value: 8,
+                      message: 'Mínimo 8 caracteres'
+                    }
+                  })}
+                  className={`border-2 ${errors.pass ? 'border-red-500' : ''}`}
                   type='password'
                   id='new-password'
                 />
-                <p>{errors.pass?.message}</p>
+                <p className='text-red-500'>{errors.pass?.message}</p>
               </div>
               <div className='flex flex-col'>
                 <label htmlFor='repeat-new-password'>Repetir contraseña</label>
                 <input
-                  className='border-2'
+                  {...register('confirmPass', {
+                    required: 'Campo requerido',
+                    validate: value =>
+                      value === watch('pass') || "The passwords do not match"
+                  })}
+                  className={`border-2 ${errors.confirmPass ? 'border-red-500' : ''}`}
                   type='password'
                   id='repeat-password'
                 />
+                <p className='text-red-500'>{errors.confirmPass?.message}</p>
               </div>
             </div>
           </div>
