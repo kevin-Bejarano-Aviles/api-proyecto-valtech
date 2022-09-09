@@ -7,7 +7,7 @@ import Instagram from '../img/Instagram.svg'
 import LinkedIn from '../img/LinkedIn.svg'
 function Footer() {
   return (
-    <div className='bg-footer h-[314px] w-full flex flex-row'>
+    <div className='bg-blue h-[314px] w-full flex flex-row'>
         <div className='flex-col h-52 w-52 ml-[281px] relative top-8'>
             <img className='' src={Icon} alt="" />
             <p className='text-white mt-8 text-base'>Conocé nuestra historia</p>
