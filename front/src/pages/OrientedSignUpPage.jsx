@@ -200,8 +200,8 @@ function OrientedSignUpPage() {
                       message: 'Sólo números'
                     },
                     min: {
-                      value: 18,
-                      message: 'Mínimo valor: 18'
+                      value: 10,
+                      message: 'Mínimo valor: 10'
                     },
                     max: {
                       value: 99,
@@ -220,7 +220,7 @@ function OrientedSignUpPage() {
                   {...register('address', {
                     required: 'Campo requerido',
                     pattern: {
-                      value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                      value: /^[A-Za-z0-9.ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
                       message: 'Campo inválido'
                     }
                   })}
