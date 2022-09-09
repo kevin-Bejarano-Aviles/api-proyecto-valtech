@@ -29,9 +29,12 @@
       "id": 6,
       "email": "Karley_Dach@jasper.info",
       "password": "963852741"
+    },
+    {
+      "id": 11,
+      "email": "devjump123",
+      "password": "12345678"
     }
   ],
-  "oriented": [
-
-  ]
+  "oriented": []
 }

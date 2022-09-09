@@ -12,6 +12,8 @@ import  Footer from './components/Footer'
 import Error from './pages/Error';
 import Proposal from './components/Proposal'
 import ProposalBox from './components/ProposalBox';
+import Events from './pages/Events';
+
 
 function App() {
   return (
@@ -27,7 +29,7 @@ function App() {
       <Route path='/orientados/:id' element={<p>Orientado</p>} />
       <Route path='/orientados/:id/asignar-orientador' element={<p>Asignar Orientador</p>} />
 
-      <Route path='/eventos' element={<p>Eventos</p>} />
+      <Route path='/eventos' element={<Events/>} />
       <Route path='/eventos/crear-evento' element={<p>Crear Evento</p>} />
 
       <Route path={'/*'} element={<div>Not Found</div>} />

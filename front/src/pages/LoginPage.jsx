@@ -1,5 +1,5 @@
 import axios from "axios";
-import adminServices from '../services/admins';
+import adminServices from '../services/admins'; //
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import ilustration from '../img/ilustration.svg';
@@ -20,11 +20,11 @@ function LoginPage() {
     password:''
   });
 
+  //I need to validate the user and control the messages
   const alerta = (e)=>{
     e.preventDefault();
     //
     adminServices.postData(datos)
-    //me manda los datos al servidor falso 
   }
 
   const handleInput= (ev)=>{
@@ -55,8 +55,6 @@ function LoginPage() {
     setErrors();
   },[datos])
  
-
-  //viendo si lo que pido me lo tira por consola
 
   return (
     <div className="flex">
