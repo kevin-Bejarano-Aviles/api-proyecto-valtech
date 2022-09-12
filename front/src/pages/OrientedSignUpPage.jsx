@@ -21,21 +21,21 @@ function OrientedSignUpPage() {
     watch,
     formState: { errors }
   } = useForm(
-    {
-      defaultValues: {
-        fullName: 'Lautaro Coria',
-        phoneNumber: '1128816544',
-        mail: 'lautaro.coria@proton.me',
-        program: 'orientacion-vocacional',
-        dni: '39370581',
-        school: 'Alte. Brown',
-        age: '26',
-        address: 'Av. Córdoba 3751',
-        motive: 'Porque sí...',
-        user: '39370581',
-        pass: '12345678'
-      }
-    }
+    // {
+    //   defaultValues: {
+    //     fullName: 'Lautaro Coria',
+    //     phoneNumber: '1128816544',
+    //     mail: 'lautaro.coria@proton.me',
+    //     program: 'orientacion-vocacional',
+    //     dni: '39370581',
+    //     school: 'Alte. Brown',
+    //     age: '26',
+    //     address: 'Av. Córdoba 3751',
+    //     motive: 'Porque sí...',
+    //     user: '39370581',
+    //     pass: '12345678'
+    //   }
+    // }
   );
 
   const onSubmit = async (data, e) => {
