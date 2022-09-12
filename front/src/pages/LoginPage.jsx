@@ -1,4 +1,3 @@
-import axios from "axios";
 import adminServices from '../services/admins'; //
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
