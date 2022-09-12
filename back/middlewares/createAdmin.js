@@ -18,7 +18,7 @@ module.exports = async (req,res,next) => {
     //compare with a variable if admin already exist on the database
     const adminExist = await adminModel.findOne({
         where : {
-            email : req.body.email
+            email : 'sofiaSerrano@gmail.com'
         }
     })
     //if admin doesn't exist it will create one and then will procede with the method login, but if admin exists it won't create it
