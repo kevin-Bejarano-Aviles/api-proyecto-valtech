@@ -10,16 +10,16 @@ const login = async(req,res)=>{
         const admin = await AdminModel.findOne({
             where:{
                 email:email
-            }
+            },attributes:['id','fullName','email', 'avatar']
+            
         });
         if(!admin){
             return res.json({message:'Credenciales invalidas'});
-        }else{
-            res.json(admin);
         }
-        /* if(bcryptjs.compareSync(pass,admin.password)){
+        if(bcryptjs.compareSync(pass,admin.password)){
             return res.json({message:'Credenciales invalidas'});
-        } */
+        }
+        res.json(admin);
 
     } catch (error) {
         res.json({message:'Error'})
