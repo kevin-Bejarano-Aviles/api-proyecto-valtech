@@ -21,6 +21,7 @@ import Oriented from './components/Oriented';
 import  Footer from './components/Footer'
 import Proposal from './components/Proposal'
 import ProposalBox from './components/ProposalBox';
+import Menu from './components/Menu'
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
       <Route path={'/404'} element={<ErrorPage />} />
       <Route path={'/pr'} element={<Proposal />} />
       <Route path={'/prb'} element={<ProposalBox />} />
+      <Route path={'/menu'} element={<Menu />} />
     </Routes>
   );
 }
