@@ -1,11 +1,14 @@
 import adminServices from '../services/admins'; //
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
+
+import warningImg from '../img/icon_warning.svg'
 import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
 
 function LoginPage() {
-  
+  const navigate = useNavigate();
   //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
   const [errorEmail,SetErrorEmail]=useState(false);
@@ -14,20 +17,23 @@ function LoginPage() {
   const [errorMessage,SetErrorMessage]=useState(false);
 
   const [datos,setDatos] = useState({
-    id:11,
     email:'',
-    password:''
+    pass:''
   });
 
   //I need to validate the user and control the messages
-  const alerta = (e)=>{
+  const alerta = async(e) =>{
     e.preventDefault();
     //
     // let band = adminServices.postData(datos,errorMessage);
-    if(adminServices.postData(datos)){
+    let band = await adminServices.postData(datos);
+    if(band===200){
+      navigate('/inicio')
+    }
+    else{
       SetErrorMessage(true)
     }
-
+    console.log(errorMessage);
   }
 
   const handleInput= (ev)=>{
@@ -40,10 +46,10 @@ function LoginPage() {
 
   // check that the field is not empty
   const setErrors=()=>{
-    if(datos.password.length<1 && !errorPassword){
+    if(datos.pass.length<1 && !errorPassword){
       SetErrorPassword(true)
     }
-    else if(datos.password.length>1 && errorPassword){
+    else if(datos.pass.length>1 && errorPassword){
       SetErrorPassword(false)
     }
     if(datos.email.length<1 && !errorEmail){
@@ -83,14 +89,25 @@ function LoginPage() {
           <p className="font-semibold">Email</p>
           <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none	focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
         </label>
-        <p className={`${!errorEmail ? 'hidden' : 'block'} text-red-500	`}>*El campo email no debe estar vacio</p>
+        <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
+          <img className="mr-2" src={warningImg} alt=''/>
+          <p>El campo email no debe estar vacio</p>
+        </div>
         
         <label className="flex flex-col mt-2 mb-5">
         <p className="font-semibold">Contraseña</p>
-          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="password" placeholder="password" value={datos.password} onChange={handleInput}/>
+          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="pass" placeholder="password" value={datos.password} onChange={handleInput}/>
         </label>
-        <p className={`${!errorPassword ? 'hidden' : 'block'} text-red-500`}>*El campo contraseña no debe estar vacio</p>
-        <p className={`${!errorMessage ? 'hidden' : 'block'} text-red-500`}>*Esta cuenta no se encuentra</p>
+
+        <div className={`${!errorPassword ? 'hidden' : 'flex'} text-red-500`}>
+        <img className="mr-2" src={warningImg} alt=''/>
+          <p >El campo contraseña no debe estar vacio</p>
+        </div>
+
+        <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
+        <img className="mr-2" src={warningImg} alt=''/>
+          <p>Email y/o contraseña incorrecta</p>
+        </div>
         
         <div className="mt-5">
           <Button type="submit" name="log in" handleFunction={()=>console.log("boton")} disabled={!errorEmail && !errorPassword ? false : true}/>        
