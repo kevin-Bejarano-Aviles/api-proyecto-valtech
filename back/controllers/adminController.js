@@ -61,8 +61,18 @@ const getAllStudent = async(req,res)=>{
     }
 }
 
+const logOut = async(req,res)=>{
+    try {
+        req.session.destroy();
+        res.json({message:"Cerrando sesion"});
+    } catch (error) {
+        res.json({message:error});
+    }
+}  
+
 module.exports = {
     addStudent,
     getAllStudent,
-    login
+    login,
+    logOut
 }

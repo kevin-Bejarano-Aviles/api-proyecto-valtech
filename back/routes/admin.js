@@ -6,6 +6,6 @@ const createAdmin = require('../middlewares/createAdmin'); // create admin user 
 router.post('/addStudent', addStudent);
 router.get('/students', getAllStudent);
 router.post('/adminLogin',createAdmin, login);
-/* router.get('/logOut',logOut); */
+router.get('/logOut', logOut); 
 
 module.exports = router;
