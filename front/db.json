@@ -87,13 +87,13 @@
   "events": [
     {
       "id":1,
-      "nameEvent":"Encuentro individual",
-      "participatingCounselor":"Esteban Enriquez",
-      "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"],
+      "name":"Encuentro individual",
       "date":"02-12-2022",
       "time":"15:43",
       "duration":"40",
-      "detalle":"lleven algo para tomar"
+      "detail":"lleven algo para tomar",
+      "participatingCounselor":"Esteban Enriquez",
+      "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
     }
 
   ]

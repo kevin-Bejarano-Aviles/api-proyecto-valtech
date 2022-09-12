@@ -6,13 +6,13 @@ import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
 
 function LoginPage() {
+  
   //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
   const [errorEmail,SetErrorEmail]=useState(false);
 
     //state variables showing error message
-  const [incorrectPassword,SetIncorrectPassword]=useState(false);
-  const [incorrectEmail,SetIncorretEmail]=useState(false);
+  const [errorMessage,SetErrorMessage]=useState(false);
 
   const [datos,setDatos] = useState({
     id:11,
@@ -24,7 +24,11 @@ function LoginPage() {
   const alerta = (e)=>{
     e.preventDefault();
     //
-    adminServices.postData(datos)
+    // let band = adminServices.postData(datos,errorMessage);
+    if(adminServices.postData(datos)){
+      SetErrorMessage(true)
+    }
+
   }
 
   const handleInput= (ev)=>{
@@ -55,6 +59,16 @@ function LoginPage() {
     setErrors();
   },[datos])
  
+  useEffect(()=>{
+    //makes the message disappear after 8 seconds on screen
+    if(errorMessage){
+      const timer=setTimeout(()=>{
+        SetErrorMessage(false)
+      },8000);
+      return ()=> clearTimeout(timer)
+    }
+  },[errorMessage])
+
 
   return (
     <div className="flex">
@@ -77,8 +91,10 @@ function LoginPage() {
           <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="password" placeholder="password" value={datos.password} onChange={handleInput}/>
         </label>
         <p className={`${!errorPassword ? 'hidden' : 'block'} text-red-500`}>*El campo contraseña no debe estar vacio</p>
+        <p className={`${!errorMessage ? 'hidden' : 'block'} text-red-500`}>*Esta cuenta no se encuentra</p>
+        
         <div className="mt-5">
-        <Button type="submit" name="log in" handleFunction={()=>console.log("boton")} disabled={!errorEmail && !errorPassword ? false : true}/>        
+          <Button type="submit" name="log in" handleFunction={()=>console.log("boton")} disabled={!errorEmail && !errorPassword ? false : true}/>        
         </div>
       </form>    
     </div>
