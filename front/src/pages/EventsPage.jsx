@@ -14,7 +14,6 @@ function EventsPage() {
                 handleFunction={()=>{navigate("/eventos/crear-evento")}}
             />
         </div>
-
         <div class="">
             
         </div>

@@ -26,9 +26,11 @@ import Menu from './components/Menu'
 function App() {
   return (
     <Routes>
+
       <Route path='/' element={<WelcomePage />}  />
       <Route path='/login' element={<LoginPage />} />
-
+      {/* consultar sobre rutas privadas */}
+      
       <Route path='/inicio/*' element={<HomePage />}>
         <Route path='mi-perfil' element={<h1>hola</h1>} />
       </Route>

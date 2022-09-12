@@ -22,10 +22,9 @@ function LoginPage() {
   });
 
   //I need to validate the user and control the messages
-  const alerta = async(e) =>{
+  const alerta = async (e) =>{
     e.preventDefault();
     //
-    // let band = adminServices.postData(datos,errorMessage);
     let band = await adminServices.postData(datos);
     if(band===200){
       navigate('/inicio')
@@ -33,7 +32,6 @@ function LoginPage() {
     else{
       SetErrorMessage(true)
     }
-    console.log(errorMessage);
   }
 
   const handleInput= (ev)=>{

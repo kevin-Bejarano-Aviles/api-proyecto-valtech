@@ -7,7 +7,7 @@ const postData = async (datos) => {
     await axios.post(baseUrl,{
       email:datos.email,
       pass:datos.pass,
-    })
+    },{withCredentials:true})
     .then(response=>{
         console.log(response);
         status=200;
