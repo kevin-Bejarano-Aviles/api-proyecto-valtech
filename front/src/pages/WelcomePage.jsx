@@ -1,6 +1,11 @@
+import React from "react";
+import HeaderAdmin from "../components/HeaderAdmin";
+
 function Welcome() {
   return (
-    <div>Welcome</div>
+    <div>
+      <HeaderAdmin/>
+    </div>
   )
 }
 

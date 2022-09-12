@@ -1,6 +1,11 @@
+import React from "react";
+import HeaderAdmin from "../components/HeaderAdmin";
+import {Outlet} from 'react-router-dom'
 function Orienteds() {
   return (
-    <div>Orienteds</div>
+    <div>
+          <HeaderAdmin Titulo={<Outlet/>} />
+    </div>
   )
 }
 

@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet} from 'react-router-dom';
 import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
 
 function Oriented() {
   return (
     <Fragment>
-      <HeaderAdmin Titulo='Orientado' />
+      <HeaderAdmin Titulo={<Outlet/>} />
       <main className='ml-6'>
         <section> {/* Información básica */}
           <h2 className='my-4 text-xl font-bold'>01. Información básica</h2>

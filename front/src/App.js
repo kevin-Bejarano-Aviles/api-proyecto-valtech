@@ -26,12 +26,12 @@ import Menu from './components/Menu'
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<WelcomePage />} />
+      <Route path='/' element={<WelcomePage />}  />
       <Route path='/login' element={<LoginPage />} />
-
-      <Route path='/inicio' element={<HomePage />} />
-      <Route path='/inicio/mi-perfil' element={<ProfilePage />} />
-
+      
+      <Route path='/inicio/*' element={<HomePage />}>
+        <Route path='mi-perfil' element={<h1>hola</h1>} />
+      </Route>
       <Route path='/orientados' element={<OrientedsPage />} />
       <Route path='/orientados/alta-orientado' element={<OrientedSignUpPage />} />
       <Route path='/orientados/:id' element={<OrientedPage />} />
@@ -49,10 +49,13 @@ function App() {
       <Route path={'/oriented-list'} element={<OrientedList />} />
       <Route path={'/oriented'} element={<Oriented />} />
       <Route path={'/footer'} element={<Footer />} />
-      <Route path={'/404'} element={<ErrorPage />} />
+      <Route path='*' element={<ErrorPage />} />
       <Route path={'/pr'} element={<Proposal />} />
       <Route path={'/prb'} element={<ProposalBox />} />
-      <Route path={'/menu'} element={<Menu/>} />
+      <Route path={'/menu/*'} element={<Menu/>} >
+       {/* <Route path='orientados' element={<h1>hola</h1>}></Route> */}
+      
+      </Route>
     </Routes>
   );
 }
