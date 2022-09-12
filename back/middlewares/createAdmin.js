@@ -11,7 +11,7 @@ const admin = {
     avatar : 'default.jpg',
     password : bcryptjs.hashSync(pass, 10)
 }
-console.log(admin.password);
+//console.log(admin.password);
 
 //middleware exported
 module.exports = async (req,res,next) => {

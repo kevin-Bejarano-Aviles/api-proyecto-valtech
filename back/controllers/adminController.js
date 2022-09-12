@@ -19,8 +19,13 @@ const login = async(req,res)=>{
         if(!bcryptjs.compareSync(pass,admin.password)){
             return res.status(401).json({message:'Credenciales invalidas'});
         }
-
-        res.json(admin);
+        req.session.adminLog={
+            id:admin.id,
+            fullName:admin.fullname,
+            avatar: admin.avatar
+        }
+        let theAdmin = req.session.adminLog;
+        res.json(theAdmin);
 
     } catch (error) {
         res.status(500).json(error.message)
