@@ -52,7 +52,7 @@ function App() {
       <Route path={'/404'} element={<ErrorPage />} />
       <Route path={'/pr'} element={<Proposal />} />
       <Route path={'/prb'} element={<ProposalBox />} />
-      <Route path={'/menu'} element={<Menu />} />
+      <Route path={'/menu'} element={<Menu/>} />
     </Routes>
   );
 }
