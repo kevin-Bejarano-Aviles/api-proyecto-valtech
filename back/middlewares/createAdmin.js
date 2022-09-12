@@ -4,13 +4,12 @@ const adminModel = require('../models/adminModel');
 const bcryptjs = require('bcryptjs');
 //create a generic password
 let pass = '123456789';
-let pass2 = await bcryptjs.hash(pass, 10);
 //create an admin user with values for admin table on mysql
 const admin = {
     fullName : 'Sofia Serrano',
     email : 'sofiaSerrano@gmail.com',
     avatar : 'default.jpg',
-    password : pass2
+    password : bcryptjs.hashSync(pass, 10)
 }
 console.log(admin.password);
 
