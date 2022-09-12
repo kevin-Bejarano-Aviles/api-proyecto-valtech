@@ -21,21 +21,21 @@ function OrientedSignUpPage() {
     watch,
     formState: { errors }
   } = useForm(
-    // {
-    //   defaultValues: {
-    //     fullName: 'Lautaro Coria',
-    //     phoneNumber: '1128816544',
-    //     mail: 'lautaro.coria@proton.me',
-    //     program: 'orientacion-vocacional',
-    //     dni: '39370581',
-    //     school: 'Alte. Brown',
-    //     age: '26',
-    //     address: 'Av. Córdoba 3751',
-    //     motive: 'Porque sí...',
-    //     user: 'lautaro.coria',
-    //     pass: '123'
-    //   }
-    // }
+    {
+      defaultValues: {
+        fullName: 'Lautaro Coria',
+        phoneNumber: '1128816544',
+        mail: 'lautaro.coria@proton.me',
+        program: 'orientacion-vocacional',
+        dni: '39370581',
+        school: 'Alte. Brown',
+        age: '26',
+        address: 'Av. Córdoba 3751',
+        motive: 'Porque sí...',
+        user: '39370581',
+        pass: '12345678'
+      }
+    }
   );
 
   const onSubmit = async (data, e) => {
@@ -79,6 +79,16 @@ function OrientedSignUpPage() {
     $selectedImage.src = objectURL;
   };
 
+  const changeBackgroundColor = e => {
+    if (e.target.value) {
+      e.target.classList.remove('bg-white');
+      e.target.classList.add('bg-inputbackground');
+    } else {
+      e.target.classList.add('bg-white');
+      e.target.classList.remove('bg-inputbackground');
+    }
+  };
+
   return (
     <div className='grid grid-cols-[234px_1fr] gap-0'>
       <Menu />
@@ -88,29 +98,31 @@ function OrientedSignUpPage() {
           <form onSubmit={handleSubmit(onSubmit)} className='ml-12' id='form'>
           <section className='mt-12'> {/* Información básica */}
             <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
-            <div className='flex '>
-              <label htmlFor='inputFile'>
-                <input
-                  {...register('avatar', {required: 'Error'})}
-                  type='file'
-                  accept='image/*'
-                  id='inputFile'
-                  hidden={true}
-                  onChange={() => showSelectedImage()}
-                />
-                <img
-                  src={addAvatar}
-                  alt='avatar'
-                  className='mr-4 w-[96px] h-[96px] cursor-pointer rounded-full'
-                  id='selectedImage'
-                />
-                <img src={iconPlus} alt='Agregar imagen' className='relative bottom-6 left-[72px]' />
+            <div className='flex gap-4'>
+              <div>
+                <label htmlFor='inputFile' className='relative'>
+                  <input
+                    {...register('avatar', {required: 'Requerido'})}
+                    type='file'
+                    accept='image/*'
+                    id='inputFile'
+                    hidden={true}
+                    onChange={() => showSelectedImage()}
+                  />
+                  <img
+                    src={addAvatar}
+                    alt='avatar'
+                    className='w-[96px] h-[96px] cursor-pointer rounded-full'
+                    id='selectedImage'
+                  />
+                  <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
+                </label>
                 <span className='flex gap-1 text-red-500'>
-                  {errors.avatar ? (<img src={iconError} alt='' />) : ''}
-                  {errors.avatar?.message}
+                    {errors.avatar ? (<img src={iconError} alt='' />) : ''}
+                    {errors.avatar?.message}
                 </span>
-              </label>
-              <div className='flex flex-col gap-3 mr-4'>
+              </div>
+              <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                   <label htmlFor='full-name'>Nombre y Apellido</label>
                   <input
@@ -125,6 +137,7 @@ function OrientedSignUpPage() {
                     type='text'
                     id='full-name'
                     placeholder='Ingresar nombre completo'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.fullName ? (<img src={iconError} alt='' />) : ''}
@@ -145,6 +158,7 @@ function OrientedSignUpPage() {
                     type='tel'
                     id='phone'
                     placeholder='Teléfono'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.phoneNumber ? (<img src={iconError} alt='' />) : ''}
@@ -167,6 +181,7 @@ function OrientedSignUpPage() {
                     type='mail'
                     id='mail'
                     placeholder='Ingresar mail'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.mail ? (<img src={iconError} alt='' />) : ''}
@@ -183,6 +198,7 @@ function OrientedSignUpPage() {
                     style={{backgroundImage: `url(${iconArrow})`}}
                     id='program'
                     onChange={() => setSelectValue(true)}
+                    onBlur={e => changeBackgroundColor(e)}
                   >
                     <option selected hidden value=''>Seleccionar opción</option>
                     <option value='orientacion-vocacional' className='text-black'>Orientación vocacional</option>
@@ -200,8 +216,8 @@ function OrientedSignUpPage() {
           </section>
           <section className='mt-12'> {/* Datos personales */}
             <h2 className='my-4 text-2xl font-bold'>02. Datos personales</h2>
-            <div className='flex'>
-              <div className='flex flex-col gap-3 mr-4'>
+            <div className='flex gap-4'>
+              <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                   <label htmlFor='dni'>Número de DNI</label>
                   <input
@@ -216,6 +232,7 @@ function OrientedSignUpPage() {
                     type='tel'
                     id='dni'
                     placeholder='Ingresar DNI'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.dni ? (<img src={iconError} alt='' />) : ''}
@@ -236,6 +253,7 @@ function OrientedSignUpPage() {
                     type='text'
                     id='school'
                     placeholder='Ingresar colegio'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.school ? (<img src={iconError} alt='' />) : ''}
@@ -266,6 +284,7 @@ function OrientedSignUpPage() {
                     type='tel'
                     id='age'
                     placeholder='Ingresar edad'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.age ? (<img src={iconError} alt='' />) : ''}
@@ -286,6 +305,7 @@ function OrientedSignUpPage() {
                     type='text'
                     id='address'
                     placeholder='Ingresar domicilio'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.address ? (<img src={iconError} alt='' />) : ''}
@@ -309,6 +329,7 @@ function OrientedSignUpPage() {
                 cols='60'
                 rows='5'
                 placeholder='Escribe un comentario'
+                onBlur={e => changeBackgroundColor(e)}
               ></textarea>
               <span className='flex gap-1 text-red-500'>
                 {errors.motive ? (<img src={iconError} alt='' />) : ''}
@@ -336,6 +357,7 @@ function OrientedSignUpPage() {
                     type='tel'
                     id='username'
                     placeholder='Ingresar DNI del Orientado'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.user ? (<img src={iconError} alt='' />) : ''}
@@ -356,6 +378,7 @@ function OrientedSignUpPage() {
                     type='password'
                     id='new-password'
                     placeholder='Ingresar contraseña'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.pass ? (<img src={iconError} alt='' />) : ''}
@@ -374,6 +397,7 @@ function OrientedSignUpPage() {
                     type='password'
                     id='repeat-password'
                     placeholder='Repetir contraseña'
+                    onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
                     {errors.confirmPass ? (<img src={iconError} alt='' />) : ''}

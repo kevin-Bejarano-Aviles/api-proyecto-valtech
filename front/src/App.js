@@ -28,7 +28,7 @@ function App() {
     <Routes>
       <Route path='/' element={<WelcomePage />}  />
       <Route path='/login' element={<LoginPage />} />
-      
+
       <Route path='/inicio/*' element={<HomePage />}>
         <Route path='mi-perfil' element={<h1>hola</h1>} />
       </Route>
@@ -54,7 +54,7 @@ function App() {
       <Route path={'/prb'} element={<ProposalBox />} />
       <Route path={'/menu/*'} element={<Menu/>} >
        {/* <Route path='orientados' element={<h1>hola</h1>}></Route> */}
-      
+
       </Route>
     </Routes>
   );

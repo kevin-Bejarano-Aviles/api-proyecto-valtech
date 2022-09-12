@@ -11,7 +11,7 @@ module.exports = {
         graybackground:'#DADEEB',
         imgheader: '#DADEEB',
         bordergray: '#E4E8F0',
-        
+        inputbackground: '#F9FBFD',
       }
     },
   },
