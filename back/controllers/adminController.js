@@ -11,18 +11,19 @@ const login = async(req,res)=>{
             where:{
                 email:email
             }
+            
         });
         if(!admin){
-            return res.json({message:'Credenciales invalidas'});
-        }else{
-            res.json(admin);
+            return res.status(401).json({message:'Credenciales invalidas'});
         }
-        /* if(bcryptjs.compareSync(pass,admin.password)){
-            return res.json({message:'Credenciales invalidas'});
-        } */
+        if(!bcryptjs.compareSync(pass,admin.password)){
+            return res.status(401).json({message:'Credenciales invalidas'});
+        }
+
+        res.json(admin);
 
     } catch (error) {
-        res.json({message:'Error'})
+        res.status(500).json(error.message)
     }
 }
 
@@ -60,8 +61,18 @@ const getAllStudent = async(req,res)=>{
     }
 }
 
+const logOut = async(req,res)=>{
+    try {
+        req.session.destroy();
+        res.json({message:"Cerrando sesion"});
+    } catch (error) {
+        res.json({message:error});
+    }
+}  
+
 module.exports = {
     addStudent,
     getAllStudent,
-    login
+    login,
+    logOut
 }
