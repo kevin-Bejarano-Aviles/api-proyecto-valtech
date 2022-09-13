@@ -21,7 +21,7 @@ const login = async(req,res)=>{
         }
         req.session.adminLog={
             id:admin.id,
-            fullName:admin.fullname,
+            fullName:admin.fullName,
             avatar: admin.avatar
         }
         let theAdmin = req.session.adminLog;

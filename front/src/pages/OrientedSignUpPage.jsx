@@ -20,21 +20,21 @@ function OrientedSignUpPage() {
     watch,
     formState: { errors }
   } = useForm(
-    // {
-    //   defaultValues: {
-    //     fullName: 'Lautaro Coria',
-    //     phoneNumber: '1128816544',
-    //     email: 'lautaro.coria@proton.me',
-    //     program: 'orientacion-vocacional',
-    //     dni: '39370581',
-    //     school: 'Alte. Brown',
-    //     age: '26',
-    //     address: 'Av. Córdoba 3751',
-    //     motive: 'Porque sí...',
-    //     user: '39370581',
-    //     pass: '12345678'
-    //   }
-    // }
+    {
+      defaultValues: {
+        fullName: 'Lautaro Coria',
+        phoneNumber: '1128816544',
+        email: 'lautaro.coria@proton.me',
+        program: 'orientacion-vocacional',
+        dni: '39370581',
+        school: 'Alte. Brown',
+        age: '26',
+        address: 'Av. Córdoba 3751',
+        motive: 'Porque sí...',
+        user: '39370581',
+        pass: '12345678'
+      }
+    }
   );
 
   const onSubmit = async (data, e) => {
@@ -74,8 +74,9 @@ function OrientedSignUpPage() {
   const showSelectedImage = () => {
     const $selectedImage = document.getElementById('selectedImage');
     const $inputFile = document.getElementById('inputFile');
-    const objectURL = URL.createObjectURL($inputFile.files[0]);
-    $selectedImage.src = objectURL;
+    console.log($inputFile.files[0])
+    // const objectURL = URL.createObjectURL();
+    $selectedImage.src = $inputFile.files[0];
   };
 
   const changeBackgroundColor = e => {
