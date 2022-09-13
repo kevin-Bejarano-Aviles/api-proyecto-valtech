@@ -10,8 +10,6 @@ function HeaderAdmin({Titulo}) {
 
             <h1 className='text-2xl ml-[46px] text-white font-normal'> {Titulo}</h1>
 
-            <h1 className='text-2xl ml-[46px] text-white font-normal'>{Titulo}</h1>
-
             <div className='ml-[992px]'><ProfilePicture picture={ProfilePictureHeader} alt="User"/></div>    
         </div>
   )
