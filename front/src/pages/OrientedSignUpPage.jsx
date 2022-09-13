@@ -77,8 +77,8 @@ function OrientedSignUpPage() {
     const $selectedImage = document.getElementById('selectedImage');
     const $inputFile = document.getElementById('inputFile');
     console.log($inputFile.files[0])
-    // const objectURL = URL.createObjectURL();
-    $selectedImage.src = $inputFile.files[0];
+    const objectURL = URL.createObjectURL($inputFile.files[0]);
+    $selectedImage.src = objectURL;
   };
 
   const changeBackgroundColor = e => {
