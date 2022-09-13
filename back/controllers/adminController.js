@@ -67,9 +67,10 @@ const getAllStudent = async(req,res)=>{
     }
 }
 
-const logOut = async(req,res)=>{
+const logOut = async(req=request,res)=>{
     try {
         req.session.destroy();
+        req.session.cookie.maxAge=-1;
         res.json({message:"Cerrando sesion"});
     } catch (error) {
         res.json({message:error});
