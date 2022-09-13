@@ -20,21 +20,21 @@ function OrientedSignUpPage() {
     watch,
     formState: { errors }
   } = useForm(
-    {
-      defaultValues: {
-        fullName: 'Lautaro Coria',
-        phoneNumber: '1128816544',
-        email: 'lautaro.coria@proton.me',
-        program: 'orientacion-vocacional',
-        dni: '39370581',
-        school: 'Alte. Brown',
-        age: '26',
-        address: 'Av. Córdoba 3751',
-        motive: 'Porque sí...',
-        user: '39370581',
-        pass: '12345678'
-      }
-    }
+    // {
+    //   defaultValues: {
+    //     fullName: 'Lautaro Coria',
+    //     phoneNumber: '1128816544',
+    //     email: 'lautaro.coria@proton.me',
+    //     program: 'orientacion-vocacional',
+    //     dni: '39370581',
+    //     school: 'Alte. Brown',
+    //     age: '26',
+    //     address: 'Av. Córdoba 3751',
+    //     motive: 'Porque sí...',
+    //     user: '39370581',
+    //     pass: '12345678'
+    //   }
+    // }
   );
 
   const onSubmit = async (data, e) => {
@@ -61,7 +61,9 @@ function OrientedSignUpPage() {
       };
       await axios('http://localhost:8000/admin/addStudent', options, {withCredentials: true});
       // window.location.reload(true);
-      navigate(`/orientados/${e.target.user.value}`);
+      console.log('hola')
+      console.log(e.target.user.value)
+      // navigate(`/orientados/${e.target.user.value}`);
     } catch (err) {
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
