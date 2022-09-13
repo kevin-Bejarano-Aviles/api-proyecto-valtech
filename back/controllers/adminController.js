@@ -33,7 +33,8 @@ const login = async(req,res)=>{
 }
 
 const addStudent = (req,res)=>{
-    const {fullName,email,phoneNumber,program,avatar,dni,school,age,address,motive,user,pass} = req.body;
+    const {fullName,email,phoneNumber,program,dni,school,age,address,motive,user,pass} = req.body;
+    const avatar = req.files[0].filename;
     const passHash = bcryptjs.hashSync(pass,12);
     try {
         studentModel.create({
