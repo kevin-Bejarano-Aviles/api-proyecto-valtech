@@ -9,7 +9,7 @@ function HeaderAdmin({ Titulo }) {
 
   const getAll = async () => {
     try {
-      let res = await axios.get('http://localhost:8000/admin/logOut', {withCredentials: true});
+      let res = await axios.get('http://localhost:8000/admin/logOut',{withCredentials:true});
       console.log(res);
       navigate('/login');
     } catch (err) {

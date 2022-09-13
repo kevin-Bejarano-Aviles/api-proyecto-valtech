@@ -67,14 +67,12 @@ const getAllStudent = async(req,res)=>{
     }
 }
 
-const logOut = async(req=request,res)=>{
-    try {
-        req.session.destroy();
-        req.session.cookie.destroy();
-        res.json({message:"Cerrando sesion"});
-    } catch (error) {
-        res.json({message:error});
-    }
+const logOut = (req=request,res)=>{
+       
+       req.session.destroy((err) => {
+        res.clearCookie('userId').send('cleared cookie');//encontrado en stack overflow,no lo se explicar
+     });
+       
 }  
 
 module.exports = {
