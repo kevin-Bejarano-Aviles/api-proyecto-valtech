@@ -1,6 +1,8 @@
 import React from "react";
+import { useEffect } from 'react';
 import Oriented from "../components/Oriented";
 import axios from 'axios';
+import { useState } from "react";
 function OrientedList() {
 //PRIMER COMENTARIO
   //const [persons,setPersons] = useState([
@@ -25,8 +27,29 @@ function OrientedList() {
   //     });
   //   });
   // }
+
+const [users, setUsers] = useState();
+
+const getAll = async () => {
+  try {
+    let res = await axios.get('http://localhost:8000/admin/students');
+    let json = await res.data;
+    setUsers(json);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+useEffect(() => {
+  getAll();
+},[]);
+
   return (
-    <div>
+    <ul>
+
+      {
+        users.map(user => <Oriented key={user.id} info={user} />)
+      }
       {/* PRIMER COMENTARIO
       <ul>
       <li>
@@ -62,7 +85,8 @@ function OrientedList() {
             }
           </tbody>
         </table> */}
-    </div>
+      
+    </ul>
   )
 }
 export default OrientedList;

@@ -16,8 +16,8 @@ function HomePage() {
       <HeaderAdmin Titulo='¡Bienvenida, Susana!'/>
       </div>
 
-      <div className="flex items-center my-3 ">
-        <h4 className="h-16 w-48 bg- px-7 py-5 ml-[46px] mx-[750px] border-b-4 border-green">Nuevos orientados</h4>
+      <div className="flex items-center absolute bottom-[540px] left-[230px] my-3">
+        <h4 className="h-14 w-48 px-7 py-3 ml-[46px] mx-[750px] border-b-4 border-green">Nuevos orientados</h4>
         <Button  type="button" name="Ingresar orientado"/>
       </div>
 
