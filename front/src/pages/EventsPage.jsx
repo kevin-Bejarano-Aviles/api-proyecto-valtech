@@ -6,8 +6,11 @@ function EventsPage() {
 
     return ( 
         <>
-        <div>
-            <h1>Todos los eventos</h1>
+        <div className="flex justify-between">
+            <div className="flex">
+                <h1 className="absolute z-1 text-2xl font-semibold">Todos los eventos</h1>
+                <div className="h-3.5 w-56  bg-backgroundGray"></div>
+            </div>
             <Button
                 type="button"
                 name="Agendar evento"

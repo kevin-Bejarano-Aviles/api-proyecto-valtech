@@ -21,7 +21,7 @@ const login = async(req,res)=>{
         }
         req.session.adminLog={
             id:admin.id,
-            fullName:admin.fullname,
+            fullName:admin.fullName,
             avatar: admin.avatar
         }
         let theAdmin = req.session.adminLog;
@@ -33,7 +33,8 @@ const login = async(req,res)=>{
 }
 
 const addStudent = (req,res)=>{
-    const {fullName,email,phoneNumber,program,avatar,dni,school,age,address,motive,user,pass} = req.body;
+    const {fullName,email,phoneNumber,program,dni,school,age,address,motive,user,pass} = req.body;
+    const avatar = req.files[0].filename;
     const passHash = bcryptjs.hashSync(pass,12);
     try {
         studentModel.create({
@@ -66,9 +67,10 @@ const getAllStudent = async(req,res)=>{
     }
 }
 
-const logOut = async(req,res)=>{
+const logOut = async(req=request,res)=>{
     try {
         req.session.destroy();
+        req.session.cookie.destroy();
         res.json({message:"Cerrando sesion"});
     } catch (error) {
         res.json({message:error});
