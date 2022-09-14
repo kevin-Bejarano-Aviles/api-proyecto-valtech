@@ -8,7 +8,7 @@ function OrientedList() {
 
   const getAll = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/admin/students');
+      const response = await axios.get('http://localhost:8000/admin/students', {withCredentials: true});
       setUsers(response.data);
     } catch (error) {
       console.log(error)
