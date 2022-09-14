@@ -31,9 +31,9 @@ function App() {
       <Route path='/login' element={<LoginPage />} />
       {/* consultar sobre rutas privadas */}
       
-      <Route path='/inicio/*' element={<HomePage />}>
-        <Route path='mi-perfil' element={<h1>hola</h1>} />
-      </Route>
+      <Route path='/inicio' element={<HomePage />}/>
+        <Route path='mi-perfil' element={<ProfilePage/>} />
+      
       <Route path='/orientados' element={<OrientedsPage />} />
       <Route path='/orientados/alta-orientado' element={<OrientedSignUpPage />} />
       <Route path='/orientados/:id' element={<OrientedPage />} />
