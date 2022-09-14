@@ -24,8 +24,8 @@ function OrientedSignUpPage() {
       defaultValues: {
         fullName: 'Lautaro Coria',
         phoneNumber: '1128816544',
-        mail: 'lautaro.coria@proton.me',
-        program: 'orientacion-vocacional',
+        email: 'lautaro.coria@proton.me',
+        program: '',
         dni: '39370581',
         school: 'Alte. Brown',
         age: '26',
