@@ -7,7 +7,7 @@ const uploadStudent = require('../middlewares/upOrientado.js');
 router.post('/addStudent',adminCheck,uploadStudent.any(), addStudent);
 router.get('/students',adminCheck, getAllStudent);
 router.get('/students/:id',adminCheck,getStudent);
-router.post('/adminLogin',createAdmin,adminCheck,login);
+router.post('/adminLogin',createAdmin,login);
 router.get('/logOut',adminCheck, logOut); 
 
 module.exports = router;
