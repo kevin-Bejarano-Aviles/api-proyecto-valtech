@@ -3,8 +3,8 @@ const studentModel = require('./studentModel');
 const adviserModel = require('./adviserModel');
 const eventModel = require('./eventModel');
 //Define relations
-studentModel.hasMany(adviserModel,{foreignKey:'adviserId'});
-adviserModel.belongsTo(studentModel,{foreignKey:'adviserId'});
+studentModel.belongsTo(adviserModel,{foreignKey:'adviserId'});
+adviserModel.hasMany(studentModel,{foreignKey:'adviserId'});
 adviserModel.hasMany(eventModel,{foreignKey:'adviser_event_id'});
 eventModel.belongsTo(adviserModel,{foreignKey:'adviser_event_id'});
 eventModel.hasMany(studentModel,{foreignKey:'eventId'});

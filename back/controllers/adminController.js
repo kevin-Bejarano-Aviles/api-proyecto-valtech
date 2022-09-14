@@ -30,7 +30,7 @@ const login = async(req,res)=>{
     } catch (error) {
         res.status(500).json(error.message)
     }
-}
+};
 
 const addStudent = (req,res)=>{
     const {fullName,email,phoneNumber,program,dni,school,age,address,motive,user,pass} = req.body;
@@ -56,7 +56,7 @@ const addStudent = (req,res)=>{
         res.json({message:'Error'})
     }
 
-}
+};
 
 const getAllStudent = async(req,res)=>{
     try {
@@ -65,7 +65,20 @@ const getAllStudent = async(req,res)=>{
     } catch (error) {
         res.json({message:'Error'})
     }
-}
+};
+
+const getStudent = async (req,res) => {
+    try {
+        const student = await studentModel.findAll({
+            where : {id : req.params.id},
+            attributes : ['id','fullName','email','phoneNumber','program','avatar','dni','school','age','address','motive','user'],
+           include : [{model:adviserModel,attributes:['id','fullName','email','phoneNumber']} ,{model:eventModel,attributes:['id','name','date','time','detail','duration','adviser_event_id']}]  
+        })
+        res.json(student[0])
+    } catch (error) {
+        res.json({message:error.message})
+    }
+};
 
 const logOut = (req=request,res)=>{
        
@@ -73,11 +86,12 @@ const logOut = (req=request,res)=>{
         res.clearCookie('userId').send('cleared cookie');//encontrado en stack overflow,no lo se explicar
      });
        
-}  
+};  
 
 module.exports = {
     addStudent,
     getAllStudent,
+    getStudent,
     login,
     logOut
-}
+};
