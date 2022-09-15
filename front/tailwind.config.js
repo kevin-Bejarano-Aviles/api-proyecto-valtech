@@ -13,6 +13,18 @@ module.exports = {
         bordergray: '#E4E8F0',
         inputbackground: '#F9FBFD',
         backgroundGray:'#E9F9F8',
+      },
+      screens: {
+        'mobile': '375px',
+        
+        'tablet': '640px',
+        // => @media (min-width: 640px) { ... }
+  
+        'laptop': '1024px',
+        // => @media (min-width: 1024px) { ... }
+  
+        'desktop': '1280px',
+        // => @media (min-width: 1280px) { ... }
       }
     },
   },

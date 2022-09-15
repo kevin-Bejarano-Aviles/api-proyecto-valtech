@@ -45,8 +45,9 @@ function LoginPage() {
     if(ev.target.name==="email"){
       setBandEmail(1)
     }
-    else{
+    else if(ev.target.name==="pass"){
       setBandPass(1)
+
     }
   }
 
@@ -86,6 +87,9 @@ function LoginPage() {
     }
   },[errorMessage])
 
+  const deskTopviews="flex flex-col justify-center h-screen w-4/5 ml-20"
+  const tabletviews="mobile:bg-graybackground"
+  const mobileviews="flex flex-col justify-center h-screen w-4/5 ml-20"
 
   return (
     <div className="flex">
@@ -95,7 +99,7 @@ function LoginPage() {
         <img className="" src={ilustration} alt="ilustracion"/>
       </div>
       {/* start form */}
-      <form className="flex flex-col justify-center h-screen w-4/5 ml-20" onSubmit={alerta}>
+      <form className={`${deskTopviews} ${tabletviews}`} onSubmit={alerta}>
         <h2 className="text-2xl	font-semibold mb-8">Ingresá a tu portal</h2>
         <label className="flex flex-col mt-2 mb-5">
           <p className="font-semibold">Email</p>
