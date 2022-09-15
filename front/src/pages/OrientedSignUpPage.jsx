@@ -13,6 +13,7 @@ import addAvatar from '../img/add-avatar.svg';
 
 function OrientedSignUpPage() {
   const navigate = useNavigate();
+  const [formError, setFormError] = useState({});
 
   const {
     register,
@@ -25,62 +26,51 @@ function OrientedSignUpPage() {
         fullName: 'Lautaro Coria',
         phoneNumber: '1128816544',
         email: 'lautaro.coria@proton.me',
-        program: '',
+        program: 'Orientacion vocacional',
         dni: '39370581',
         school: 'Alte. Brown',
         age: '26',
         address: 'Av. Córdoba 3751',
         motive: 'Porque sí...',
         user: '39370581',
-        pass: '12345678'
+        pass: '12345678',
+        confirmPass: '12345678',
       }
     }
   );
 
+  // Método para botón "Ingresar orietado".
   const onSubmit = async (data, e) => {
-    console.log(data);
     e.preventDefault();
     try {
       let options = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json; charset=utf-8'},
-        data: JSON.stringify({
-          avatar: e.target.avatar.value,
-          fullName: e.target.fullName.value,
-          phoneNumber: e.target.phoneNumber.value,
-          email: e.target.email.value,
-          program: e.target.program.value,
-          dni: e.target.dni.value,
-          school: e.target.school.value,
-          age: e.target.age.value,
-          address: e.target.address.value,
-          motive: e.target.motive.value,
-          user: e.target.user.value,
-          pass: e.target.pass.value
-        })
+          method: 'POST',
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+          data: {
+            ...data,
+            avatar: e.target.avatar.files[0],
+          }
       };
-      await axios('http://localhost:8000/admin/addStudent', options, {withCredentials: true});
-      // window.location.reload(true);
-      console.log('hola')
-      console.log(e.target.user.value)
+      await axios('http://localhost:8000/admin/addStudent', options);
+      // hacer una petición get y traer el usuario recién ingresado para
+      // traer su id y luego hacer el navigate
       // navigate(`/orientados/${e.target.user.value}`);
     } catch (err) {
-      let message = err.response.statusText || 'Ocurrió un error';
-      console.log(message);
+      setFormError(err.response.data);
+      console.log(formError);
     }
   };
 
-  // console.log(errors);
-  console.log(watch());
-
+  // Método que muestra en pantalla la imagen seleccionada.
   const showSelectedImage = () => {
     const $selectedImage = document.getElementById('selectedImage');
     const $inputFile = document.getElementById('inputFile');
-    console.log($inputFile.files[0])
     const objectURL = URL.createObjectURL($inputFile.files[0]);
     $selectedImage.src = objectURL;
   };
 
+  // Método que cambia el color de fondo de los inputs.
   const changeBackgroundColor = e => {
     if (e.target.value) {
       e.target.classList.remove('bg-white');
@@ -189,6 +179,7 @@ function OrientedSignUpPage() {
                       {errors.email ? (<img src={iconError} alt='' />) : ''}
                       {errors.email?.message}
                     </span>
+                    {/* <span>{formError.email ? formError.email ? form.email.msg : null}</span> */}
                   </div>
                   <div className='flex flex-col gap-1'>
                     <label htmlFor='program'>Programa</label>
