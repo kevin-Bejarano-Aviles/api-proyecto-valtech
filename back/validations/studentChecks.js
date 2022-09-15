@@ -20,7 +20,7 @@ module.exports = [ //Export our validations
         .isLength({ max: 50 }).withMessage('Máximo 50 números'),
     check('program').notEmpty().withMessage('Ingrese a qué programa ingresará'),
     check('dni').notEmpty().withMessage('Ingrese su número de DNI')
-        .isLength({ max: 50 }).withMessage('Máximo 50 números'),
+        .isLength({min: 7, max: 9 }).withMessage('El dni debe tener un maximo de 9 caracteres'),
     body('dni')
         .custom(function (value) {
             return studentModel.findOne({
@@ -39,6 +39,14 @@ module.exports = [ //Export our validations
     check('address').notEmpty().withMessage('Ingrese su dirección'),
     check('motive').notEmpty().withMessage('Ingrese el motivo por el cual se acerca a la institución'),
     check('pass').notEmpty().withMessage('Ingrese una contraseña'),
+    body('confirmPass')
+    .custom((value,{req}) => {
+        if(value != req.body.pass){
+            return false
+        }
+        return true
+    })
+    .withMessage("Las constraseñas no coiciden"),
     check('user').notEmpty().withMessage('Ingrese un nombre de usuario'),
     body('user')
         .custom(function (value) {
