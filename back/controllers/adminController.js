@@ -1,7 +1,11 @@
+//Require models and associations of the db
 const {adviserModel,eventModel,studentModel} = require('../models/associations') 
 const AdminModel = require('../models/adminModel');
 const NewsModel = require('../models/newsModel');
+//Require bcryptjs
 const bcryptjs = require('bcryptjs');
+//Require express validator 
+const { validationResult } = require('express-validator');
 
 const login = async(req,res)=>{
     const {email,pass} = req.body;
@@ -36,25 +40,32 @@ const addStudent = (req,res)=>{
     const {fullName,email,phoneNumber,program,dni,school,age,address,motive,user,pass} = req.body;
     const avatar = req.files[0].filename;
     const passHash = bcryptjs.hashSync(pass,12);
-    try {
+    let errors = validationResult(req);
+    console.log(errors);
+    if(errors.isEmpty()){
+        try {
         studentModel.create({
-            fullName,
-            email,
-            phoneNumber,
-            program,
-            avatar,
-            dni,
-            school,
-            age,
-            address,
-            motive,
-            user,
+            fullName : fullName,
+            email : email,
+            phoneNumber: phoneNumber,
+            program : program,
+            avatar : avatar,
+            dni : dni,
+            school : school,
+            age : age,
+            address : address,
+            motive : motive,
+            user : user,
             password:passHash          
         });
         res.json({message:'Registro creado correctamente'});
     } catch (error) {
-        res.json({message:'Error'})
+        res.status(500).json({message:'Error'})
     }
+    }else{
+        res.json(errors.mapped());
+    }
+    
 
 };
 
@@ -76,7 +87,7 @@ const getStudent = async (req,res) => {
         })
         res.json(student[0])
     } catch (error) {
-        res.json({message:error.message})
+        res.status(500).json({message:error.message})
     }
 };
 
