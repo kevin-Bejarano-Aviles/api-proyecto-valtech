@@ -8,6 +8,9 @@ import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
 
 function LoginPage() {
+  const [bandEmail,setBandEmail]=useState(0)
+  const [bandPass,setBandPass]=useState(0)
+
   const navigate = useNavigate();
   //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
@@ -39,24 +42,35 @@ function LoginPage() {
       ...datos,
       [ev.target.name]:ev.target.value
     })
-    
+    if(ev.target.name==="email"){
+      setBandEmail(1)
+    }
+    else{
+      setBandPass(1)
+    }
   }
 
   // check that the field is not empty
   const setErrors=()=>{
-    if(datos.pass.length<1 && !errorPassword){
+    
+    if(datos.pass.length<1 && !errorPassword && bandPass===1){
       SetErrorPassword(true)
     }
     else if(datos.pass.length>1 && errorPassword){
       SetErrorPassword(false)
     }
-    if(datos.email.length<1 && !errorEmail){
+    if(datos.email.length<1 && !errorEmail && bandEmail===1){
       SetErrorEmail(true)
     }
     else if(datos.email.length>1 && errorEmail){
       SetErrorEmail(false)
     }
   }
+
+  useEffect(()=>{
+    SetErrorPassword(false)
+      SetErrorEmail(false)
+  },[])
 
   useEffect(()=>{
     setErrors();
