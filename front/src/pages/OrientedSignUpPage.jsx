@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
@@ -15,33 +15,20 @@ function OrientedSignUpPage() {
   const navigate = useNavigate();
   const [formError, setFormError] = useState({});
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm(
-    {
-      defaultValues: {
-        fullName: 'Lautaro Coria',
-        phoneNumber: '1128816544',
-        email: 'lautaro.coria@proton.me',
-        program: 'Orientacion vocacional',
-        dni: '39370581',
-        school: 'Alte. Brown',
-        age: '26',
-        address: 'Av. Córdoba 3751',
-        motive: 'Porque sí...',
-        user: '39370581',
-        pass: '12345678',
-        confirmPass: '12345678',
-      }
-    }
-  );
+  useEffect(() => {
+    console.log(formError);
+  },[formError]);
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
   // Método para botón "Ingresar orietado".
   const onSubmit = async (data, e) => {
     e.preventDefault();
+    postStudent(data, e);
+  };
+
+  // Método para enviar un nuevo orientado.
+  const postStudent = async (data, e) => {
     try {
       let options = {
           method: 'POST',
@@ -53,12 +40,22 @@ function OrientedSignUpPage() {
           }
       };
       await axios('http://localhost:8000/admin/addStudent', options);
-      // hacer una petición get y traer el usuario recién ingresado para
-      // traer su id y luego hacer el navigate
-      // navigate(`/orientados/${e.target.user.value}`);
+      getAllStudents();
     } catch (err) {
       setFormError(err.response.data);
       console.log(formError);
+    }
+  };
+
+  // Método para traer todos los orientados.
+  const getAllStudents = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
+      const json = await response.data;
+      const lastUserId = json[json.length-1].id;
+      navigate(`/orientados/${lastUserId}`);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -114,103 +111,105 @@ function OrientedSignUpPage() {
                       {errors.avatar?.message}
                   </span>
                 </div>
-                <div className='flex flex-col gap-3'>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='full-name'>Nombre y Apellido</label>
-                    <input
-                      {...register('fullName', {
-                        required: 'Campo requerido',
-                        pattern: {
-                          value: /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
-                          message: 'Campo inválido'
-                        }
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.fullName ? 'border-red-500' : ''}`}
-                      type='text'
-                      id='full-name'
-                      placeholder='Ingresar nombre completo'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.fullName ? (<img src={iconError} alt='' />) : ''}
-                      {errors.fullName?.message}
-                    </span>
+                <div>
+                  <div className='flex gap-3'>
+                    <div className='flex flex-col gap-1'>
+                      <label htmlFor='full-name'>Nombre y Apellido</label>
+                      <input
+                        {...register('fullName', {
+                          required: 'Campo requerido',
+                          pattern: {
+                            value: /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                            message: 'Campo inválido'
+                          }
+                        })}
+                        className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.fullName ? 'border-red-500' : ''}`}
+                        type='text'
+                        id='full-name'
+                        placeholder='Ingresar nombre completo'
+                        onBlur={e => changeBackgroundColor(e)}
+                      />
+                      <span className='flex gap-1 text-red-500'>
+                        {errors.fullName ? (<img src={iconError} alt='' />) : ''}
+                        {errors.fullName?.message}
+                      </span>
+                    </div>
+                    <div className='flex flex-col gap-1'>
+                      <label htmlFor='mail'>Mail</label>
+                      <input
+                        {...register('email', {
+                          required: 'Campo requerido',
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,500}$/i,
+                            message: 'Email inválido'
+                          }
+                        })}
+                        className={`border-2 p-2 w-80 h-10 rounded-lg ${(errors.email || formError.email) ? 'border-red-500' : ''}`}
+                        type='mail'
+                        id='mail'
+                        placeholder='Ingresar mail'
+                        onBlur={e => changeBackgroundColor(e)}
+                      />
+                      <span className='flex gap-1 text-red-500'>
+                        {(errors.email || formError.email) ? (<img src={iconError} alt='' />) : ''}
+                        {formError.email ? formError.email.msg : ''}
+                        {errors.email?.message}
+                      </span>
+                    </div>
                   </div>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='phone'>Teléfono</label>
-                    <input
-                      {...register('phoneNumber', {
-                        required: 'Campo requerido',
-                        pattern: {
-                          value: /^[0-9]{10,50}$/i,
-                          message: 'Entre 10 y 50 dígitos'
-                        }
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.phoneNumber ? 'border-red-500' : ''}`}
-                      type='tel'
-                      id='phone'
-                      placeholder='Teléfono'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.phoneNumber ? (<img src={iconError} alt='' />) : ''}
-                      {errors.phoneNumber?.message}
-                    </span>
-                  </div>
-                </div>
-                <div className='flex flex-col gap-3'>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='mail'>Mail</label>
-                    <input
-                      {...register('email', {
-                        required: 'Campo requerido',
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,500}$/i,
-                          message: 'Email inválido'
-                        }
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.email ? 'border-red-500' : ''}`}
-                      type='mail'
-                      id='mail'
-                      placeholder='Ingresar mail'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.email ? (<img src={iconError} alt='' />) : ''}
-                      {errors.email?.message}
-                    </span>
-                    {/* <span>{formError.email ? formError.email ? form.email.msg : null}</span> */}
-                  </div>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='program'>Programa</label>
-                    <select
-                      {...register('program', {
-                        required: 'Seleccina una opción',
-                      })}
-                      className={`border-2 pl-1 pr-2 w-80 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center]`}
-                      style={{backgroundImage: `url(${iconArrow})`}}
-                      id='program'
-                      onBlur={e => changeBackgroundColor(e)}
-                      onFocus={e => e.target.classList.add('text-black')}
-                    >
-                      <option selected hidden value=''>Seleccionar opción</option>
-                      <option value='Orientacion vocacional'>Orientación vocacional</option>
-                      <option value='Reorientacion vocacional'>Reorientación vocacional</option>
-                      <option value='Taller de matematicas'>Taller de matemáticas</option>
-                      <option value='Metodos de estudio'>Métodos de estudio</option>
-                    </select>
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.program ? (<img src={iconError} alt='Error' />) : ''}
-                      {errors.program?.message}
-                    </span>
+                  <div className='flex gap-3'>
+                    <div className='flex flex-col gap-1'>
+                      <label htmlFor='phone'>Teléfono</label>
+                      <input
+                        {...register('phoneNumber', {
+                          required: 'Campo requerido',
+                          pattern: {
+                            value: /^[0-9]{10,50}$/i,
+                            message: 'Entre 10 y 50 dígitos'
+                          }
+                        })}
+                        className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.phoneNumber ? 'border-red-500' : ''}`}
+                        type='tel'
+                        id='phone'
+                        placeholder='Teléfono'
+                        onBlur={e => changeBackgroundColor(e)}
+                      />
+                      <span className='flex gap-1 text-red-500'>
+                        {errors.phoneNumber ? (<img src={iconError} alt='' />) : ''}
+                        {errors.phoneNumber?.message}
+                      </span>
+                    </div>
+                    <div className='flex flex-col gap-1'>
+                      <label htmlFor='program'>Programa</label>
+                      <select
+                        {...register('program', {
+                          required: 'Seleccina una opción',
+                        })}
+                        className={`border-2 pl-1 pr-2 w-80 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center]`}
+                        style={{backgroundImage: `url(${iconArrow})`}}
+                        id='program'
+                        onBlur={e => changeBackgroundColor(e)}
+                        onFocus={e => e.target.classList.add('text-black')}
+                      >
+                        <option selected hidden value=''>Seleccionar opción</option>
+                        <option value='Orientacion vocacional'>Orientación vocacional</option>
+                        <option value='Reorientacion vocacional'>Reorientación vocacional</option>
+                        <option value='Taller de matematicas'>Taller de matemáticas</option>
+                        <option value='Metodos de estudio'>Métodos de estudio</option>
+                      </select>
+                      <span className='flex gap-1 text-red-500'>
+                        {errors.program ? (<img src={iconError} alt='Error' />) : ''}
+                        {errors.program?.message}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
             <section className='mt-12'> {/* Datos personales */}
               <h2 className='my-4 text-2xl font-bold'>02. Datos personales</h2>
-              <div className='flex gap-4'>
-                <div className='flex flex-col gap-3'>
+              <div className='flex flex-col gap-4'>
+                <div className='flex gap-3'>
                   <div className='flex flex-col gap-1'>
                     <label htmlFor='dni'>Número de DNI</label>
                     <input
@@ -221,40 +220,18 @@ function OrientedSignUpPage() {
                           message: 'Entre 8 y 50 dígitos'
                         }
                       })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.dni ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 w-80 h-10 rounded-lg ${(errors.dni || formError.dni) ? 'border-red-500' : ''}`}
                       type='tel'
                       id='dni'
                       placeholder='Ingresar DNI'
                       onBlur={e => changeBackgroundColor(e)}
                     />
                     <span className='flex gap-1 text-red-500'>
-                      {errors.dni ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.dni ||formError.dni) ? (<img src={iconError} alt='' />) : ''}
+                      {formError.dni ? formError.dni.msg : ''}
                       {errors.dni?.message}
                     </span>
                   </div>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='school'>Colegio</label>
-                    <input
-                      {...register('school', {
-                        required: 'Campo requerido',
-                        pattern: {
-                          value: /^[A-Za-z.ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
-                          message: 'Campo inválido'
-                        }
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.school ? 'border-red-500' : ''}`}
-                      type='text'
-                      id='school'
-                      placeholder='Ingresar colegio'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.school ? (<img src={iconError} alt='' />) : ''}
-                      {errors.school?.message}
-                    </span>
-                  </div>
-                </div>
-                <div className='flex flex-col gap-3'>
                   <div className='flex flex-col gap-1'>
                     <label htmlFor='age'>Edad</label>
                     <input
@@ -284,6 +261,29 @@ function OrientedSignUpPage() {
                       {errors.age?.message}
                     </span>
                   </div>
+                </div>
+                <div className='flex gap-3'>
+                  <div className='flex flex-col gap-1'>
+                    <label htmlFor='school'>Colegio</label>
+                    <input
+                      {...register('school', {
+                        required: 'Campo requerido',
+                        pattern: {
+                          value: /^[A-Za-z.ÁÉÍÓÚáéíóúÜüÑñ ]{2,500}$/,
+                          message: 'Campo inválido'
+                        }
+                      })}
+                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.school ? 'border-red-500' : ''}`}
+                      type='text'
+                      id='school'
+                      placeholder='Ingresar colegio'
+                      onBlur={e => changeBackgroundColor(e)}
+                    />
+                    <span className='flex gap-1 text-red-500'>
+                      {errors.school ? (<img src={iconError} alt='' />) : ''}
+                      {errors.school?.message}
+                    </span>
+                  </div>
                   <div className='flex flex-col gap-1'>
                     <label htmlFor='address'>Domicilio</label>
                     <input
@@ -306,28 +306,28 @@ function OrientedSignUpPage() {
                     </span>
                   </div>
                 </div>
-              </div>
-              <div className='flex flex-col gap-1 mt-3'>
-                <label htmlFor='reason'>¿Por qué se acercó a nuestra institución?</label>
-                <textarea
-                  {...register('motive', {
-                    required: 'Campo requerido',
-                    pattern: {
-                      value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ., ]{2,500}$/,
-                      message: 'Campo inválido'
-                    }
-                  })}
-                  className={`border-2 w-[656px] p-2 rounded-lg ${errors.motive ? 'border-red-500' : ''}`}
-                  id='reason'
-                  cols='60'
-                  rows='5'
-                  placeholder='Escribe un comentario'
-                  onBlur={e => changeBackgroundColor(e)}
-                ></textarea>
-                <span className='flex gap-1 text-red-500'>
-                  {errors.motive ? (<img src={iconError} alt='' />) : ''}
-                  {errors.motive?.message}
-                </span>
+                <div className='flex flex-col gap-1'>
+                  <label htmlFor='reason'>¿Por qué se acercó a nuestra institución?</label>
+                  <textarea
+                    {...register('motive', {
+                      required: 'Campo requerido',
+                      pattern: {
+                        value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ., ]{2,500}$/,
+                        message: 'Campo inválido'
+                      }
+                    })}
+                    className={`border-2 w-[656px] p-2 rounded-lg ${errors.motive ? 'border-red-500' : ''}`}
+                    id='reason'
+                    cols='60'
+                    rows='5'
+                    placeholder='Escribe un comentario'
+                    onBlur={e => changeBackgroundColor(e)}
+                  ></textarea>
+                  <span className='flex gap-1 text-red-500'>
+                    {errors.motive ? (<img src={iconError} alt='' />) : ''}
+                    {errors.motive?.message}
+                  </span>
+                </div>
               </div>
             </section>
             <section className='mt-16'> {/* Crear usuario y contraseña */}
