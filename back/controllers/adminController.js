@@ -60,10 +60,10 @@ const addStudent = (req,res)=>{
         });
         res.json({message:'Registro creado correctamente'});
     } catch (error) {
-        res.status(500).json({message:'Error'})
+        res.json({message:'Error'})
     }
     }else{
-        res.json(errors.mapped());
+        res.status(500).json(errors.mapped());
     }
     
 
