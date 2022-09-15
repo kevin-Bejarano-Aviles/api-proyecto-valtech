@@ -22,15 +22,17 @@ function OrientedList() {
   console.log(users);
 
   return (
+    <>
     <ul>
       {
         !users ? 'Vacío' : (
           users.map(user => (
-          <Oriented key={user.id} info={user} />
+          <Oriented info={user}/> 
           ))
         )
       }
     </ul>
+    </>
   )
 }
 export default OrientedList;
