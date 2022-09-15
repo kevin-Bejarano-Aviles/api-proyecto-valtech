@@ -2,6 +2,7 @@
 const {adviserModel,eventModel,studentModel} = require('../models/associations') 
 const AdminModel = require('../models/adminModel');
 const NewsModel = require('../models/newsModel');
+const db = require('../database/db')
 //Require bcryptjs
 const bcryptjs = require('bcryptjs');
 //Require express validator 
@@ -36,7 +37,7 @@ const login = async(req,res)=>{
     }
 };
 
-const addStudent = (req,res)=>{
+const addStudent = async(req,res)=>{
     const {fullName,email,phoneNumber,program,dni,school,age,address,motive,user,pass} = req.body;
     const avatar = req.files[0].filename;
     const passHash = bcryptjs.hashSync(pass,12);
@@ -44,7 +45,8 @@ const addStudent = (req,res)=>{
     console.log(errors);
     if(errors.isEmpty()){
         try {
-        studentModel.create({
+        await db.query("ALTER TABLE students AUTO_INCREMENT = 1");
+        await studentModel.create({
             fullName : fullName,
             email : email,
             phoneNumber: phoneNumber,
