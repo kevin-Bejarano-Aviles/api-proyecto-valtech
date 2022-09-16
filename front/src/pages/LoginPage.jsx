@@ -114,7 +114,9 @@ function LoginPage() {
         </label>
         <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
           <img className="mr-2" src={warningImg} alt=''/>
-          <p className='font-bold'>El campo email no debe estar vacio</p>
+          <p className='font-bold desktop:font-normal
+ tablet:font-normal
+'>El campo email no debe estar vacio</p>
         </div>
         
         <label className="flex flex-col mt-2 mb-5">
@@ -124,7 +126,8 @@ function LoginPage() {
 
         <div className={`${!errorPassword ? 'hidden' : 'flex '} text-red-500 `}>
         <img className="mr-2" src={warningImg} alt=''/>
-          <p className='font-bold'>El campo contraseña no debe estar vacio</p>
+          <p className='font-bold desktop:font-normal
+ tablet:font-normal'>El campo contraseña no debe estar vacio</p>
         </div>
 
         <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
