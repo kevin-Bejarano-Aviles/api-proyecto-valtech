@@ -9,14 +9,13 @@ import { useState } from 'react';
 
 function Oriented() {
   const params = useParams();
-
   const [user, setUser] = useState([]);
 
   const getAllStudents = async () => {
     try {
       let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
       setUser(res.data);
-      console.log(user)
+      console.log(user);
     } catch (err) {
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
@@ -37,7 +36,7 @@ function Oriented() {
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='flex gap-4'>
               <img
-                src={}
+                src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://www.figma.com/file/Ky0ep967hjzRXSwH8WSOjI/404?node-id=6%3A11745'}
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
               />
