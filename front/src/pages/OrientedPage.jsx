@@ -37,7 +37,7 @@ function Oriented() {
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='flex gap-4'>
               <img
-                src={}
+                src=""
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
               />

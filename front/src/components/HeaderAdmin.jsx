@@ -14,7 +14,7 @@ function HeaderAdmin({ Titulo }) {
     <h1 className='text-2xl ml-[46px] text-white font-normal'>{Titulo}</h1>
     <div className='ml-[992px] flex flex-col justify-center'>
       <div className='fixed '  onClick={clickPhoto}><ProfilePicture picture={ProfilePictureHeader} alt="User"/></div>
-      <div className='relative top-14 right-52'>{photo ? <Logout/> : ""}</div>
+      <div className='relative top-16 right-52'>{photo ? <Logout/> : ""}</div>
     </div>
    </div>
   )
