@@ -36,7 +36,7 @@ function Oriented() {
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='flex gap-4'>
               <img
-                src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://www.figma.com/file/Ky0ep967hjzRXSwH8WSOjI/404?node-id=6%3A11745'}
+                src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
               />
@@ -86,7 +86,7 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section className='mb-4'> {/* Crear usuario y contraseña */}
+          <section> {/* Crear usuario y contraseña */}
             <h2 className='mb-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
             <div className='flex flex-col gap-2'>
               <div className='flex flex-col gap-2'>
@@ -99,9 +99,9 @@ function Oriented() {
               </div>
             </div>
           </section>
-          {/* <Link to={`/orientados/${user}/asignar-orientador`}>
+          <Link to={`/orientados/${user.id}/asignar-orientador`}>
             <Button type='button' name='Asignar orientador/a' />
-          </Link> */}
+          </Link>
         </main>
       </div>
     </div>
