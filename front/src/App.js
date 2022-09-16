@@ -42,7 +42,7 @@ function App() {
       <Route path='/eventos' element={<EventsPage/>} />
       <Route path='/eventos/crear-evento' element={<CreateEventPage />} />
 
-      <Route path={'/*'} element={<ErrorPage />} />
+      
 
       {/*  Las Rutas de abajo son sólo temporales por si necesitan ir viendo lo que crean */}
       <Route path={'/button'} element={<Button />} />
