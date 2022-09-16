@@ -10,7 +10,7 @@ function HeaderAdmin({ Titulo }) {
   }
 
   return (
-    <div className='bg-blue w-full h-[112px] flex items-center fixed z-20'>
+    <div className='bg-blue w-full h-[112px] flex items-center fixed z-30'>
       <div className='flex flex-col justify-center'>
     <h1 className='text-2xl ml-[46px] text-white font-normal  fixed'>{Titulo}</h1>
     <div className='ml-[1100px] flex flex-col justify-center'>

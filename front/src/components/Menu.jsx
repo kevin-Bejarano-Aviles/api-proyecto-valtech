@@ -7,12 +7,12 @@ import IconEventos from '../img/IconEventos.svg'
 
 
 function Menu() {
-  const Active = ' text-red-700' /* const that i use later in NavLink classname */
+  const Active = 'fill-red-700 text-red-700' /* const that i use later in NavLink classname */
   const Normal= "" 
    
   return (
    
-    <div className='w-[234px] min-h-screen bg-white border-r border-bordergray z-20'>
+    <div className='w-[234px] min-h-screen bg-white border-r border-bordergray z-30'>
     <div className='fixed'>
     <img className='ml-8 mr-auto mt-8 w-[166px] h-[41px] ' src={Icon} alt="" />
     <NavLink to ={'/inicio'}  className={({isActive})=>(isActive ? Active : Normal)}>

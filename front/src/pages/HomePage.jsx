@@ -9,13 +9,14 @@ function HomePage() {
 
   return (
 
-    <div className="">
+    <div className=" overflow-x-hidden">
       <div className="flex flex-grow">
       <div>
       <Menu/>
       </div>
       <div>
-      <HeaderAdmin Titulo='¡Bienvenida, Susana!'/> </div>
+      <HeaderAdmin Titulo='¡Bienvenida, Susana!'/> 
+      </div>
       </div>
       <div className="flex items-center absolute bottom-[540px] left-[230px]">
         <h4 className="h-14 w-48 px-7 py-3 ml-[46px] mx-[750px] border-b-4 border-green">Nuevos orientados</h4>
