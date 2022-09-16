@@ -86,48 +86,50 @@ function LoginPage() {
       return ()=> clearTimeout(timer)
     }
   },[errorMessage])
-  const deskTopviewIlustration="laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center"
-  const deskTopviewForm="laptop:flex laptop:flex-col laptop:justify-center laptop:h-screen laptop:w-4/5 laptop:ml-20"
-  const tabletviewIlustration=" tablet:bg-graybackground tablet:h-screen tablet:w-3/5 tablet:flex tablet:flex-col tablet:justify-center "
-  const tabletviewsForm="tablet:flex tablet:flex-col tablet:justify-center tablet:h-screen tablet:w-4/5 tablet:ml-14 "
+  const deskTopviewIlustration="laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center"
+  const deskTopviewForm="laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20"
 
-  const inputDesktopView="bg-graybackground h-10 w-96 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+  const tabletviewIlustration="tablet:static  tablet:bg-graybackground tablet:h-screen tablet:w-3/5 tablet:flex tablet:flex-col tablet:justify-center "
+  const tabletviewsForm="tablet:drop-shadow-none tablet:backdrop-blur-none tablet:bg-transparent tablet:flex tablet:flex-col tablet:justify-center laptop:items-start tablet:h-screen tablet:w-4/5 tablet:ml-14 "
 
-  const inputMobileView="mobile:w-80"
+  const inputDesktopView="bg-graybackground h-10  mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500 desktop:w-96 tablet:w-96 "
 
+  const inputMobileView="w-72"
+
+  const mobileViewImages="bg-graybackground  flex flex-col items-center w-full"
   return (
     <div className={`flex flex-col tablet:flex-row`}>
       
-      <div className={`bg-graybackground  flex flex-col items-center w-full ${deskTopviewIlustration} ${tabletviewIlustration}}`}>
+      <div className={`fixed z-0 left-0 right-0 top-24 bottom-0${deskTopviewIlustration} ${tabletviewIlustration}`}>
         <img className="w-32 laptop:w-48 " src={title} alt="v-camp"/>
-        <img className="w-56" src={ilustration} alt="ilustracion"/>
+        <img className="w-full tablet:w-full laptop:w-full" src={ilustration} alt="ilustracion"/>
       </div>
       {/* start form */}
 
-      <form className={`flex flex-col items-center mt-4 ${deskTopviewForm} ${tabletviewsForm}`} onSubmit={alerta}>
-        <h2 className="text-2xl	font-semibold mb-8">Ingresá a tu portal</h2>
+      <form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} onSubmit={alerta}>
+        <h2 className="text-3xl	font-bold mb-8 text-zinc-600">Ingresá a tu portal</h2>
         <label className="flex flex-col mt-2 mb-5">
-          <p className="font-semibold">Email</p>
+          <p className="font-black text-zinc-600 text-lg">Email</p>
           <input className={`${inputDesktopView} ${inputMobileView}`} type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
         </label>
         <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
           <img className="mr-2" src={warningImg} alt=''/>
-          <p>El campo email no debe estar vacio</p>
+          <p className='font-bold'>El campo email no debe estar vacio</p>
         </div>
         
         <label className="flex flex-col mt-2 mb-5">
-        <p className="font-semibold">Contraseña</p>
+        <p className="font-black text-zinc-600 text-lg">Contraseña</p>
           <input className={`${inputDesktopView} ${inputMobileView}`} type="password" name="pass" placeholder="password" value={datos.password} onChange={handleInput}/>
         </label>
 
-        <div className={`${!errorPassword ? 'hidden' : 'flex'} text-red-500`}>
+        <div className={`${!errorPassword ? 'hidden' : 'flex '} text-red-500 `}>
         <img className="mr-2" src={warningImg} alt=''/>
-          <p >El campo contraseña no debe estar vacio</p>
+          <p className='font-bold'>El campo contraseña no debe estar vacio</p>
         </div>
 
         <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
         <img className="mr-2" src={warningImg} alt=''/>
-          <p>Email y/o contraseña incorrecta</p>
+          <p className='font-bold'>Email y/o contraseña incorrecta</p>
         </div>
         
         <div className="mt-5">
