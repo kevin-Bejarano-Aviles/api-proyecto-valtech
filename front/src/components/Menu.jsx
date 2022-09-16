@@ -14,7 +14,7 @@ function Menu() {
    
     <div className='w-[234px] min-h-screen bg-white border-r border-bordergray z-20'>
     <div className='fixed'>
-    <img className='ml-auto mr-auto mt-8 w-[166px] h-[41px] ' src={Icon} alt="" />
+    <img className='ml-8 mr-auto mt-8 w-[166px] h-[41px] ' src={Icon} alt="" />
     <NavLink to ={'/inicio'}  className={({isActive})=>(isActive ? Active : Normal)}>
      <h3 className=' text-base mt-[67px] flex flex-row ml-8 font-normal '> 
      <img className='mr-2' src={IconHome} alt="" />Inicio</h3>
