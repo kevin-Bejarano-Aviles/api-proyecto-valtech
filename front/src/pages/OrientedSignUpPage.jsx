@@ -82,7 +82,7 @@ function OrientedSignUpPage() {
     <div className='grid grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin />
+        <HeaderAdmin  Titulo="Orientados"/>
         <main className='pb-12'>
           <form onSubmit={handleSubmit(onSubmit)} className='ml-12' id='form'>
             <section className='mt-12'> {/* Información básica */}
