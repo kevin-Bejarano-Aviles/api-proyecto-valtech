@@ -86,24 +86,29 @@ function LoginPage() {
       return ()=> clearTimeout(timer)
     }
   },[errorMessage])
+  const deskTopviewIlustration="laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center"
+  const deskTopviewForm="laptop:flex laptop:flex-col laptop:justify-center laptop:h-screen laptop:w-4/5 laptop:ml-20"
+  const tabletviewIlustration=" tablet:bg-graybackground tablet:h-screen tablet:w-3/5 tablet:flex tablet:flex-col tablet:justify-center "
+  const tabletviewsForm="tablet:flex tablet:flex-col tablet:justify-center tablet:h-screen tablet:w-4/5 tablet:ml-14 "
 
-  const deskTopviews="flex flex-col justify-center h-screen w-4/5 ml-20"
-  const tabletviews="mobile:bg-graybackground"
-  const mobileviews="flex flex-col justify-center h-screen w-4/5 ml-20"
+  const inputDesktopView="bg-graybackground h-10 w-96 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+
+  const inputMobileView="mobile:w-80"
 
   return (
-    <div className="flex">
+    <div className={`flex flex-col tablet:flex-row`}>
       
-      <div className="bg-graybackground h-screen w-3/5 flex flex-col justify-center">
-        <img className="w-48" src={title} alt="v-camp"/>
-        <img className="" src={ilustration} alt="ilustracion"/>
+      <div className={`bg-graybackground  flex flex-col items-center w-full ${deskTopviewIlustration} ${tabletviewIlustration}}`}>
+        <img className="w-32 laptop:w-48 " src={title} alt="v-camp"/>
+        <img className="w-56" src={ilustration} alt="ilustracion"/>
       </div>
       {/* start form */}
-      <form className={`${deskTopviews} ${tabletviews}`} onSubmit={alerta}>
+
+      <form className={`flex flex-col items-center mt-4 ${deskTopviewForm} ${tabletviewsForm}`} onSubmit={alerta}>
         <h2 className="text-2xl	font-semibold mb-8">Ingresá a tu portal</h2>
         <label className="flex flex-col mt-2 mb-5">
           <p className="font-semibold">Email</p>
-          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none	focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
+          <input className={`${inputDesktopView} ${inputMobileView}`} type="text" name="email" placeholder="email" value={datos.email} onChange={handleInput}/>
         </label>
         <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
           <img className="mr-2" src={warningImg} alt=''/>
@@ -112,7 +117,7 @@ function LoginPage() {
         
         <label className="flex flex-col mt-2 mb-5">
         <p className="font-semibold">Contraseña</p>
-          <input className="bg-graybackground h-10 w-80 mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500" type="password" name="pass" placeholder="password" value={datos.password} onChange={handleInput}/>
+          <input className={`${inputDesktopView} ${inputMobileView}`} type="password" name="pass" placeholder="password" value={datos.password} onChange={handleInput}/>
         </label>
 
         <div className={`${!errorPassword ? 'hidden' : 'flex'} text-red-500`}>
