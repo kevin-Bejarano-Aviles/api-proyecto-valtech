@@ -21,7 +21,7 @@ function OrientedSignUpPage() {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  // Método para botón "Ingresar orietado".
+  // Método para botón 'Ingresar orietado'.
   const onSubmit = async (data, e) => {
     e.preventDefault();
     postStudent(data, e);
@@ -32,14 +32,15 @@ function OrientedSignUpPage() {
     try {
       let options = {
           method: 'POST',
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { 'Content-Type': 'multipart/form-data' },
           withCredentials: true,
           data: {
             ...data,
             avatar: e.target.avatar.files[0],
           }
       };
-      await axios('http://localhost:8000/admin/addStudent', options);
+      const response = await axios('http://localhost:8000/admin/addStudent', options);
+      console.log(response);
       getAllStudents();
     } catch (err) {
       setFormError(err.response.data);
@@ -53,7 +54,7 @@ function OrientedSignUpPage() {
       const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
       const json = await response.data;
       const lastUserId = json[json.length-1].id;
-      navigate(`/orientados/${lastUserId}`);
+      // navigate(`/orientados/${lastUserId}`);
     } catch (err) {
       console.log(err);
     }
@@ -82,13 +83,13 @@ function OrientedSignUpPage() {
     <div className='grid grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin  Titulo="Orientados"/>
-        <main className='pb-12 mt-[150px]'>
-          <form onSubmit={handleSubmit(onSubmit)} className='ml-12' id='form'>
+        <HeaderAdmin Titulo='Orientados' />
+        <main className='pb-12 mx-12 mt-[150px]'>
+          <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <section className='mt-12'> {/* Información básica */}
               <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
-              <div className='flex gap-4'>
-                <div>
+              <div className='flex gap-4 mobile:flex-col tablet:flex-row'>
+                <div className='mobile:w-[96px]'>
                   <label htmlFor='inputFile' className='relative'>
                     <input
                       {...register('avatar', {required: 'Requerido'})}
@@ -111,9 +112,9 @@ function OrientedSignUpPage() {
                       {errors.avatar?.message}
                   </span>
                 </div>
-                <div>
-                  <div className='flex gap-3'>
-                    <div className='flex flex-col gap-1'>
+                <div className='tablet:grow'>
+                  <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+                    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                       <label htmlFor='full-name'>Nombre y Apellido</label>
                       <input
                         {...register('fullName', {
@@ -123,7 +124,7 @@ function OrientedSignUpPage() {
                             message: 'Campo inválido'
                           }
                         })}
-                        className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.fullName ? 'border-red-500' : ''}`}
+                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.fullName ? 'border-red-500' : ''}`}
                         type='text'
                         id='full-name'
                         placeholder='Ingresar nombre completo'
@@ -134,7 +135,7 @@ function OrientedSignUpPage() {
                         {errors.fullName?.message}
                       </span>
                     </div>
-                    <div className='flex flex-col gap-1'>
+                    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                       <label htmlFor='mail'>Mail</label>
                       <input
                         {...register('email', {
@@ -144,7 +145,7 @@ function OrientedSignUpPage() {
                             message: 'Email inválido'
                           }
                         })}
-                        className={`border-2 p-2 w-80 h-10 rounded-lg ${(errors.email || formError.email) ? 'border-red-500' : ''}`}
+                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.email || formError.email) ? 'border-red-500' : ''}`}
                         type='mail'
                         id='mail'
                         placeholder='Ingresar mail'
@@ -157,8 +158,8 @@ function OrientedSignUpPage() {
                       </span>
                     </div>
                   </div>
-                  <div className='flex gap-3'>
-                    <div className='flex flex-col gap-1'>
+                  <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+                    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                       <label htmlFor='phone'>Teléfono</label>
                       <input
                         {...register('phoneNumber', {
@@ -168,7 +169,7 @@ function OrientedSignUpPage() {
                             message: 'Entre 10 y 50 dígitos'
                           }
                         })}
-                        className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.phoneNumber ? 'border-red-500' : ''}`}
+                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.phoneNumber ? 'border-red-500' : ''}`}
                         type='tel'
                         id='phone'
                         placeholder='Teléfono'
@@ -179,13 +180,13 @@ function OrientedSignUpPage() {
                         {errors.phoneNumber?.message}
                       </span>
                     </div>
-                    <div className='flex flex-col gap-1'>
+                    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                       <label htmlFor='program'>Programa</label>
                       <select
                         {...register('program', {
                           required: 'Seleccina una opción',
                         })}
-                        className={`border-2 pl-1 pr-2 w-80 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center]`}
+                        className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2`}
                         style={{backgroundImage: `url(${iconArrow})`}}
                         id='program'
                         onBlur={e => changeBackgroundColor(e)}
@@ -208,9 +209,9 @@ function OrientedSignUpPage() {
             </section>
             <section className='mt-12'> {/* Datos personales */}
               <h2 className='my-4 text-2xl font-bold'>02. Datos personales</h2>
-              <div className='flex flex-col gap-4'>
-                <div className='flex gap-3'>
-                  <div className='flex flex-col gap-1'>
+              <div className='flex gap-4 mobile:flex-col'>
+                <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+                  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                     <label htmlFor='dni'>Número de DNI</label>
                     <input
                       {...register('dni', {
@@ -220,7 +221,7 @@ function OrientedSignUpPage() {
                           message: 'Entre 8 y 50 dígitos'
                         }
                       })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${(errors.dni || formError.dni) ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${(errors.dni || formError.dni) ? 'border-red-500' : ''}`}
                       type='tel'
                       id='dni'
                       placeholder='Ingresar DNI'
@@ -232,7 +233,7 @@ function OrientedSignUpPage() {
                       {errors.dni?.message}
                     </span>
                   </div>
-                  <div className='flex flex-col gap-1'>
+                  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                     <label htmlFor='age'>Edad</label>
                     <input
                       {...register('age', {
@@ -250,7 +251,7 @@ function OrientedSignUpPage() {
                           message: 'Máximo valor: 99'
                         }
                       })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.age ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.age ? 'border-red-500' : ''}`}
                       type='tel'
                       id='age'
                       placeholder='Ingresar edad'
@@ -262,8 +263,8 @@ function OrientedSignUpPage() {
                     </span>
                   </div>
                 </div>
-                <div className='flex gap-3'>
-                  <div className='flex flex-col gap-1'>
+                <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+                  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                     <label htmlFor='school'>Colegio</label>
                     <input
                       {...register('school', {
@@ -273,7 +274,7 @@ function OrientedSignUpPage() {
                           message: 'Campo inválido'
                         }
                       })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.school ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.school ? 'border-red-500' : ''}`}
                       type='text'
                       id='school'
                       placeholder='Ingresar colegio'
@@ -284,7 +285,7 @@ function OrientedSignUpPage() {
                       {errors.school?.message}
                     </span>
                   </div>
-                  <div className='flex flex-col gap-1'>
+                  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                     <label htmlFor='address'>Domicilio</label>
                     <input
                       {...register('address', {
@@ -294,7 +295,7 @@ function OrientedSignUpPage() {
                           message: 'Campo inválido'
                         }
                       })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.address ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.address ? 'border-red-500' : ''}`}
                       type='text'
                       id='address'
                       placeholder='Ingresar domicilio'
@@ -316,7 +317,7 @@ function OrientedSignUpPage() {
                         message: 'Campo inválido'
                       }
                     })}
-                    className={`border-2 w-[656px] p-2 rounded-lg ${errors.motive ? 'border-red-500' : ''}`}
+                    className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${errors.motive ? 'border-red-500' : ''}`}
                     id='reason'
                     cols='60'
                     rows='5'
@@ -332,75 +333,73 @@ function OrientedSignUpPage() {
             </section>
             <section className='mt-16'> {/* Crear usuario y contraseña */}
               <h2 className='my-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
-              <div className='flex'>
-                <div className='flex flex-col gap-3 mr-4'>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='username'>Usuario</label>
-                    <input
-                      {...register('user', {
-                        required: 'Campo requerido',
-                        pattern: {
-                          value: /^[0-9]{8,50}$/i,
-                          message: 'Entre 8 y 50 dígitos'
-                        },
-                        validate: value =>
-                          value === watch('dni') || "DNI no coincide"
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.user ? 'border-red-500' : ''}`}
-                      type='tel'
-                      id='username'
-                      placeholder='Ingresar DNI del Orientado'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.user ? (<img src={iconError} alt='' />) : ''}
-                      {errors.user?.message}
-                    </span>
-                  </div>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='password'>Nueva contraseña</label>
-                    <input
-                      {...register('pass', {
-                        required: 'Contraseña requerida',
-                        minLength: {
-                          value: 8,
-                          message: 'Mínimo 8 caracteres'
-                        }
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.pass ? 'border-red-500' : ''}`}
-                      type='password'
-                      id='new-password'
-                      placeholder='Ingresar contraseña'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.pass ? (<img src={iconError} alt='' />) : ''}
-                      {errors.pass?.message}
-                    </span>
-                  </div>
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor='repeat-new-password'>Repetir contraseña</label>
-                    <input
-                      {...register('confirmPass', {
-                        required: 'Campo requerido',
-                        validate: value =>
-                          value === watch('pass') || "The passwords do not match"
-                      })}
-                      className={`border-2 p-2 w-80 h-10 rounded-lg ${errors.confirmPass ? 'border-red-500' : ''}`}
-                      type='password'
-                      id='repeat-password'
-                      placeholder='Repetir contraseña'
-                      onBlur={e => changeBackgroundColor(e)}
-                    />
-                    <span className='flex gap-1 text-red-500'>
-                      {errors.confirmPass ? (<img src={iconError} alt='' />) : ''}
-                      {errors.confirmPass?.message}
-                    </span>
-                  </div>
+              <div className='flex flex-col gap-3'>
+                <div className='flex flex-col gap-1'>
+                  <label htmlFor='username'>Usuario</label>
+                  <input
+                    {...register('user', {
+                      required: 'Campo requerido',
+                      pattern: {
+                        value: /^[0-9]{8,50}$/i,
+                        message: 'Entre 8 y 50 dígitos'
+                      },
+                      validate: value =>
+                        value === watch('dni') || 'DNI no coincide'
+                    })}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.user ? 'border-red-500' : ''}`}
+                    type='tel'
+                    id='username'
+                    placeholder='Ingresar DNI del Orientado'
+                    onBlur={e => changeBackgroundColor(e)}
+                  />
+                  <span className='flex gap-1 text-red-500'>
+                    {errors.user ? (<img src={iconError} alt='' />) : ''}
+                    {errors.user?.message}
+                  </span>
+                </div>
+                <div className='flex flex-col gap-1'>
+                  <label htmlFor='password'>Nueva contraseña</label>
+                  <input
+                    {...register('pass', {
+                      required: 'Contraseña requerida',
+                      minLength: {
+                        value: 8,
+                        message: 'Mínimo 8 caracteres'
+                      }
+                    })}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.pass ? 'border-red-500' : ''}`}
+                    type='password'
+                    id='new-password'
+                    placeholder='Ingresar contraseña'
+                    onBlur={e => changeBackgroundColor(e)}
+                  />
+                  <span className='flex gap-1 text-red-500'>
+                    {errors.pass ? (<img src={iconError} alt='' />) : ''}
+                    {errors.pass?.message}
+                  </span>
+                </div>
+                <div className='flex flex-col gap-1'>
+                  <label htmlFor='repeat-new-password'>Repetir contraseña</label>
+                  <input
+                    {...register('confirmPass', {
+                      required: 'Campo requerido',
+                      validate: value =>
+                        value === watch('pass') || 'Las contraseñas no coinciden'
+                    })}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.confirmPass ? 'border-red-500' : ''}`}
+                    type='password'
+                    id='repeat-password'
+                    placeholder='Repetir contraseña'
+                    onBlur={e => changeBackgroundColor(e)}
+                  />
+                  <span className='flex gap-1 text-red-500'>
+                    {errors.confirmPass ? (<img src={iconError} alt='' />) : ''}
+                    {errors.confirmPass?.message}
+                  </span>
                 </div>
               </div>
             </section>
-            <div className='flex items-center gap-4 mt-12'>
+            <div className='mobile:flex-col tablet:flex-row flex items-center gap-4 mt-12'>
               <Button type='submit' name='Ingresar orientado' />
               <Link className='underline' to={'/orientados'}>Cancelar ingreso</Link>
             </div>
