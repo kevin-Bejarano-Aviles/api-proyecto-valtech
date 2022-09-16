@@ -11,6 +11,7 @@ const admin = {
     avatar : 'default.jpg',
     password : bcryptjs.hashSync(pass, 10)
 }
+const db = require('../database/db');
 //console.log(admin.password);
 
 //middleware exported
@@ -20,17 +21,18 @@ module.exports = async (req,res,next) => {
         where : {
             email : 'sofiaSerrano@gmail.com'
         }
-    })
+    });
     //if admin doesn't exist it will create one and then will procede with the method login, but if admin exists it won't create it
     if(!adminExist){
-        adminModel.create({
+        await db.query("ALTER TABLE admins AUTO_INCREMENT = 1");
+        await adminModel.create({
             fullName : admin.fullName,
             email : admin.email,
             avatar : admin.avatar,
             password : admin.password
-        })
-        next()
+        });
+        next();
     }else{
-        next()
+        next();
     }
 }

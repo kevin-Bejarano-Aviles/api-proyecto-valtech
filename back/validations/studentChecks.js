@@ -8,11 +8,11 @@ module.exports = [ //Export our validations
             return studentModel.findOne({
                 where: {
                     email: value
-                }
+                },attributes:['email']
             })
                 .then(email => {
                     if (email) {
-                        return Promise.reject('Este email ya tiene una cuenta en nuetra base de datos')
+                        return Promise.reject('Este email ya tiene una cuenta en nuestra base de datos')
                     }
                 })
         }),
@@ -20,17 +20,18 @@ module.exports = [ //Export our validations
         .isLength({ max: 50 }).withMessage('Máximo 50 números'),
     check('program').notEmpty().withMessage('Ingrese a qué programa ingresará'),
     check('dni').notEmpty().withMessage('Ingrese su número de DNI')
-        .isLength({min: 7, max: 9 }).withMessage('El dni debe tener un maximo de 9 caracteres'),
+        .isInt().withMessage('El dni solo tiene que tener números sin puntos')
+        .isLength({min: 7, max: 9 }).withMessage('El dni debe tener un minimo de 7 caracteres y un maximo de 9 caracteres'), 
     body('dni')
         .custom(function (value) {
             return studentModel.findOne({
                 where: {
                     dni: value
-                }
+                },attributes:['dni']
             })
                 .then(dni => {
                     if (dni) {
-                        return Promise.reject('Este usuario ya existe en nuestra base de datos')
+                        return Promise.reject('Este dni ya existe en nuestra base de datos')
                     }
                 })
         }),
@@ -47,13 +48,14 @@ module.exports = [ //Export our validations
         return true
     })
     .withMessage("Las constraseñas no coiciden"),
-    check('user').notEmpty().withMessage('Ingrese un nombre de usuario'),
+    check('user').notEmpty().withMessage('Ingrese un nombre de usuario')
+    .isInt().withMessage('El nombre de usuario solo tiene que tener números sin puntos'),
     body('user')
         .custom(function (value) {
             return studentModel.findOne({
                 where: {
                     user: value
-                }
+                },attributes:['user']
             })
                 .then(user => {
                     if (user) {
@@ -62,17 +64,19 @@ module.exports = [ //Export our validations
                 })
         }),
         body('avatar').custom((value,{req})=>{
-            value = req.files[0]
-            if(value){
+            value = req.files[0];
+            if(!value){
+                return false;
+            }else{
+                return true
+            }
+        }).withMessage('Tiene que ingresar una imagen'),
+         body('avatar').custom((value,{req})=>{
+            value = req.files[0];
                 if(value.mimetype == 'image/png' || value.mimetype == 'image/jpg' || value.mimetype == 'image/jpeg'){
                     return true
                 }else{
                     return false
-                }
-            }else{
-                return true
-            }
-            
-        })
-        .withMessage("El formato de la imagen debe ser: jpg, jpeg, png o gif")
+                } 
+        }).withMessage("El formato de la imagen debe ser: jpg, jpeg, png o gif") 
 ]
