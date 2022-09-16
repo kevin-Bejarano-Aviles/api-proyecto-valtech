@@ -83,7 +83,7 @@ function OrientedSignUpPage() {
       <Menu />
       <div>
         <HeaderAdmin  Titulo="Orientados"/>
-        <main className='pb-12'>
+        <main className='pb-12 mt-[150px]'>
           <form onSubmit={handleSubmit(onSubmit)} className='ml-12' id='form'>
             <section className='mt-12'> {/* Información básica */}
               <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>

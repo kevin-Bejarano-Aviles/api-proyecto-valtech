@@ -9,15 +9,14 @@ import { useState } from 'react';
 
 function Oriented() {
   const params = useParams();
-  console.log(params);
 
   const [user, setUser] = useState([]);
 
-  const getUsers = async () => {
+  const getAllStudents = async () => {
     try {
-      let res = await axios('http://localhost:8000/admin/students');
-      const user = res.data.filter(item => item.dni === parseInt(params.id))[0];
-      setUser(user);
+      let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
+      setUser(res.data);
+      console.log(user)
     } catch (err) {
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
@@ -25,7 +24,7 @@ function Oriented() {
   };
 
   useEffect(() => {
-    getUsers();
+    getAllStudents();
   },[]);
 
   return (
@@ -33,12 +32,12 @@ function Oriented() {
       <Menu />
       <div>
         <HeaderAdmin />
-        <main className='flex flex-col gap-10 ml-12 pb-12'>
+        <main className='flex flex-col gap-10 ml-12 mt-[102px] pb-12'>
           <section className='mt-12'> {/* Información básica */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='flex gap-4'>
               <img
-                src='https://st3.depositphotos.com/9998432/13335/v/600/depositphotos_133352102-stock-illustration-default-placeholder-profile-icon.jpg'
+                src={}
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
               />
