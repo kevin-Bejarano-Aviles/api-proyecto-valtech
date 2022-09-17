@@ -34,7 +34,7 @@ function Oriented() {
         <main className='flex flex-col gap-10 ml-12 mt-[102px] pb-12'>
           <section className='mt-12'> {/* Información básica */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
-            <div className='flex gap-4'>
+            <div className='flex gap-9'>
               <img
                 src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'

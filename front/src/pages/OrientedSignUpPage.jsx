@@ -16,10 +16,27 @@ function OrientedSignUpPage() {
   const [formError, setFormError] = useState({});
 
   useEffect(() => {
-    console.log(formError);
+    if (formError.message) getAllStudents();
   },[formError]);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm(
+    {
+      defaultValues: {
+        fullName: 'Julian Martinez',
+        email: 'julian.martinez@gmail.com',
+        phoneNumber: '01162386020',
+        program: 'Orientacion vocacional',
+        dni: '28456387',
+        age: '17',
+        school: 'Nuestra señora del valle',
+        address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+        motive: 'Necesita orientación para elegir una carrera.',
+        user: '28456387',
+        pass: '12345678',
+        confirmPass: '12345678'
+      }
+    }
+  );
 
   // Método para botón 'Ingresar orietado'.
   const onSubmit = async (data, e) => {
@@ -40,11 +57,9 @@ function OrientedSignUpPage() {
           }
       };
       const response = await axios('http://localhost:8000/admin/addStudent', options);
-      console.log(response);
-      getAllStudents();
+      setFormError(response.data);
     } catch (err) {
-      setFormError(err.response.data);
-      console.log(formError);
+      console.error(`${err.response.status}: ${err.response.statusText}`);
     }
   };
 
@@ -54,9 +69,9 @@ function OrientedSignUpPage() {
       const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
       const json = await response.data;
       const lastUserId = json[json.length-1].id;
-      // navigate(`/orientados/${lastUserId}`);
+      navigate(`/orientados/${lastUserId}`);
     } catch (err) {
-      console.log(err);
+      console.error(`${err.response.status}: ${err.response.statusText}`);
     }
   };
 
