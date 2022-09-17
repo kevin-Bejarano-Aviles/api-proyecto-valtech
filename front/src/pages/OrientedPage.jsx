@@ -31,10 +31,10 @@ function Oriented() {
       <Menu />
       <div>
         <HeaderAdmin />
-        <main className='flex flex-col gap-10 ml-12 mt-[102px] pb-12'>
+        <main className='flex flex-col gap-10 mx-12 mt-[102px] pb-12'>
           <section className='mt-12'> {/* Información básica */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
-            <div className='flex gap-9'>
+            <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
                 src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'
@@ -59,7 +59,7 @@ function Oriented() {
           </section>
           <section> {/* Datos personales */}
             <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
-            <div className='flex gap-4'>
+            <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
               <div className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>
                   <p className='text-xs text-gray-400'>NÚMERO DE DNI</p>
