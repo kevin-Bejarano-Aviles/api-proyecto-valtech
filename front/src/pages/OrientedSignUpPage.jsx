@@ -20,31 +20,31 @@ function OrientedSignUpPage() {
   },[formError]);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
-    {
-      defaultValues: {
-        fullName: 'Julian Martinez',
-        email: 'julian.martinez@gmail.com',
-        phoneNumber: '01162386020',
-        program: 'Orientacion vocacional',
-        dni: '28456387',
-        age: '17',
-        school: 'Nuestra señora del valle',
-        address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-        motive: 'Necesita orientación para elegir una carrera.',
-        user: '28456387',
-        pass: '12345678',
-        confirmPass: '12345678'
-      }
-    }
+    // {
+    //   defaultValues: {
+    //     fullName: 'Julian Martinez',
+    //     email: 'julian.martinez@gmail.com',
+    //     phoneNumber: '01162386020',
+    //     program: 'Orientacion vocacional',
+    //     dni: '28456387',
+    //     age: '17',
+    //     school: 'Nuestra señora del valle',
+    //     address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+    //     motive: 'Necesita orientación para elegir una carrera.',
+    //     user: '28456387',
+    //     pass: '12345678',
+    //     confirmPass: '12345678'
+    //   }
+    // }
   );
 
-  // Método para botón 'Ingresar orietado'.
+  // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
     e.preventDefault();
     postStudent(data, e);
   };
 
-  // Método para enviar un nuevo orientado.
+  // Function to send a new student.
   const postStudent = async (data, e) => {
     try {
       let options = {
@@ -63,7 +63,7 @@ function OrientedSignUpPage() {
     }
   };
 
-  // Método para traer todos los orientados.
+  // Function to bring all students.
   const getAllStudents = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
@@ -75,7 +75,7 @@ function OrientedSignUpPage() {
     }
   };
 
-  // Método que muestra en pantalla la imagen seleccionada.
+  // Function to show the selected image by screen.
   const showSelectedImage = () => {
     const $selectedImage = document.getElementById('selectedImage');
     const $inputFile = document.getElementById('inputFile');
@@ -83,7 +83,7 @@ function OrientedSignUpPage() {
     $selectedImage.src = objectURL;
   };
 
-  // Método que cambia el color de fondo de los inputs.
+  // Function to change the background color of the input elements.
   const changeBackgroundColor = e => {
     if (e.target.value) {
       e.target.classList.remove('bg-white');
@@ -101,7 +101,7 @@ function OrientedSignUpPage() {
         <HeaderAdmin Titulo='Orientados' />
         <main className='pb-12 mx-12 mt-[150px]'>
           <form onSubmit={handleSubmit(onSubmit)} id='form'>
-            <section className='mt-12'> {/* Información básica */}
+            <section className='mt-12'> {/* Basic information */}
               <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
               <div className='flex gap-4 mobile:flex-col tablet:flex-row'>
                 <div className='mobile:w-[96px]'>
@@ -222,7 +222,7 @@ function OrientedSignUpPage() {
                 </div>
               </div>
             </section>
-            <section className='mt-12'> {/* Datos personales */}
+            <section className='mt-12'> {/* Personal information */}
               <h2 className='my-4 text-2xl font-bold'>02. Datos personales</h2>
               <div className='flex gap-4 mobile:flex-col'>
                 <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
@@ -346,7 +346,7 @@ function OrientedSignUpPage() {
                 </div>
               </div>
             </section>
-            <section className='mt-16'> {/* Crear usuario y contraseña */}
+            <section className='mt-16'> {/* Create a username and a password */}
               <h2 className='my-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
               <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>

@@ -32,7 +32,7 @@ function Oriented() {
       <div>
         <HeaderAdmin />
         <main className='flex flex-col gap-10 mx-12 mt-[102px] pb-12'>
-          <section className='mt-12'> {/* Información básica */}
+          <section className='mt-12'> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
@@ -57,7 +57,7 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Datos personales */}
+          <section> {/* Personal information */}
             <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
             <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
               <div className='flex flex-col gap-2'>
@@ -86,7 +86,7 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Crear usuario y contraseña */}
+          <section> {/* Create a user and a password */}
             <h2 className='mb-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
             <div className='flex flex-col gap-2'>
               <div className='flex flex-col gap-2'>
