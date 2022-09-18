@@ -115,7 +115,7 @@ function OrientedSignUpPage() {
                     <input
                       {...register('avatar', {required: 'Requerido'})}
                       type='file'
-                      accept='image/*'
+                      accept='.png, .jpg, .jpeg, .gif'
                       id='inputFile'
                       hidden={true}
                       onChange={() => showSelectedImage()}
