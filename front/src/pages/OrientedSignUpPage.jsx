@@ -16,26 +16,27 @@ function OrientedSignUpPage() {
   const [formError, setFormError] = useState({});
 
   useEffect(() => {
+    console.log(formError);
     if (formError.message) getAllStudents();
   },[formError]);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
-    // {
-    //   defaultValues: {
-    //     fullName: 'Julian Martinez',
-    //     email: 'julian.martinez@gmail.com',
-    //     phoneNumber: '01162386020',
-    //     program: 'Orientacion vocacional',
-    //     dni: '28456387',
-    //     age: '17',
-    //     school: 'Nuestra señora del valle',
-    //     address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-    //     motive: 'Necesita orientación para elegir una carrera.',
-    //     user: '28456387',
-    //     pass: '12345678',
-    //     confirmPass: '12345678'
-    //   }
-    // }
+    {
+      defaultValues: {
+        fullName: 'Julian Martinez',
+        email: 'julian.martinez@gmail.com',
+        phoneNumber: '01162386020',
+        program: 'Orientacion vocacional',
+        dni: '28456387',
+        age: '17',
+        school: 'Nuestra señora del valle',
+        address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+        motive: 'Necesita orientación para elegir una carrera.',
+        user: '28456387',
+        pass: '12345678',
+        confirmPass: '12345678'
+      }
+    }
   );
 
   // Function to 'Ingresar orietado' button.
@@ -94,18 +95,23 @@ function OrientedSignUpPage() {
     }
   };
 
+  // Sacar las clases mobile y laptop y los div de más
   return (
-    <div className='grid grid-cols-[234px_1fr] gap-0'>
-      <Menu />
+    <div className='laptop:grid laptop:grid-cols-[234px_1fr] laptop:gap-0'>
+      <div className='mobile:hidden laptop:block'>
+        <Menu />
+      </div>
       <div>
-        <HeaderAdmin Titulo='Orientados' />
+        <div className='mobile:hidden laptop:block'>
+          <HeaderAdmin Titulo='Orientados' />
+        </div>
         <main className='pb-12 mx-12 mt-[150px]'>
           <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <section className='mt-12'> {/* Basic information */}
               <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
-              <div className='flex gap-4 mobile:flex-col tablet:flex-row'>
-                <div className='mobile:w-[96px]'>
-                  <label htmlFor='inputFile' className='relative'>
+              <div className={`flex gap-4 mobile:flex-col ${(!formError.avatar) ? 'tablet:flex-row': ''}`}>
+                <div className={`${(errors.avatar || formError.avatar) ? 'mobile:' : ''}`}>
+                  <label htmlFor='inputFile'>
                     <input
                       {...register('avatar', {required: 'Requerido'})}
                       type='file'
@@ -114,16 +120,19 @@ function OrientedSignUpPage() {
                       hidden={true}
                       onChange={() => showSelectedImage()}
                     />
-                    <img
-                      src={addAvatar}
-                      alt='avatar'
-                      className='w-[96px] h-[96px] cursor-pointer rounded-full'
-                      id='selectedImage'
-                    />
-                    <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
+                    <div className='relative mobile:w-[96px]'>
+                      <img
+                        src={addAvatar}
+                        alt='avatar'
+                        className='w-[96px] h-[96px] cursor-pointer rounded-full'
+                        id='selectedImage'
+                      />
+                      <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
+                    </div>
                   </label>
                   <span className='flex gap-1 text-red-500'>
-                      {errors.avatar ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.avatar || formError.avatar) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                      {formError.avatar ? formError.avatar.msg : ''}
                       {errors.avatar?.message}
                   </span>
                 </div>
@@ -139,14 +148,15 @@ function OrientedSignUpPage() {
                             message: 'Campo inválido'
                           }
                         })}
-                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.fullName ? 'border-red-500' : ''}`}
+                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.fullName || formError.fullName) ? 'border-red-500' : ''}`}
                         type='text'
                         id='full-name'
                         placeholder='Ingresar nombre completo'
                         onBlur={e => changeBackgroundColor(e)}
                       />
                       <span className='flex gap-1 text-red-500'>
-                        {errors.fullName ? (<img src={iconError} alt='' />) : ''}
+                        {(errors.fullName || formError.fullName) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                        {formError.fullName ? formError.fullName.msg : ''}
                         {errors.fullName?.message}
                       </span>
                     </div>
@@ -167,7 +177,7 @@ function OrientedSignUpPage() {
                         onBlur={e => changeBackgroundColor(e)}
                       />
                       <span className='flex gap-1 text-red-500'>
-                        {(errors.email || formError.email) ? (<img src={iconError} alt='' />) : ''}
+                        {(errors.email || formError.email) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                         {formError.email ? formError.email.msg : ''}
                         {errors.email?.message}
                       </span>
@@ -184,14 +194,15 @@ function OrientedSignUpPage() {
                             message: 'Entre 10 y 50 dígitos'
                           }
                         })}
-                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.phoneNumber ? 'border-red-500' : ''}`}
+                        className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.phoneNumber || formError.phoneNumber) ? 'border-red-500' : ''}`}
                         type='tel'
                         id='phone'
                         placeholder='Teléfono'
                         onBlur={e => changeBackgroundColor(e)}
                       />
                       <span className='flex gap-1 text-red-500'>
-                        {errors.phoneNumber ? (<img src={iconError} alt='' />) : ''}
+                        {(errors.phoneNumber || formError.phoneNumber) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                        {formError.phoneNumber ? formError.phoneNumber.msg : ''}
                         {errors.phoneNumber?.message}
                       </span>
                     </div>
@@ -199,9 +210,9 @@ function OrientedSignUpPage() {
                       <label htmlFor='program'>Programa</label>
                       <select
                         {...register('program', {
-                          required: 'Seleccina una opción',
+                          required: 'Selecciona una opción',
                         })}
-                        className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2`}
+                        className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(errors.program || formError.program) ? 'border-red-500' : ''}`}
                         style={{backgroundImage: `url(${iconArrow})`}}
                         id='program'
                         onBlur={e => changeBackgroundColor(e)}
@@ -214,7 +225,8 @@ function OrientedSignUpPage() {
                         <option value='Metodos de estudio'>Métodos de estudio</option>
                       </select>
                       <span className='flex gap-1 text-red-500'>
-                        {errors.program ? (<img src={iconError} alt='Error' />) : ''}
+                        {(errors.program || formError.program) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                        {formError.program ? formError.program.msg : ''}
                         {errors.program?.message}
                       </span>
                     </div>
@@ -243,7 +255,7 @@ function OrientedSignUpPage() {
                       onBlur={e => changeBackgroundColor(e)}
                     />
                     <span className='flex gap-1 text-red-500'>
-                      {(errors.dni ||formError.dni) ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.dni ||formError.dni) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                       {formError.dni ? formError.dni.msg : ''}
                       {errors.dni?.message}
                     </span>
@@ -266,14 +278,15 @@ function OrientedSignUpPage() {
                           message: 'Máximo valor: 99'
                         }
                       })}
-                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.age ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${(errors.age || formError.age) ? 'border-red-500' : ''}`}
                       type='tel'
                       id='age'
                       placeholder='Ingresar edad'
                       onBlur={e => changeBackgroundColor(e)}
                     />
                     <span className='flex gap-1 text-red-500'>
-                      {errors.age ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.age || formError.age) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                      {formError.age ? formError.age.msg : ''}
                       {errors.age?.message}
                     </span>
                   </div>
@@ -289,14 +302,15 @@ function OrientedSignUpPage() {
                           message: 'Campo inválido'
                         }
                       })}
-                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.school ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${(errors.school || formError.school) ? 'border-red-500' : ''}`}
                       type='text'
                       id='school'
                       placeholder='Ingresar colegio'
                       onBlur={e => changeBackgroundColor(e)}
                     />
                     <span className='flex gap-1 text-red-500'>
-                      {errors.school ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.school || formError.school) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                      {formError.school ? formError.school.msg : ''}
                       {errors.school?.message}
                     </span>
                   </div>
@@ -310,14 +324,15 @@ function OrientedSignUpPage() {
                           message: 'Campo inválido'
                         }
                       })}
-                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${errors.address ? 'border-red-500' : ''}`}
+                      className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${(errors.address || formError.address) ? 'border-red-500' : ''}`}
                       type='text'
                       id='address'
                       placeholder='Ingresar domicilio'
                       onBlur={e => changeBackgroundColor(e)}
                     />
                     <span className='flex gap-1 text-red-500'>
-                      {errors.address ? (<img src={iconError} alt='' />) : ''}
+                      {(errors.address || formError.address) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                      {formError.address ? formError.address.msg : ''}
                       {errors.address?.message}
                     </span>
                   </div>
@@ -332,7 +347,7 @@ function OrientedSignUpPage() {
                         message: 'Campo inválido'
                       }
                     })}
-                    className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${errors.motive ? 'border-red-500' : ''}`}
+                    className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${(errors.motive || formError.motive) ? 'border-red-500' : ''}`}
                     id='reason'
                     cols='60'
                     rows='5'
@@ -340,7 +355,8 @@ function OrientedSignUpPage() {
                     onBlur={e => changeBackgroundColor(e)}
                   ></textarea>
                   <span className='flex gap-1 text-red-500'>
-                    {errors.motive ? (<img src={iconError} alt='' />) : ''}
+                    {(errors.motive || formError.motive) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.motive ? formError.motive.msg : ''}
                     {errors.motive?.message}
                   </span>
                 </div>
@@ -361,14 +377,15 @@ function OrientedSignUpPage() {
                       validate: value =>
                         value === watch('dni') || 'DNI no coincide'
                     })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.user ? 'border-red-500' : ''}`}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.user || formError.user) ? 'border-red-500' : ''}`}
                     type='tel'
                     id='username'
                     placeholder='Ingresar DNI del Orientado'
                     onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
-                    {errors.user ? (<img src={iconError} alt='' />) : ''}
+                    {(errors.user || formError.user) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.user ? formError.user.msg : ''}
                     {errors.user?.message}
                   </span>
                 </div>
@@ -382,14 +399,15 @@ function OrientedSignUpPage() {
                         message: 'Mínimo 8 caracteres'
                       }
                     })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.pass ? 'border-red-500' : ''}`}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.pass || formError.pass) ? 'border-red-500' : ''}`}
                     type='password'
                     id='new-password'
                     placeholder='Ingresar contraseña'
                     onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
-                    {errors.pass ? (<img src={iconError} alt='' />) : ''}
+                    {(errors.pass || formError.pass) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.pass ? formError.pass.msg : ''}
                     {errors.pass?.message}
                   </span>
                 </div>
@@ -401,14 +419,15 @@ function OrientedSignUpPage() {
                       validate: value =>
                         value === watch('pass') || 'Las contraseñas no coinciden'
                     })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${errors.confirmPass ? 'border-red-500' : ''}`}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${(errors.confirmPass || formError.confirmPass) ? 'border-red-500' : ''}`}
                     type='password'
                     id='repeat-password'
                     placeholder='Repetir contraseña'
                     onBlur={e => changeBackgroundColor(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
-                    {errors.confirmPass ? (<img src={iconError} alt='' />) : ''}
+                    {(errors.confirmPass || formError.confirmPass) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.confirmPass ? formError.confirmPass.msg : ''}
                     {errors.confirmPass?.message}
                   </span>
                 </div>
