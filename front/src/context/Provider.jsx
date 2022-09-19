@@ -12,6 +12,7 @@ const init=()=>{
 
 const Provider = ({children}) =>{
     const logearme =()=>{
+        localStorage.removeItem("estado")
         const action={
             type:types.login
         }
