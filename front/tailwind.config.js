@@ -9,6 +9,7 @@ module.exports = {
         green: '#0BA4A0',
         blue:'#2E384D',
         letrafooter: '#1EC5BB',
+        lightgray: '#8798AD',
         graybackground:'#DADEEB',
         imgheader: '#DADEEB',
         bordergray: '#E4E8F0',
