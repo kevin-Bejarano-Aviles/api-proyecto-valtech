@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
@@ -10,6 +10,7 @@ import { useState } from 'react';
 function Oriented() {
   const params = useParams();
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   const getAllStudents = async () => {
     try {
@@ -17,6 +18,7 @@ function Oriented() {
       setUser(res.data);
       console.log(user);
     } catch (err) {
+      navigate('error');
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
     }
@@ -27,10 +29,14 @@ function Oriented() {
   },[]);
 
   return (
-    <div className='grid grid-cols-[234px_1fr] gap-0'>
-      <Menu />
+    <div className='laptop:grid laptop:grid-cols-[234px_1fr] laptop:gap-0'>
+      <div className='mobile:hidden laptop:block'>
+        <Menu />
+      </div>
       <div>
-        <HeaderAdmin />
+      <div className='mobile:hidden laptop:block'>
+          <HeaderAdmin Titulo='Orientados' />
+        </div>
         <main className='flex flex-col gap-10 mx-12 mt-[102px] pb-12'>
           <section className='mt-12'> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
