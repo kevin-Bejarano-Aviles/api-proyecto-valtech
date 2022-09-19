@@ -34,12 +34,15 @@ function OrientedList() {
           )
         }
       </ul>
-      <h6
-        className='h-4 max-w-max pb-3 ml-[10px] border-b-8 border-yellow underline'
-        onClick={() => setSeeMore(!seeMore)}
-      >
-        {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
-      </h6>
+      <div className='max-w-max'>
+        <span
+          className='ml-2 h-4 max-w-max underline cursor-pointer'
+          onClick={() => setSeeMore(!seeMore)}
+        >
+          {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
+        </span>
+        <div className='relative -z-10 bottom-[11px] h-4 bg-yellow'></div>
+      </div>
     </>
   )
 }
