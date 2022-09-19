@@ -29,14 +29,10 @@ function Oriented() {
   },[]);
 
   return (
-    <div className='laptop:grid laptop:grid-cols-[234px_1fr] laptop:gap-0'>
-      <div className='mobile:hidden laptop:block'>
-        <Menu />
-      </div>
+    <div className='grid grid-cols-[234px_1fr] gap-0'>
+      <Menu />
       <div>
-      <div className='mobile:hidden laptop:block'>
-          <HeaderAdmin Titulo='Orientados' />
-        </div>
+        <HeaderAdmin Titulo='Orientados' />
         <main className='flex flex-col gap-10 mx-12 mt-[102px] pb-12'>
           <section className='mt-12'> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>

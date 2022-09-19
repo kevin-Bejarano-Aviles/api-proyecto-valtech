@@ -95,16 +95,11 @@ function OrientedSignUpPage() {
     }
   };
 
-  // Sacar las clases mobile y laptop y los div de más
   return (
-    <div className='laptop:grid laptop:grid-cols-[234px_1fr] laptop:gap-0'>
-      <div className='mobile:hidden laptop:block'>
-        <Menu />
-      </div>
+    <div className='grid grid-cols-[234px_1fr] gap-0'>
+      <Menu />
       <div>
-        <div className='mobile:hidden laptop:block'>
-          <HeaderAdmin Titulo='Orientados' />
-        </div>
+        <HeaderAdmin Titulo='Orientados' />
         <main className='pb-12 mx-12 mt-[150px]'>
           <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <section className='mt-12'> {/* Basic information */}
