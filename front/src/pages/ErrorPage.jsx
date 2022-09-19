@@ -30,10 +30,10 @@ export default function ErrorPage() {
           } 
           </h2>
       </div>
-      <div className='flex justify-center mt-12 mb-28'>
+  
         <Proposal/>
-      </div>
-      <footer><Footer/></footer>
+     
+      <Footer/>
     </div>
   )
 }
