@@ -1,10 +1,10 @@
 import React from "react";
-import HeaderAdmin from "../components/HeaderAdmin";
+import Header from "../components/HeaderPublic";
 
 function Welcome() {
   return (
     <div>
-      <HeaderAdmin/>
+      <Header/>
     </div>
   )
 }

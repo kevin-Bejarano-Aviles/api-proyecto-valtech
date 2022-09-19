@@ -12,7 +12,7 @@ function Menu() {
     <div className='fixed'>
     <img className='ml-8 mr-auto mt-8 w-[166px] h-[41px] ' src={Icon} alt="" />
    
-   <div className='mt-[67px]'>
+   <div className='mt-[67px] w-[234px]'>
      <MenuComponent/>
     </div>
     </div>

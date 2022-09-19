@@ -3,7 +3,7 @@ import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
 import ProfilePicture from '../components/ProfilePicture';
 import Logout from './Logout';
 
-function HeaderAdmin({ Titulo }) {
+function HeaderAdmin({ Titulo="bienvenido" }) {
   const [photo, setPhoto] = useState(false)
   const clickPhoto = () => {
     setPhoto (!photo);
