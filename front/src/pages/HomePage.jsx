@@ -20,13 +20,13 @@ function HomePage() {
     </div>
     </div>
     <div className="flex items-center absolute bottom-[540px] left-[230px]">
-      <h4 className="h-14 w-48 px-7 py-3 ml-[46px] mx-[750px] border-b-4 border-green">Nuevos orientados</h4>
+      <h4 className="h-14 w-52 px-7 py-3 ml-[46px] mx-[750px] border-b-4 border-green">Nuevos orientados</h4>
       <Link to={'/orientados/alta-orientado'}><Button  type="button" name="Ingresar orientado"/></Link>
     </div>
     <div className="relative bottom-[540px] left-[265px]">
     <OrientedList/>
     </div>
-  <div>
+  <div className=' absolute bottom-[20px] left-[270px]'>
     <h2 className='h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>Novedades</h2>
     <div className="flex flex-row items-start gap-[24px]">
     <div className='h-[252px] w-[320px] relative top-5 rounded-lg border-[1px] border-slate-300 drop-shadow-[0_0_10px_rgba(135,152,173,0.1)] p-[32px] '>
