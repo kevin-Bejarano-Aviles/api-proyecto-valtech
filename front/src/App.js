@@ -22,6 +22,8 @@ import  Footer from './components/Footer'
 import Proposal from './components/Proposal'
 import ProposalBox from './components/ProposalBox';
 import Menu from './components/Menu'
+import HeaderResponsive from './components/HeaderResponsive'
+import MenuResponsive from './components/MenuResponsive';
 
 function App() {
   return (
@@ -54,7 +56,11 @@ function App() {
       <Route path='*' element={<ErrorPage />} />
       <Route path={'/pr'} element={<Proposal />} />
       <Route path={'/prb'} element={<ProposalBox />} />
+      <Route path={'/header-responsive'} element={<HeaderResponsive />} />
+      <Route path={'/menu-responsive'} element={<MenuResponsive />} />
       <Route path={'/menu/*'} element={<Menu/>} >
+
+        
        {/* <Route path='orientados' element={<h1>hola</h1>}></Route> */}
 
       </Route>

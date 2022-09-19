@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@iconify/react": "^4.0.0",
     "autoprefixer": "^10.4.8",
     "json-server": "^0.17.0",
     "postcss": "^8.4.16",
