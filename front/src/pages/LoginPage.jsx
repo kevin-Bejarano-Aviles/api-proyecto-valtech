@@ -28,6 +28,7 @@ function LoginPage() {
     .then(response=>{
         login();
         console.log(response);
+        localStorage.setItem('admin', JSON.stringify(response.data));
       })
     .catch(error => {
       setMessage(error.response.data.message)

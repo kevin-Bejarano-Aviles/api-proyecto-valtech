@@ -21,10 +21,10 @@ function OrientedList() {
     getAll();
   },[]);
 
-  console.log(users);
+  // console.log(users);
 
   return (
-    <>
+    <div>
       <ul className='grid grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
         {
           !users ? 'No hay orientados' : (
@@ -41,9 +41,9 @@ function OrientedList() {
         >
           {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
         </span>
-        <div className='relative -z-10 bottom-[11px] h-4 bg-yellow'></div>
+        <div className='relative -z-10 bottom-[11px] h-3 bg-yellow'></div>
       </div>
-    </>
+    </div>
   )
 }
 export default OrientedList;
