@@ -21,7 +21,6 @@ function LoginPage() {
   }
 
   const postData = async (datos) => {
-    let num = 0
     await axios.post(baseUrl,{
       email:datos.email,
       pass:datos.pass,
@@ -32,11 +31,10 @@ function LoginPage() {
       })
     .catch(error => {
       setMessage(error.response.data.message)
-      num=1
     })
 
     }
-    const [message,setMessage]=useState(null)
+  const [message,setMessage]=useState(null)
   const [bandEmail,setBandEmail]=useState(0)
   const [bandPass,setBandPass]=useState(0)
 
@@ -57,17 +55,8 @@ function LoginPage() {
     e.preventDefault();
     //
 
-    let band = await postData(datos);
-    if(band===0){
-      console.log("es  null");
-      navigate('/inicio')
-      console.log(message);
-    }
-    else{
-      console.log(" no es  null");
-      console.log(message);
-      SetErrorMessage(true)
-    }
+    postData(datos);
+
   }
 
   const handleInput= (ev)=>{
