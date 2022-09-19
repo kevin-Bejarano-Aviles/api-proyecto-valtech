@@ -8,12 +8,13 @@ import CardText from '../components/CardText';
 
 function HomePage() {
   const admin = JSON.parse(localStorage.getItem('admin'));
+  const adminFirstName = admin.fullName.split(' ')[0];
 
   return (
     <div className='grid grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo={`¡Bienvenida, ${admin.fullName}!`} />
+        <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
         <main className='pb-12 mx-12 mt-[150px] max-w-max'>
           <div className='flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
