@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -430,7 +430,7 @@ function OrientedSignUpPage() {
             </section>
             <div className='mobile:flex-col tablet:flex-row flex items-center gap-4 mt-12'>
               <Button type='submit' name='Ingresar orientado' />
-              <Link className='underline' to={'/orientados'}>Cancelar ingreso</Link>
+              <a href='#' className='underline' onClick={() => navigate(-1)}>Cancelar ingreso</a>
             </div>
           </form>
         </main>
