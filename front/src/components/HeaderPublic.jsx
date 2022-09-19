@@ -1,12 +1,18 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '../img/vnegro.svg'
-import Button from "./Button";
+import Button from './Button';
 
 function Header() {
+  const DesktopStyle=''
+  const navigate = useNavigate();
+  const redirectLogin=()=>{
+    navigate('/login')
+  }
   return (
-      <div className="bg-white h-[72px] flex items-center flex-row " >
-        <img className="ml-[267px]" src={Icon} alt="icon" />
-        <div className="ml-[577px]"><Button type="button" name="Ingresá a tu portal" /></div>
+      <div className='bg-white w-full h-[72px] flex items-center justify-around	 flex-row ' >
+        <img className='' src={Icon} alt='icon' />
+        <div className=''><Button type='button' name='Ingresá a tu portal' handleFunction={redirectLogin}/></div>
       </div>
   )
 }
