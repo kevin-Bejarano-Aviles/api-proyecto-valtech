@@ -17,7 +17,7 @@ module.exports = {
         hoverlogout:'#F8FAFC',
       },
       screens: {
-        'mobile': '375px',
+        'mobile': '360px',
         
         'tablet': '640px',
         // => @media (min-width: 640px) { ... }
