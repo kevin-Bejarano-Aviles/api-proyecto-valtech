@@ -6,10 +6,15 @@ function OrientedList() {
 
   const [users, setUsers] = useState(null);
 
+  const [viewBottom, SetviewBottom] = useState(false);
+
   const getAll = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/students', {withCredentials: true});
       setUsers(response.data);
+      if(users.length > 9){
+        SetviewBottom(true)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -25,13 +30,16 @@ function OrientedList() {
     <>
     <ul>
       {
-        !users ? 'Vacío' : (
+        !users ? 'No hay orientados' : (
           users.map(user => (
           <Oriented info={user}/> 
           ))
         )
       }
     </ul>
+    {viewBottom && 
+      <h6 className="h-4 w-[145px] pb-3 ml-[10px] border-b-8 border-yellow underline">Ver más orientados</h6>
+    }
     </>
   )
 }
