@@ -78,7 +78,7 @@ const addStudent = async (req, res) => {
 
 const getAllStudent = async (req, res) => {
     try {
-        const students = await studentModel.findAll({attributes:['fullName','email','phoneNumber','program','avatar','dni','school','age','address','motive','user','eventId','adviserId','createdAt','updatedAt']});
+        const students = await studentModel.findAll({attributes:{exclude : ['password']}}); // excludes just one item
         res.json(students);
     } catch (error) {
         res.status(500).json({error:error.message})
