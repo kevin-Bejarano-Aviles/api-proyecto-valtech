@@ -6,15 +6,12 @@ function OrientedList() {
 
   const [users, setUsers] = useState(null);
 
-  const [viewBottom, SetviewBottom] = useState(false);
+  const [seeMore, setSeeMore] = useState(false);
 
   const getAll = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/students', {withCredentials: true});
       setUsers(response.data);
-      if(users.length > 9){
-        SetviewBottom(true)
-      }
     } catch (error) {
       console.log(error)
     }
@@ -28,18 +25,21 @@ function OrientedList() {
 
   return (
     <>
-    <ul>
-      {
-        !users ? 'No hay orientados' : (
-          users.map(user => (
-          <Oriented info={user}/> 
-          ))
-        )
-      }
-    </ul>
-    {viewBottom && 
-      <h6 className="h-4 w-[145px] pb-3 ml-[10px] border-b-8 border-yellow underline">Ver más orientados</h6>
-    }
+      <ul className='grid grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
+        {
+          !users ? 'No hay orientados' : (
+            users.map((user, index) => (
+              index <= 8 ? <Oriented info={user}/> : seeMore ? <Oriented info={user}/> : ''
+            ))
+          )
+        }
+      </ul>
+      <h6
+        className='h-4 max-w-max pb-3 ml-[10px] border-b-8 border-yellow underline'
+        onClick={() => setSeeMore(!seeMore)}
+      >
+        {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
+      </h6>
     </>
   )
 }
