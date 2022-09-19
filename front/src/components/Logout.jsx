@@ -1,22 +1,31 @@
-import React from 'react'
-import IconUser from '../img/Icon_user.svg'
-import IconLogouat from '../img/Icon_logout.svg'
+import React, { useContext } from 'react';
+import Context from '../context/Context';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import IconUser from '../img/Icon_user.svg';
+import IconLogouat from '../img/Icon_logout.svg';
+
 
 
 export default function Logout() {
     const navigate = useNavigate();
+    const {deslogearme} = useContext(Context);
+    const login = ()=>{
+      deslogearme()
+      navigate('/login',{replace:true})
+    }
 
     const getAll = async () => {
       try {
         let res = await axios.get('http://localhost:8000/admin/logOut',{withCredentials:true});
         console.log(res);
-        navigate('/login');
+        login()
       } catch (err) {
         console.log(err);
       }
     };
+
+
   return (
     <div className='w-[216px] h-20 mt-10 ml-10'>
         <div className='h-10 w-full bg-white hover:bg-hoverlogout border-x-2 border-t-2 border-gray-400  rounded-t-[10px] flex items-center'>

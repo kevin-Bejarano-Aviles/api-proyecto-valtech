@@ -2,16 +2,44 @@ import adminServices from '../services/admins'; //
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
+import axios from 'axios'
 
 import warningImg from '../img/icon_warning.svg'
 import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
+import { useContext } from 'react';
+import Context from '../context/Context';
 
 function LoginPage() {
+
+  const baseUrl = 'http://localhost:8000/admin/adminLogin'
+  const navigate = useNavigate();
+    const {logearme} = useContext(Context);
+    const login = ()=>{
+      logearme()
+      navigate('/login',{replace:true})
+  }
+
+  const postData = async (datos) => {
+    let num = 0
+    await axios.post(baseUrl,{
+      email:datos.email,
+      pass:datos.pass,
+    },{withCredentials:true})
+    .then(response=>{
+        login();
+        console.log(response);
+      })
+    .catch(error => {
+      setMessage(error.response.data.message)
+      num=1
+    })
+
+    }
+    const [message,setMessage]=useState(null)
   const [bandEmail,setBandEmail]=useState(0)
   const [bandPass,setBandPass]=useState(0)
 
-  const navigate = useNavigate();
   //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
   const [errorEmail,SetErrorEmail]=useState(false);
@@ -28,11 +56,16 @@ function LoginPage() {
   const alerta = async (e) =>{
     e.preventDefault();
     //
-    let band = await adminServices.postData(datos);
-    if(band===200){
+
+    let band = await postData(datos);
+    if(band===0){
+      console.log("es  null");
       navigate('/inicio')
+      console.log(message);
     }
     else{
+      console.log(" no es  null");
+      console.log(message);
       SetErrorMessage(true)
     }
   }
@@ -96,7 +129,6 @@ function LoginPage() {
 
   const inputMobileView="w-72"
 
-  const mobileViewImages="bg-graybackground  flex flex-col items-center w-full"
   return (
     <div className={`flex flex-col tablet:flex-row`}>
       
@@ -132,7 +164,7 @@ function LoginPage() {
 
         <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
         <img className="mr-2" src={warningImg} alt=''/>
-          <p className='font-bold'>Email y/o contraseña incorrecta</p>
+          <p className='font-bold'>{message}</p>
         </div>
         
         <div className="mt-5">
