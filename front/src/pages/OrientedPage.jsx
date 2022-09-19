@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
@@ -10,6 +10,7 @@ import { useState } from 'react';
 function Oriented() {
   const params = useParams();
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   const getAllStudents = async () => {
     try {
@@ -17,6 +18,7 @@ function Oriented() {
       setUser(res.data);
       console.log(user);
     } catch (err) {
+      navigate('error');
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
     }
@@ -27,14 +29,18 @@ function Oriented() {
   },[]);
 
   return (
-    <div className='grid grid-cols-[234px_1fr] gap-0'>
-      <Menu />
+    <div className='laptop:grid laptop:grid-cols-[234px_1fr] laptop:gap-0'>
+      <div className='mobile:hidden laptop:block'>
+        <Menu />
+      </div>
       <div>
-        <HeaderAdmin />
-        <main className='flex flex-col gap-10 ml-12 mt-[102px] pb-12'>
-          <section className='mt-12'> {/* Información básica */}
+      <div className='mobile:hidden laptop:block'>
+          <HeaderAdmin Titulo='Orientados' />
+        </div>
+        <main className='flex flex-col gap-10 mx-12 mt-[102px] pb-12'>
+          <section className='mt-12'> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
-            <div className='flex gap-4'>
+            <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
                 src={user.avatar ? require(`../img/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'
@@ -57,9 +63,9 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Datos personales */}
+          <section> {/* Personal information */}
             <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
-            <div className='flex gap-4'>
+            <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
               <div className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>
                   <p className='text-xs text-gray-400'>NÚMERO DE DNI</p>
@@ -86,7 +92,7 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Crear usuario y contraseña */}
+          <section> {/* Create a user and a password */}
             <h2 className='mb-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
             <div className='flex flex-col gap-2'>
               <div className='flex flex-col gap-2'>
