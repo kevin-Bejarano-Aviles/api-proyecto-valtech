@@ -35,20 +35,7 @@ function RoutersElement() {
   
         <Route path='*' element={<ErrorPage />} />
 
-  
-        {/*  Las Rutas de abajo son sólo temporales por si necesitan ir viendo lo que crean */}
-        {/* <Route path={'/button'} element={<Button />} />
-        <Route path={'/header-public'} element={<HeaderPublic />} />
-        <Route path={'/header-admin'} element={<HeaderAdmin />} />
-        <Route path={'/oriented-list'} element={<OrientedList />} />
-        <Route path={'/oriented'} element={<Oriented />} />
-        <Route path={'/footer'} element={<Footer />} />
-        <Route path='*' element={<ErrorPage />} />
-        <Route path={'/pr'} element={<Proposal />} />
-        <Route path={'/prb'} element={<ProposalBox />} />
-        <Route path={'/menu/*'} element={<Menu/>} > */}
-         {/* <Route path='orientados' element={<h1>hola</h1>}></Route> */}
-  
+
       </Routes>
     );
   }
