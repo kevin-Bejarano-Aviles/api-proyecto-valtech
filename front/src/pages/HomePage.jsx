@@ -11,12 +11,16 @@ function HomePage() {
   const adminFirstName = admin.fullName.split(' ')[0];
 
   return (
-    <div className='grid grid-cols-[234px_1fr] gap-0'>
-      <Menu />
+    <div className='mobile:grid laptop:grid-cols-[234px_1fr] laptop:gap-0 grid'>
+      <div className='mobile:hidden laptop:block'>
+        <Menu />
+      </div>
       <div>
-        <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
-        <main className='pb-12 mx-12 mt-[150px] max-w-max'>
-          <div className='flex items-center justify-between'>
+        <div className='mobile:hidden laptop:block'>
+          <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
+        </div>
+        <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-[150px]'>
+          <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
               Nuevos orientados
             </h4>
@@ -25,14 +29,14 @@ function HomePage() {
             </Link>
           </div>
           <OrientedList/>
-          <div className='mt-16'>
+          <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>Novedades</h2>
-            <div className='relative flex gap-4 cursor-pointer'>
+            <div className='mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
               <CardText title='¿Usás inteligentemente tu tiempo?' />
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
               <CardText title='¿Qué querés aportar?' />
-              <div className='absolute left-[968px] top-[102px] flex justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full'>&#62;</div>
             </div>
+            <div className='mobile:hidden lap_tablet:flex absolute top-[136px] -right-6 justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full cursor-pointer'>&#62;</div>
           </div>
         </main>
       </div>

@@ -25,7 +25,7 @@ function OrientedList() {
 
   return (
     <div>
-      <ul className='grid grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
+      <ul className='grid mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
         {
           !users ? 'No hay orientados' : (
             users.map((user, index) => (
