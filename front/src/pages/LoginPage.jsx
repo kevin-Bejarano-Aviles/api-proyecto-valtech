@@ -44,10 +44,13 @@ function LoginPage() {
         login();
         console.log(response);
         localStorage.setItem('admin', JSON.stringify(response.data));
+
       })
     .catch(error => {
-      console.log(error);
-      setMessage(error.response.data.message)
+      console.log(error.response.data.message);
+      setMessage(error.response.data.message);
+      SetErrorMessage(true)
+
     })
 
     }
@@ -148,10 +151,10 @@ function LoginPage() {
           <p className='font-bold desktop:font-normal
  tablet:font-normal'>El campo contraseña no debe estar vacio</p>
         </div>
-
+        
         <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
-        <img className='mr-2' src={warningImg} alt=''/>
-          <p className='font-bold'>{message}</p>
+            <img className='mr-2' src={warningImg} alt=''/>
+            <p className='font-bold'>{message ? message : null}</p>
         </div>
         
         <div className='mt-5'>
