@@ -34,7 +34,7 @@ function Oriented() {
       <div>
         <HeaderAdmin Titulo='Orientados' />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 mt-6 flex flex-col gap-10 pb-12'>
-          <section className='mt-12'> {/* Basic information */}
+          <section> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img

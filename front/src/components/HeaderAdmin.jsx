@@ -37,7 +37,7 @@ function HeaderAdmin({ Titulo }) {
         </div>
       </div>
       {/** Mobile header */}
-      <div className='mobile:flex laptop:hidden items-center h-14 border-b-2 border-gray bg-white'>
+      <div className='mobile:flex laptop:hidden pl-6 items-center h-14 border-b-2 border-gray bg-white'>
           <Icon
             icon='ci:menu-alt-01'
             color='#2e384d'
