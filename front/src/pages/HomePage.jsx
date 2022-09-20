@@ -11,14 +11,10 @@ function HomePage() {
   const adminFirstName = admin.fullName.split(' ')[0];
 
   return (
-    <div className='mobile:grid laptop:grid-cols-[234px_1fr] laptop:gap-0 grid'>
-      <div className='mobile:hidden laptop:block'>
-        <Menu />
-      </div>
+    <div className='grid grid-cols-[234px_1fr] gap-0'>
+      <Menu />
       <div>
-        <div className='mobile:hidden laptop:block'>
-          <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
-        </div>
+        <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-[150px]'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
