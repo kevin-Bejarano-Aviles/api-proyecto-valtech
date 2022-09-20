@@ -1,4 +1,3 @@
-import adminServices from '../services/admins'; //
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../components/Button';
@@ -11,6 +10,21 @@ import { useContext } from 'react';
 import Context from '../context/Context';
 
 function LoginPage() {
+  const [message,setMessage]=useState(null)
+  const [bandEmail,setBandEmail]=useState(0)
+  const [bandPass,setBandPass]=useState(0)
+
+  //state variables so that the field is not empty
+  const [errorPassword,SetErrorPassword]=useState(false);
+  const [errorEmail,SetErrorEmail]=useState(false);
+
+    //state variables showing error message
+  const [errorMessage,SetErrorMessage]=useState(false);
+
+  const [datos,setDatos] = useState({
+    email:'',
+    pass:''
+  });
 
   const baseUrl = 'http://localhost:8000/admin/adminLogin'
   const navigate = useNavigate();
@@ -35,29 +49,11 @@ function LoginPage() {
     })
 
     }
-  const [message,setMessage]=useState(null)
-  const [bandEmail,setBandEmail]=useState(0)
-  const [bandPass,setBandPass]=useState(0)
-
-  //state variables so that the field is not empty
-  const [errorPassword,SetErrorPassword]=useState(false);
-  const [errorEmail,SetErrorEmail]=useState(false);
-
-    //state variables showing error message
-  const [errorMessage,SetErrorMessage]=useState(false);
-
-  const [datos,setDatos] = useState({
-    email:'',
-    pass:''
-  });
 
   //I need to validate the user and control the messages
   const alerta = async (e) =>{
     e.preventDefault();
-    //
-
     postData(datos);
-
   }
 
   const handleInput= (ev)=>{
@@ -131,18 +127,17 @@ function LoginPage() {
       <form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} onSubmit={alerta}>
         <h2 className='text-3xl	font-bold mb-8 text-zinc-600'>Ingresá a tu portal</h2>
         <label className='flex flex-col mt-2 mb-5'>
-          <p className='font-black text-zinc-600 text-lg'>Email</p>
+          <p className='font-bold desktop:font-normal
+ tablet:font-normal text-zinc-600 text-lg'>Email</p>
           <input className={`${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email' value={datos.email} onChange={handleInput}/>
         </label>
         <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
           <img className='mr-2' src={warningImg} alt=''/>
-          <p className='font-bold desktop:font-normal
- tablet:font-normal
-'>El campo email no debe estar vacio</p>
+          <p className='font-bold desktop:font-normal tablet:font-normal'>El campo email no debe estar vacio</p>
         </div>
         
         <label className='flex flex-col mt-2 mb-5'>
-        <p className='font-black text-zinc-600 text-lg'>Contraseña</p>
+        <p className='font-bold desktop:font-normal tablet:font-normal text-zinc-600 text-lg'>Contraseña</p>
           <input className={`${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password' value={datos.password} onChange={handleInput}/>
         </label>
 

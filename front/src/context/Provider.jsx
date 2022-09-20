@@ -11,8 +11,8 @@ const init=()=>{
 }
 
 const Provider = ({children}) =>{
+    localStorage.removeItem('estado')
     const logearme =()=>{
-        localStorage.removeItem('estado')
         const action={
             type:types.login
         }
