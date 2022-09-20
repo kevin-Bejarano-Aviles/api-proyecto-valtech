@@ -2,7 +2,7 @@
 const db = require('../database/db');
 //Require sequelize
 const { DataTypes} = require('sequelize');
-// Mayuscula inicio o no?
+// define our db and the attributes
 const eventModel = db.define('events', {
     name:{type:DataTypes.STRING},
     date:{type:DataTypes.DATE},

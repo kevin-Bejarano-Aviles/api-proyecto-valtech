@@ -10,10 +10,12 @@ const bcryptjs = require('bcryptjs');
 //Require express validator 
 const { validationResult } = require('express-validator');
 
+//Method to login our admin
 const login = async (req, res) => {
     const { email, pass } = req.body;
     //const passHash = bcryptjs.hashSync(pass,12);
-    try {
+    try { 
+         // We use the email to login, if our model find the email will comparate with the password, else we'll see the message "Credenciales inválidas"
         const admin = await AdminModel.findOne({
             where: {
                 email: email
@@ -22,7 +24,7 @@ const login = async (req, res) => {
         });
         if (!admin) {
             return res.status(400).json({ message: 'Credenciales invalidas' });
-        }
+        } // We compare the password entered with the password we have in the db that's already hashed, with method "compareSync" 
         if (!bcryptjs.compareSync(pass, admin.password)) {
             return res.status(400).json({ message: 'Credenciales invalidas' });
         }
@@ -39,15 +41,17 @@ const login = async (req, res) => {
     }
 };
 
+//Method to add a student
 const addStudent = async (req, res) => {
     const { fullName, email, phoneNumber, program, dni, school, age, address, motive, user, pass } = req.body;
+    //If validationResult of "errors" is empty can create a new student, else we will see the error
     let errors = validationResult(req);
     //console.log(errors);
     if (errors.isEmpty()) {
         try {
             const avatar = req.files[0].filename;
-            const passHash = bcryptjs.hashSync(pass, 12);
-            await db.query("ALTER TABLE students AUTO_INCREMENT = 1");
+            const passHash = bcryptjs.hashSync(pass, 12); // We use method "hashSync" to hash the password entered
+            await db.query("ALTER TABLE students AUTO_INCREMENT = 1"); // This line is to reset id so our deletes ids can use the deleted ones
             await studentModel.create({
                 fullName: fullName,
                 email: email,
@@ -68,7 +72,7 @@ const addStudent = async (req, res) => {
         }
     } else {
         res.status(400).json(errors.mapped());
-        //console.log(req.files[0]);
+        // If we have an image will assign avatar
         if(typeof req.files[0] != 'undefined'){
             const avatar = req.files[0].filename;
             fs.unlinkSync(path.join(__dirname,'..','..','front','src','img','students',`${avatar}`));
@@ -76,6 +80,7 @@ const addStudent = async (req, res) => {
     }
 };
 
+//Method to get all students
 const getAllStudent = async (req, res) => {
     try {
         const students = await studentModel.findAll({attributes:{exclude : ['password']}}); // excludes just one item
@@ -85,6 +90,7 @@ const getAllStudent = async (req, res) => {
     }
 };
 
+//Method to get one student
 const getStudent = async (req, res) => {
     try {
         const student = await studentModel.findAll({
@@ -101,14 +107,15 @@ const getStudent = async (req, res) => {
     }
 };
 
+//Method to log out
 const logOut = (req = request, res) => {
-
-    req.session.destroy((err) => {
-        res.clearCookie('userId').send('cleared cookie');//por alguna razon al agregar el send si funciona
+        req.session.destroy((err) => {
+        res.clearCookie('userId').send('cleared cookie');//If we add "send" it works, we don't know why
     });
 
 };
 
+//Export methods
 module.exports = {
     addStudent,
     getAllStudent,
