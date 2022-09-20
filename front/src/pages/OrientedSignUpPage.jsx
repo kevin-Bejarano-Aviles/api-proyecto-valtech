@@ -96,11 +96,11 @@ function OrientedSignUpPage() {
   };
 
   return (
-    <div className='grid grid-cols-[234px_1fr] gap-0'>
+    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
-        <main className='pb-12 mx-12 mt-[150px]'>
+        <main className='pb-12 mx-12'>
           <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <section className='mt-12'> {/* Basic information */}
               <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
