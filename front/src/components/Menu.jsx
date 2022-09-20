@@ -7,7 +7,7 @@ import MenuComponent from './MenuComponent'
 function Menu() {
     
   return (
-   
+    <div className='invisible laptop:visible'>
     <div className='w-[234px] min-h-screen bg-white border-r border-bordergray z-30'>
     <div className='fixed'>
     <img className='ml-8 mr-auto mt-8 w-[166px] h-[41px] ' src={Icon} alt="" />
@@ -17,6 +17,7 @@ function Menu() {
     </div>
     </div>
      </div>
+    </div>
    
   
   )
