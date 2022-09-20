@@ -36,7 +36,7 @@ module.exports = [ //Export our validations
                 })
         }),
     check('school').notEmpty().withMessage('Ingrese su colegio'),
-    check('age').notEmpty().withMessage('Ingrese su edad'),
+    check('age').notEmpty().withMessage('Ingrese su edad').isLength({min:18,max:99}).withMessage('La edad tiene que ser minimo de 18 años y maximo de 99 años'),
     check('address').notEmpty().withMessage('Ingrese su dirección'),
     check('motive').notEmpty().withMessage('Ingrese el motivo por el cual se acerca a la institución'),
     check('pass').notEmpty().withMessage('Ingrese una contraseña'),

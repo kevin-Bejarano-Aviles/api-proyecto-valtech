@@ -21,10 +21,10 @@ const login = async (req, res) => {
 
         });
         if (!admin) {
-            return res.status(401).json({ message: 'Credenciales invalidas' });
+            return res.status(400).json({ message: 'Credenciales invalidas' });
         }
         if (!bcryptjs.compareSync(pass, admin.password)) {
-            return res.status(401).json({ message: 'Credenciales invalidas' });
+            return res.status(400).json({ message: 'Credenciales invalidas' });
         }
         req.session.adminLog = {
             id: admin.id,
@@ -67,7 +67,7 @@ const addStudent = async (req, res) => {
             res.status(500).json({error:error.message})
         }
     } else {
-        res.status(200).json(errors.mapped());
+        res.status(400).json(errors.mapped());
         //console.log(req.files[0]);
         if(typeof req.files[0] != 'undefined'){
             const avatar = req.files[0].filename;
