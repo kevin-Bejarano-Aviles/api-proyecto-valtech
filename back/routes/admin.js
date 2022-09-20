@@ -7,7 +7,7 @@ const  {addStudent, getAllStudent, login, logOut, getStudent} = require('../cont
 const createAdmin = require('../middlewares/createAdmin'); // create admin user on database
 const adminCheck = require('../middlewares/adminCheck'); // require admin checks
 const studentCheck = require('../validations/studentChecks'); // require student checks
-const uploadStudent = require('../middlewares/upStudent.js'); // require our middleware for avatars
+const uploadStudent = require('../middlewares/upAvatar.js'); // require our middleware for avatars
 
 //Http with their methods and urls
 router.post('/addStudent',adminCheck,uploadStudent.any(),studentCheck,addStudent);
