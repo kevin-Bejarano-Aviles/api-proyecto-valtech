@@ -49,7 +49,7 @@ function HeaderAdmin({ Titulo }) {
           <img className='mx-auto' src={IconV} alt='' />
       </div>
       {/** Show Menubar */}
-      {/* <MenuResponsive /> */}
+      <MenuResponsive menu={menu} setMenu={setMenu} />
     </header>
   )
 }
