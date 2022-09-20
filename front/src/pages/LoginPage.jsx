@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import Context from '../context/Context';
 
 function LoginPage() {
+  const [band,useState]=useState(0)
   const [message,setMessage]=useState(null)
   const [bandEmail,setBandEmail]=useState(0)
   const [bandPass,setBandPass]=useState(0)
@@ -45,6 +46,7 @@ function LoginPage() {
         localStorage.setItem('admin', JSON.stringify(response.data));
       })
     .catch(error => {
+      console.log(error);
       setMessage(error.response.data.message)
     })
 

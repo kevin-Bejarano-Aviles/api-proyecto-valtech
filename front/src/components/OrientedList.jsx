@@ -3,7 +3,8 @@ import Oriented from './Oriented';
 import axios from 'axios';
 
 function OrientedList() {
-  
+  const [cantUsers,setCantusers]=useState(0);
+
   const [users, setUsers] = useState(null);
 
   const [seeMore, setSeeMore] = useState(false);
