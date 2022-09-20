@@ -1,22 +1,22 @@
-import { useReducer } from "react";
-import Context from "./Context";
-import Reducer from "./Reducer";
-import types from "./types";
+import { useReducer } from 'react';
+import Context from './Context';
+import Reducer from './Reducer';
+import types from './types';
 
 const init=()=>{
-    const valor=localStorage.getItem("estado")
+    const valor=localStorage.getItem('estado')
     return{
         estado:!!valor //si esxiste un valor lo guarda como false o true
     }
 }
 
 const Provider = ({children}) =>{
+    localStorage.removeItem('estado')
     const logearme =()=>{
-        localStorage.removeItem("estado")
         const action={
             type:types.login
         }
-        localStorage.setItem("estado",true)
+        localStorage.setItem('estado',true)
         dispatch(action)
     }
 
@@ -25,7 +25,7 @@ const Provider = ({children}) =>{
             type:types.logout
         }
         //no tengo que cambiar el estado a false porque solo se fija que exista
-        localStorage.removeItem("estado")
+        localStorage.removeItem('estado')
         dispatch(action)
     }
     const [logeado,dispatch]=useReducer(Reducer,{},init)

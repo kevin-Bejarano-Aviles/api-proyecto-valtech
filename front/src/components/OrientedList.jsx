@@ -3,7 +3,7 @@ import Oriented from './Oriented';
 import axios from 'axios';
 
 function OrientedList() {
-
+  
   const [users, setUsers] = useState(null);
 
   const [seeMore, setSeeMore] = useState(false);
@@ -21,7 +21,6 @@ function OrientedList() {
     getAll();
   },[]);
 
-  // console.log(users);
 
   return (
     <div>
@@ -34,6 +33,7 @@ function OrientedList() {
           )
         }
       </ul>
+      {      
       <div className='max-w-max'>
         <span
           className='ml-2 h-4 max-w-max underline cursor-pointer'
@@ -42,7 +42,9 @@ function OrientedList() {
           {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
         </span>
         <div className='relative -z-10 bottom-[11px] h-3 bg-yellow'></div>
+      
       </div>
+      }
     </div>
   )
 }

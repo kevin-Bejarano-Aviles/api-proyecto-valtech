@@ -7,6 +7,7 @@ const storage = multer.diskStorage({ //To save img
       cb(null,path.join(__dirname,'..','..','front','src','img','students')) //img destination from edit form
     },/*  */
     filename: function (req, file, cb) {
+      // We name the img with the date, and a random number so will never repeat
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)) 
     }

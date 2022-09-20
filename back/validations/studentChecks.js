@@ -1,9 +1,10 @@
+// Require student model
 const studentModel = require("../models/studentModel.js"); //Require student Model
 const { check, validationResult, body } = require('express-validator');//Require express validator to add validations
 module.exports = [ //Export our validations
     check('fullName').notEmpty().withMessage('Ingrese su nombre y apellido'),
     check('email').isEmail().withMessage('Debe ingresar un email en el campo'),
-    body('email')
+    body('email') // This validation is to check if the email is already in our db
         .custom(function (value) {
             return studentModel.findOne({
                 where: {
@@ -11,7 +12,7 @@ module.exports = [ //Export our validations
                 },attributes:['email']
             })
                 .then(email => {
-                    if (email) {
+                    if (email) { // if email is already in our db will reject 
                         return Promise.reject('Este email ya tiene una cuenta en nuestra base de datos')
                     }
                 })
@@ -22,7 +23,7 @@ module.exports = [ //Export our validations
     check('dni').notEmpty().withMessage('Ingrese su número de DNI')
         .isInt().withMessage('El dni solo tiene que tener números sin puntos')
         .isLength({min: 7, max: 9 }).withMessage('El dni debe tener un minimo de 7 caracteres y un maximo de 9 caracteres'), 
-    body('dni')
+    body('dni') //This validation is to check if the dni is already in our db
         .custom(function (value) {
             return studentModel.findOne({
                 where: {
@@ -31,6 +32,7 @@ module.exports = [ //Export our validations
             })
                 .then(dni => {
                     if (dni) {
+                        // if dni is already in our db will reject 
                         return Promise.reject('Este dni ya existe en nuestra base de datos')
                     }
                 })
@@ -40,7 +42,7 @@ module.exports = [ //Export our validations
     check('address').notEmpty().withMessage('Ingrese su dirección'),
     check('motive').notEmpty().withMessage('Ingrese el motivo por el cual se acerca a la institución'),
     check('pass').notEmpty().withMessage('Ingrese una contraseña'),
-    body('confirmPass')
+    body('confirmPass') //if the 'confirmpass' isn't the same entered in 'pass' will not leave the user register 
     .custom((value,{req}) => {
         if(value != req.body.pass){
             return false
@@ -59,6 +61,7 @@ module.exports = [ //Export our validations
             })
                 .then(user => {
                     if (user) {
+                        // if user is already in our db will reject 
                         return Promise.reject('Este usuario ya existe en nuestra base de datos')
                     }
                 })
@@ -69,10 +72,11 @@ module.exports = [ //Export our validations
                 return false;
             }else{
                 return true
-            }
+            } //If the user don't add an img will reject the form  with the message "tiene que ingresar una imagen"
         }).withMessage('Tiene que ingresar una imagen'),
          body('avatar').custom((value,{req})=>{
             value = req.files[0];
+               //Declare what type of img our form will accept and if the user enter a diferent type will reject it
                 if(value.mimetype == 'image/png' || value.mimetype == 'image/jpg' || value.mimetype == 'image/jpeg'){
                     return true
                 }else{
