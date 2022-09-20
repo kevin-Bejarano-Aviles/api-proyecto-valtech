@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import Context from '../context/Context';
 
 function LoginPage() {
-  const [band,useState]=useState(0)
+  // const [band,useState]=useState(0)
   const [message,setMessage]=useState(null)
   const [bandEmail,setBandEmail]=useState(0)
   const [bandPass,setBandPass]=useState(0)
