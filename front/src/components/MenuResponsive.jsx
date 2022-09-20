@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
 import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
 import MenuComponent from './MenuComponent';
 import Logout from '../img/Icon_logout.svg'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
+import Context from '../context/Context';
 
 export default function MenuResponsive({menu, setMenu}) {
 
-  
-
   const navigate = useNavigate();
+  const {deslogearme} = useContext(Context);
+  const login = ()=>{
+    deslogearme()
+    navigate('/login',{replace:true})
+  }
+
+
 
   const getAll = async () => {
     try {
       let res = await axios.get('http://localhost:8000/admin/logOut',{withCredentials:true});
       console.log(res);
-      navigate('/login');
+      login()
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +43,7 @@ export default function MenuResponsive({menu, setMenu}) {
              <MenuComponent/>
            </div>
            <div className='mt-72 ml-8'>
-            <Link to='/login' onClick={() => getAll()}><h4 className='flex flex-row'><img className='mr-2' src={Logout} alt="" />Cerrar sesión</h4></Link>
+            <Link to='/login' onClick={getAll}><h4 className='flex flex-row'><img className='mr-2' src={Logout} alt="" />Cerrar sesión</h4></Link>
            </div>
         </div>
     </div>
