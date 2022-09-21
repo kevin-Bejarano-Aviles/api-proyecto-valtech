@@ -58,6 +58,7 @@ function OrientedSignUpPage() {
           }
       };
       const response = await axios('http://localhost:8000/admin/addStudent', options);
+      setFormError(response.data);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
       console.log(err);
