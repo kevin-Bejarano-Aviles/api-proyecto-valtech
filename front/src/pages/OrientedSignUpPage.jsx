@@ -47,6 +47,7 @@ function OrientedSignUpPage() {
 
   // Function to send a new student.
   const postStudent = async (data, e) => {
+
     try {
       let options = {
           method: 'POST',
@@ -57,10 +58,12 @@ function OrientedSignUpPage() {
             avatar: e.target.avatar.files[0],
           }
       };
-      const response = await axios('http://localhost:8000/admin/addStudent', options);
+      const response = await axios.post('http://localhost:8000/admin/addStudent',options);
       setFormError(response.data);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
+      console.log(err);
+
     }
   };
 
