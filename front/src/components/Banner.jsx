@@ -45,14 +45,12 @@ function Banner() {
         slideRef.current.classList.remove('fade-anim');
     }
 
-    setInterval(()=>{
-        handleOneNextClick()
-    },8000)
+    
 
     useEffect(()=>{
-        // startSlider()
         slideRef.current.addEventListener("animationend", removeAnimation);
     },[])
+
 
     return ( 
         <div className="w-full  m-auto">
