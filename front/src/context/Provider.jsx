@@ -25,6 +25,7 @@ const Provider = ({children}) =>{
             type:types.logout
         }
         //no tengo que cambiar el estado a false porque solo se fija que exista
+        localStorage.removeItem('admin')
         localStorage.removeItem('estado')
         dispatch(action)
     }
