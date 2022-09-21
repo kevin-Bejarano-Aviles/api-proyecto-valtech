@@ -52,10 +52,10 @@ function Banner() {
     let stylActive=`mx-2 rounded w-11 h-2  ${currentIndex===0 ? 'bg-colorList' : 'bg-graybackground' }`;
 
     return ( 
-        <div className="max-w-screen-xl m-auto">
+        <div className="w-full  m-auto">
             <div ref={slideRef} className='w-full flex justify-center select-none relative'>
-            <div className="aspect-w-16 aspect-h-9">
-                <img src={featuredImg[currentIndex]} alt={currentIndex}></img>
+            <div className="w-full">
+                <img className='w-full' src={featuredImg[currentIndex]} alt={currentIndex}></img>
             </div>
                 <div className='absolute w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
                     <button onClick={handleOnePrevClick}><img src={arrow_left} alt="" /></button>
