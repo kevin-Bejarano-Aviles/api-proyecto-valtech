@@ -49,7 +49,6 @@ function Banner() {
         // startSlider()
         slideRef.current.addEventListener("animationend", removeAnimation);
     },[])
-    let stylActive=`mx-2 rounded w-11 h-2  ${currentIndex===0 ? 'bg-colorList' : 'bg-graybackground' }`;
 
     return ( 
         <div className="w-full  m-auto">
