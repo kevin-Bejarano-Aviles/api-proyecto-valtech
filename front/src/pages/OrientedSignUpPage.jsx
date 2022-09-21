@@ -243,8 +243,8 @@ function OrientedSignUpPage() {
                       {...register('dni', {
                         required: 'Campo requerido',
                         pattern: {
-                          value: /^[0-9]{8,50}$/i,
-                          message: 'Entre 8 y 50 dígitos'
+                          value: /^[0-9]{7,50}$/i,
+                          message: 'Entre 7 y 50 dígitos'
                         }
                       })}
                       className={`border-2 p-2 mobile:w-full w-80 h-10 rounded-lg ${(errors.dni || formError.dni) ? 'border-red-500' : ''}`}
