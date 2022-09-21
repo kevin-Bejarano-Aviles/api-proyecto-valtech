@@ -35,7 +35,6 @@ function RoutersElement() {
   
         <Route path='*' element={<ErrorPage />} />
 
-
       </Routes>
     );
   }

@@ -1,12 +1,14 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/HeaderPublic';
-
+import Banner from '../components/Banner';
 
 function Welcome() {
   return (
     <div>
       <Header/>
+      <Banner/>
+      {/* Aca tiene que ir el banner */}
       <div className='w-full flex justify-center items-center h-80 mobile:h-auto mobile:p-2.5'>
         <div className='text-blue pb-2'>
           <h1 className='pb-2 text-blue font-bold text-xl'>Misión</h1>
