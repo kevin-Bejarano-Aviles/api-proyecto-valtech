@@ -28,7 +28,7 @@ function OrientedSignUpPage() {
         phoneNumber: '01162386020',
         program: 'Orientacion vocacional',
         dni: '28456387',
-        age: '17',
+        age: '18',
         school: 'Nuestra señora del valle',
         address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
         motive: 'Necesita orientación para elegir una carrera.',
@@ -47,7 +47,6 @@ function OrientedSignUpPage() {
 
   // Function to send a new student.
   const postStudent = async (data, e) => {
-
     try {
       let options = {
           method: 'POST',
@@ -58,11 +57,11 @@ function OrientedSignUpPage() {
             avatar: e.target.avatar.files[0],
           }
       };
-      const response = await axios('http://localhost:8000/admin/addStudent',options);
-      setFormError(response.data);
+      const response = await axios('http://localhost:8000/admin/addStudent', options);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
       console.log(err);
+      setFormError(err.response.data);
     }
   };
 
@@ -117,7 +116,7 @@ function OrientedSignUpPage() {
                       accept='.png, .jpg, .jpeg, .gif'
                       id='inputFile'
                       hidden={true}
-                      onChange={() => showSelectedImage()}
+                      onChangeCapture={() => showSelectedImage()}
                     />
                     <div className='relative mobile:w-[96px]'>
                       <img
@@ -216,6 +215,7 @@ function OrientedSignUpPage() {
                         id='program'
                         onBlur={e => changeBackgroundColor(e)}
                         onFocus={e => e.target.classList.add('text-black')}
+                        onChange={e => e.target.classList.add('text-black')}
                       >
                         <option selected hidden value=''>Seleccionar opción</option>
                         <option value='Orientacion vocacional'>Orientación vocacional</option>
@@ -370,8 +370,8 @@ function OrientedSignUpPage() {
                     {...register('user', {
                       required: 'Campo requerido',
                       pattern: {
-                        value: /^[0-9]{8,50}$/i,
-                        message: 'Entre 8 y 50 dígitos'
+                        value: /^[0-9]{7,50}$/i,
+                        message: 'Entre 7 y 50 dígitos'
                       },
                       validate: value =>
                         value === watch('dni') || 'DNI no coincide'
