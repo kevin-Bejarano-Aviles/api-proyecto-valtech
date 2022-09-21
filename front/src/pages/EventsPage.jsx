@@ -23,7 +23,9 @@ function EventsPage() {
             <div>
                 <h1 className='text-blue text-xl font-semibold'>Buscar eventos de un orientado</h1>
             </div>
-            <div></div>
+            <div>
+                
+            </div>
         </div>
         </>
      );
