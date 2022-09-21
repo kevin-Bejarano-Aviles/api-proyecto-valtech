@@ -58,12 +58,11 @@ function OrientedSignUpPage() {
             avatar: e.target.avatar.files[0],
           }
       };
-      const response = await axios.post('http://localhost:8000/admin/addStudent',options);
+      const response = await axios('http://localhost:8000/admin/addStudent',options);
       setFormError(response.data);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
       console.log(err);
-
     }
   };
 
@@ -75,7 +74,7 @@ function OrientedSignUpPage() {
       const lastUserId = json[json.length-1].id;
       setTimeout(() => {
         navigate(`/orientados/${lastUserId}`);
-      }, 500);
+      }, 1000);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
