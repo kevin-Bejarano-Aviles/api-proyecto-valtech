@@ -47,21 +47,38 @@ function OrientedSignUpPage() {
 
   // Function to send a new student.
   const postStudent = async (data, e) => {
-    try {
-      let options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'multipart/form-data' },
-          withCredentials: true,
-          data: {
-            ...data,
-            avatar: e.target.avatar.files[0],
-          }
-      };
-      const response = await axios('http://localhost:8000/admin/addStudent', options);
-      setFormError(response.data);
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
+    await axios.post('http://localhost:8000/admin/addStudent', {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      withCredentials: true,
+      data: {
+        ...data,
+        avatar: e.target.avatar.files[0],
+      }}).this(response=>{
+              setFormError(response.data);
+      }).catch(err=>console.error(err))
+    // try {
+    //   let options = {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'multipart/form-data' },
+    //       withCredentials: true,
+    //       data: {
+    //         ...data,
+    //         avatar: e.target.avatar.files[0],
+    //       }
+    //   };
+    //   const response = await axios.post('http://localhost:8000/admin/addStudent', {method: 'POST',
+    //   headers: { 'Content-Type': 'multipart/form-data' },
+    //   withCredentials: true,
+    //   data: {
+    //     ...data,
+    //     avatar: e.target.avatar.files[0],
+    //   }});
+    //   setFormError(response.data);
+    // } catch (err) {
+    //   console.error(`${err.response.status}: ${err.response.statusText}`);
+    //   console.log(err);
+
+    // }
   };
 
   // Function to bring all students.

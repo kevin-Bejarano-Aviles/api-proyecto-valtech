@@ -12,8 +12,10 @@ import Context from '../context/Context';
 function LoginPage() {
   // const [band,useState]=useState(0)
   const [message,setMessage]=useState(null)
+
   const [bandEmail,setBandEmail]=useState(0)
   const [bandPass,setBandPass]=useState(0)
+    const [bandButton,setBandButton]=useState(0)
 
   //state variables so that the field is not empty
   const [errorPassword,SetErrorPassword]=useState(false);
@@ -67,11 +69,16 @@ function LoginPage() {
       [ev.target.name]:ev.target.value
     })
     if(ev.target.name==='email'){
-      setBandEmail(1)
+      setBandEmail(1);
+      if(bandPass===1){
+        setBandButton(1);
+      }
     }
     else if(ev.target.name==='pass'){
-      setBandPass(1)
-
+      setBandPass(1);
+      if(bandEmail===1){
+        setBandButton(1)
+      }
     }
   }
 
@@ -158,7 +165,7 @@ function LoginPage() {
         </div>
         
         <div className='mt-5'>
-          <Button type='submit' name='log in' handleFunction={()=>console.log('boton')} disabled={!errorEmail && !errorPassword ? false : true}/>        
+          <Button type='submit' name='log in' handleFunction={()=>console.log(bandButton)} disabled={((!errorEmail && !errorPassword) && bandButton===1) ? false : true}/>        
         </div>
       </form>    
     </div>
