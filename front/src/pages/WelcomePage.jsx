@@ -8,7 +8,6 @@ function Welcome() {
     <div>
       <Header/>
       <Banner/>
-      {/* Aca tiene que ir el banner */}
       <div className='w-full flex justify-center items-center h-80 mobile:h-auto mobile:p-2.5'>
         <div className='mt-10 ml-5 tablet:mx-0 tablet:w-3/5  text-blue pb-2'>
           <h1 className='pb-2 text-blue font-bold text-xl'>Misión</h1>
