@@ -70,7 +70,9 @@ function OrientedSignUpPage() {
       const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
       const json = await response.data;
       const lastUserId = json[json.length-1].id;
-      navigate(`/orientados/${lastUserId}`);
+      setTimeout(() => {
+        navigate(`/orientados/${lastUserId}`);
+      }, 500);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
@@ -265,8 +267,8 @@ function OrientedSignUpPage() {
                           message: 'Sólo números'
                         },
                         min: {
-                          value: 10,
-                          message: 'Mínimo valor: 10'
+                          value: 18,
+                          message: 'Mínimo valor: 18'
                         },
                         max: {
                           value: 99,
