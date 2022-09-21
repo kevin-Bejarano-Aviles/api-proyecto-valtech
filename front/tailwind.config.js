@@ -17,6 +17,7 @@ module.exports = {
         backgroundGray:'#E9F9F8',
         hoverlogout:'#F8FAFC',
         colorList:'#0088ff',
+        disabledbutton: '#AFAFAF',
       },
       screens: {
         'mobile': '360px',

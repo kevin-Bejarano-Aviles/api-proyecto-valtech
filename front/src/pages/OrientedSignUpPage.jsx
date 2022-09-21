@@ -14,6 +14,7 @@ import addAvatar from '../img/add-avatar.svg';
 function OrientedSignUpPage() {
   const navigate = useNavigate();
   const [formError, setFormError] = useState({});
+  const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
     console.log(formError);
@@ -21,23 +22,46 @@ function OrientedSignUpPage() {
   },[formError]);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
-    {
-      defaultValues: {
-        fullName: 'Julian Martinez',
-        email: 'julian.martinez@gmail.com',
-        phoneNumber: '01162386020',
-        program: 'Orientacion vocacional',
-        dni: '28456387',
-        age: '18',
-        school: 'Nuestra señora del valle',
-        address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-        motive: 'Necesita orientación para elegir una carrera.',
-        user: '28456387',
-        pass: '12345678',
-        confirmPass: '12345678'
-      }
-    }
+    // {
+    //   defaultValues: {
+    //     fullName: 'Julian Martinez',
+    //     email: 'julian.martinez@gmail.com',
+    //     phoneNumber: '01162386020',
+    //     program: 'Orientacion vocacional',
+    //     dni: '28456387',
+    //     age: '18',
+    //     school: 'Nuestra señora del valle',
+    //     address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+    //     motive: 'Necesita orientación para elegir una carrera.',
+    //     user: '28456387',
+    //     pass: '12345678',
+    //     confirmPass: '12345678'
+    //   }
+    // }
   );
+
+  useEffect(() => {
+    console.log(watch())
+    if (
+      watch().address === '' ||
+      watch().age === '' ||
+      watch().avatar.length < 1 ||
+      watch().confirmPass === '' ||
+      watch().dni === '' ||
+      watch().email === '' ||
+      watch().fullName === '' ||
+      watch().motive === '' ||
+      watch().pass === '' ||
+      watch().phoneNumber === '' ||
+      watch().program === '' ||
+      watch().school === '' ||
+      watch().user === ''
+    ) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+  },[watch()]);
 
   // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
@@ -216,7 +240,7 @@ function OrientedSignUpPage() {
                         id='program'
                         onBlur={e => changeBackgroundColor(e)}
                         onFocus={e => e.target.classList.add('text-black')}
-                        onChange={e => e.target.classList.add('text-black')}
+                        onChangeCapture={e => e.target.classList.add('text-black')}
                       >
                         <option selected hidden value=''>Seleccionar opción</option>
                         <option value='Orientacion vocacional'>Orientación vocacional</option>
@@ -434,7 +458,7 @@ function OrientedSignUpPage() {
               </div>
             </section>
             <div className='mobile:flex-col tablet:flex-row flex items-center gap-4 mt-12'>
-              <Button type='submit' name='Ingresar orientado' />
+              <Button type='submit' name='Ingresar orientado' disabled={isEmpty} />
               <a href='#' className='underline' onClick={() => navigate(-1)}>Cancelar ingreso</a>
             </div>
           </form>
