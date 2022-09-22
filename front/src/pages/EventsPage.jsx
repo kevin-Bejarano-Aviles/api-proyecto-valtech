@@ -5,104 +5,129 @@ import {  useNavigate } from 'react-router-dom';
 import Icon_arrow_left from '../img/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
 import TableRow from '../components/TableRow';
-import Search from '../components/Search'
-function EventsPage() {
-	const eventList=[
-		{
-		  "id":1,
+import Search from '../components/Search';
+import Icon_Search from '../img/Icon_search.svg';
+
+import { useState } from 'react';
+
+const eventList=[
+	{
+	  "id":1,
+	  "name":"Encuentro individual",
+	  "date":"02-12-2022",
+	  "time":"15:43",
+	  "duration":"40",
+	  "detail":"lleven algo para tomar",
+	  "participatingCounselor":"Sofía Serrano",
+	  "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
+	},
+	{
+		"id":2,
+		"name":"Encuentro individual",
+		"date":"01-09-2022",
+		"time":"15:43",
+		"duration":"40",
+		"detail":"lleven algo para tomar",
+		"participatingCounselor":"Esteban Enriquez",
+		"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
+	},
+	{
+		"id":3,
+		"name":"Encuentro individual",
+		"date":"02-12-2022",
+		"time":"15:43",
+		"duration":"40",
+		"detail":"lleven algo para tomar",
+		"participatingCounselor":"Esteban Julian",
+		"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
+	  }
+	  ,
+	{
+		"id":4,
+		"name":"Encuentro individual",
+		"date":"02-12-2022",
+		"time":"15:43",
+		"duration":"40",
+		"detail":"lleven algo para tomar",
+		"participatingCounselor":"Esteban Perez",
+		"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
+	  }
+	  ,
+	{
+		"id":5,
+		"name":"Encuentro individual",
+		"date":"02-12-2022",
+		"time":"15:43",
+		"duration":"40",
+		"detail":"lleven algo para tomar",
+		"participatingCounselor":"Esteban Gallardo",
+		"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
+	  },
+	  {
+		  "id":6,
 		  "name":"Encuentro individual",
 		  "date":"02-12-2022",
 		  "time":"15:43",
 		  "duration":"40",
 		  "detail":"lleven algo para tomar",
-		  "participatingCounselor":"Esteban Enriquez",
+		  "participatingCounselor":"Esteban Maradona",
 		  "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
 		},
 		{
-			"id":2,
-			"name":"Encuentro individual",
-			"date":"01-09-2022",
-			"time":"15:43",
-			"duration":"40",
-			"detail":"lleven algo para tomar",
-			"participatingCounselor":"Esteban Enriquez",
-			"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-		},
-		{
-			"id":3,
+			"id":7,
 			"name":"Encuentro individual",
 			"date":"02-12-2022",
 			"time":"15:43",
 			"duration":"40",
 			"detail":"lleven algo para tomar",
-			"participatingCounselor":"Esteban Enriquez",
-			"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-		  }
-		  ,
-		{
-			"id":3,
-			"name":"Encuentro individual",
-			"date":"02-12-2022",
-			"time":"15:43",
-			"duration":"40",
-			"detail":"lleven algo para tomar",
-			"participatingCounselor":"Esteban Enriquez",
-			"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-		  }
-		  ,
-		{
-			"id":4,
-			"name":"Encuentro individual",
-			"date":"02-12-2022",
-			"time":"15:43",
-			"duration":"40",
-			"detail":"lleven algo para tomar",
-			"participatingCounselor":"Esteban Enriquez",
+			"participatingCounselor":"Esteban julian",
 			"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
 		  },
 		  {
-			  "id":5,
+			  "id":8,
 			  "name":"Encuentro individual",
 			  "date":"02-12-2022",
 			  "time":"15:43",
 			  "duration":"40",
 			  "detail":"lleven algo para tomar",
-			  "participatingCounselor":"Esteban Enriquez",
+			  "participatingCounselor":"Esteban martinez",
 			  "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
 			},
 			{
-				"id":6,
+				"id":9,
 				"name":"Encuentro individual",
 				"date":"02-12-2022",
 				"time":"15:43",
 				"duration":"40",
 				"detail":"lleven algo para tomar",
-				"participatingCounselor":"Esteban Enriquez",
+				"participatingCounselor":"Esteban Julian",
 				"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-			  },
-			  {
-				  "id":7,
-				  "name":"Encuentro individual",
-				  "date":"02-12-2022",
-				  "time":"15:43",
-				  "duration":"40",
-				  "detail":"lleven algo para tomar",
-				  "participatingCounselor":"Esteban Enriquez",
-				  "participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-				},
-				{
-					"id":8,
-					"name":"Encuentro individual",
-					"date":"02-12-2022",
-					"time":"15:43",
-					"duration":"40",
-					"detail":"lleven algo para tomar",
-					"participatingCounselor":"Esteban Enriquez",
-					"participatingCounselors":["Julián Martinez", "Sabrina García", "Benjamín Neridas"]
-				  }
-	  ]
+			  }
+  ]
 
+function EventsPage() {
+	
     let navigate = useNavigate();
+	//show all events
+	const [showAll, setShowAll] = useState(false);
+	//Show only the event that has the name of the target I want to see
+	const [search,SetSearch] = useState('Esteban');
+
+	const handleSearch = (event)=>{
+		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
+		SetSearch(event.target.value)
+		if (search) {
+		  setShowAll(false)
+		}
+		else{
+		  setShowAll(true)
+		}
+		console.log(showAll)
+	}
+
+	const eventsToShow=showAll ? eventList : eventList.filter(event => event.participatingCounselor.includes(search)) ;
+
+	console.log(eventsToShow);
 
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -127,13 +152,22 @@ function EventsPage() {
                     
                 </div>
                 <div className='mt-5'>
+					{/* ------------------------------------------------------------------------------------------------------------------------------ */}
                     <p className='text-blue text-xl font-semibold'>Buscar eventos de un orientado</p>
-					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'}/>
+					{/* voy a ver si puedo hacer el metodo desde aca y despues lo paso a componente */}
+					{/* <Search placeholder={'Buscar eventos por nombre y apellido del orientado'}/> */}
+					<label className='relative block w-full lap_tablet:w-3/5'>
+						<input className='placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' placeholder={'Buscar eventos por nombre y apellido del orientado'} type='text' name='search'/>
+						<span className='sr-only'>Search</span>
+						<span className='absolute inset-y-0 right-0 flex items-center pr-2'>
+							<img src={Icon_Search} alt='Icon_Search' />  
+						</span>
+					</label>
 				</div>
                 {/* tablita para mostrar eventos */}
                 {/* tabla container*/}
 				<div className='w-full flex flex-row items-center justify-center tablet:justify-end'>
-						<p className='ml-2 mr-2 my-8 text-xl  lap_tablet:my-0'>1-8 de 100</p>
+						<p className='ml-2 mr-2 my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1-8 de 100</p>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left'/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' />
 				</div>
