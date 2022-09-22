@@ -18,10 +18,16 @@
 - Metodo http que se usa: 'POST'
 - Para que sirve: El cliente le envia el 'email' y la 'pass' para iniciar sesion. El servidor verifica si el el email se encuentra en la base de datos, si se encuentra, verifica que la contraseña sea igual, en caso de error, se mandaja un mensaje Json 'Credenciales invalidas' si no se le enviara un objeto JSON con algunos datos del admin
 - ESTADO: Metodo terminado
-- Middlewares y validaciones implementados: incompleto
+- Middlewares y validaciones implementados: COMPLETO
 
 ## URL: 'http://localhost:8000/admin/students/:id'
 - Metodo http que se usa: 'GET'
 - Para que sirve: Al llamar a la URL, el servidor le envia un orientado en especifico al cliente con sus datos.
 - ESTADO : Metodo terminado
+- Middlewares y validaciones implementados: middleware implementado - adminCheck - para usarlo debera estar logueado el amnistrador de otra manera no le enviara la respuesta.
+
+## URL: http://localhost:8000/admin/logOut
+- Metodo http que se usa: 'GET'.
+- Para que sirve: Al llamar a la URL, el servidor elimina tanto la sesion del usuario como su cookie.
+- ESTADO: Metodo terminado.
 - Middlewares y validaciones implementados: middleware implementado - adminCheck - para usarlo debera estar logueado el amnistrador de otra manera no le enviara la respuesta.
