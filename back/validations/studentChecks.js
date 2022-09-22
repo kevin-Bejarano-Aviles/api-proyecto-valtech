@@ -58,6 +58,13 @@ module.exports = [ //Export our validations
     .withMessage("Las constraseñas no coiciden"),
     check('user').notEmpty().withMessage('Ingrese un nombre de usuario')
     .isInt().withMessage('El nombre de usuario solo tiene que tener números sin puntos'),
+    body('user').custom((value,{req})=>{
+        if(value === req.body.dni){
+            return true;
+        }else{
+            return false;
+        }
+    }).withMessage('El usuario y el dni deben coincidir'),
     body('user')
         .custom(function (value) {
             return studentModel.findOne({
