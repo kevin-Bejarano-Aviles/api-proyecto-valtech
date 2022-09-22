@@ -21,7 +21,7 @@ function HeaderAdmin({ Titulo }) {
     <header className='sticky top-0 z-40 w-full'>
       {/** Desktop header */}
       <div className='pl-12 bg-blue'>
-        <div className='mobile:hidden laptop:flex justify-between items-center w-5/6 h-[112px]'>
+        <div className='hidden laptop:flex justify-between items-center w-5/6 h-[112px]'>
           <h1 className='text-[32px] text-white'>{Titulo}</h1>
           <div className='relative'>
             <ProfilePicture
@@ -37,7 +37,7 @@ function HeaderAdmin({ Titulo }) {
         </div>
       </div>
       {/** Mobile header */}
-      <div className='mobile:flex laptop:hidden pl-6 items-center h-14 border-b-2 border-gray bg-white'>
+      <div className='flex laptop:hidden pl-6 items-center h-14 border-b-2 border-gray bg-white'>
           <Icon
             icon='ci:menu-alt-01'
             color='#2e384d'

@@ -132,10 +132,10 @@ function EventsPage() {
 				</div>
                 {/* tablita para mostrar eventos */}
                 {/* tabla container*/}
-				<div className='w-full flex flex-row items-center justify-end'>
-						<p className='ml-2 mr-2'>1-8 de 100</p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2' alt='icon arrow left'/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2' alt='icon arrow rigth' />
+				<div className='w-full flex flex-row items-center justify-center tablet:justify-end'>
+						<p className='ml-2 mr-2 my-8 text-xl  lap_tablet:my-0'>1-8 de 100</p>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left'/>
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' />
 				</div>
                     {/* paginado */}
 					
