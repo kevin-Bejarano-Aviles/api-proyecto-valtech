@@ -111,7 +111,7 @@ function EventsPage() {
 	//show all events
 	const [showAll, setShowAll] = useState(false);
 	//Show only the event that has the name of the target I want to see
-	const [search,SetSearch] = useState('Esteban');
+	const [search,SetSearch] = useState(' ');
 
 	const handleSearch = (event)=>{
 		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
@@ -122,7 +122,6 @@ function EventsPage() {
 		else{
 		  setShowAll(true)
 		}
-		console.log(showAll)
 	}
 
 	const eventsToShow=showAll ? eventList : eventList.filter(event => event.participatingCounselor.includes(search)) ;
@@ -157,7 +156,7 @@ function EventsPage() {
 					{/* voy a ver si puedo hacer el metodo desde aca y despues lo paso a componente */}
 					{/* <Search placeholder={'Buscar eventos por nombre y apellido del orientado'}/> */}
 					<label className='relative block w-full lap_tablet:w-3/5'>
-						<input className='placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' placeholder={'Buscar eventos por nombre y apellido del orientado'} type='text' name='search'/>
+						<input className='placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' placeholder={'Buscar eventos por nombre y apellido del orientado'} type='text' name='search' onChange={handleSearch}/>
 						<span className='sr-only'>Search</span>
 						<span className='absolute inset-y-0 right-0 flex items-center pr-2'>
 							<img src={Icon_Search} alt='Icon_Search' />  
@@ -201,8 +200,8 @@ function EventsPage() {
 						</thead>
 						<tbody className=''>
 							{
-								!eventList ? 'No hay eventos'
-								: (eventList.map((event,index)=>(
+								!eventsToShow ? 'No hay eventos'
+								: (eventsToShow.map((event,index)=>(
 									<TableRow event={event}/>
 								))
 								)
