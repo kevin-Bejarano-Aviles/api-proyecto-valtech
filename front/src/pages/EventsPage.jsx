@@ -2,11 +2,10 @@ import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
 import {  useNavigate } from 'react-router-dom';
-import Icon_Search from '../img/Icon_search.svg';
 import Icon_arrow_left from '../img/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
 import TableRow from '../components/TableRow';
-
+import Search from '../components/Search'
 function EventsPage() {
 	const eventList=[
 		{
@@ -129,7 +128,7 @@ function EventsPage() {
                 </div>
                 <div className='mt-5'>
                     <p className='text-blue text-xl font-semibold'>Buscar eventos de un orientado</p>
-                
+					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'}/>
 				</div>
                 {/* tablita para mostrar eventos */}
                 {/* tabla container*/}
