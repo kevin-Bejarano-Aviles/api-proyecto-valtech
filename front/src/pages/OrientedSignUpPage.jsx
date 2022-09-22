@@ -41,7 +41,6 @@ function OrientedSignUpPage() {
   );
 
   useEffect(() => {
-    console.log(watch())
     if (
       watch().address === '' ||
       watch().age === '' ||

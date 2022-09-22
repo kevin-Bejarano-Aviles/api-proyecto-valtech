@@ -6,10 +6,12 @@ import Menu from '../components/Menu';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Alert from '../components/Alert';
 
 function Oriented() {
   const params = useParams();
   const [user, setUser] = useState([]);
+  const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
 
   const getAllStudents = async () => {
@@ -33,7 +35,7 @@ function Oriented() {
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
-        <main className='mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 pb-12'>
+        <main className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${showAlert ? 'pb-24' : 'pb-7'}`}>
           <section> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
@@ -88,8 +90,8 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Create a user and a password */}
-            <h2 className='mb-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
+          <section> {/* User and a password */}
+            <h2 className='mb-4 text-2xl font-bold'>03. Usuario y contraseña</h2>
             <div className='flex flex-col gap-2'>
               <div className='flex flex-col gap-2'>
                 <p className='text-xs text-gray-400'>USUARIO</p>
@@ -104,6 +106,11 @@ function Oriented() {
           <Link to={`/orientados/${user.id}/asignar-orientador`}>
             <Button type='button' name='Asignar orientador/a' />
           </Link>
+          {
+            (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)
+            ? <Alert message='El orientado fue ingresado con éxito.' onclick={() => setShowAlert(false)} />
+            : ''
+          }
         </main>
       </div>
     </div>
