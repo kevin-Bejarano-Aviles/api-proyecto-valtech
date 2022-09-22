@@ -130,7 +130,7 @@ function OrientedSignUpPage() {
         <main className='pb-12 mx-12'>
           <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <section className='mt-12'> {/* Basic information */}
-              <h2 className='my-4 text-2xl font-bold'>01. Información básica</h2>
+              <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
               <div className={`flex gap-4 mobile:flex-col ${(!formError.avatar) ? 'tablet:flex-row': ''}`}>
                 <div className={`${(errors.avatar || formError.avatar) ? 'mobile:' : ''}`}>
                   <label htmlFor='inputFile'>
@@ -258,7 +258,7 @@ function OrientedSignUpPage() {
               </div>
             </section>
             <section className='mt-12'> {/* Personal information */}
-              <h2 className='my-4 text-2xl font-bold'>02. Datos personales</h2>
+              <h2 className='my-4 text-2xl font-medium'>02. Datos personales</h2>
               <div className='flex gap-4 mobile:flex-col'>
                 <div className='flex gap-3 mobile:flex-col tablet:flex-row'>
                   <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
@@ -386,7 +386,7 @@ function OrientedSignUpPage() {
               </div>
             </section>
             <section className='mt-16'> {/* Create a username and a password */}
-              <h2 className='my-4 text-2xl font-bold'>03. Crear usuario y contraseña</h2>
+              <h2 className='my-4 text-2xl font-medium'>03. Crear usuario y contraseña</h2>
               <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-1'>
                   <label htmlFor='username'>Usuario</label>
