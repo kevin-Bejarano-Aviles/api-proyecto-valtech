@@ -17,6 +17,7 @@ module.exports = {
         backgroundGray:'#E9F9F8',
         hoverlogout:'#F8FAFC',
         colorList:'#0088ff',
+        bgTable:'#E8EFF6'
       },
       screens: {
         'mobile': '360px',
