@@ -3,7 +3,7 @@ const adminModel = require('../models/adminModel');
 //Require bcrypt for password
 const bcryptjs = require('bcryptjs');
 //create a generic password
-let pass = '123456789';
+let pass = '4R8u$t47';
 //create an admin user with values for admin table on mysql
 const admin = {
     fullName : 'Sofia Serrano',
