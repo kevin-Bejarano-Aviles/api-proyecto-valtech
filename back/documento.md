@@ -31,3 +31,9 @@
 - Para que sirve: Al llamar a la URL, el servidor elimina tanto la sesion del usuario como su cookie.
 - ESTADO: Metodo terminado.
 - Middlewares y validaciones implementados: middleware implementado - adminCheck - para usarlo debera estar logueado el amnistrador de otra manera no le enviara la respuesta.
+
+## URL: 'http://localhost:8000/admin/advisers'
+- Metodo http que se usa: 'GET'
+- Para que sirve: Al llamar al la url el servidor le envia todos los orientadores al cliente
+- ESTADO: Metodo terminado
+- Middlewares: middleware - adminCheck - implementado, para usarlo el administrador debera estar logueado.

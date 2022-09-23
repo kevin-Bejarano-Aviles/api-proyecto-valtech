@@ -114,10 +114,21 @@ const logOut = (req = request, res) => {
     });
 
 };
+//Method to get all the advisers
+const getAllAdvisers = async (req,res) => {
+    
+    try {
+        const advisers = await adviserModel.findAll();
+        res.json(advisers)
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+};
 
 //Export methods
 module.exports = {
     addStudent,
+    getAllAdvisers,
     getAllStudent,
     getStudent,
     login,
