@@ -31,9 +31,18 @@ function Profile() {
             </div>
 
               <div className='h-[320px] w-[400px] border-l-2'>
+
               <h2 className=' text-2xl'>{`${adminFirstName} ${adminSecondName}`}</h2>
-              <h6 className='text-sm text-lightgray'>Administradora</h6>
+              <h6 className='text-sm mt-2 mb-6 text-lightgray'>Administradora</h6>
+
               <h6 className='text-xs text-lightgray'>EMAIL</h6>
+              <h5 className='mb-6 mt-1'>guadalupegarcilazo@gmail.com</h5>
+
+              <h6 className='text-xs text-lightgray'>TELÉFONO</h6>
+              <h5 className='mb-6 mt-1'>1553678990</h5>
+
+              <h6 className='text-xs text-lightgray'>LINKED IN</h6>
+              <h5 className='mb-6  mt-1'>Susana.garmendia</h5>
               </div>
           </div>
         </main>
