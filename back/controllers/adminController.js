@@ -31,7 +31,8 @@ const login = async (req, res) => {
         req.session.adminLog = {
             id: admin.id,
             fullName: admin.fullName,
-            avatar: admin.avatar
+            avatar: admin.avatar,
+            email: admin.email
         }
         let theAdmin = req.session.adminLog;
         res.json(theAdmin);
