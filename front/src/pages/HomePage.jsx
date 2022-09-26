@@ -10,6 +10,8 @@ function HomePage() {
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
 
+  console.log(admin);
+
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
