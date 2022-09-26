@@ -36,7 +36,6 @@ create table events(
     primary key(id),
     constraint fk_adviser foreign key(adviser_event_id) references advisers(id) on update cascade on delete cascade
 );
-
 create table students(
 	id int not null auto_increment,
     fullName varchar(500),
@@ -54,9 +53,14 @@ create table students(
     createdAt DATE,
     updatedAt DATE,
     adviserId int,
-    eventId int,
     primary key(id),
-    constraint fk_adviser_id foreign key(adviserId) references advisers(id) on update cascade on delete cascade,
-    constraint fk_envent foreign key(eventId) references events(id) on update cascade on delete cascade
+    constraint fk_adviser_id foreign key(adviserId) references advisers(id) on update cascade on delete cascade
 );
-
+create table students_events(
+	studentId int,
+    eventId int,
+    createdAt date,
+    updatedAt date,
+    constraint fk_studentEvent foreign key(studentId) references students(id) on update cascade on delete cascade,
+    constraint fk_eventStudent foreign key(eventId) references events(id) on update cascade on delete cascade
+);

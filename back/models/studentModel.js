@@ -16,7 +16,6 @@ const studentModel = db.define('students', {
     motive:{type:DataTypes.STRING},
     user:{type:DataTypes.STRING},
     password:{type:DataTypes.STRING},
-    eventId:{type:DataTypes.INTEGER},//association with event table
     adviserId:{type:DataTypes.INTEGER}//association with counselor table
 })
 //Export model

@@ -1,10 +1,12 @@
 //Require models and associations of the db
-const { adviserModel, eventModel, studentModel } = require('../models/associations')
+const { adviserModel, eventModel, studentModel,studentsEventsModel } = require('../models/associations');
+/* const studentEventModel = require('../models/studentEvent') */
 const AdminModel = require('../models/adminModel');
 const NewsModel = require('../models/newsModel');
 const db = require('../database/db');
 const fs = require('fs');
 const path = require('path');
+const {Op} = require('sequelize');
 //Require bcryptjs
 const bcryptjs = require('bcryptjs');
 //Require express validator 
@@ -125,7 +127,86 @@ const getAllAdvisers = async (req,res) => {
         res.status(500).json({error:error.message})
     }
 };
-
+const prueba =async(req,res)=>{
+    try {
+        const estudiantes = [{
+            id:1
+        },{
+            id:2
+        },{
+            id:3
+        }];
+        const even = await eventModel.create({
+            name:'asdasdasd',
+            detail:'hola qeu tal',
+            adviser_event_id:2
+        }); 
+        estudiantes.forEach(async(element)=>{
+            const student = await studentModel.findOne({
+                where:{
+                    id:element.id
+                }
+            });
+             await even.addStudent(student); 
+            console.log(student);
+        })
+        
+        
+        /* const evetn = await eventModel.findAll({
+            include:{
+                model:studentEventModel
+            }
+        })
+        res.json(evetn) */
+        res.json('evento creado');
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
+const pruebaVer = async(req,res)=>{
+    try {
+        const result = await eventModel.findAll({
+            include:[{
+                model:adviserModel,
+                attributes:['id','fullName']
+            },{
+                model:studentModel,
+                attributes:['id','fullName']
+            }]
+        })
+        
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
+const pruebaBuscar = async(req,res)=>{
+    const {student} = req.query;
+    try {
+       /*  const students = await studentModel.findAll({
+            where:{
+                fullName:{
+                    [Op.substring]:student
+                }
+            }
+            ,attributes:['id','fullName'],
+            include:{model:eventModel}
+        }); */
+        const events = await eventModel.findAll({
+            include:{
+                model:studentModel,
+                where:{
+                    fullName:{
+                        [Op.substring]:student
+                    }
+                }
+            }
+        })
+        res.json(events)
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
 //Export methods
 module.exports = {
     addStudent,
@@ -133,5 +214,8 @@ module.exports = {
     getAllStudent,
     getStudent,
     login,
-    logOut
+    logOut,
+    prueba,
+    pruebaVer,
+    pruebaBuscar
 };
