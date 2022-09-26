@@ -10,10 +10,15 @@ function CreateEventPage_copy() {
     time:'',
     detail:'',
     duration:'',
-    adviser_event_id:'',
-    
-  });
+    adviser_event_id:''  });
 
+  let checklis=[
+    {name:'opcion 1',checked:false},
+    {name:'opcion 2',checked:true}
+    
+  ]
+  const [checklist,setCheckbox]=useState(checklis);
+  
   const handleInput= (ev)=>{
     setDatos({
       ...datos,
@@ -26,7 +31,17 @@ function CreateEventPage_copy() {
     e.preventDefault();
     console.log(datos);
   }
-
+  
+  function toggle(value,id){
+    console.log(value);
+    console.log(id);
+    setCheckbox([
+      ...checklist,
+      checklist[id].checked=value
+    ])
+    console.log("valor cambiado");
+   
+  }
   return (
     <>
 
@@ -60,7 +75,19 @@ function CreateEventPage_copy() {
             <input  type='text' name='detail' placeholder='detalles' value={datos.detail} onChange={handleInput}/>
           </label>
           <div className='mt-5'>
-
+            <label htmlFor="">Opcion 1<input
+            id='0'
+            type="checkbox"
+            checked={checklist[0].checked}
+            onChange={e => toggle(e.target.checked,e.target.id)}
+          /></label>
+          <label htmlFor="">Opcion 2<input
+          id='1'
+            type="checkbox"
+            checked={checklist[1].checked}
+            onChange={e => toggle(e.target.checked,e.target.id)}
+          /></label>
+          
           <Button type='submit' name='log in' handleFunction={()=>console.log('se envio')} />        
         </div>
     </form>
