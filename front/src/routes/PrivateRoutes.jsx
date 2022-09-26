@@ -4,7 +4,7 @@ import Context from '../context/Context';
 
 function PrivateRoutes({children}) {
     const {estado}=useContext(Context)
-    return ( (estado)?children : <Navigate to='/inicio'/>  
+    return ( (estado)?children : <Navigate to='/'/>  
        
      );
 }

@@ -4,7 +4,7 @@ import Context from '../context/Context';
 
 function PublicRoutes({children}) {
     const {estado}=useContext(Context)
-    return ( (!estado)?children : <Navigate to='/'/>  
+    return ( (!estado)?children : <Navigate to='/inicio'/>  
        
      );
 }
