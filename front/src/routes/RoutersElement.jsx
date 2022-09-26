@@ -13,6 +13,7 @@ import AssignCounselorPage from '../pages/AssignCounselorPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
+import CreateEventPage_copy from '../pages/CreateEventPage_copy'
 
 function RoutersElement() {
     return (
@@ -32,7 +33,9 @@ function RoutersElement() {
   
         <Route path='/eventos' element={<PrivateRoutes><EventsPage/></PrivateRoutes>} />
         <Route path='/eventos/crear-evento' element={<PrivateRoutes><CreateEventPage /></PrivateRoutes>} />
-  
+        <Route path='/eventos/crear-evento-copia' element={<PrivateRoutes><CreateEventPage_copy /></PrivateRoutes>} />
+
+
         <Route path='*' element={<ErrorPage />} />
 
       </Routes>
