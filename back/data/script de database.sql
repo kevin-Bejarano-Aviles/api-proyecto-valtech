@@ -11,15 +11,6 @@ create table admins(
     updatedAt DATE,
     primary key(id)
 );
-CREATE TABLE news(
-	id int not null auto_increment,
-    title varchar(100),
-    content varchar(500),
-    image varchar(250),
-    createdAt DATE,
-    updatedAt DATE,
-    primary key(id)
-);
 
 CREATE TABLE advisers(
 	id int not null auto_increment,
