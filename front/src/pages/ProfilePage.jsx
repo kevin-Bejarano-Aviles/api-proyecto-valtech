@@ -10,7 +10,6 @@ function Profile() {
   const adminSecondName = admin.fullName.split(' ')[1];
   const adminEmail = admin.email;
   
-
   return (
    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
@@ -29,7 +28,6 @@ function Profile() {
               picture={ProfilePictureHeader}
               alt='Admin'/>
             </div>
-
               <div className='h-[320px] w-[400px] border-l-2 pl-4 py-5'>
 
               <h2 className=' text-2xl'>{`${adminFirstName} ${adminSecondName}`}</h2>

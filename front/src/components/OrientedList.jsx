@@ -14,6 +14,7 @@ function OrientedList() {
   const [users, setUsers] = useState(null);
 
   const [seeMore, setSeeMore] = useState(false);
+  
   const login = ()=>{
     deslogearme()
     navigate('/login',{replace:true})
@@ -51,7 +52,9 @@ function OrientedList() {
           className='ml-2 h-4 max-w-max underline cursor-pointer'
           onClick={() => setSeeMore(!seeMore)}
         >
-          {seeMore ? 'Ver menos orientados' : 'Ver más orientados'}
+          {seeMore ? 'Ver menos orientados' : 'Ver más orientados'
+          
+          }
         </span>
         <div className='relative -z-10 bottom-[11px] h-3 bg-yellow'></div>
       
