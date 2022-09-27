@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 //Require our methods from admin controllers
-const  {addStudent, getAllStudent, login, logOut, getStudent, getAllAdvisers, prueba, pruebaVer, pruebaBuscar} = require('../controllers/adminController.js');
+const  {addStudent, getAllStudent, login, logOut, getStudent, getAllAdvisers,assignAdviser, createEvent} = require('../controllers/adminController.js');
 //Require our middlewares
 const createAdmin = require('../middlewares/createAdmin'); // create admin user on database
 const adminCheck = require('../middlewares/adminCheck'); // require admin checks
@@ -17,8 +17,7 @@ router.get('/students/:id',adminCheck,getStudent);
 router.post('/adminLogin',createAdmin,createAdvisers,login);
 router.get('/logOut',adminCheck, logOut);
 router.get('/advisers',adminCheck,getAllAdvisers);
-router.post('/pruebaCrear',prueba)
-router.get('/pruebaVer',pruebaVer)
-router.get('/event',pruebaBuscar)
+router.post('/addEvent',createEvent);
+router.put('/assignAdviser/:id',assignAdviser);
 //Export router
 module.exports = router;
