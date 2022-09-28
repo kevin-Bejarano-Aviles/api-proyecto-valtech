@@ -75,7 +75,7 @@ function CreateEventPage() {
   const { register, handleSubmit, watch, setValue } = useForm(
     {
       // defaultValues: {
-      //   adviser: '3',
+      //   adviser_event_id: '3',
       //   date: '2022-09-28',
       //   datail: 'Event detail',
       //   duration: '120',
@@ -95,7 +95,7 @@ function CreateEventPage() {
   useEffect(() => {
     if (
       watch().name === '' ||
-      typeof watch().adviser === 'undefined' ||
+      typeof watch().adviser_event_id === 'undefined' ||
       (typeof watch().students === 'undefined' || watch().students.length === 0) ||
       watch().date === '' ||
       typeof watch().time === 'undefined' ||
@@ -112,12 +112,11 @@ function CreateEventPage() {
   // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    data.students = selectedStudents;
-    data.adviser = selectedAdviser;
+    // data.students = selectedStudents;
+    // data.adviser_event_id = selectedAdviser;
     data.time = selectedTime.join(':');
-    data.duration = selectedDuration;
-    console.log(data);
-    // postStudent(data, e);
+    // data.duration = selectedDuration;
+    postStudent(data, e);
   };
 
   // Function to send a new student.
@@ -125,20 +124,18 @@ function CreateEventPage() {
     try {
       let options = {
           method: 'POST',
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
           withCredentials: true,
-          data: {
-            ...data,
-            students: e.target.students.value,
-          }
+          data: {...data}
       };
       console.log(options.data);
-      // const response = await axios('http://localhost:8000/admin/addStudent', options);
+      const response = await axios('http://localhost:8000/admin/addEvent', options);
+      console.log(response.data);
       // setFormError(response.data);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
       console.log(err);
-      setFormError(err.response.data);
+      // setFormError(err.response.data);
     }
   };
 
@@ -173,7 +170,7 @@ function CreateEventPage() {
   };
 
   const handleSelectedAdviser = e => {
-    setValue('adviser', e.target.value);
+    setValue('adviser_event_id', e.target.value);
     setSelectedAdviser(e.target.value);
     document.getElementById('adviser').innerText = e.target.innerText;
     setIsAdviserVisibled(false);
@@ -242,9 +239,9 @@ function CreateEventPage() {
                 <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='adviser' className='text-sm'>Orientador participante</label>
                   <div
-                    {...register('adviser')}
+                    {...register('adviser_event_id')}
                     id='adviser'
-                    className={`mobile:w-full tablet:max-w-[320px] flex items-center pl-3 pr-2 h-10 text-sm rounded-lg appearance-none bg-no-repeat bg-[right_10px_center] border-2 cursor-pointer ${formError.adviser ? 'border-red-500' : ''} ${adviserStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isAdviserVisibled ? 'border-green' : ''}`}
+                    className={`mobile:w-full tablet:max-w-[320px] flex items-center pl-3 pr-2 h-10 text-sm rounded-lg appearance-none bg-no-repeat bg-[right_10px_center] border-2 cursor-pointer ${formError.adviser_event_id ? 'border-red-500' : ''} ${adviserStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isAdviserVisibled ? 'border-green' : ''}`}
                     onClick={e => {
                       setIsAdviserVisibled(!isAdviserVisibled);
                       setIsStudentVisibled(false);
@@ -267,8 +264,8 @@ function CreateEventPage() {
                     ))}
                   </ul>
                   <span className='flex gap-1 text-red-500'>
-                    {formError.adviser ? (<img src={iconError} className='self-start relative top-1' />) : ''}
-                    {formError.adviser ? formError.adviser.msg : ''}
+                    {formError.adviser_event_id ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.adviser_event_id ? formError.adviser_event_id.msg : ''}
                   </span>
                 </div>
                 <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
@@ -455,7 +452,7 @@ function CreateEventPage() {
                       setIsTimeVisibled(false);
                     }}
                   >
-                    <div id='duration'>Seleccionar duración</div>
+                    <div {...duration} id='duration'>Seleccionar duración</div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
                   <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isDurationVisibled ? '' : 'hidden'}`}>
