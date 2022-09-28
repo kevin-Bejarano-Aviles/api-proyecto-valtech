@@ -4,7 +4,21 @@ import Button from '../components/Button';
 
 
 function CreateEventPage_copy() {
-  
+  const [students, setStudents] = useState([]);
+  const [studentsEvent, setStudentsEvents] = useState([]);
+
+
+  const getAllStudents = async () => {
+    
+    try {
+      const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
+      setStudents(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.error(`${err.response.status}: ${err.response.statusText}`);
+    }
+  };
+
   const [datos,setDatos] = useState({
     name:'',
     date:'',
@@ -13,12 +27,12 @@ function CreateEventPage_copy() {
     duration:'',
     adviser_event_id:''  });
 
-  let checklis=[
-    {name:'opcion 1',checked:false},
-    {name:'opcion 2',checked:true}
+  // let checklis=[
+  //   {name:'opcion 1',checked:false},
+  //   {name:'opcion 2',checked:true}
     
-  ]
-  const [checklist,setCheckbox]=useState(checklis);
+  // ]
+  // const [checklist,setCheckbox]=useState(checklis);
   
   const handleInput= (ev)=>{
     setDatos({
@@ -36,18 +50,33 @@ function CreateEventPage_copy() {
   function toggle(value,id){
     console.log(value);
     console.log(id);
-    setCheckbox([
-      ...checklist,
-      checklist[id].checked=value
-    ])
+    // setCheckbox([
+    //   ...checklist,
+    //   checklist[id].checked=value
+    // ])
     console.log("valor cambiado");
-   
+    // let find=studentsEvent.includes(toString(id))
+    // console.log(find);
+   if (value===true) {
+    setStudentsEvents([...studentsEvent,id])
+    console.log(studentsEvent);
+
+   }
+   else{
+    let listanew=studentsEvent.filter(student=> student.id===id);
+    setStudentsEvents(...listanew)
+    console.log(studentsEvent);
+
+   }
   }
+  useEffect(()=>{
+    getAllStudents()
+  },[])
   return (
     <>
 
     <div>CreateEventPage_copy</div>
-    <form onSubmit={alerta}>
+    <form >
           <label className='flex flex-col mt-2 mb-5'>
             <p >Nombre evento</p>
             <input  type='text' name='name' placeholder='name' value={datos.email} onChange={handleInput}/>
@@ -75,8 +104,9 @@ function CreateEventPage_copy() {
             <p >Detalles</p>
             <input  type='text' name='detail' placeholder='detalles' value={datos.detail} onChange={handleInput}/>
           </label>
+
           <div className='mt-5'>
-            <label htmlFor="">Opcion 1<input
+            {/* <label htmlFor="">Opcion 1<input
             id='0'
             type="checkbox"
             checked={checklist[0].checked}
@@ -87,8 +117,34 @@ function CreateEventPage_copy() {
             type="checkbox"
             checked={checklist[1].checked}
             onChange={e => toggle(e.target.checked,e.target.id)}
-          /></label>
+          /></label> */}
+          <ul>
+          {students.map(student => (
+                      <li key={student.id} className={`${student.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3`}>
+                        
+                        <label
+                          className='relative pl-6 w-full cursor-pointer label-checked'
+                        >
+                            {student.fullName}
+                            <input
+                        className='hidden input-checked'
+                          type='checkbox'
+                          name={JSON.stringify(student)}
+                          id={student.id}
+                          onClick={(e) => {
+                            toggle(e.target.checked,e.target.id);
+                          }}
+                        />
+                        </label>
+                      </li>
+          ))}
+         </ul>
+          {
+            studentsEvent &&
           
+            studentsEvent[0]
+            
+          }
           <Button type='submit' name='log in' handleFunction={()=>console.log('se envio')} />        
         </div>
     </form>
