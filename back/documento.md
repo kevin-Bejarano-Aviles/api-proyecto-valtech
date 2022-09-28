@@ -37,3 +37,34 @@
 - Para que sirve: Al llamar al la url el servidor le envia todos los orientadores al cliente
 - ESTADO: Metodo terminado
 - Middlewares: middleware - adminCheck - implementado, para usarlo el administrador debera estar logueado.
+
+## URL: 'http://localhost:8000/admin/assignAdviser/:id'
+- Metodo http que se usa: 'PUT'
+- Para que sirve: Con este metodo el administrador podrá asignar un orientador(id pasado por req.body) a un estudiante, mediante su id pasado por la url
+- ESTADO: Metodo en fase de prueba
+- Middlewares: Aun no 
+
+## URL: 'http://localhost:8000/admin/addEvent'
+- Metodo http que se usa: 'POST'.
+- Para que sirve: El administrador(cliente) le envia cierta cantidad de datos al servidor para crear un evento entro ellos estan:
+    - Un array de objetos llamada 'students' que tienen la propiedad 'id' con su numero de id
+    - El nombre del evento
+    - La fecha del evento con este formato (YYYY-MMMM-DDDD)
+    - La hora del evento con el formato (HH:MM)
+    - El tiempo que dura el evento con como int
+    - EL detalle del evento,
+    - El id del orientador que dara el evento
+
+- ESTADO: Metodo en fase de prueba
+- Middlewares o validaciones: Aun no
+## URL: 'http://localhost:8000/admin/events'
+- Metodo http que se usa: 'GET'.
+- Para que sirve: El cliente va a poder ver todos los eventos creados hasta el momento
+- ESTADO: Metodo en fase de prueba
+- Middlewares: Aun no
+
+## URL: 'http://localhost:8000/admin/deleteEvent/:id'
+- Metodo http que se usa: 'DELETE'.
+- Para que sirve: El cliente va a poder eliminar el evento mediante su id.
+- ESTADO: Metodo en fase de prueba
+- Middlewares: Aun no

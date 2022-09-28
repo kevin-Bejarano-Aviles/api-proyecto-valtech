@@ -1,11 +1,22 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import iconDelete from '../img/Icon_delete.svg';
 
 
 function TableRow({event}) {
-    let date=event.date;
-    let datestring=''
-    function convertDate(){
+
+    const deleteEvent = async ()=>{
+        try {
+            const response = await axios.delete(`http://localhost:8000/admin/deleteEvent/${event.id}`)
+            console.log(response);
+        } catch (error) {
+            console.error(error.response)
+        }
+    }
+
+    function convertDate(date){
+            let datestring=''
+
         for (let index = 0; index < date.length; index++) {
             const element = date[index];
             if(element==='-'){
@@ -18,12 +29,12 @@ function TableRow({event}) {
         return datestring;
     }
     
-    convertDate()
+    
     return ( 
     <tr className='bg-transparent hover:bg-bgTable ' key={event.id}>
     <td class='px-5 py-5 border-b border-gray-200  text-sm'>
         <div class='flex items-center'>
-                <p className='text-blue'>{datestring} </p>
+                <p className='text-blue'>{convertDate(event.date)} </p>
             </div>
     </td>
     <td class='px-5 py-5 border-b border-gray-200  text-sm'>
@@ -39,10 +50,10 @@ function TableRow({event}) {
             class='relative inline-block  text-blue leading-tight'>
             <span aria-hidden
                 class='absolute inset-0 bg-green-200 opacity-50 rounded-full'></span>
-        <span class='relative'>{event.participatingCounselor}</span>
+        <span class='relative'>{event.adviser.fullName}</span>
         </span>
     </td>
-    <td class='px-5 py-5 border-b border-gray-200  text-sm cursor-pointer'>
+    <td class='px-5 py-5 border-b border-gray-200  text-sm cursor-pointer' onClick={deleteEvent}>
         <img src={iconDelete} alt="" />									
     </td>
     
