@@ -137,7 +137,7 @@ const assignAdviser = async (req,res) => {
             id : id
         }
        });
-       res.status(200)
+       res.status(200).json('ok')
     } catch (error) {
         res.status(500).json({error:error.message})
     }
@@ -145,11 +145,12 @@ const assignAdviser = async (req,res) => {
 
 const createEvent = async (req,res) => {
     try {
-        const {students,name,date,time,duration,adviser_event_id} = req.body
+        const {students,name,date,time,detail,duration,adviser_event_id} = req.body
         const event = await eventModel.create({
             name : name,
             date : date,
             time : time,
+            detail:detail,
             duration : duration,
             adviser_event_id : adviser_event_id
         });
@@ -160,20 +161,96 @@ const createEvent = async (req,res) => {
                } 
             })
             await event.addStudent(student); 
-            console.log(student);
         })
     res.json('Event created');
     } catch (error) {
         res.status(500).json({error:error.message})
     }
 };
+const getAllEvents = async(req,res)=>{
+    try {
+        const events = await eventModel.findAll({
+            include:[{
+                model:adviserModel,
+                attributes:['id','fullName']
+            },{
+                model:studentModel,
+                attributes:['id','fullName']
+            }]
+        });
+        res.json({events,cant:events.length});
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
+const eventByStudent = async(req,res)=>{
+    const {student} = req.query;
+    try {
+        const events = await eventModel.findAll({
+            include:{
+                model:studentModel,
+                where:{
+                    fullName:{
+                        [Op.substring]:student
+                    }
+                },
+                attributes:['id','fullName']
+            }
+        });
+        if(events.length<1){
+            return res.status(404).json({message:'No se encontraron resultados'})
+        }
+        res.json(events);
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+};
+const deleteEvent = async(req,res)=>{
+    const {id} = req.params;
+    try {
+        const event = await eventModel.destroy({
+            where:{
+                id:id
+            }
+        });
+        //tal vez se va
+        if(!event){
+            return res.status(404).json({message:'No se puede eliminar el evento porque no existe en la base de datos'})
+        }
+        res.json({message:'Evento eliminado'});
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
+const pruebaPag = async(req,res)=>{
+    const {from=0,limit=4,student=''} = req.query;
+    try {
+        const allStudent = await studentModel.findAll({
+            where:{
+                fullName:{
+                    [Op.substring]:student
+                }
+            },
+            offset:Number(from),
+            limit:Number(limit)
+        });
+        if(allStudent.length<1){
+            return res.status(404).json({message:'No se encontraron resultados'})
+        }
+        res.json({allStudent,cant:allStudent.length});
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+}
 
 //Export methods
 module.exports = {
     addStudent,
     assignAdviser,
     createEvent,
+    deleteEvent,
     getAllAdvisers,
+    getAllEvents,
     getAllStudent,
     getStudent,
     login,
