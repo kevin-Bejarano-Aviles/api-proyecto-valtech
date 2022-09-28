@@ -4,10 +4,8 @@ import Menu from '../components/Menu';
 import {  useNavigate } from 'react-router-dom';
 import Icon_arrow_left from '../img/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
-import TableRow from '../components/TableRow';
 import Search from '../components/Search';
 import Icon_Search from '../img/Icon_search.svg';
-import eventServices from '../services/events'
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -24,7 +22,7 @@ function EventsPage() {
 	const [cantEvents,setCantEvents]=useState(0);
 	const [banSearch,SetBandSearch]=useState(false);
 	const [initrange,setRange]=useState(0)
-
+	const [orderListband,SetOrderListband]=useState(true);
 	//show all events
 	const [showAll, setShowAll] = useState(false);
 	//Show only the event that has the name of the target I want to see
@@ -56,20 +54,21 @@ function EventsPage() {
         }
     }
 
-	function convertDate(date){
-        let datestring=''
-        for (let index = 0; index < date.length; index++) {
-            const element = date[index];
-            if(element==='-'){
-                datestring=datestring+'/'
-            }
-            else{
-                datestring=datestring+element;
-            }
-        }
-        return datestring;
-    }
-    
+	
+    function orderList(list){
+		console.log('ordenando lista');
+		let array;
+		if(orderListband){
+			console.log('menor');
+			array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
+		}
+		else{
+			console.log('mayor');
+
+			array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
+		}
+		setEventsList(array)
+	}
 
 	const handleSearch = (event)=>{
 		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
@@ -114,27 +113,67 @@ function EventsPage() {
 	let eventsToShow=(showAll || search.length<1) 
 	
 	? newArray(eventList,initrange,initrange+8) 
-	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 ? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) : eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
+	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 
+		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
+		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
-	console.log(eventsToShow);
-	console.log(newArray(eventList,initrange,initrange+8));
+	
+	// console.log(newArray(eventList,initrange,initrange+8));
+	function convertDate(date){
+        let datestring=''
+        for (let index = 0; index < date.length; index++) {
+            const element = date[index];
+            if(element==='-'){
+                datestring=datestring+'/'
+            }
+            else{
+                datestring=datestring+element;
+            }
+        }
+        return datestring;
+    }
+
+	function converTime(time){
+		let timeArray=time.split(':')
+		let timeString=timeArray[0]+':'+timeArray[2]
+		return timeString;
+
+	}
+
+	function toggle(){
+		if(orderListband){
+			SetOrderListband(false)
+		}
+		else{
+			SetOrderListband(true)
+		}
+	}
 
 	useEffect(()=>{
-		if(search.length>=1){
+		if(search.length>0){
 			let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
 			setCantEvents(cant.length);
 			setRange(0);
 		}
+		else{
+			let cant=eventList.length
+			setCantEvents(cant)		}
 	},[search])
-
-	useEffect(()=>{
-		getallvents()
-	},[])
 
 	useEffect(()=>{
 		let cant=eventList.length
 		setCantEvents(cant)
 	},[eventList])
+
+	useEffect(()=>{
+		getallvents();
+		orderList(eventList);
+	},[])
+
+	useEffect(()=>{
+		orderList(eventList);
+	},[orderListband])
+
 	
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -175,7 +214,7 @@ function EventsPage() {
                     <table class='mt-2 min-w-full leading-normal rounded-lg'>
 						<thead className='rounded-full'>
 							<tr className='boder-t-2 rounded-full'>
-								<th
+								<th onClick={()=>toggle()}
 									class='px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
 									Fecha
 								</th>
@@ -209,7 +248,7 @@ function EventsPage() {
 													</div>
 											</td>
 											<td className='px-5 py-5 border-b border-gray-200  text-sm'>
-												<p className='text-blue whitespace-no-wrap'>{eve.time} hs</p>
+												<p className='text-blue whitespace-no-wrap'>{converTime(eve.time)} hs</p>
 											</td>
 											<td className='px-5 py-5 border-b border-gray-200  text-sm'>
 												<p className='text-blue whitespace-no-wrap'>

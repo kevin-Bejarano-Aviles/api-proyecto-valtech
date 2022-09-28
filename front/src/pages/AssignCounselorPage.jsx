@@ -15,6 +15,7 @@ function AssignCounselorPage() {
     try {
       let Orientador = await axios.get(`http://localhost:8000/admin/advisers`, { withCredentials: true });
       setOriented(Orientador.data);
+      console.log(Orientador.data);
       
     } catch (Orientador) {
       navigate('error');
