@@ -8,12 +8,33 @@ import iconError from '../img/icon_warning.svg';
 import iconArrow from '../img/list-control.svg';
 
 function CreateEventPage() {
+  // hooks for validations
   const [formError, setFormError] = useState({});
   const [isEmpty, setIsEmpty] = useState(false);
+  // hooks for APIs
   const [students, setStudents] = useState([]);
   const [advisers, setAdvisers] = useState([]);
-  const [isVisibled, setIsVisibled] = useState(false);
-  const [studentListInput, setStudentListInput] = useState([]);
+  // hooks to send data
+  const [selectedAdviser, setSelectedAdviser] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [selectedTime, setSelectedTime] = useState(['00', '00']);
+  const [selectedDuration, setSelectedDuration] = useState('0');
+  // hooks to show or hide elements
+  const [isStudentVisibled, setIsStudentVisibled] = useState(false);
+  const [isAdviserVisibled, setIsAdviserVisibled] = useState(false);
+  const [isTimeVisibled, setIsTimeVisibled] = useState(false);
+  const [isDurationVisibled, setIsDurationVisibled] = useState(false);
+  // hooks for styles
+  const [studentsStyle, setStudentsStyle] = useState(false);
+  const [adviserStyle, setAdviserStyle] = useState(false);
+  const [nameStyle, setNameStyle] = useState(false);
+  const [timeStyle, setTimeStyle] = useState(false);
+  const [durationStyle, setDurationStyle] = useState(false);
+  const [detailStyle, setDetailStyle] = useState(false);
+  // complementary hook
+  let [cont, setCont] = useState(0);
+  // styles for time input
+  const styleItem = 'h-10 flex items-center pl-3 truncate cursor-pointer hover:font-bold hover:text-green';
 
   useEffect(() => {
     getAllStudents();
@@ -25,17 +46,33 @@ function CreateEventPage() {
   },[formError]);
 
   useEffect(() => {
-    console.log('desde useEffect...');
-    console.log(studentListInput);
-  },[studentListInput]);
+    let selectedNames = [];
 
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm(
+    for (let element of selectedStudents) {
+      selectedNames = [...selectedNames, students.filter(student => student.id === element.id)[0].fullName];
+    }
+
+    const element = document.getElementById('students');
+
+    if (selectedNames.length === 0) {
+      element.innerText = 'Seleccionar orientados';
+      setStudentsStyle(false);
+    } else {
+      element.innerText = selectedNames.join(', ');
+      setStudentsStyle(true);
+    }
+  },[selectedStudents]);
+
+  useEffect(() => {
+    if (cont === 0) {
+      document.getElementById('time').innerText = 'Seleccionar horario'
+    } else {
+      document.getElementById('time').innerText = `${selectedTime.join(':')} hs`;
+    }
+    setCont(cont+1);
+  },[selectedTime]);
+
+  const { register, handleSubmit, watch, setValue } = useForm(
     {
       // defaultValues: {
       //   adviser: '3',
@@ -51,28 +88,34 @@ function CreateEventPage() {
     }
   );
 
+  const name = register('name');
+  const duration = register('duration');
+  const detail = register('detail');
+
   useEffect(() => {
-    // if (
-    //   watch().name === '' ||
-    //   watch().adviser === '' ||
-    //   watch().students === '' ||
-    //   watch().date === '' ||
-    //   watch().time === '' ||
-    //   watch().duration === '' ||
-    //   watch().detail === ''
-    // ) {
-    //   setIsEmpty(true);
-    // } else {
-    //   setIsEmpty(false);
-    // }
-    // console.log(watch());
-    // console.log(errors);
+    if (
+      watch().name === '' ||
+      typeof watch().adviser === 'undefined' ||
+      (typeof watch().students === 'undefined' || watch().students.length === 0) ||
+      watch().date === '' ||
+      typeof watch().time === 'undefined' ||
+      typeof watch().duration === 'undefined' ||
+      watch().detail === ''
+    ) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+    console.log(watch());
   },[watch()]);
 
   // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    data.students = studentListInput;
+    data.students = selectedStudents;
+    data.adviser = selectedAdviser;
+    data.time = selectedTime.join(':');
+    data.duration = selectedDuration;
     console.log(data);
     // postStudent(data, e);
   };
@@ -109,6 +152,7 @@ function CreateEventPage() {
     }
   };
 
+  // Function to bring all advisers.
   const getAllAdvisers = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/advisers', { withCredentials: true });
@@ -117,73 +161,42 @@ function CreateEventPage() {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
   };
-  // Function to change the background color of the input elements.
-  const changeBackgroundColor = e => {
-    if (e.target.value) {
-      e.target.classList.remove('bg-white');
-      e.target.classList.add('bg-inputbackground');
-      e.target.classList.add('text-black');
+
+  const editSelectedStudents = e => {
+    if (e.target.checked) {
+      setSelectedStudents([...selectedStudents, {id: parseInt(e.target.id)}]);
+      setValue('students', [...selectedStudents, {id: parseInt(e.target.id)}]);
     } else {
-      e.target.classList.add('bg-white');
-      e.target.classList.remove('bg-inputbackground');
+      setSelectedStudents(selectedStudents.filter(student => student.id !== parseInt(e.target.id)));
+      setValue('students', selectedStudents.filter(student => student.id !== parseInt(e.target.id)));
     }
   };
 
-  const editArray = (e) => {
-    console.log(e.target.checked);
-    e.target.checked ? addToArray(e.target.name) : removeFromArray(e.target.name);
+  const handleSelectedAdviser = e => {
+    setValue('adviser', e.target.value);
+    setSelectedAdviser(e.target.value);
+    document.getElementById('adviser').innerText = e.target.innerText;
+    setIsAdviserVisibled(false);
+    setAdviserStyle(true);
   };
 
-  const addToArray = (name) => {
-    console.log(name);
-    const newStudent = JSON.parse(name);
-    const data = { id: newStudent.id};
-    setStudentListInput([...studentListInput, data]);
-  };
-
-  const removeFromArray = (name) => {
-    const newStudent = JSON.parse(name);
-    const newStudentListInput = studentListInput.filter(student => student.id !== newStudent.id)
-    setStudentListInput(newStudentListInput);
-  };
-
-  const openWindow = () => {
-    setIsVisibled(!isVisibled);
-  };
-
-  const showStudents = (e) => {
-    console.log('desde el metodo...');
-    console.log(studentListInput);
-    if(isVisibled) {
-      let selectedStudents = [];
-      let selectedNames = [];
-
-      for (let object of studentListInput) {
-        selectedStudents = [...selectedStudents, students.filter(student => student.id === object.id)[0]];
-      }
-
-      setValue('students', selectedStudents);
-
-      for (let object of selectedStudents) {
-        selectedNames = [...selectedNames, object.fullName];
-      }
-
-      // console.log(selectedNames);
-
-      if (selectedNames.length === 0) {
-        // console.log('es 0');
-        // e.target.innerText = 'Seleccionar orientados';
-        // e.target.classList.remove('text-black');
-        // e.target.classList.add('text-lightgray');
-        // e.target.parentElement.classList.remove('bg-inputbackground');
-      } else {
-        // console.log('es + de 0');
-        let divElement = e.target.parentElement.parentElement.previousSibling.firstChild;
-        divElement.innerText = selectedNames.join(', ');
-        // e.target.classList.add('text-black');
-        // e.target.parentElement.classList.add('bg-inputbackground');
-      }
+  const handleSelectedTime = e => {
+    if (e.target.parentElement.id === 'hour') {
+      setSelectedTime([e.target.innerText, selectedTime[1]]);
+      setValue('time', [e.target.innerText, selectedTime[1]]);
+    } else {
+      setSelectedTime([selectedTime[0], e.target.innerText]);
+      setValue('time', [selectedTime[0], e.target.innerText])
     }
+    setTimeStyle(true);
+  };
+
+  const handleSelectedDuration = e => {
+    setValue('duration', e.target.value);
+    document.getElementById('duration').innerText = e.target.innerText;
+    setDurationStyle(true);
+    setIsDurationVisibled(false);
+    setSelectedDuration(e.target.value);
   };
 
   return (
@@ -201,94 +214,104 @@ function CreateEventPage() {
                 <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='event-name' className='text-sm'>Nombre del evento</label>
                   <input
-                    {...register('name', {
-                      required: 'Campo requerido',
-                      pattern: {
-                        value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ ]{2,200}$/,
-                        message: 'Min 2 caracteres'
-                      }
-                    })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 text-sm rounded-lg border-2 ${(errors.name || formError.name) ? 'border-red-500' : ''}`}
+                    className={`mobile:w-full tablet:max-w-[320px] p-3 h-10 text-sm rounded-lg border-2 focus:outline-green ${formError.name ? 'border-red-500' : ''} ${nameStyle ? 'bg-inputbackground' : ''}`}
                     type='text'
                     id='event-name'
                     placeholder='Ingresar nombre'
-                    onBlur={e => changeBackgroundColor(e)}
+                    {...name}
+                    onChange={e => {
+                      name.onChange(e);
+                      if (e.target.value) {
+                        setNameStyle(true);
+                      } else {
+                        setNameStyle(false);
+                      }
+                    }}
+                    onFocus={e => {
+                      setIsAdviserVisibled(false);
+                      setIsStudentVisibled(false);
+                      setIsTimeVisibled(false);
+                      setIsDurationVisibled(false);
+                    }}
                   />
                   <span className='flex gap-1 text-red-500'>
-                    {(errors.name || formError.name) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.name ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.name ? formError.name.msg : ''}
-                    {errors.name?.message}
                   </span>
                 </div>
-                <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+                <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='adviser' className='text-sm'>Orientador participante</label>
-                  <select
-                    {...register('adviser', {
-                      required: 'Selecciona un orientador',
-                    })}
-                    className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 text-sm rounded-lg text-lightgray appearance-none bg-no-repeat bg-[right_10px_center] border-2 cursor-pointer ${(errors.adviser || formError.adviser) ? 'border-red-500' : ''}`}
-                    style={{backgroundImage: `url(${iconArrow})`}}
-                    id='duration'
-                    onBlur={e => changeBackgroundColor(e)}
-                    onFocus={e => e.target.classList.add('text-black')}
+                  <div
+                    {...register('adviser')}
+                    id='adviser'
+                    className={`mobile:w-full tablet:max-w-[320px] flex items-center pl-3 pr-2 h-10 text-sm rounded-lg appearance-none bg-no-repeat bg-[right_10px_center] border-2 cursor-pointer ${formError.adviser ? 'border-red-500' : ''} ${adviserStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isAdviserVisibled ? 'border-green' : ''}`}
+                    onClick={e => {
+                      setIsAdviserVisibled(!isAdviserVisibled);
+                      setIsStudentVisibled(false);
+                      setIsTimeVisibled(false);
+                      setIsDurationVisibled(false);
+                    }}
                   >
-                    <option selected hidden value=''>Seleccionar orientador</option>
+                    Seleccionar orientador
+                  </div>
+                  <ul className={`absolute top-[72px] list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isAdviserVisibled ? '' : 'hidden'}`}>
                     {advisers.map(adviser => (
-                        <option key={adviser.id} value={adviser.id}>{adviser.fullName}</option>
+                        <li
+                          key={adviser.id}
+                          value={adviser.id}
+                          className={`${adviser.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3 truncate cursor-pointer hover:font-bold hover:text-green`}
+                          onClick={e => handleSelectedAdviser(e)}
+                        >
+                          {adviser.fullName}
+                        </li>
                     ))}
-                  </select>
+                  </ul>
                   <span className='flex gap-1 text-red-500'>
-                    {(errors.adviser || formError.adviser) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.adviser ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.adviser ? formError.adviser.msg : ''}
-                    {errors.adviser?.message}
                   </span>
                 </div>
                 <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='students' className='text-sm'>Orientado/s participante/s</label>
                   <div
-                    className={`flex items-center h-10 border-2 rounded-lg overflow-hidden cursor-pointer ${(errors.students || formError.students) ? 'border-red-500' : ''} ${isVisibled ? 'border-green' : ''}`}
+                    className={`${formError.students ? 'border-red-500' : ''} ${isStudentVisibled ? 'border-green' : ''} ${studentsStyle ? 'bg-inputbackground' : ''} flex items-center h-10 border-2 rounded-lg overflow-hidden cursor-pointer`}
                   >
                     <div
-                      {...register('students', {
-                        required: 'Campo requerido'
-                      })}
-                      className={`mobile:w-full tablet:max-w-[320px] pl-2 text-sm  text-lightgray truncate`}
+                      {...register('students')}
+                      className={`mobile:w-full tablet:max-w-[320px] pl-2 text-sm truncate ${studentsStyle ? 'text-black' : 'text-lightgray'}`}
                       id='students'
-                      value={studentListInput}
-                      onClick={(e) => openWindow()}
+                      onClick={() => {
+                        setIsStudentVisibled(!isStudentVisibled);
+                        setIsAdviserVisibled(false);
+                        setIsTimeVisibled(false);
+                        setIsDurationVisibled(false);
+                      }}
                     >
                       Seleccionar orientados
                     </div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
-                  <ul className={`${isVisibled ? 'block' : 'hidden'} absolute top-[72px] w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg`}>
+                  <ul className={`${isStudentVisibled ? 'block' : 'hidden'} absolute top-[72px] w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg`}>
                     {students.map(student => (
                       <li key={student.id} className={`${student.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3`}>
                         <input
-                        className='hidden input-checked'
+                          className='input-checked'
                           type='checkbox'
-                          name={JSON.stringify(student)}
                           id={student.id}
-                          onClick={(e) => {
-                            editArray(e);
-                            setTimeout(() => {
-                              showStudents(e);
-                            }, 500);
-                          }}
+                          onClick={e => editSelectedStudents(e)}
                         />
                         <label
                           htmlFor={student.id}
                           className='relative pl-6 w-full cursor-pointer label-checked'
                         >
-                            {student.fullName}
+                          {student.fullName}
                         </label>
                       </li>
                     ))}
                   </ul>
                   <span className='flex gap-1 text-red-500'>
-                    {(errors.students || formError.students) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.students ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.students ? formError.students.msg : ''}
-                    {errors.students?.message}
                   </span>
                 </div>
               </div>
@@ -300,88 +323,340 @@ function CreateEventPage() {
                 <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='date' className='text-sm'>Fecha</label>
                   <input
-                    {...register('date', { required: false })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 text-sm rounded-lg border-2 ${(errors.date || formError.date) ? 'border-red-500' : ''}`}
+                    {...register('date')}
+                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 text-sm rounded-lg border-2 ${formError.date ? 'border-red-500' : ''}`}
                     type='date'
                     id='date'
                     placeholder='Ingresar fecha'
-                    onBlur={e => changeBackgroundColor(e)}
+                    // onBlur={e => changeInputStyles(e)}
                   />
                   <span className='flex gap-1 text-red-500'>
-                    {(errors.date || formError.date) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.date ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.date ? formError.date.msg : ''}
-                    {errors.date?.message}
                   </span>
                 </div>
-                <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-                  <label htmlFor='time' className='text-sm'>Horario</label>
-                  <input
-                    {...register('time', { required: false })}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 text-sm rounded-lg border-2 ${(errors.time || formError.time) ? 'border-red-500' : ''}`}
-                    type='time'
-                    min='00:00'
-                    max='23:00'
-                    id='time'
-                    placeholder='Seleccionar horario'
-                    onBlur={e => changeBackgroundColor(e)}
-                  />
-                  <span className='flex gap-1 text-red-500'>
-                    {(errors.time || formError.time) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
-                    {formError.time ? formError.time.msg : ''}
-                    {errors.time?.message}
-                  </span>
-                </div>
-                <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-                  <label htmlFor='duration' className='text-sm'>Duración</label>
-                  <select
-                    {...register('duration', {
-                      required: false,
-                    })}
-                    className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 text-sm rounded-lg text-lightgray appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(errors.duration || formError.duration) ? 'border-red-500' : ''}`}
-                    style={{backgroundImage: `url(${iconArrow})`}}
-                    id='duration'
-                    onBlur={e => changeBackgroundColor(e)}
-                    onFocus={e => e.target.classList.add('text-black')}
-                    onChangeCapture={e => e.target.classList.add('text-black')}
+                <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+                  <label htmlFor='time' className='relative -z-10 text-sm'>Horario</label>
+                  <div
+                    className={`mobile:w-full tablet:max-w-[320px] flex justify-between items-center pl-3 pr-2 h-10 text-sm rounded-lg border-2 cursor-pointer ${formError.time ? 'border-red-500' : ''} ${timeStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isTimeVisibled ? 'border-green' : ''}`}
+                    onClick={e => {
+                      setIsTimeVisibled(!isTimeVisibled);
+                      setIsStudentVisibled(false);
+                      setIsAdviserVisibled(false);
+                      setIsDurationVisibled(false);
+                    }}
                   >
-                    <option selected hidden value=''>Seleccionar duración</option>
-                    <option value='15'>00:15 hs</option>
-                    <option value='30'>00:30 hs</option>
-                    <option value='45'>00:45 hs</option>
-                    <option value='60'>1:00 hs</option>
-                    <option value='75'>1:15 hs</option>
-                    <option value='90'>1:30 hs</option>
-                    <option value='105'>1:45 hs</option>
-                    <option value='120'>2:00 hs</option>
-                    <option value='135'>2:15 hs</option>
-                    <option value='150'>2:30 hs</option>
-                    <option value='165'>2:45 hs</option>
-                    <option value='180'>3:00 hs</option>
-                    <option value='195'>3:15 hs</option>
-                    <option value='210'>3:30 hs</option>
-                    <option value='225'>3:45 hs</option>
-                    <option value='240'>4:00 hs</option>
-                    <option value='255'>4:15 hs</option>
-                    <option value='270'>4:30 hs</option>
-                    <option value='285'>4:45 hs</option>
-                    <option value='300'>5:00 hs</option>
-                    <option value='315'>5:15 hs</option>
-                    <option value='330'>5:30 hs</option>
-                    <option value='345'>5:45 hs</option>
-                    <option value='360'>6:00 hs</option>
-                    <option value='375'>6:15 hs</option>
-                    <option value='390'>6:30 hs</option>
-                    <option value='405'>6:45 hs</option>
-                    <option value='420'>7:00 hs</option>
-                    <option value='435'>7:15 hs</option>
-                    <option value='450'>7:30 hs</option>
-                    <option value='465'>7:45 hs</option>
-                    <option value='480'>8:00 hs</option>
-                  </select>
+                    <div {...register('time')} id='time'>Seleccionar horario</div>
+                    <img src={iconArrow} alt='' className='px-2 w-[32px]' />
+                  </div>
+                  <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isTimeVisibled ? '' : 'hidden'}`}>
+                    <ul className='overflow-auto basis-1/2' id='hour'>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>00</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>01</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>02</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>03</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>04</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>05</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>06</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>07</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>08</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>09</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>10</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>11</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>12</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>13</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>14</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>15</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>16</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>17</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>18</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>19</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>20</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>21</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>22</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>23</li>
+                    </ul>
+                    <ul className='overflow-auto basis-1/2' id='minute'>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>00</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>01</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>02</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>03</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>04</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>05</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>06</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>07</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>08</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>09</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>10</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>11</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>12</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>13</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>14</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>15</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>16</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>17</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>18</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>19</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>20</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>21</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>22</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>23</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>24</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>25</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>26</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>27</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>28</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>29</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>30</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>31</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>32</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>33</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>34</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>35</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>36</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>37</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>38</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>39</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>40</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>41</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>42</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>43</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>44</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>45</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>46</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>47</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>48</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>49</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>50</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>51</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>52</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>53</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>54</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>55</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>56</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>57</li>
+                      <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>58</li>
+                      <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>59</li>
+                    </ul>
+                  </div>
                   <span className='flex gap-1 text-red-500'>
-                    {(errors.duration || formError.duration) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.time ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                    {formError.time ? formError.time.msg : ''}
+                  </span>
+                </div>
+                <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+                  <label htmlFor='duration' className='relative -z-10 text-sm'>Duración</label>
+                  <div
+                    className={`mobile:w-full tablet:max-w-[320px] flex justify-between items-center pl-3 pr-2 h-10 text-sm rounded-lg border-2 cursor-pointer ${formError.duration ? 'border-red-500' : ''} ${durationStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isDurationVisibled ? 'border-green' : ''}`}
+                    onClick={e => {
+                      setIsDurationVisibled(!isDurationVisibled);
+                      setIsStudentVisibled(false);
+                      setIsAdviserVisibled(false);
+                      setIsTimeVisibled(false);
+                    }}
+                  >
+                    <div id='duration'>Seleccionar duración</div>
+                    <img src={iconArrow} alt='' className='px-2 w-[32px]' />
+                  </div>
+                  <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isDurationVisibled ? '' : 'hidden'}`}>
+                    <ul className='overflow-auto basis-full'>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='15'
+                        onClick={e => handleSelectedDuration(e)}>
+                          00:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='30'
+                        onClick={e => handleSelectedDuration(e)}>
+                          00:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='45'
+                        onClick={e => handleSelectedDuration(e)}>
+                          00:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='60'
+                        onClick={e => handleSelectedDuration(e)}>
+                          01:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='75'
+                        onClick={e => handleSelectedDuration(e)}>
+                          01:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='90'
+                        onClick={e => handleSelectedDuration(e)}>
+                          01:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='105'
+                        onClick={e => handleSelectedDuration(e)}>
+                          01:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='120'
+                        onClick={e => handleSelectedDuration(e)}>
+                          02:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='135'
+                        onClick={e => handleSelectedDuration(e)}>
+                          02:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='150'
+                        onClick={e => handleSelectedDuration(e)}>
+                          02:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='165'
+                        onClick={e => handleSelectedDuration(e)}>
+                          02:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='180'
+                        onClick={e => handleSelectedDuration(e)}>
+                          03:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='195'
+                        onClick={e => handleSelectedDuration(e)}>
+                          03:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='210'
+                        onClick={e => handleSelectedDuration(e)}>
+                          03:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='225'
+                        onClick={e => handleSelectedDuration(e)}>
+                          03:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='240'
+                        onClick={e => handleSelectedDuration(e)}>
+                          04:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='255'
+                        onClick={e => handleSelectedDuration(e)}>
+                          04:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='270'
+                        onClick={e => handleSelectedDuration(e)}>
+                          04:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='285'
+                        onClick={e => handleSelectedDuration(e)}>
+                          04:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='300'
+                        onClick={e => handleSelectedDuration(e)}>
+                          05:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='315'
+                        onClick={e => handleSelectedDuration(e)}>
+                          05:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='330'
+                        onClick={e => handleSelectedDuration(e)}>
+                          05:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='345'
+                        onClick={e => handleSelectedDuration(e)}>
+                          05:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='360'
+                        onClick={e => handleSelectedDuration(e)}>
+                          06:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='375'
+                        onClick={e => handleSelectedDuration(e)}>
+                          06:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='390'
+                        onClick={e => handleSelectedDuration(e)}>
+                          06:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='405'
+                        onClick={e => handleSelectedDuration(e)}>
+                          06:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='420'
+                        onClick={e => handleSelectedDuration(e)}>
+                          07:00 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='435'
+                        onClick={e => handleSelectedDuration(e)}>
+                          07:15 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='450'
+                        onClick={e => handleSelectedDuration(e)}>
+                          07:30 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-white`}
+                        value='465'
+                        onClick={e => handleSelectedDuration(e)}>
+                          07:45 hs
+                      </li>
+                      <li
+                        className={`${styleItem} bg-bgStudents`}
+                        value='480'
+                        onClick={e => handleSelectedDuration(e)}>
+                          08:00 hs
+                      </li>
+                    </ul>
+                  </div>
+                  <span className='flex gap-1 text-red-500'>
+                    {formError.duration ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.duration ? formError.duration.msg : ''}
-                    {errors.duration?.message}
                   </span>
                 </div>
               </div>
@@ -392,24 +667,26 @@ function CreateEventPage() {
               <div className='flex flex-col gap-1'>
                 <label htmlFor='detail' className='text-sm'>Comentarios del evento</label>
                 <textarea
-                  {...register('detail', {
-                    required: false,
-                    pattern: {
-                      value: /^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ., ]{2,500}$/,
-                      message: 'Campo inválido'
-                    }
-                  })}
-                  className={`border-2 mobile:w-full max-w-[656px] p-2 text-sm rounded-lg ${(errors.detail || formError.detail) ? 'border-red-500' : ''}`}
+                  {...detail}
+                  className={`border-2 mobile:w-full max-w-[656px] p-2 text-sm rounded-lg focus:outline-green ${formError.detail ? 'border-red-500' : ''} ${detailStyle ? 'bg-inputbackground text-black' : 'text-lightgray'}`}
                   id='detail'
                   cols='60'
                   rows='5'
                   placeholder='Escribir comentarios'
-                  onBlur={e => changeBackgroundColor(e)}
+                  onChange={e => {
+                    detail.onChange(e);
+                    e.target.value ? setDetailStyle(true) : setDetailStyle(false);
+                  }}
+                  onFocus={e => {
+                    setIsAdviserVisibled(false);
+                    setIsStudentVisibled(false);
+                    setIsTimeVisibled(false);
+                    setIsDurationVisibled(false);
+                  }}
                 ></textarea>
                 <span className='flex gap-1 text-red-500'>
-                  {(errors.detail || formError.detail) ? (<img src={iconError} className='self-start relative top-1' />) : ''}
+                  {formError.detail ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                   {formError.detail ? formError.detail.msg : ''}
-                  {errors.detail?.message}
                 </span>
               </div>
             </section>
