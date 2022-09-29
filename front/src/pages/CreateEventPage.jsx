@@ -6,9 +6,9 @@ import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
 import iconError from '../img/icon_warning.svg';
 import iconArrow from '../img/list-control.svg';
-// import iconSearch from '../img/icon-search.svg';
-
-import iconSearch from '../img/Icon_search.svg';
+import iconSearch from '../img/icon-search.svg';
+import Calendar from 'react-calendar';
+import '../Calendar.css';
 
 function CreateEventPage() {
   // hooks for validations
@@ -27,6 +27,7 @@ function CreateEventPage() {
   const [isAdviserVisibled, setIsAdviserVisibled] = useState(false);
   const [isTimeVisibled, setIsTimeVisibled] = useState(false);
   const [isDurationVisibled, setIsDurationVisibled] = useState(false);
+  const [isDateVisibled, setIsDateVisibled] = useState(false);
   // hooks for styles
   const [studentsStyle, setStudentsStyle] = useState(false);
   const [adviserStyle, setAdviserStyle] = useState(false);
@@ -34,6 +35,14 @@ function CreateEventPage() {
   const [timeStyle, setTimeStyle] = useState(false);
   const [durationStyle, setDurationStyle] = useState(false);
   const [detailStyle, setDetailStyle] = useState(false);
+  const [dateStyle, setDateStyle] = useState(false);
+  // hook for Calendar component
+  const [date, setDate] = useState(new Date());
+
+  const onChange = (date) => {
+    setDate(date);
+    setValue('date', `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`);
+  };
   // complementary hook
   let [cont, setCont] = useState(0);
   // styles for time input
@@ -320,16 +329,22 @@ function CreateEventPage() {
             <section className='mt-8 mb-8'> {/* Available days and times */}
               <h2 className='my-4 font-medium'>02. Días y Horarios disponibles</h2>
               <div className='flex gap-4 mobile:flex-col lap_tablet:flex-row'>
-                <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+                <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='date' className='text-sm'>Fecha</label>
-                  <input
-                    {...register('date')}
-                    className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 text-sm rounded-lg border-2 ${formError.date ? 'border-red-500' : ''}`}
-                    type='date'
-                    id='date'
-                    placeholder='Ingresar fecha'
-                    // onBlur={e => changeInputStyles(e)}
-                  />
+                  <div
+                    className={`mobile:w-full tablet:max-w-[320px] flex justify-between items-center pl-3 pr-2 h-10 text-sm rounded-lg border-2 cursor-pointer ${formError.date ? 'border-red-500' : ''} ${dateStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isDateVisibled ? 'border-green' : ''}`}
+                    onClick={() => {
+                      setIsDateVisibled(!isDateVisibled);
+                      setIsStudentVisibled(false);
+                      setIsAdviserVisibled(false);
+                      setIsDurationVisibled(false);
+                      setIsTimeVisibled(false);
+                    }}
+                  >
+                    <div {...register('date')} id='date' className='select-none'>Ingresar fecha</div>
+                    <img src={iconArrow} alt='' className='px-2 w-[32px]' />
+                  </div>
+                  <Calendar calendarType='US' locale='rm-sursilv' onChange={onChange} value={date} className={isDateVisibled ? 'block' : 'hidden'} />
                   <span className='flex gap-1 text-red-500'>
                     {formError.date ? (<img src={iconError} className='self-start relative top-1' />) : ''}
                     {formError.date ? formError.date.msg : ''}
@@ -346,7 +361,7 @@ function CreateEventPage() {
                       setIsDurationVisibled(false);
                     }}
                   >
-                    <div {...register('time')} id='time' className='select-none'>Seleccionar horario</div>
+                    <div {...register('time')} id='time' className='select-none truncate'>Seleccionar horario</div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
                   <div className={`absolute top-[72px] z-10 flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isTimeVisibled ? '' : 'hidden'}`}>
@@ -448,14 +463,14 @@ function CreateEventPage() {
                   <label htmlFor='duration' className='relative -z-10 text-sm'>Duración</label>
                   <div
                     className={`mobile:w-full tablet:max-w-[320px] flex justify-between items-center pl-3 pr-2 h-10 text-sm rounded-lg border-2 cursor-pointer ${formError.duration ? 'border-red-500' : ''} ${durationStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isDurationVisibled ? 'border-green' : ''}`}
-                    onClick={e => {
+                    onClick={() => {
                       setIsDurationVisibled(!isDurationVisibled);
                       setIsStudentVisibled(false);
                       setIsAdviserVisibled(false);
                       setIsTimeVisibled(false);
                     }}
                   >
-                    <div {...duration} id='duration' className='select-none'>Seleccionar duración</div>
+                    <div {...duration} id='duration' className='select-none truncate'>Seleccionar duración</div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
                   <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isDurationVisibled ? '' : 'hidden'}`}>
