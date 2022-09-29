@@ -6,6 +6,7 @@ import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
 import iconError from '../img/icon_warning.svg';
 import iconArrow from '../img/list-control.svg';
+import iconSearch from '../img/icon-search.svg';
 
 function CreateEventPage() {
   // hooks for validations
@@ -112,10 +113,7 @@ function CreateEventPage() {
   // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    // data.students = selectedStudents;
-    // data.adviser_event_id = selectedAdviser;
     data.time = selectedTime.join(':');
-    // data.duration = selectedDuration;
     postStudent(data, e);
   };
 
@@ -238,20 +236,23 @@ function CreateEventPage() {
                 </div>
                 <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
                   <label htmlFor='adviser' className='text-sm'>Orientador participante</label>
-                  <div
-                    {...register('adviser_event_id')}
-                    id='adviser'
-                    className={`mobile:w-full tablet:max-w-[320px] flex items-center pl-3 pr-2 h-10 text-sm rounded-lg appearance-none bg-no-repeat bg-[right_10px_center] border-2 cursor-pointer ${formError.adviser_event_id ? 'border-red-500' : ''} ${adviserStyle ? 'text-black bg-inputbackground' : 'text-lightgray'} ${isAdviserVisibled ? 'border-green' : ''}`}
-                    onClick={e => {
-                      setIsAdviserVisibled(!isAdviserVisibled);
-                      setIsStudentVisibled(false);
-                      setIsTimeVisibled(false);
-                      setIsDurationVisibled(false);
-                    }}
-                  >
-                    Seleccionar orientador
+                  <div className={`flex items-center h-10 rounded-lg cursor-pointer border-2 ${isAdviserVisibled ? 'border-green' : ''} ${adviserStyle ? 'text-black bg-inputbackground' : 'text-lightgray'}`}>
+                    <div
+                      {...register('adviser_event_id')}
+                      id='adviser'
+                      className={`mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate ${formError.adviser_event_id ? 'border-red-500' : ''}`}
+                      onClick={e => {
+                        setIsAdviserVisibled(!isAdviserVisibled);
+                        setIsStudentVisibled(false);
+                        setIsTimeVisibled(false);
+                        setIsDurationVisibled(false);
+                      }}
+                    >
+                      Seleccionar orientador
+                    </div>
+                    <img src={iconSearch} alt='' className='px-2' />
                   </div>
-                  <ul className={`absolute top-[72px] list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isAdviserVisibled ? '' : 'hidden'}`}>
+                  <ul className={`absolute top-[72px] z-10 list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isAdviserVisibled ? '' : 'hidden'}`}>
                     {advisers.map(adviser => (
                         <li
                           key={adviser.id}
@@ -275,7 +276,7 @@ function CreateEventPage() {
                   >
                     <div
                       {...register('students')}
-                      className={`mobile:w-full tablet:max-w-[320px] pl-2 text-sm truncate ${studentsStyle ? 'text-black' : 'text-lightgray'}`}
+                      className={`mobile:w-full tablet:max-w-[320px] pl-2 text-sm truncate select-none ${studentsStyle ? 'text-black' : 'text-lightgray'}`}
                       id='students'
                       onClick={() => {
                         setIsStudentVisibled(!isStudentVisibled);
@@ -286,7 +287,7 @@ function CreateEventPage() {
                     >
                       Seleccionar orientados
                     </div>
-                    <img src={iconArrow} alt='' className='px-2 w-[32px]' />
+                    <img src={iconSearch} alt='' className='px-2' />
                   </div>
                   <ul className={`${isStudentVisibled ? 'block' : 'hidden'} absolute top-[72px] w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg`}>
                     {students.map(student => (
@@ -343,10 +344,10 @@ function CreateEventPage() {
                       setIsDurationVisibled(false);
                     }}
                   >
-                    <div {...register('time')} id='time'>Seleccionar horario</div>
+                    <div {...register('time')} id='time' className='select-none'>Seleccionar horario</div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
-                  <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isTimeVisibled ? '' : 'hidden'}`}>
+                  <div className={`absolute top-[72px] z-10 flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isTimeVisibled ? '' : 'hidden'}`}>
                     <ul className='overflow-auto basis-1/2' id='hour'>
                       <li className={`${styleItem} bg-white`} onClick={e => handleSelectedTime(e)}>00</li>
                       <li className={`${styleItem} bg-bgStudents`} onClick={e => handleSelectedTime(e)}>01</li>
@@ -452,7 +453,7 @@ function CreateEventPage() {
                       setIsTimeVisibled(false);
                     }}
                   >
-                    <div {...duration} id='duration'>Seleccionar duración</div>
+                    <div {...duration} id='duration' className='select-none'>Seleccionar duración</div>
                     <img src={iconArrow} alt='' className='px-2 w-[32px]' />
                   </div>
                   <div className={`absolute top-[72px] flex list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${isDurationVisibled ? '' : 'hidden'}`}>
