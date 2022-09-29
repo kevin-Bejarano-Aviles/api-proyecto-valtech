@@ -33,8 +33,7 @@ function EventsPage() {
 		try{
 			const response = await axios.get('http://localhost:8000/admin/events')
 			console.log(response.data.events);
-			orderList(response.data.events)
-
+			setEventsList(response.data.events)
 		}
 		catch(err){
 			console.error(`${err.response.status}: ${err.response.statusText}`);
@@ -170,7 +169,7 @@ function EventsPage() {
 
 	useEffect(()=>{
 		getallvents();
-		toggle();
+		orderList(eventList);
 	},[])
 
 	useEffect(()=>{
