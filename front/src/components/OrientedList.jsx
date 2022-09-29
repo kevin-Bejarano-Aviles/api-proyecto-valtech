@@ -1,39 +1,10 @@
 import { useEffect, useState ,useContext} from 'react';
 import Oriented from './Oriented';
-import {Link, useNavigate} from 'react-router-dom'
-import axios from 'axios';
-import Context from '../context/Context';
-
-function OrientedList({asignOriented=false}) {
-  console.log(asignOriented);
-  const navigate = useNavigate();
-
-  const {deslogearme} = useContext(Context);
 
 
-  const [users, setUsers] = useState([]);
-  const [cantUsers,setCantusers]=useState(0);
+function OrientedList({asignOriented=false,users}) {
 
   const [seeMore, setSeeMore] = useState(false);
-  
-  const login = ()=>{
-    deslogearme()
-    navigate('/login',{replace:true})
-  }
-  const getAll = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/admin/students/', {withCredentials: true});
-      setUsers(response.data);
-    } catch (error) {
-      login();
-      console.log(error)
-    }
-  };
-
-  useEffect(() => {
-    getAll();
-  },[]);
-
 
   return (
     <div>
