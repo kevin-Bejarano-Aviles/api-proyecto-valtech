@@ -12,13 +12,18 @@ import axios from "axios";
 
 //see orientedList
 function Orienteds() {
+
   const navigate = useNavigate();
 
   const {deslogearme} = useContext(Context);
 
-  const [users, setUsers] = useState([]);
+  const [usersList, setUsers] = useState([]);
 
-  
+  const [search,SetSearch] = useState('');
+
+  const [showAll, setShowAll] = useState(true);
+
+
   const login = ()=>{
     deslogearme()
     navigate('/login',{replace:true})
@@ -32,10 +37,22 @@ function Orienteds() {
       console.log(error)
     }
   };
+  const handleSearch = (event)=>{
+		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
+		SetSearch(event.target.value)
+		if (search.length>1) {
+		  setShowAll(false)
+		}
+		else{
+		  setShowAll(true)
+		}
+	}
 
   useEffect(() => {
     getAll();
   },[]);
+
+  let users = showAll ? usersList : usersList.filter(user=>(user.fullName.toLowerCase()).includes(search.toLowerCase()));
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -57,7 +74,7 @@ function Orienteds() {
           </div>
 
               <div className="relative mt-8">
-              <Search placeholder={`Buscar orientado por nombre y apellido`}/>
+              <Search placeholder={`Buscar orientado por nombre y apellido`} handleChange={handleSearch}/>
               
               <OrientedList asignOriented={true} users={users}/>
               </div>
