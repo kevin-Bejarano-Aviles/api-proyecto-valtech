@@ -9,6 +9,8 @@ import Context from '../context/Context';
 import axios from 'axios';
 
 function HomePage() {
+
+
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
 

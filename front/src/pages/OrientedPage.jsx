@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Alert from '../components/Alert';
 
 function Oriented() {
+
   const params = useParams();
   const [user, setUser] = useState([]);
   const [showAlert, setShowAlert] = useState(true);
@@ -18,13 +19,15 @@ function Oriented() {
     try {
       let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
       setUser(res.data);
-      console.log(user);
+      // console.log(user);
     } catch (err) {
       navigate('error');
       let message = err.response.statusText || 'Ocurrió un error';
       console.log(message);
     }
   };
+
+
 
   useEffect(() => {
     getAllStudents();
@@ -108,8 +111,7 @@ function Oriented() {
           </Link>
           {
             (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)
-            ? <Alert message='El orientado fue ingresado con éxito.' onclick={() => setShowAlert(false)} />
-            : ''
+            && <Alert message='El orientado fue ingresado con éxito.' onclick={() => setShowAlert(false)} />
           }
         </main>
       </div>
