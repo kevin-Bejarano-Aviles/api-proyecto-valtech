@@ -4,10 +4,7 @@ import Menu from '../components/Menu';
 import {  useNavigate } from 'react-router-dom';
 import Icon_arrow_left from '../img/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
-import TableRow from '../components/TableRow';
 import Search from '../components/Search';
-import Icon_Search from '../img/Icon_search.svg';
-import eventServices from '../services/events'
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -24,18 +21,19 @@ function EventsPage() {
 	const [cantEvents,setCantEvents]=useState(0);
 	const [banSearch,SetBandSearch]=useState(false);
 	const [initrange,setRange]=useState(0)
-
+	const [orderListband,SetOrderListband]=useState(true);
 	//show all events
 	const [showAll, setShowAll] = useState(false);
 	//Show only the event that has the name of the target I want to see
 	const [search,SetSearch] = useState('');
+	const  [firsrtOrder,setFirstOrder]=useState(false);
+
 
 	const getallvents=async ()=>{
 		try{
 			const response = await axios.get('http://localhost:8000/admin/events')
 			console.log(response.data.events);
 			setEventsList(response.data.events)
-
 		}
 		catch(err){
 			console.error(`${err.response.status}: ${err.response.statusText}`);
@@ -46,7 +44,7 @@ function EventsPage() {
 
         try {
             const response = await axios.delete(`http://localhost:8000/admin/deleteEvent/${id}`)
-            let newArray=eventList.filter(event=> event.id!=id);
+            let newArray=eventList.filter(event=> event.id!==id);
 			setEventsList(newArray);
 			console.log(response);
 			console.log(id);
@@ -56,20 +54,25 @@ function EventsPage() {
         }
     }
 
-	function convertDate(date){
-        let datestring=''
-        for (let index = 0; index < date.length; index++) {
-            const element = date[index];
-            if(element==='-'){
-                datestring=datestring+'/'
-            }
-            else{
-                datestring=datestring+element;
-            }
-        }
-        return datestring;
-    }
-    
+	
+    function orderList(list){
+		console.log('ordenando lista');
+		let array;
+		if(!orderListband){
+			console.log('menor');
+			array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
+			console.log(array);
+
+		}
+		else{
+			console.log('mayor');
+
+			array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
+			console.log(array);
+
+		}
+		setEventsList(array)
+	}
 
 	const handleSearch = (event)=>{
 		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
@@ -99,7 +102,6 @@ function EventsPage() {
 
 	function newArray(arrayList,init,end){
 		let array=[]
-		console.log("el rango es de"+init+" a " + end);
 		if(end>arrayList.length){
 			end=arrayList.length;
 		}
@@ -110,32 +112,80 @@ function EventsPage() {
 		return array
 	}
 
-	//averiguar como hacer que se filter con el lower case
-	let eventsToShow=(showAll || search.length<1) 
-	
-	? newArray(eventList,initrange,initrange+8) 
-	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 ? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) : eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
-	console.log(eventsToShow);
-	console.log(newArray(eventList,initrange,initrange+8));
+	
+	// console.log(newArray(eventList,initrange,initrange+8));
+	function convertDate(date){
+        let datestring=''
+        for (let index = 0; index < date.length; index++) {
+            const element = date[index];
+            if(element==='-'){
+                datestring=datestring+'/'
+            }
+            else{
+                datestring=datestring+element;
+            }
+        }
+        return datestring;
+    }
+
+	function converTime(time){
+		let timeArray=time.split(':')
+		let timeString=timeArray[0]+':'+timeArray[2]
+		return timeString;
+
+	}
+
+
+	function toggle(){
+		
+		if(orderListband){
+			SetOrderListband(false)
+
+		}
+		else{
+			SetOrderListband(true)
+
+		}
+
+	}
 
 	useEffect(()=>{
-		if(search.length>=1){
+		if(search.length>0){
 			let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
 			setCantEvents(cant.length);
 			setRange(0);
 		}
+		else{
+			let cant=eventList.length
+			setCantEvents(cant)		}
 	},[search])
-
-	useEffect(()=>{
-		getallvents()
-	},[])
 
 	useEffect(()=>{
 		let cant=eventList.length
 		setCantEvents(cant)
+
 	},[eventList])
+
+	useEffect(()=>{
+		getallvents();
+		orderList(eventList);
+	},[])
+
+	useEffect(()=>{
+		orderList(eventList);
+
+	},[ orderListband])
 	
+	
+
+	let eventsToShow=(showAll || search.length<1) 
+	
+	? newArray(eventList,initrange,initrange+8) 
+	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 
+		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
+		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
+
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
@@ -175,25 +225,25 @@ function EventsPage() {
                     <table class='mt-2 min-w-full leading-normal rounded-lg'>
 						<thead className='rounded-full'>
 							<tr className='boder-t-2 rounded-full'>
-								<th
-									class='px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
+								<th onClick={()=> toggle()}
+									class='mobileM:px-5 px-1 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Fecha
 								</th>
 								<th
-									class='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
+									class=' px-3 mobileM:px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Horario
 								</th>
 								<th
-									class='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
+									class=' px-3 mobileM:px-5py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Evento
 								</th>
 								
 								<th
-									class='px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
+									class=' px-1 mobileM:px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Participante
 								</th>
                                 <th
-									class='px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs font-semibold text-green uppercase tracking-wider'>
+									class=' px-1 mobileM:px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									
 								</th>
 							</tr>
@@ -203,20 +253,20 @@ function EventsPage() {
 								eventsToShow.length===0 ? (showAll ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  '>No se encontro el evento con el orientado</p> )
 								: (eventsToShow.map((eve,index)=>(
 										<tr className='bg-transparent hover:bg-bgTable ' key={eve.id}>
-											<td className='px-5 py-5 border-b border-gray-200  text-sm'>
+											<td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
 												<div className='flex items-center'>
 														<p className='text-blue'>{convertDate(eve.date)} </p>
 													</div>
 											</td>
-											<td className='px-5 py-5 border-b border-gray-200  text-sm'>
-												<p className='text-blue whitespace-no-wrap'>{eve.time} hs</p>
+											<td className='border-b border-gray-200   text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
+												<p className='text-blue whitespace-no-wrap'>{converTime(eve.time)} hs</p>
 											</td>
-											<td className='px-5 py-5 border-b border-gray-200  text-sm'>
+											<td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
 												<p className='text-blue whitespace-no-wrap'>
 													{eve.name}
 												</p>
 												</td>
-												<td className='px-5 py-5 border-b border-gray-200  text-sm'>
+												<td className='border-b border-gray-200  text-xs mobileM:text-sm px-1 mobileM:px-5 py-5 '>
 												<span
 													className='relative inline-block  text-blue leading-tight'>
 													<span aria-hidden
@@ -224,7 +274,7 @@ function EventsPage() {
 												<span className='relative'>{eve.adviser.fullName}</span>
 												</span>
 											</td>
-											<td className='px-5 py-5 border-b border-gray-200  text-sm '>
+											<td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
 												<img className='cursor-pointer' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
 											</td>
 											

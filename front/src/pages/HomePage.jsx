@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OrientedList from '../components/OrientedList';
 import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
 import CardText from '../components/CardText';
+import Context from '../context/Context';
+import axios from 'axios';
 
 function HomePage() {
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
 
-  console.log(admin);
+  const navigate = useNavigate();
+
+  const {deslogearme} = useContext(Context);
+
+  const [users, setUsers] = useState([]);
+
+  
+  const login = ()=>{
+    deslogearme()
+    navigate('/login',{replace:true})
+  }
+  const getAll = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/admin/students/', {withCredentials: true});
+      setUsers(response.data);
+    } catch (error) {
+      login();
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+    getAll();
+  },[]);
+
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -26,7 +52,7 @@ function HomePage() {
               <Button  type='button' name='Ingresar orientado'/>
             </Link>
           </div>
-          <OrientedList/>
+          <OrientedList users={users}/>
           <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>Novedades</h2>
             <div className='mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
