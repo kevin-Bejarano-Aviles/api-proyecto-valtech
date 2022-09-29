@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Search from "../components/Search";
 import OrientedList from "../components/OrientedList";
 
+//see orientedList
 function Orienteds() {
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -28,8 +29,8 @@ function Orienteds() {
 
               <div className="relative mt-8">
               <Search placeholder={`Buscar orientado por nombre y apellido`}/>
-
-              <OrientedList/>
+              
+              <OrientedList asignOriented={true}/>
               </div>
               
         </main>

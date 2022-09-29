@@ -4,7 +4,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import Context from '../context/Context';
 
-function OrientedList() {
+function OrientedList({asignOriented=false}) {
+  console.log(asignOriented);
   const navigate = useNavigate();
 
   const {deslogearme} = useContext(Context);
@@ -32,8 +33,7 @@ function OrientedList() {
   useEffect(() => {
     getAll();
   },[]);
-  console.log(users.length);
-  console.log('no hay orientados'+ users);
+
 
   return (
     <div>
@@ -41,7 +41,7 @@ function OrientedList() {
         {
           users.length===0 ? 'No hay orientados' : (
             users.map((user, index) => (
-              index <= 8 ? <Oriented info={user}/> : seeMore ? <Oriented info={user}/> : ''
+              index <= 8 ? <Oriented info={user} asignOriented={asignOriented}/> : seeMore ? <Oriented info={user} asignOriented={asignOriented}/> : ''
             ))
           )
         }

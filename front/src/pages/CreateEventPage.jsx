@@ -6,7 +6,9 @@ import HeaderAdmin from '../components/HeaderAdmin';
 import Menu from '../components/Menu';
 import iconError from '../img/icon_warning.svg';
 import iconArrow from '../img/list-control.svg';
-import iconSearch from '../img/icon-search.svg';
+// import iconSearch from '../img/icon-search.svg';
+
+import iconSearch from '../img/Icon_search.svg';
 
 function CreateEventPage() {
   // hooks for validations
