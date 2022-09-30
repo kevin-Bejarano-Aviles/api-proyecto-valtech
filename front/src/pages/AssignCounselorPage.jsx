@@ -29,6 +29,8 @@ function AssignCounselorPage() {
     setViewButton (!viewButton);
   } */
 
+  const [ocultar, setOcultar] = useState (true)
+
   const params = useParams();
   const navigate = useNavigate();
 
@@ -88,7 +90,7 @@ function AssignCounselorPage() {
 
 
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
       <Menu />
       <div>
       <HeaderAdmin Titulo='Orientados' />
@@ -153,24 +155,28 @@ function AssignCounselorPage() {
         </div>
 
         <div className="ml-10 mt-16 mb-8 flex flex-row "  onClick={()=>setViewButton(false)}>
-        <div  onClick={clickAlert}>
+        
+        <div className={alert ? "hidden" : "block"}  onClick={clickAlert}>
         <Button type='submit' name='Asignar orientador/a' disabled={isEmpty}  />
         </div>
         <div className="hidden">.</div>
         </div>
         <div className={viewButton ? "hidden" : "block"}>
-          <div className="bg-blue" onClick={clickAlertm}>
+          <div className="flex flex-row ml-10 relative bottom-10 items-center">
+          <div  onClick={clickAlertm}>
           <Button type='submit' name='Modificar orientador/a' disabled={isEmpty}  /> 
           </div>
-          <div>
+          <div className="ml-4 underline">
             <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
+          </div>
           </div>
         </div>
         
         </form>
         <div className="mt-24 ml-10">
-        {alert ? <Alert message='El orientado ya fue asignado a su referente.' onclick={() => clickAlert(false)}/> : ''}
-        
+        <div className={!ocultar ? "hidden" : "block"}> 
+        {alert ? <Alert message='El orientado ya fue asignado a su referente.' onclick={() => setOcultar(false)}/> : ''}
+        </div>
         {alertm ? <Alert message='El orientado fue modificado.' onclick={() => clickAlertm(false)}/> : ''}
         </div>
         </seccion>
