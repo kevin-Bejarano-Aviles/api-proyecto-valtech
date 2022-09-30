@@ -288,20 +288,26 @@ function EventsPage() {
 										</tr>
 
 										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-5'>
-											<div className='flex items-center  justify-start flex-col w-4/5 border rounded-md p-5 border-slate-400'>
-												<div className='w-full flex justify-start flex-row'>
-													<div className='flex items-start mr-2 flex-col '>
-														<p className='text-lightgray'>Fecha</p>
-														<p className='text-blue'>{convertDate(eve.date)} </p>
+											<div className='flex items-center  justify-between flex-row w-4/5 border rounded-md p-5 border-slate-400'>
+												<div className='flex  justify-start flex-col '>
+													<div className='w-full flex justify-start flex-row'>
+														<div className='flex items-start mr-2 flex-col '>
+															{/* <p className='text-lightgray'>Fecha</p> */}
+															<p className='text-green font-medium'>Fecha</p>
+
+															<p className='text-blue'>{convertDate(eve.date)} </p>
+														</div>
+														<div className='flex ml-10 flex-col  items-start'>
+															<p className='text-green font-medium'>Horario</p>
+															<p className='text-blue'>{converTime(eve.time)} hs</p>
+														</div>
 													</div>
-													<div className='flex ml-10 flex-col  items-start'>
-														<p className='text-lightgray'>Horario</p>
-														<p className='text-blue'>{converTime(eve.time)} hs</p>
-													</div>
-												</div>
-												<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
-														{eve.name}
+													<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
+															{eve.name}
 													</p>
+												</div>
+												<img className='cursor-pointer w-14 h-14' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
+
 											</div>
 										</div>		
 										</>						
@@ -310,7 +316,7 @@ function EventsPage() {
 							}
 						</tbody>
 					</table>
-					<div className='w-full flex flex-col tablet:hidden flex-row items-center justify-center tablet:justify-end  '>
+					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
 						<div className='flex '>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
