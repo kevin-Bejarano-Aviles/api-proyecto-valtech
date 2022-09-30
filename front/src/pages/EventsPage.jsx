@@ -202,7 +202,7 @@ function EventsPage() {
                         <h1 className='text-blue absolute w-56 z-20 text-2xl font-normal '>Todos los eventos</h1>
                         <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'></div>
                     </div>
-                    <div className='hidden mobileM:flex  mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
+                    <div className='hidden tablet:flex  mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button
 								type='button'
 								name='Agendar evento'
@@ -312,7 +312,14 @@ function EventsPage() {
 						<div className='flex '>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
-						</div>
+					</div>
+					<div className='flex tablet:hidden my-20 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
+							<Button
+								type='button'
+								name='Agendar evento'
+								handleFunction={()=>{navigate('/eventos/crear-evento')}}
+							/>
+                    </div>
 				</div>
             </div>  
             </main>
