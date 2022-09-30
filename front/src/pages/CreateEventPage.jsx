@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '../components/Button';
 import HeaderAdmin from '../components/HeaderAdmin';
@@ -7,6 +8,7 @@ import Menu from '../components/Menu';
 import iconError from '../img/icon_warning.svg';
 import iconArrow from '../img/list-control.svg';
 import iconSearch from '../img/icon-search.svg';
+import iconCalendar from '../img/icon-calendar.svg';
 import Calendar from 'react-calendar';
 import '../Calendar.css';
 
@@ -40,13 +42,21 @@ function CreateEventPage() {
   const [date, setDate] = useState(new Date());
 
   const onChange = (date) => {
+    const selectedDay = ("0" + date.getDate()).slice(-2);
+    const selectedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+    const selectedYear = date.getFullYear();
     setDate(date);
-    setValue('date', `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`);
+    setValue('date', `${selectedYear}-${selectedMonth}-${selectedDay}`);
+    const dateElement = document.getElementById('date');
+    dateElement.innerText = `${selectedDay}/${selectedMonth}/${selectedYear}`;
+    setDateStyle(true);
   };
   // complementary hook
   let [cont, setCont] = useState(0);
   // styles for time input
   const styleItem = 'h-10 flex items-center pl-3 truncate cursor-pointer hover:font-bold hover:text-green';
+  // useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllStudents();
@@ -84,22 +94,7 @@ function CreateEventPage() {
     setCont(cont+1);
   },[selectedTime]);
 
-  const { register, handleSubmit, watch, setValue } = useForm(
-    {
-      // defaultValues: {
-      //   adviser_event_id: '3',
-      //   date: '2022-09-28',
-      //   datail: 'Event detail',
-      //   duration: '120',
-      //   name: 'Event name',
-      //   students: [],
-      //   time: '17:00'
-      // }
-      mode: 'onSubmit',
-      reValidateMode: 'onChange',
-    }
-  );
-
+  const { register, handleSubmit, watch, setValue } = useForm();
   const name = register('name');
   const duration = register('duration');
   const detail = register('detail');
@@ -125,11 +120,11 @@ function CreateEventPage() {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     data.time = selectedTime.join(':');
-    postStudent(data, e);
+    postEvent(data, e);
   };
 
   // Function to send a new student.
-  const postStudent = async (data, e) => {
+  const postEvent = async (data, e) => {
     try {
       let options = {
           method: 'POST',
@@ -139,8 +134,9 @@ function CreateEventPage() {
       };
       console.log(options.data);
       const response = await axios('http://localhost:8000/admin/addEvent', options);
-      console.log(response.data);
+      // console.log(response.data);
       // setFormError(response.data);
+      navigate('/eventos');
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
       console.log(err);
@@ -238,6 +234,7 @@ function CreateEventPage() {
                       setIsStudentVisibled(false);
                       setIsTimeVisibled(false);
                       setIsDurationVisibled(false);
+                      setIsDateVisibled(false);
                     }}
                   />
                   <span className='flex gap-1 text-red-500'>
@@ -257,6 +254,7 @@ function CreateEventPage() {
                         setIsStudentVisibled(false);
                         setIsTimeVisibled(false);
                         setIsDurationVisibled(false);
+                        setIsDateVisibled(false);
                       }}
                     >
                       Seleccionar orientador
@@ -294,13 +292,14 @@ function CreateEventPage() {
                         setIsAdviserVisibled(false);
                         setIsTimeVisibled(false);
                         setIsDurationVisibled(false);
+                        setIsDateVisibled(false);
                       }}
                     >
                       Seleccionar orientados
                     </div>
                     <img src={iconSearch} alt='' className='px-2' />
                   </div>
-                  <ul className={`${isStudentVisibled ? 'block' : 'hidden'} absolute top-[72px] w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg`}>
+                  <ul className={`${isStudentVisibled ? 'block' : 'hidden'} absolute z-10 top-[72px] w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg`}>
                     {students.map(student => (
                       <li key={student.id} className={`${student.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3`}>
                         <input
@@ -342,7 +341,7 @@ function CreateEventPage() {
                     }}
                   >
                     <div {...register('date')} id='date' className='select-none'>Ingresar fecha</div>
-                    <img src={iconArrow} alt='' className='px-2 w-[32px]' />
+                    <img src={iconCalendar} alt='' className='px-2 w-[32px]' />
                   </div>
                   <Calendar calendarType='US' locale='rm-sursilv' onChange={onChange} value={date} className={isDateVisibled ? 'block' : 'hidden'} />
                   <span className='flex gap-1 text-red-500'>
@@ -359,6 +358,7 @@ function CreateEventPage() {
                       setIsStudentVisibled(false);
                       setIsAdviserVisibled(false);
                       setIsDurationVisibled(false);
+                      setIsDateVisibled(false);
                     }}
                   >
                     <div {...register('time')} id='time' className='select-none truncate'>Seleccionar horario</div>
@@ -468,6 +468,7 @@ function CreateEventPage() {
                       setIsStudentVisibled(false);
                       setIsAdviserVisibled(false);
                       setIsTimeVisibled(false);
+                      setIsDateVisibled(false);
                     }}
                   >
                     <div {...duration} id='duration' className='select-none truncate'>Seleccionar duración</div>
@@ -697,6 +698,7 @@ function CreateEventPage() {
                     setIsStudentVisibled(false);
                     setIsTimeVisibled(false);
                     setIsDurationVisibled(false);
+                    setIsDateVisibled(false);
                   }}
                 ></textarea>
                 <span className='flex gap-1 text-red-500'>
