@@ -228,7 +228,7 @@ function EventsPage() {
 				</div>
                     {/* paginado */}
 					
-                    <table class='mt-2 min-w-full leading-normal border rounded-t-md  border-gray-200 '>
+                    <table class='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
 						<thead className=' w-full border-b'>
 							<tr className='  hidden tablet:table-row'>
 								<th onClick={()=> toggle()}
@@ -322,10 +322,11 @@ function EventsPage() {
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
 					</div>
-					<div className='flex tablet:hidden my-20 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
+					<div className='flex tablet:hidden mt-16 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button
 								type='button'
 								name='Agendar evento'
+								classN={true}
 								handleFunction={()=>{navigate('/eventos/crear-evento')}}
 							/>
                     </div>
