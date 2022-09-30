@@ -228,35 +228,35 @@ function EventsPage() {
 				</div>
                     {/* paginado */}
 					
-                    <table class='mt-2 min-w-full leading-normal rounded-lg'>
-						<thead className='rounded-full'>
-							<tr className='boder-t-2 rounded-full hidden tablet:table-row'>
+                    <table class='mt-2 min-w-full leading-normal border rounded-t-md  border-gray-200 '>
+						<thead className=' w-full border-b'>
+							<tr className='  hidden tablet:table-row'>
 								<th onClick={()=> toggle()}
-									class='mobileM:px-5 px-1 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class='mobileM:px-5 px-1 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Fecha
 								</th>
 								<th
-									class=' px-3 mobileM:px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class=' px-3 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Horario
 								</th>
 								<th
-									class=' px-3 mobileM:px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class=' px-3 mobileM:px-6 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Evento
 								</th>
 								
 								<th
-									class=' px-1 mobileM:px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class=' px-1 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Participante
 								</th>
                                 <th
-									class=' px-2 mobileM:px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
-									
+									class=' px-2 mobileM:px-5 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									  
 								</th>
 							</tr>
 						</thead>
-						<tbody className=''>
+						<tbody className='table-row-group'>
 							{
-								cantEvents===0 ? ((!showAll && search.length<1) ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  '>No se encontro el evento con el orientado</p> )
+								cantEvents===0 ? ((!showAll && search.length<1) ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  ml-5'>No se encontro el evento con el orientado</p> )
 								: (eventsToShow.map((eve,index)=>(
 									<>
 										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
