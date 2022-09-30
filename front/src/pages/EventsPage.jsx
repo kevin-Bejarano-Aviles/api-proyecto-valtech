@@ -19,7 +19,7 @@ function EventsPage() {
 	
 	const [eventList,setEventsList]=useState([])
 	const [cantEvents,setCantEvents]=useState(0);
-	const [banSearch,SetBandSearch]=useState(false);
+	const [banSearch,SetBandSearch]=useState(true);
 	const [initrange,setRange]=useState(0)
 	const [orderListband,SetOrderListband]=useState(true);
 	//show all events
@@ -32,8 +32,8 @@ function EventsPage() {
 	const getallvents=async ()=>{
 		try{
 			const response = await axios.get('http://localhost:8000/admin/events')
-			console.log(response.data.events);
 			setEventsList(response.data.events)
+
 		}
 		catch(err){
 			console.error(`${err.response.status}: ${err.response.statusText}`);
@@ -56,26 +56,29 @@ function EventsPage() {
 
 	
     function orderList(list){
-		console.log('ordenando lista');
 		let array;
-		if(!orderListband){
-			console.log('menor');
-			array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
-			console.log(array);
-
+		if (list.length>0) {
+			if(!orderListband){
+				console.log('menor');
+				array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
+				console.log(array);
+	
+			}
+			else{
+				console.log('mayor');
+	
+				array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
+				console.log(array);
+	
+			}
+			setEventsList(array)
 		}
-		else{
-			console.log('mayor');
-
-			array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
-			console.log(array);
-
-		}
-		setEventsList(array)
+		
 	}
 
 	const handleSearch = (event)=>{
 		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
+		console.log(search.length);
 		SetSearch(event.target.value)
 		if (search) {
 		  setShowAll(false)
@@ -151,7 +154,7 @@ function EventsPage() {
 	}
 
 	useEffect(()=>{
-		if(search.length>0){
+		if(search.length>1){
 			let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
 			setCantEvents(cant.length);
 			setRange(0);
@@ -164,7 +167,6 @@ function EventsPage() {
 	useEffect(()=>{
 		let cant=eventList.length
 		setCantEvents(cant)
-
 	},[eventList])
 
 	useEffect(()=>{
@@ -186,6 +188,7 @@ function EventsPage() {
 		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
 		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
+		console.log(showAll);
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
@@ -195,28 +198,28 @@ function EventsPage() {
 
             <div className='mt-5'>
                 <div className='flex justify-between flex-col-reverse mobileL:flex-row '>
-                    <div className='relative h-8 w-56 mt-8 mb-5 mobileL:my-0'>
+                    <div className='relative h-8 w-56 mt-8 mb-3 ml-5 mobileL:my-0 tablet:mx-0'>
                         <h1 className='text-blue absolute w-56 z-20 text-2xl font-normal '>Todos los eventos</h1>
                         <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'></div>
                     </div>
-                    <div className='flex mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
-                    <Button
-                        type='button'
-                        name='Agendar evento'
-                        handleFunction={()=>{navigate('/eventos/crear-evento')}}
-                    />
+                    <div className='hidden mobileM:flex  mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
+							<Button
+								type='button'
+								name='Agendar evento'
+								handleFunction={()=>{navigate('/eventos/crear-evento')}}
+							/>
                     </div>
                     
                 </div>
-                <div className='mt-5'>
+                <div className='mt-5 mx-2 tablet:mx-0'>
 					{/* ------------------------------------------------------------------------------------------------------------------------------ */}
-                    <p className='text-blue text-xl font-semibold'>Buscar eventos de un orientado</p>
+                    <p className='text-blue text-xl font-semibold my-2 mobileM:my-0'>Buscar eventos de un orientado</p>
 					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'} handleChange={handleSearch}/>
 				</div>
                 {/* tablita para mostrar eventos */}
                 {/* tabla container*/}
-				<div className='w-full flex flex-row items-center justify-center tablet:justify-end'>
-						<p className='ml-2 mr-2 my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
+				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
+						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
 				</div>
@@ -224,7 +227,7 @@ function EventsPage() {
 					
                     <table class='mt-2 min-w-full leading-normal rounded-lg'>
 						<thead className='rounded-full'>
-							<tr className='boder-t-2 rounded-full'>
+							<tr className='boder-t-2 rounded-full hidden tablet:table-row'>
 								<th onClick={()=> toggle()}
 									class='mobileM:px-5 px-1 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Fecha
@@ -234,7 +237,7 @@ function EventsPage() {
 									Horario
 								</th>
 								<th
-									class=' px-3 mobileM:px-5py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class=' px-3 mobileM:px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Evento
 								</th>
 								
@@ -243,16 +246,17 @@ function EventsPage() {
 									Participante
 								</th>
                                 <th
-									class=' px-1 mobileM:px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									class=' px-2 mobileM:px-5 py-3 border-b-2 rounded-tl-lg border-gray-200 bg-gray-100 text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									
 								</th>
 							</tr>
 						</thead>
 						<tbody className=''>
 							{
-								eventsToShow.length===0 ? (showAll ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  '>No se encontro el evento con el orientado</p> )
+								cantEvents===0 ? ((!showAll && search.length<1) ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  '>No se encontro el evento con el orientado</p> )
 								: (eventsToShow.map((eve,index)=>(
-										<tr className='bg-transparent hover:bg-bgTable ' key={eve.id}>
+									<>
+										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
 											<td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
 												<div className='flex items-center'>
 														<p className='text-blue'>{convertDate(eve.date)} </p>
@@ -278,12 +282,38 @@ function EventsPage() {
 												<img className='cursor-pointer' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
 											</td>
 											
-										</tr>								
+										</tr>
+
+										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-5'>
+											<div className='flex items-center  justify-start flex-col w-4/5 border rounded-md p-5 border-slate-400'>
+												<div className='w-full flex justify-start flex-row'>
+													<div className='flex items-start mr-2 flex-col '>
+														<p className='text-lightgray'>Fecha</p>
+														<p className='text-blue'>{convertDate(eve.date)} </p>
+													</div>
+													<div className='flex ml-10 flex-col  items-start'>
+														<p className='text-lightgray'>Horario</p>
+														<p className='text-blue'>{converTime(eve.time)} hs</p>
+													</div>
+												</div>
+												<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
+														{eve.name}
+													</p>
+											</div>
+										</div>		
+										</>						
 									))
 								)
 							}
 						</tbody>
 					</table>
+					<div className='w-full flex flex-col tablet:hidden flex-row items-center justify-center tablet:justify-end  '>
+						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
+						<div className='flex '>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
+						</div>
+				</div>
             </div>  
             </main>
         </div>
