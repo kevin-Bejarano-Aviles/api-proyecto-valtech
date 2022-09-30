@@ -206,7 +206,10 @@ function EventsPage() {
 							<Button
 								type='button'
 								name='Agendar evento'
-								handleFunction={()=>{navigate('/eventos/crear-evento')}}
+								classN={true}
+								handleFunction={()=>{navigate('/eventos/crear-evento')
+								}
+								}
 							/>
                     </div>
                     
