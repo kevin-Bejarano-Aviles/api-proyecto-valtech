@@ -198,7 +198,7 @@ function EventsPage() {
 
             <div className='mt-5'>
                 <div className='flex justify-between flex-col-reverse mobileL:flex-row '>
-                    <div className='relative h-8 w-56 mt-8 mb-3 ml-5 mobileL:my-0 tablet:mx-0'>
+                    <div className='relative h-8 w-56 mt-8 mb-3 mx-5 mobileL:my-0 tablet:mx-0'>
                         <h1 className='text-blue absolute w-56 z-20 text-2xl font-normal '>Todos los eventos</h1>
                         <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'></div>
                     </div>
@@ -214,9 +214,9 @@ function EventsPage() {
                     </div>
                     
                 </div>
-                <div className='mt-5 mx-2 tablet:mx-0'>
+                <div className='mt-5 mx-5 tablet:mx-0'>
 					{/* ------------------------------------------------------------------------------------------------------------------------------ */}
-                    <p className='text-blue text-xl font-semibold my-2 mobileM:my-0'>Buscar eventos de un orientado</p>
+                    <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
 					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'} handleChange={handleSearch}/>
 				</div>
                 {/* tablita para mostrar eventos */}
