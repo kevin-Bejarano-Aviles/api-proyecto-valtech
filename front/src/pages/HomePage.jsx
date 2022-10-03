@@ -45,7 +45,7 @@ function HomePage() {
       <div>
         <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
-          <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center justify-between'>
+          <div className='flex-col gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
               Nuevos orientados
             </h4>
