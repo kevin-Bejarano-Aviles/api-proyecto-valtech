@@ -17,7 +17,7 @@ El proyecto debera ser corrido con un ``npm install``, en las siguientes carpeta
 ```
 Luego de hacer esto es importante armar la base de datos, por lo que en la carpeta `/back/data` se encontrara un script que podra se ejecutado en `MYSQL` para su creación, importante que cada tabla sea ejecutado por separado y no todo de una vez porque causara un error al hacerlo, ver el siguiente archivo archivo, `/back/env/.env-example`, que conectara la db por lo que se tendra que tener en cuenta para su creación, si se tiene otros datos se podra cambiar en la variable de entorno. 
 
-Una vez hecho todo lo anterior ya se habran instalado todos los modulos correspondientes en cada carpeta por lo que al inicializar el proyecto para su prueba se debera tener ingresar con las siguientes creenciales, las cuales cumplen rol de `administrador`, quien tendra los permisos para navegar por la web y realizar las acciones mencionadas en el antrior documento:
+Una vez hecho todo lo anterior ya se habran instalado todos los modulos correspondientes en cada carpeta por lo que al inicializar el proyecto para su prueba se debera ingresar con las siguientes creenciales, las cuales cumplen rol de `administrador`, quien tendra los permisos para navegar por la web y realizar las acciones mencionadas en el anterior documento:
 
 ```bash
    email: sofiaSerrano@gmail.com
@@ -49,4 +49,4 @@ A través del boton `ingresar orientado`, se te redirigirá a esta vista donde s
 
 #### http://localhost:3000/orientados/:id
 
-Una vez rellenado exitosamente el formulado mencionado anteriormente, se te mostrará esta vista donde `:id` sera un elemento que cambiará dependiedo de la cantidad de orientados ya se encuentren en la base de datos.
+Una vez rellenado exitosamente el formulado mencionado anteriormente, se te mostrará esta vista donde `:id` sera un elemento que cambiará dependiedo de la cantidad de orientados que se encuentren en la base de datos, siendo este uno en particular con su `:id`, en la base de datos.
