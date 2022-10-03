@@ -31,7 +31,6 @@ function HomePage() {
       setUsers(response.data);
     } catch (error) {
       login();
-      console.log(error)
     }
   };
 

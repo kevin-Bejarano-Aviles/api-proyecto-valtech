@@ -44,12 +44,10 @@ function LoginPage() {
     },{withCredentials:true})
     .then(response=>{
         login();
-        console.log(response);
         localStorage.setItem('admin', JSON.stringify(response.data));
 
       })
     .catch(error => {
-      console.log(error.response.data.message);
       setMessage(error.response.data.message);
       SetErrorMessage(true)
 

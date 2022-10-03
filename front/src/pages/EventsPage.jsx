@@ -43,11 +43,9 @@ function EventsPage() {
 	const deleteEvent = async (id)=>{
 
         try {
-            const response = await axios.delete(`http://localhost:8000/admin/deleteEvent/${id}`)
+            await axios.delete(`http://localhost:8000/admin/deleteEvent/${id}`)
             let newArray=eventList.filter(event=> event.id!==id);
 			setEventsList(newArray);
-			console.log(response);
-			console.log(id);
 			
 		} catch (error) {
             console.error(error.response)
@@ -59,16 +57,11 @@ function EventsPage() {
 		let array;
 		if (list.length>0) {
 			if(!orderListband){
-				console.log('menor');
 				array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
-				console.log(array);
-	
 			}
 			else{
-				console.log('mayor');
 	
 				array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
-				console.log(array);
 	
 			}
 			setEventsList(array)
