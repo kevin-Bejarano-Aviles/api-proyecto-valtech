@@ -19,8 +19,7 @@ function Oriented() {
     try {
       let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
       setUser(res.data);
-      console.log(res.data.adviser);
-      // console.log(user);
+      console.log(res.data);
     } catch (err) {
       navigate('error');
       let message = err.response.statusText || 'Ocurrió un error';

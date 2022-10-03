@@ -12,7 +12,7 @@ function Proposal() {
       <div className='mt-8 tablet:mt-0 h-[211px] z-10 relative bottom-32 tablet:bottom-16 flex items-center flex-col tablet:flex-row laptop:w-[864px] laptop:ml-8 '>
            <div className='mr-4'><ProposalBox Tittle="Orientación vocacional" description="Te entrenamos en la toma de decisión de tu trayecto profesional."/></div>
            <div className='mr-4'><ProposalBox Tittle="Re-Orientación vocacional" description="Reinvensión personal, laboral y profesional."/></div>
-           <div className='mr-4'><ProposalBox Title="Espacios de aprendizaje" description="Aprendé a pensar desde otra lógica."/></div>
+           <div className='mr-4'><ProposalBox Tittle="Espacios de aprendizaje" description="Aprendé a pensar desde otra lógica."/></div>
       </div>
     </div>
       </div>
