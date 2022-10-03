@@ -9,7 +9,7 @@ function Welcome() {
     <div>
       <Header/>
       <Banner/>
-      <div className='w-full flex justify-center items-center h-80 mobile:h-auto mobile:p-2.5'>
+      <div className='w-full flex justify-center items-center h-auto mobile:p-2.5'>
         <div className='mt-10 ml-5 tablet:mx-0 tablet:w-3/5  text-blue pb-2'>
           <h1 className='pb-2 text-blue font-bold text-xl'>Misión</h1>
           <p className='pb-2 text-lg	'>Acompañamos a las personas en sus procesos de transformación personal y profesional para que logren construir una vida con sentido </p>        
@@ -28,7 +28,7 @@ function Welcome() {
 
             <li className='list-disc	text-colorList'>
               <span>
-                <p className='text-blue text-lg'>Crear su propia carrera personalprofesional.
+                <p className='text-blue text-lg'>Crear su propia carrera personal y profesional.
               </p>
               </span>
               

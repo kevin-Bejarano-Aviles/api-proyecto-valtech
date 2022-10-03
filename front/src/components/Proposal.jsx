@@ -3,7 +3,7 @@ import ProposalBox from './ProposalBox'
 
 function Proposal() {
   return (
-    <div className='flex justify-center mt-12 mb-96 tablet:mb-28'>
+    <div className='flex justify-center mt-20 mobile:mt-12 mb-96 tablet:mb-28'>
           <div className=' h-[640px] tablet:h-[358px] laptop:w-[864px]'>
       <div className='bg-green h-[211px] w-full laptop:w-[864px] mobile:rounded-lg flex flex-col'>
         <h2 className='ml-8 relative top-8 text-2xl font-medium text-white'>¿Cuál es nuestra propuesta?</h2>
