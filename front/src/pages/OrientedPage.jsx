@@ -19,6 +19,7 @@ function Oriented() {
     try {
       let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
       setUser(res.data);
+      console.log(res.data.adviser);
       // console.log(user);
     } catch (err) {
       navigate('error');
@@ -107,7 +108,7 @@ function Oriented() {
             </div>
           </section>
           <Link to={`/orientados/${user.id}/asignar-orientador`}>
-            <Button type='button' name={`${user.adviserId ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
+            <Button type='button' name={`${user.adviser!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
           </Link>
           {
             (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)

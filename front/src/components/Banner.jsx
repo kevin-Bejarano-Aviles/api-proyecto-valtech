@@ -70,10 +70,10 @@ function Banner() {
     return ( 
         <div className="w-full  m-auto">
             <div ref={slideRef} className='w-full flex justify-center select-none relative'>
-            <div className="w-full">
-                <img className='w-full' src={featuredImg[currentIndex]} alt={currentIndex}></img>
+            <div className="w-full overflow-hidden ">
+                <img className='w-[800px] h-[171px] tablet:w-full tablet:h-auto' src={featuredImg[currentIndex]} alt={currentIndex}></img>
             </div>
-                <div className='absolute w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
+                <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
                     <button onClick={handleOnePrevClick}><img src={arrow_left} alt="" /></button>
                     <button onClick={handleOneNextClick}><img src={arrow_rigth} alt="" /></button>
                 </div>
