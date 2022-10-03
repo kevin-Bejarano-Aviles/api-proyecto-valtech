@@ -40,11 +40,11 @@ function HomePage() {
 
 
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
-        <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
+        <main className='max-w-max mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='flex-col gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
               Nuevos orientados
@@ -56,7 +56,7 @@ function HomePage() {
           <OrientedList users={users}/>
           <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>Novedades</h2>
-            <div className='mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
+            <div className='grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
               <CardText title='¿Usás inteligentemente tu tiempo?' />
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
               <CardText title='¿Qué querés aportar?' />
