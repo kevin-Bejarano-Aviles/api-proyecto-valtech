@@ -159,7 +159,8 @@ function LoginPage() {
         
         <div className={`${!errorMessage ? 'hidden' : 'flex'} text-red-500`}>
             <img className='mr-2' src={warningImg} alt=''/>
-            <p className='font-bold'>{message ? message : null}</p>
+            <p className='font-bold 
+ tablet:font-normal'>{message ? message : null}</p>
         </div>
         
         <div className='mt-5'>
