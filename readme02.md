@@ -23,7 +23,7 @@ Dentro de la carpeta back escribir los siguientes comandos en la terminal
 
 - Este primer comando es para la creacion de la base de datos:
 ```bash
-  npx sequelize-cli db:created
+  npx sequelize-cli db:create
 ```
 
 
