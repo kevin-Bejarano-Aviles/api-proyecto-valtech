@@ -31,7 +31,7 @@ function Orienteds() {
   const getAll = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/students/', {withCredentials: true});
-      setUsers(response.data);
+      setUsers(response.data.students);
     } catch (error) {
       login();
       console.log(error)
