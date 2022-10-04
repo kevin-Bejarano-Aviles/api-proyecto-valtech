@@ -1,8 +1,12 @@
 //Require models and associations of the db
-const { adviserModel, eventModel, studentModel} = require('../models/associations');
+//const { adviserModel, eventModel, studentModel} = require('../models/associations');
 /* const studentEventModel = require('../models/studentEvent') */
-const AdminModel = require('../models/adminModel');
-const db = require('../database/db');
+//const AdminModel = require('../models/adminModel');
+const AdminModel = require('../models').Admins;
+const adviserModel = require('../models').Advisers;
+const studentModel = require('../models').Students;//solo asi lo reconoce
+const eventModel = require('../models').Events;
+const db = require('../models/index');
 const fs = require('fs');
 const path = require('path');
 const {Op} = require('sequelize');
@@ -39,6 +43,7 @@ const login = async (req, res) => {
         res.json(theAdmin);
 
     } catch (error) {
+        console.log({error:error.message});
         res.status(500).json({error:error.message});
     }
 };
@@ -53,7 +58,7 @@ const addStudent = async (req, res) => {
         try {
             const avatar = req.files[0].filename;
             const passHash = bcryptjs.hashSync(pass, 12); // We use method "hashSync" to hash the password entered
-            await db.query("ALTER TABLE students AUTO_INCREMENT = 1"); // This line is to reset id so our deletes ids can use the deleted ones
+            await db.sequelize.query("ALTER TABLE students AUTO_INCREMENT = 1"); // This line is to reset id so our deletes ids can use the deleted ones
             await studentModel.create({
                 fullName: fullName,
                 email: email,
@@ -97,8 +102,10 @@ const getStudent = async (req, res) => {
     try {
         const student = await studentModel.findAll({
             where: { id: req.params.id },
-            attributes: ['id', 'fullName', 'email', 'phoneNumber', 'program', 'avatar', 'dni', 'school', 'age', 'address', 'motive', 'user'],
-            include: [{ model: adviserModel, attributes: ['id', 'fullName', 'email', 'phoneNumber'] }, { model: eventModel, attributes: ['id', 'name', 'date', 'time', 'detail', 'duration', 'adviser_event_id'] }]
+            //attributes: ['id', 'fullName', 'email', 'phoneNumber', 'program', 'avatar', 'dni', 'school', 'age', 'address', 'motive', 'user'],
+            include:{
+                model:adviserModel
+            }
         })
         if(!student[0]){
             return res.status(404).json({message:'404 user not found'});
@@ -145,7 +152,8 @@ const assignAdviser = async (req,res) => {
 
 const createEvent = async (req,res) => {
     try {
-        const {students,name,date,time,detail,duration,adviser_event_id} = req.body
+        const {students,name,date,time,detail,duration,adviser_event_id} = req.body;
+        await db.sequelize.query("ALTER TABLE events AUTO_INCREMENT = 1");
         const event = await eventModel.create({
             name : name,
             date : date,

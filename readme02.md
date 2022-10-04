@@ -15,7 +15,31 @@ El proyecto debera ser corrido con un ``npm install``, en las siguientes carpeta
   cd front 
   npm install 
 ```
-Luego de hacer esto es importante armar la base de datos, por lo que en la carpeta `/back/data` se encontrara un script que podra se ejecutado en `MYSQL` para su creación, importante que cada tabla sea ejecutado por separado y no todo de una vez porque causara un error al hacerlo, ver el siguiente archivo archivo, `/back/env/.env-example`, que conectara la db por lo que se tendra que tener en cuenta para su creación, si se tiene otros datos se podra cambiar en la variable de entorno. 
+
+Luego de hacer esto es importante armar la base de datos, se utilizo sequelize-cli para hacer las migraciones.
+Para poder crear la base de datos primero tiene que crear el archivo '.env' dentro de la carpeta 'back' donde estaran las variables de entorno, tales variables tienen un ej en el archivo '.env.example'.
+Una vez echo esto es momento de crear la base de datos.
+Dentro de la carpeta back escribir los siguientes comandos en la terminal
+
+- Este primer comando es para la creacion de la base de datos:
+```bash
+  npx sequelize-cli db:created
+```
+
+
+- Este comando es para la creacion de las tablas con sus relaciones:
+```bash
+  npx sequelize-cli db:migrate
+```
+
+
+- Este comando es para la insercion de datos predefinidos en la base de datos tales como el admin, estudiantes y profesores:
+```bash
+  npx sequelize-cli db:seed:all
+```
+
+### Imagen de la tabla con sus relaciones
+![Modelo ER](./Imagen%20modelo%20entidad%20relacion.png)
 
 Una vez hecho todo lo anterior ya se habran instalado todos los modulos correspondientes en cada carpeta por lo que al inicializar el proyecto para su prueba se debera ingresar con las siguientes creenciales, las cuales cumplen rol de `administrador`, quien tendra los permisos para navegar por la web y realizar las acciones mencionadas en el anterior documento:
 

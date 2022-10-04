@@ -1,5 +1,5 @@
 // Require student model
-const studentModel = require("../models/studentModel.js"); //Require student Model
+const studentModel = require('../models').Students //Require student Model
 const { check, validationResult, body } = require('express-validator');//Require express validator to add validations
 module.exports = [ //Export our validations
     check('fullName').notEmpty().withMessage('Ingrese su nombre y apellido'),

@@ -1,5 +1,5 @@
 const db = require('../database/db');
-const adviserModel = require('../models/adviserModel');
+//const adviserModel = require('../models/adviserModel');
 
 const advisers = [
     {

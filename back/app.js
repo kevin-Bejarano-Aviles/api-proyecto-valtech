@@ -1,10 +1,12 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
-const db = require('./database/db');
-const dotenv = require('dotenv');
+//const db = require('./database/db');
+const db = require('./models/index');
+//const dotenv = require('dotenv');
 const session = require('express-session');
 /* const methodOverride = require('method-override'); */
-const port = 8000;
+const port = process.env.PORT||8001;
 const cors = require('cors');
 const cookie = require('cookie-parser');
 const adminRoutes = require('./routes/admin.js')
@@ -35,15 +37,14 @@ app.use(express.json());
 app.use('/admin',adminRoutes);
 
 try {
-  db.authenticate()
+  db.sequelize.authenticate()
   console.log('Succesfull connection')
   } catch (error) {
     console.log(`The error is: ${error}`)
   }
 
-dotenv.config({path: './env/.env'})
+//dotenv.config({path: './env/.env'})
 
 app.listen(port, ()=>{
-    console.log('SERVER UP running in http://localhost:8000')
-   
+    console.log(`SERVER UP running in http://localhost:${port}`);
 })

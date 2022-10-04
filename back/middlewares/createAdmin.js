@@ -1,5 +1,5 @@
 //Require admin Model
-const adminModel = require('../models/adminModel');
+//const adminModel = require('../models/adminModel');
 //Require bcrypt for password
 const bcryptjs = require('bcryptjs');
 //create a generic password
