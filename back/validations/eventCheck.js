@@ -1,5 +1,5 @@
 // Require student model
-const eventModel = require('../models/events'); //Require student Model
+//const eventModel = require('../models').Events; //Require student Model
 const { check, validationResult, body } = require('express-validator');//Require express validator to add validations
 
 module.exports = [

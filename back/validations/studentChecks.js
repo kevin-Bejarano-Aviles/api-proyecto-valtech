@@ -1,12 +1,12 @@
 // Require student model
-const studentModel = require('../models').Students //Require student Model
-const { check, validationResult, body } = require('express-validator');//Require express validator to add validations
+const StudentModel = require('../models').Students //Require student Model
+const { check, body } = require('express-validator');//Require express validator to add validations
 module.exports = [ //Export our validations
     check('fullName').notEmpty().withMessage('Ingrese su nombre y apellido'),
     check('email').isEmail().withMessage('Debe ingresar un email en el campo'),
     body('email') // This validation is to check if the email is already in our db
         .custom(function (value) {
-            return studentModel.findOne({
+            return StudentModel.findOne({
                 where: {
                     email: value
                 },attributes:['email']
@@ -25,7 +25,7 @@ module.exports = [ //Export our validations
         .isLength({min: 7, max: 50 }).withMessage('El dni debe tener un minimo de 7 caracteres y un maximo de 50 caracteres'), 
     body('dni') //This validation is to check if the dni is already in our db
         .custom(function (value) {
-            return studentModel.findOne({
+            return StudentModel.findOne({
                 where: {
                     dni: value
                 },attributes:['dni']
@@ -67,7 +67,7 @@ module.exports = [ //Export our validations
     }).withMessage('El usuario y el dni deben coincidir'),
     body('user')
         .custom(function (value) {
-            return studentModel.findOne({
+            return StudentModel.findOne({
                 where: {
                     user: value
                 },attributes:['user']

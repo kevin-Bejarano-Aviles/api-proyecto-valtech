@@ -1,19 +1,13 @@
 //Require models and associations of the db
-//const { adviserModel, eventModel, studentModel} = require('../models/associations');
-/* const studentEventModel = require('../models/studentEvent') */
-//const AdminModel = require('../models/adminModel');
 const AdminModel = require('../models').Admins;
-const adviserModel = require('../models').Advisers;
-const studentModel = require('../models').Students;//solo asi lo reconoce
-const eventModel = require('../models').Events;
+const AdviserModel = require('../models').Advisers;
+const StudentModel = require('../models').Students;//solo asi lo reconoce
+const EventModel = require('../models').Events;
 const db = require('../models/index');
-const fs = require('fs');
-const path = require('path');
 const {Op} = require('sequelize');
 //Require bcryptjs
 const bcryptjs = require('bcryptjs');
 //Require express validator 
-const { validationResult } = require('express-validator');
 
 //Method to login our admin
 const login = async (req, res) => {
@@ -25,7 +19,6 @@ const login = async (req, res) => {
             where: {
                 email: email
             }
-
         });
         if (!admin) {
             return res.status(400).json({ message: 'Credenciales invalidas' });
@@ -39,8 +32,7 @@ const login = async (req, res) => {
             avatar: admin.avatar,
             email: admin.email
         }
-        let theAdmin = req.session.adminLog;
-        res.json(theAdmin);
+        res.json({adminLog:req.session.adminLog});
 
     } catch (error) {
         console.log({error:error.message});
@@ -51,15 +43,11 @@ const login = async (req, res) => {
 //Method to add a student
 const addStudent = async (req, res) => {
     const { fullName, email, phoneNumber, program, dni, school, age, address, motive, user, pass } = req.body;
-    //If validationResult of "errors" is empty can create a new student, else we will see the error
-    let errors = validationResult(req);
-    //console.log(errors);
-    if (errors.isEmpty()) {
         try {
             const avatar = req.files[0].filename;
             const passHash = bcryptjs.hashSync(pass, 12); // We use method "hashSync" to hash the password entered
             await db.sequelize.query("ALTER TABLE students AUTO_INCREMENT = 1"); // This line is to reset id so our deletes ids can use the deleted ones
-            await studentModel.create({
+            await StudentModel.create({
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -75,44 +63,36 @@ const addStudent = async (req, res) => {
             });
             res.json({ message: 'Registro creado correctamente' });
         } catch (error) {
-            res.status(500).json({error:error.message})
+            res.status(500).json({error:error.message});
         }
-    } else {
-        res.status(400).json(errors.mapped());
-        // If we have an image will assign avatar
-        if(typeof req.files[0] != 'undefined'){
-            const avatar = req.files[0].filename;
-            fs.unlinkSync(path.join(__dirname,'..','..','front','src','img','students',`${avatar}`));
-        }
-    }
 };
 
 //Method to get all students
 const getAllStudent = async (req, res) => {
     try {
-        const students = await studentModel.findAll({attributes:{exclude : ['password']}}); // excludes just one item
-        res.json(students);
+        const students = await StudentModel.findAll({attributes:{exclude : ['password']}}); // excludes just one item
+        res.json({students});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 };
 
 //Method to get one student
 const getStudent = async (req, res) => {
     try {
-        const student = await studentModel.findAll({
+        const student = await StudentModel.findAll({
             where: { id: req.params.id },
-            //attributes: ['id', 'fullName', 'email', 'phoneNumber', 'program', 'avatar', 'dni', 'school', 'age', 'address', 'motive', 'user'],
+            attributes:{exclude:['password']},
             include:{
-                model:adviserModel
+                model:AdviserModel
             }
-        })
+        });
         if(!student[0]){
             return res.status(404).json({message:'404 user not found'});
         }
-        res.json(student[0]);
+        res.json({student:student[0]});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 };
 
@@ -125,28 +105,27 @@ const logOut = (req = request, res) => {
 };
 //Method to get all the advisers
 const getAllAdvisers = async (req,res) => {
-    
     try {
-        const advisers = await adviserModel.findAll();
-        res.json(advisers)
+        const advisers = await AdviserModel.findAll();
+        res.json({advisers});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 };
 const assignAdviser = async (req,res) => {
     try {
-        const {idAdviser} = req.body
-        const {id} = req.params
-       await studentModel.update({
+        const {idAdviser} = req.body;
+        const {id} = req.params;
+        await StudentModel.update({
         adviserId : idAdviser
        },{
         where :{
             id : id
         }
        });
-       res.status(200).json('ok')
+       res.status(200).json({message:`adviser asignado al estudiante con id ${id}`});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 };
 
@@ -154,7 +133,7 @@ const createEvent = async (req,res) => {
     try {
         const {students,name,date,time,detail,duration,adviser_event_id} = req.body;
         await db.sequelize.query("ALTER TABLE events AUTO_INCREMENT = 1");
-        const event = await eventModel.create({
+        const event = await EventModel.create({
             name : name,
             date : date,
             time : time,
@@ -163,40 +142,40 @@ const createEvent = async (req,res) => {
             adviser_event_id : adviser_event_id
         });
         students.forEach(async(item)=>{
-            const student = await studentModel.findOne({
+            const student = await StudentModel.findOne({
                where : {
                 id : item.id
                } 
-            })
+            });
             await event.addStudent(student); 
-        })
-    res.json('Event created');
+        });
+    res.json({message:'Event created'});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 };
 const getAllEvents = async(req,res)=>{
     try {
-        const events = await eventModel.findAll({
+        const events = await EventModel.findAll({
             include:[{
-                model:adviserModel,
+                model:AdviserModel,
                 attributes:['id','fullName']
             },{
-                model:studentModel,
+                model:StudentModel,
                 attributes:['id','fullName']
             }]
         });
         res.json({events,cant:events.length});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 }
 const eventByStudent = async(req,res)=>{
     const {student} = req.query;
     try {
-        const events = await eventModel.findAll({
+        const events = await EventModel.findAll({
             include:{
-                model:studentModel,
+                model:StudentModel,
                 where:{
                     fullName:{
                         [Op.substring]:student
@@ -216,7 +195,7 @@ const eventByStudent = async(req,res)=>{
 const deleteEvent = async(req,res)=>{
     const {id} = req.params;
     try {
-        const event = await eventModel.destroy({
+        const event = await EventModel.destroy({
             where:{
                 id:id
             }
@@ -227,13 +206,13 @@ const deleteEvent = async(req,res)=>{
         }
         res.json({message:'Evento eliminado'});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 }
 const pruebaPag = async(req,res)=>{
     const {from=0,limit=4,student=''} = req.query;
     try {
-        const allStudent = await studentModel.findAll({
+        const allStudent = await StudentModel.findAll({
             where:{
                 fullName:{
                     [Op.substring]:student
@@ -247,7 +226,7 @@ const pruebaPag = async(req,res)=>{
         }
         res.json({allStudent,cant:allStudent.length});
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({error:error.message});
     }
 }
 
