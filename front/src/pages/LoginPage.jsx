@@ -44,8 +44,8 @@ function LoginPage() {
     },{withCredentials:true})
     .then(response=>{
         login();
-        localStorage.setItem('admin', JSON.stringify(response.data));
-
+        console.log(response.data.adminLog);
+        localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
       })
     .catch(error => {
       setMessage(error.response.data.message);
@@ -164,7 +164,7 @@ function LoginPage() {
         </div>
         
         <div className='mt-5'>
-          <Button type='submit' name='log in' handleFunction={()=>console.log(bandButton)} disabled={((!errorEmail && !errorPassword) && bandButton===1) ? false : true}/>        
+          <Button type='submit' name='log in' disabled={((!errorEmail && !errorPassword) && bandButton===1) ? false : true}/>        
         </div>
       </form>    
     </div>
