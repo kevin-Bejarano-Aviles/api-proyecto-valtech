@@ -98,7 +98,6 @@ function AssignCounselorPage() {
          <h2 className="text-2xl text-blue ml-[46px]  mt-8 ">Asignación de Orientador Referente</h2>
       <div className=" ">
           <AssingComponente/>
-          
       </div>
          </section>
          <seccion>
