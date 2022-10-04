@@ -76,7 +76,6 @@ function AssignCounselorPage() {
           withCredentials: true,
           data: {...data}
       };
-      console.log(options.data);
       const response = await axios(`http://localhost:8000/admin/assignAdviser/${params.id}`, options);
       console.log(response.data); 
       
