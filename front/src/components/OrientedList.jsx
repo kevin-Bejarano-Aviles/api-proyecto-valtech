@@ -6,12 +6,12 @@ function OrientedList({asignOriented=false,users}) {
 
   const [seeMore, setSeeMore] = useState(false);
   return (
-    <div>
+    <div >
       <ul className='grid mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
         {
           users.length===0 ? 'No hay orientados' : (
             users.map((user, index) => (
-              index <= 8 ? <Oriented info={user} asignOriented={asignOriented}/> : (seeMore ? <Oriented info={user} asignOriented={asignOriented}/> : '')
+              index <= 8 ? <Oriented info={user} asignOriented={asignOriented} key={user.id}/> : (seeMore ? <Oriented info={user} asignOriented={asignOriented} key={user.id}/> : '')
             ))
           )
         }
