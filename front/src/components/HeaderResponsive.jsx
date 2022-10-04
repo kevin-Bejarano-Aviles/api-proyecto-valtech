@@ -9,7 +9,7 @@ export default function HeaderResponsive() {
    setMenu(!menu)
    }
   return (
-    <div>
+    <div className='hidden mobile:hid'>
     <div className='h-16 w-[1023px] flex items-center border-b-2 border-gray'>
         <div onClick={clickmenu}><Icon className='ml-2' icon="ci:menu-alt-01" color="#2e384d"  width="65" height="32"  hFlip={true} /></div>
         {/* <div className='w-[567px] h-10 ml-auto mr-auto flex items-center justify-center'> */}
