@@ -31,9 +31,9 @@ function LoginPage() {
 
   const baseUrl = 'http://localhost:8000/admin/adminLogin'
   const navigate = useNavigate();
-    const {logearme} = useContext(Context);
+    const {logIn} = useContext(Context);
     const login = ()=>{
-      logearme()
+      logIn()
       navigate('/login',{replace:true})
   }
 
