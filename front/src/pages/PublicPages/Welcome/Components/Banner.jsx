@@ -1,14 +1,14 @@
 import img1 from '../../../../assets/banner/banner_img1.png';
 import img2 from '../../../../assets/banner/banner_img2.png';
 import img3 from '../../../../assets/banner/banner_img3.png';
-import '../index.css';
+import '../../../../index.css';
 
 import arrow_left from '../../../../assets/icons/arrow_left.svg'
-import arrow_rigth from '../../../../assets/icons/right.svg'
+import arrow_rigth from '../../../../assets/icons/arrow_right.svg'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import ButtonImg from './ButtonImg';
+import ButtonImg from '../Components/ButtonImg';
 
 
 const featuredImg=[img1,img2,img3];

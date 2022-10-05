@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Button from '../../../components/Button';
+import Button from '../../PrivatePages/sharedPrivateComponents/button/Button';
 import axios from 'axios'
 
-import warningImg from '../img/icon_warning.svg'
-import ilustration from '../img/ilustration.svg';
-import title from '../img/vnegro.svg'
+import warningImg from '../../../assets/icons/icon_warning.svg'
+import ilustration from '../../../assets/ilustration/login/ilustration.svg';
+import title from '../../../assets/logo/vnegro.svg'
 import { useContext } from 'react';
 import Context from '../../../context/Context';
 
