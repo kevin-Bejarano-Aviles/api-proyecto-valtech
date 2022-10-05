@@ -3,8 +3,8 @@ import { Navigate } from 'react-router-dom';
 import Context from '../context/Context';
 
 function PublicRoutes({children}) {
-    const {estado}=useContext(Context)
-    return ( (!estado)?children : <Navigate to='/inicio'/>  
+    const {state}=useContext(Context)
+    return ( (!state)?children : <Navigate to='/inicio'/>  
        
      );
 }

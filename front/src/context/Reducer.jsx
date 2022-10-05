@@ -5,11 +5,11 @@ const Reducer = (state={},action)=>{
     switch(action.type){
         case types.login:
             return{
-                estado:true
+                state:true
             }
         case types.logout:
             return{
-                estado:false
+                state:false
             }
         default:
             return state

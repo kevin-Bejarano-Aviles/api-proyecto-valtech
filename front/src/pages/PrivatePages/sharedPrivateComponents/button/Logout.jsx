@@ -9,9 +9,9 @@ import IconLogouat from '../img/Icon_logout.svg';
 
 export default function Logout() {
     const navigate = useNavigate();
-    const {deslogearme} = useContext(Context);
+    const {logOut} = useContext(Context);
     const login = ()=>{
-      deslogearme()
+      logOut()
       navigate('/login',{replace:true})
     }
 

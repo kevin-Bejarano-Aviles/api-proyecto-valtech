@@ -4,37 +4,37 @@ import Reducer from './Reducer';
 import types from './types';
 
 const init=()=>{
-    const valor=localStorage.getItem('estado')
+    const vlue=localStorage.getItem('state')
     return{
-        estado:!!valor //si esxiste un valor lo guarda como false o true
+        state:!!vlue //si esxiste un valor lo guarda como false o true
     }
 }
 
 const Provider = ({children}) =>{
-    // localStorage.removeItem('estado')
-    const logearme =()=>{
+    // localStorage.removeItem('state')
+    const logIn =()=>{
         const action={
             type:types.login
         }
-        localStorage.setItem('estado',true)
+        localStorage.setItem('state',true)
         dispatch(action)
     }
 
-    const deslogearme =()=>{
+    const logOut =()=>{
         const action={
             type:types.logout
         }
-        //no tengo que cambiar el estado a false porque solo se fija que exista
+        //no tengo que cambiar el state a false porque solo se fija que exista
         localStorage.removeItem('admin')
-        localStorage.removeItem('estado')
+        localStorage.removeItem('state')
         dispatch(action)
     }
-    const [logeado,dispatch]=useReducer(Reducer,{},init)
+    const [loggedIn,dispatch]=useReducer(Reducer,{},init)
     return(
         <Context.Provider value={{
-            ...logeado,
-                logearme,
-                deslogearme
+            ...loggedIn,
+                logIn,
+                logOut
             }}>
             {children}
         </Context.Provider>

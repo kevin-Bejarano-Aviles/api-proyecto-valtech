@@ -3,8 +3,8 @@ import { Navigate } from 'react-router-dom';
 import Context from '../context/Context';
 
 function PrivateRoutes({children}) {
-    const {estado}=useContext(Context)
-    return ( (estado)?children : <Navigate to='/'/>  
+    const {state}=useContext(Context)
+    return ( (state)?children : <Navigate to='/'/>  
        
      );
 }

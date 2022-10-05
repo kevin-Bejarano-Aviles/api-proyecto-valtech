@@ -16,13 +16,13 @@ function HomePage() {
 
   const navigate = useNavigate();
 
-  const {deslogearme} = useContext(Context);
+  const {logOut} = useContext(Context);
 
   const [users, setUsers] = useState([]);
 
   
   const login = ()=>{
-    deslogearme()
+    logOut()
     navigate('/login',{replace:true})
   }
   const getAll = async () => {
