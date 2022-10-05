@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../sharedPrivateComponents/Button';
+import Button from '../sharedPrivateComponents/button/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
-import HeaderAdmin from '../sharedPrivateComponents/HeaderAdmin';
-import Menu from '../sharedPrivateComponents/Menu';
+import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/menu/Menu';
 import CardText from '../Home/components/CardText';
 import Context from '../../../context/Context';
 import axios from 'axios';

@@ -12,7 +12,7 @@ function Oriented({ info ,asignOriented=false}) {
          onClick={() => {navigate(`/orientados/${info.id}`)}}>
 
         <div className='flex  '>
-          <img className='w-16 h-16 rounded-full ml-[-5px] mt-[-4px] mx-1' src={require(`../img/students/${info.avatar}`)} alt=''/>
+          <img className='w-16 h-16 rounded-full ml-[-5px] mt-[-4px] mx-1' src={require(`../../../assets/students/${info.avatar}`)} alt=''/>
             <div className='ml-2'>
               <h3 className='font-medium text-base'>{info.fullName}</h3>
               <h4 className='text-sm text-lightgray'>{info.school}</h4>
