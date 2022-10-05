@@ -1,16 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import OrientedSignUpPage from '../pages/OrientedSignUpPage';
-import EventsPage from '../pages/EventsPage';
-import WelcomePage from '../pages/WelcomePage';
+import HomePage from '../pages/PrivatePages/Home/HomePage';
+import LoginPage from '../pages/PublicPages/Login/LoginPage';
+import OrientedSignUpPage from '../pages/PrivatePages/OrientedSignUp/OrientedSignUpPage';
+import EventsPage from '../pages/PrivatePages/Event/EventsPage';
+import WelcomePage from '../pages/PublicPages/Welcome/WelcomePage';
 import ErrorPage from '../pages/ErrorPage';
-import ProfilePage from '../pages/ProfilePage';
-import OrientedsPage from '../pages/OrientedsPage';
-import OrientedPage from '../pages/OrientedPage';
-import AssignCounselorPage from '../pages/AssignCounselorPage';
-import CreateEventPage from '../pages/CreateEventPage';
+import ProfilePage from '../pages/PrivatePages/Profile/ProfilePage';
+import OrientedsPage from '../pages/PrivatePages/Orienteds/OrientedsPage';
+import OrientedDetail from '../pages/PrivatePages/OrientedDetail/OrientedDetailPage';
+import AssignCounselorPage from '../pages/PrivatePages/AssignCounselor/AssignCounselorPage';
+import CreateEventPage from '../pages/PrivatePages/CreateEvent/CreateEventPage';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 
@@ -27,7 +27,7 @@ function RoutersElement() {
         
         <Route path='/orientados' element={<PrivateRoutes><OrientedsPage /></PrivateRoutes>} />
         <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} />
-        <Route path='/orientados/:id' element={<PrivateRoutes><OrientedPage /></PrivateRoutes>} />
+        <Route path='/orientados/:id' element={<PrivateRoutes><OrientedDetail /></PrivateRoutes>} />
         <Route path='/orientados/:id/asignar-orientador' element={<PrivateRoutes><AssignCounselorPage /></PrivateRoutes>} />
   
         <Route path='/eventos' element={<PrivateRoutes><EventsPage/></PrivateRoutes>} />
