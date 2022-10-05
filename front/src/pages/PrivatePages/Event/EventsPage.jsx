@@ -1,14 +1,14 @@
-import Button from '../../../components/Button';
-import HeaderAdmin from '../../../components/HeaderAdmin';
-import Menu from '../../../components/Menu';
+import Button from '../sharedPrivateComponents/button/Button';
+import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/menu/Menu';
 import {  useNavigate } from 'react-router-dom';
-import Icon_arrow_left from '../img/Icon_arrow-left.svg'
-import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
-import Search from '../../../components/Search';
+import Icon_arrow_left from '../../../assets/icons/Icon_arrow-left.svg'
+import Icon_arrow_rigth from '../../../assets/icons/Icon_arrow-right.svg'
+import Search from '../sharedPrivateComponents/Search';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import iconDelete from '../img/Icon_delete.svg';
+import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
 
 
 
