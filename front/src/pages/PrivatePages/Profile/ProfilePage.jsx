@@ -1,10 +1,11 @@
 // import { Link } from 'react-router-dom';
-import HeaderAdmin from '../../../components/HeaderAdmin';
-import Menu from '../../../components/Menu';
-import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
-import ProfilePicture from '../../../components/ProfilePicture';
+import HeaderAdmin from '../sharedPrivateComponents/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/Menu';
+import ProfilePictureHeader from '../../../assets/admins/ProfilePictureHeader.svg';
+import ProfilePicture from '../sharedPrivateComponents/ProfilePicture';
 
 function Profile() {
+
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
   const adminSecondName = admin.fullName.split(' ')[1];
@@ -15,6 +16,7 @@ function Profile() {
       <Menu />
       <div>
         <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
+          {/* cambiar titulo por title!!!!!!!!!!!!!!!!! gonza */}
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center'>
             <h2 className='flex items-center justify-center h-[32px] w-[90px] text-2xl text-blue'>
@@ -26,7 +28,7 @@ function Profile() {
               <ProfilePicture 
               styles='w-32 rounded-full'
               picture={ProfilePictureHeader}
-              alt='Admin'/>
+              alt='admin'/>
             </div>
               <div className='h-[320px] w-[400px] border-l-2 pl-4 py-5'>
 
@@ -37,8 +39,8 @@ function Profile() {
               <h5 className='mb-6 mt-1'>{`${adminEmail}`}</h5>
 
               <h6 className='text-xs text-lightgray'>TELÉFONO</h6>
-              <h5 className='mb-6 mt-1'>1553678990</h5>
-
+              <h5 className='mb-6 mt-1'>1553678990</h5>  
+              {/* me falta traer estos datos del back oo dejarlos fijos !!!!!!!!!!!!!!! preguntar */}
               <h6 className='text-xs text-lightgray'>LINKED IN</h6>
               <h5 className='mb-6  mt-1'>Sofia.serrano</h5>
               </div>

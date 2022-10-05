@@ -14,11 +14,9 @@ function AssignComponent() {
     try {
       let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
       setUser(res.data);
-      console.log(user);
     } catch (err) {
       navigate('error');
       let message = err.response.statusText || 'Ocurrió un error';
-      console.log(message);
     }
   };
 

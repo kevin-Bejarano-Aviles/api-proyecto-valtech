@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../../components/Button';
-import HeaderAdmin from '../../../components/HeaderAdmin';
-import Menu from '../../../components/Menu';
+import Button from '../sharedPrivateComponents/Button';
+import HeaderAdmin from '../sharedPrivateComponents/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/Menu';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Alert from '../../../components/Alert';
+import Alert from '../sharedPrivateComponents/Alert';
 
 function Oriented() {
 

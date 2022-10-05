@@ -1,10 +1,11 @@
 import { useEffect, useState ,useContext} from 'react';
-import Oriented from '../component/PrivatePages/shared/Oriented';
+import Oriented from './Oriented';
 
 
 function OrientedList({asignOriented=false,users}) {
 
   const [seeMore, setSeeMore] = useState(false);
+  
   return (
     <div >
       <ul className='grid mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>

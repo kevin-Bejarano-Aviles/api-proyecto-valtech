@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from "react";
-import HeaderAdmin from "../../../components/HeaderAdmin";
-import Menu from "../../../components/Menu";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "../../../components/Button";
-import Search from "../../../components/Search";
-import OrientedList from "../../../components/OrientedList";
-import { useState } from "react";
+import React, { useContext, useEffect } from 'react';
+import HeaderAdmin from '../sharedPrivateComponents/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/Menu';
+import { Link, useNavigate } from 'react-router-dom';
+import Button from "../sharedPrivateComponents/Button";
+import Search from "../sharedPrivateComponents/Search";
+import OrientedList from '../sharedPrivateComponents/OrientedList';
+import { useState } from 'react';
 import Context from '../../../context/Context';
-import axios from "axios";
+import axios from 'axios';
 
 
 //see orientedList
@@ -16,6 +16,7 @@ function Orienteds() {
   const navigate = useNavigate();
 
   const {deslogearme} = useContext(Context);
+    // cambiar deslogearme a logout !!!!!!!!!!!!!!!!!!! preguntar
 
   const [usersList, setUsers] = useState([]);
 
@@ -34,11 +35,10 @@ function Orienteds() {
       setUsers(response.data.students);
     } catch (error) {
       login();
-      console.log(error)
     }
   };
   const handleSearch = (event)=>{
-		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
+		//If the input is empty, show one that meets the criteria. Otherwise, the message was not found.
 		SetSearch(event.target.value)
 		if (search.length>1) {
 		  setShowAll(false)
@@ -75,7 +75,6 @@ function Orienteds() {
 
               <div className="relative mt-8">
               <Search placeholder={`Buscar orientado por nombre y apellido`} handleChange={handleSearch}/>
-              
               <OrientedList asignOriented={true} users={users}/>
               </div>
               
