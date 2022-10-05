@@ -1,10 +1,10 @@
 import React from 'react'
-import Icon from '../img/vblanco.svg'
-import Mail from '../img/MailIcon.svg'
-import Phone from '../img/Phone.svg'
-import Facebook from '../img/Facebook.svg'
-import Instagram from '../img/Instagram.svg'
-import LinkedIn from '../img/LinkedIn.svg'
+import Icon from '../../assets/logo/vblanco.svg'
+import Mail from '../../assets/MailIcon.svg'
+import Phone from '../../assets/Phone.svg'
+import Facebook from '../../assets/icons/sociaMedia/Facebook.svg'
+import Instagram from '../../assets/icons/sociaMedia/Instagram.svg'
+import LinkedIn from '../../assets/icons/sociaMedia/LinkedIn.svg'
 function Footer() {
     const desktopStyle='tablet:justify-evenly tablet:flex-row mobile:items-center';
   return (
