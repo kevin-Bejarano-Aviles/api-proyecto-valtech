@@ -172,7 +172,7 @@ function AssignCounselorPage() {
         <div>
           <div>  
             <form  onSubmit={handleSubmit(onSubmit)} id="1">
-              <div className={ocultarCard || (user.adviser === null) ? "block" : "hidden"}>
+              <div className={ocultarCard || (user.adviserId === null) ? "block" : "hidden"}>
                 <div>
                 <label className='text-[14px] leading-4 text-blue ml-[46px]  mt-4'>Referente</label>
                 </div>
@@ -222,7 +222,7 @@ function AssignCounselorPage() {
                 </div> 
               </div>
               <div className="ml-10 mt-16 mb-8 flex flex-row "  onClick={()=>setViewButton(false)}>
-                <div className={`${alert ? "hidden" : "block"} ${ocultarCard || (user.adviser === null) ? "block" : "hidden"} `}  onClick={clickAlert}>
+                <div className={`${alert ? "hidden" : "block"} ${ocultarCard || (user.adviserId === null) ? "block" : "hidden"} `}  onClick={clickAlert}>
                   <Button type='submit' name='Asignar orientador/a' disabled={isEmpty}  />
                 </div>
                 <div className="hidden">.</div>
@@ -244,10 +244,10 @@ function AssignCounselorPage() {
           
 
         <div  className={ocultarCard ? "hidden" : "block"}>
-        <div className={user.adviser !==null ? "block" : "hidden"}>
+        <div className={user.adviserId !==null ? "block" : "hidden"}>
           
            <div className="py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
-            <div className='w-[178px] h-[178px] flex justify-center items-center border-r-[1px] border-bordergray'><img className='w-[140px] h-[140px] rounded-full' src={'' ? require(`../img/adviser/${''}`) : 'https://i.imgur.com/b08hxPY.png'} alt={selectOption}/></div>
+            <div className='w-[178px] h-[178px] flex justify-center items-center border-r-[1px] border-bordergray'><img className='w-[140px] h-[140px] rounded-full' src={user.Adviser && user.Adviser.avatar ? require(`../img/adviser/${user.Adviser && user.Adviser.avatar}`) : 'https://i.imgur.com/b08hxPY.png'} alt={selectOption}/></div>
             <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
             <div className=' mobile:mx-auto lap_tablet:mx-auto  tablet:mx-auto'>
             <h2 className='text-2xl font-normal ml-6 '></h2>
@@ -260,7 +260,6 @@ function AssignCounselorPage() {
             </div>
             <div className='w-1/2 px-6 '>
             <h5 className=' text-xs text-lightgray'>Telefono</h5>
-            {console.log(user.Adviser && user.Adviser.email)}
             <p className=' text-[16pxpx] leading-[26px] text-blue'>{user.Adviser && user.Adviser.phoneNumber}</p>
             </div>
             </div>
@@ -268,7 +267,7 @@ function AssignCounselorPage() {
             </div>
             </div>
            
-           <div className={user.adviser !==null ? "block" : "hidden"} >
+           <div className={user.adviserId !==null ? "block" : "hidden"} >
            <div className="flex flex-row ml-10 mt-16 relative bottom-10 items-center">
 
            <Button type='button' handleFunction={() => setOcultarCard(true)}  name='Modificar orientador/a'/>

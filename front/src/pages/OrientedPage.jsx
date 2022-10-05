@@ -105,7 +105,7 @@ function Oriented() {
             </div>
           </section>
           <Link to={`/orientados/${user.id}/asignar-orientador`}>
-            <Button type='button' name={`${user.adviser!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
+            <Button type='button' name={`${user.adviserId!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
           </Link>
           {
             (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)
