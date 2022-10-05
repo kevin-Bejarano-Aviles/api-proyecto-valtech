@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../Footer';
+import Footer from '../sharedComponent/';
 import Header from '../../../components/HeaderPublic';
 import Banner from '../../../components/Banner';
 import Proposal from '../../../components/Proposal';
