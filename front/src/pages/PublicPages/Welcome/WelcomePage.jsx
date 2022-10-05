@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/HeaderPublic';
-import Banner from '../components/Banner';
-import Proposal from '../components/Proposal';
+import Footer from '../../Footer';
+import Header from '../../../components/HeaderPublic';
+import Banner from '../../../components/Banner';
+import Proposal from '../../../components/Proposal';
 
 function Welcome() {
   return (

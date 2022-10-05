@@ -1,8 +1,8 @@
 // import { Link } from 'react-router-dom';
-import HeaderAdmin from '../components/HeaderAdmin';
-import Menu from '../components/Menu';
+import HeaderAdmin from '../../../components/HeaderAdmin';
+import Menu from '../../../components/Menu';
 import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
-import ProfilePicture from '../components/ProfilePicture';
+import ProfilePicture from '../../../components/ProfilePicture';
 
 function Profile() {
   const admin = JSON.parse(localStorage.getItem('admin'));

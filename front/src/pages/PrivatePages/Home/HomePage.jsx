@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../components/Button';
+import Button from '../../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import OrientedList from '../components/OrientedList';
-import HeaderAdmin from '../components/HeaderAdmin';
-import Menu from '../components/Menu';
-import CardText from '../components/CardText';
-import Context from '../context/Context';
+import OrientedList from '../../../components/OrientedList';
+import HeaderAdmin from '../../../components/HeaderAdmin';
+import Menu from '../../../components/Menu';
+import CardText from './CardText';
+import Context from '../../../context/Context';
 import axios from 'axios';
 
 function HomePage() {

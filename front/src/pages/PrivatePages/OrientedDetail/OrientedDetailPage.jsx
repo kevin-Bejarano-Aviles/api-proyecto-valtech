@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import HeaderAdmin from '../components/HeaderAdmin';
-import Menu from '../components/Menu';
+import Button from '../../../components/Button';
+import HeaderAdmin from '../../../components/HeaderAdmin';
+import Menu from '../../../components/Menu';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Alert from '../components/Alert';
+import Alert from '../../../components/Alert';
 
 function Oriented() {
 
@@ -105,7 +105,7 @@ function Oriented() {
             </div>
           </section>
           <Link to={`/orientados/${user.id}/asignar-orientador`}>
-            <Button type='button' name={`${user.adviserId!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
+            <Button type='button' name={`${user.adviser!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
           </Link>
           {
             (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)

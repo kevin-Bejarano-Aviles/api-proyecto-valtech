@@ -1,10 +1,10 @@
-import Button from '../components/Button';
-import HeaderAdmin from '../components/HeaderAdmin';
-import Menu from '../components/Menu';
+import Button from '../../../components/Button';
+import HeaderAdmin from '../../../components/HeaderAdmin';
+import Menu from '../../../components/Menu';
 import {  useNavigate } from 'react-router-dom';
 import Icon_arrow_left from '../img/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../img/Icon_arrow-right.svg'
-import Search from '../components/Search';
+import Search from '../../../components/Search';
 import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';

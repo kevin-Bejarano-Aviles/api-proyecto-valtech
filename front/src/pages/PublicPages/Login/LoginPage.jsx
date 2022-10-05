@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Button from '../components/Button';
+import Button from '../../../components/Button';
 import axios from 'axios'
 
 import warningImg from '../img/icon_warning.svg'
 import ilustration from '../img/ilustration.svg';
 import title from '../img/vnegro.svg'
 import { useContext } from 'react';
-import Context from '../context/Context';
+import Context from '../../../context/Context';
 
 function LoginPage() {
   // const [band,useState]=useState(0)

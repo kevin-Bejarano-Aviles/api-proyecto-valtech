@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
-import HeaderAdmin from "../components/HeaderAdmin";
-import Menu from "../components/Menu";
+import HeaderAdmin from "../../../components/HeaderAdmin";
+import Menu from "../../../components/Menu";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import Search from "../components/Search";
-import OrientedList from "../components/OrientedList";
+import Button from "../../../components/Button";
+import Search from "../../../components/Search";
+import OrientedList from "../../../components/OrientedList";
 import { useState } from "react";
-import Context from '../context/Context';
+import Context from '../../../context/Context';
 import axios from "axios";
 
 
