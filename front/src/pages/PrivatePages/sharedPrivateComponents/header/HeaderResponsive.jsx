@@ -1,7 +1,7 @@
 import {React, useState} from 'react'
 import { Icon } from '@iconify/react';
 import IconV from '../img/vnegro.svg'
-import MenuResponsive from './MenuResponsive';
+import MenuResponsive from '../MenuResponsive';
 
 export default function HeaderResponsive() {
    const [menu, setMenu] = useState(false)

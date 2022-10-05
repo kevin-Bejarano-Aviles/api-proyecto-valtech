@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
 import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
-import MenuComponent from './MenuComponent';
+import MenuComponent from './menu/MenuComponent';
 import Logout from '../img/Icon_logout.svg'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
