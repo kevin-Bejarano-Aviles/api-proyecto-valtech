@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import HeaderAdmin from '../sharedPrivateComponents/HeaderAdmin';
-import Menu from '../sharedPrivateComponents/Menu';
+import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/menu/Menu';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from "../sharedPrivateComponents/Button";
+import Button from "../sharedPrivateComponents/button/Button";
 import Search from "../sharedPrivateComponents/Search";
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import { useState } from 'react';
