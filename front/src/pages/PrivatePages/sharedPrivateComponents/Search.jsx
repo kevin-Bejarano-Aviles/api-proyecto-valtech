@@ -1,4 +1,4 @@
-import Icon_Search from '../img/Icon_search.svg';
+import Icon_Search from '../../../assets/icons/privatePage/icon-search.svg';
 
 
 function Search({placeholder,handleChange}) {
