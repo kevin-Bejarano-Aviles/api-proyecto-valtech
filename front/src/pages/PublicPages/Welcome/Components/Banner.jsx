@@ -1,10 +1,10 @@
-import img1 from '../img/banner_img1.png';
-import img2 from '../img/banner_img2.png';
-import img3 from '../img/banner_img3.png';
+import img1 from '../../../../assets/banner/banner_img1.png';
+import img2 from '../../../../assets/banner/banner_img2.png';
+import img3 from '../../../../assets/banner/banner_img3.png';
 import '../index.css';
 
-import arrow_left from '../img/arrow_left.svg'
-import arrow_rigth from '../img/arrow_right.svg'
+import arrow_left from '../../../../assets/icons/arrow_left.svg'
+import arrow_rigth from '../../../../assets/icons/right.svg'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
