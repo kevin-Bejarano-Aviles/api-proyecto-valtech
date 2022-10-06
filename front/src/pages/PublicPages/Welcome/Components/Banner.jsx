@@ -60,7 +60,6 @@ function Banner() {
     
     useEffect(()=>{
         slideRef.current.addEventListener("animationend", removeAnimation);
-        console.log(currentIndex);
     },[currentIndex])
 
     // useEffect(()=>{

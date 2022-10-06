@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import Context from '../../../context/Context';
 
 function LoginPage() {
+  const url=process.env.REACT_APP_API_URL
   // const [band,useState]=useState(0)
   const [message,setMessage]=useState(null)
 
@@ -29,7 +30,7 @@ function LoginPage() {
     pass:''
   });
 
-  const baseUrl = 'http://localhost:8000/admin/adminLogin'
+const baseUrl = 'http://localhost:8000/admin/adminLogin'
   const navigate = useNavigate();
     const {logIn} = useContext(Context);
     const login = ()=>{
