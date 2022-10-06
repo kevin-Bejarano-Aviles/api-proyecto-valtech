@@ -26,7 +26,6 @@ function EventsPage() {
 	const [showAll, setShowAll] = useState(false);
 	//Show only the event that has the name of the target I want to see
 	const [search,SetSearch] = useState('');
-	const  [firsrtOrder,setFirstOrder]=useState(false);
 
 
 	const getallvents=async ()=>{
@@ -54,24 +53,22 @@ function EventsPage() {
 
 	
     function orderList(list){
-		let array;
+		let orderListArray;
 		if (list.length>0) {
 			if(!orderListband){
-				array=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
+				orderListArray=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
 			}
 			else{
 	
-				array=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
+				orderListArray=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
 	
 			}
-			setEventsList(array)
+			setEventsList(orderListArray)
 		}
 		
 	}
 
 	const handleSearch = (event)=>{
-		//si el input esta vacio que muestre uno que cumpla con los criterios caso contrario mensaje de no se encontro el mensaje 
-		console.log(search.length);
 		SetSearch(event.target.value)
 		if (search) {
 		  setShowAll(false)
@@ -82,7 +79,6 @@ function EventsPage() {
 		  SetBandSearch(false)
 		}
 	}
-	//averiguar como hacer que se filter con el lower case
 
 	function arrowRigth() {
 		if(initrange+eventsToShow.length < cantEvents ){
@@ -97,32 +93,30 @@ function EventsPage() {
 	}
 
 	function newArray(arrayList,init,end){
-		let array=[]
+		let arrayLimitEvent=[]
 		if(end>arrayList.length){
 			end=arrayList.length;
 		}
 		for (let index = init; index < end; index++) {
 			const element = arrayList[index];
-			array.push(element)
+			arrayLimitEvent.push(element)
 		}
-		return array
+		return arrayLimitEvent
 	}
 
 
-	
-	// console.log(newArray(eventList,initrange,initrange+8));
 	function convertDate(date){
-        let datestring=''
+        let convertDatestring=''
         for (let index = 0; index < date.length; index++) {
             const element = date[index];
             if(element==='-'){
-                datestring=datestring+'/'
+                convertDatestring=convertDatestring+'/'
             }
             else{
-                datestring=datestring+element;
+                convertDatestring=convertDatestring+element;
             }
         }
-        return datestring;
+        return convertDatestring;
     }
 
 	function converTime(time){
@@ -208,18 +202,15 @@ function EventsPage() {
                     
                 </div>
                 <div className='mt-5 mx-5 tablet:mx-0'>
-					{/* ------------------------------------------------------------------------------------------------------------------------------ */}
                     <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
 					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'} handleChange={handleSearch}/>
 				</div>
-                {/* tablita para mostrar eventos */}
-                {/* tabla container*/}
+          
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
 				</div>
-                    {/* paginado */}
 					
                     <table class='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
 						<thead className=' w-full border-b'>
@@ -285,7 +276,6 @@ function EventsPage() {
 												<div className='flex  justify-start flex-col '>
 													<div className='w-full flex justify-start flex-row'>
 														<div className='flex items-start mr-2 flex-col '>
-															{/* <p className='text-lightgray'>Fecha</p> */}
 															<p className='text-green font-medium'>Fecha</p>
 
 															<p className='text-blue'>{convertDate(eve.date)} </p>

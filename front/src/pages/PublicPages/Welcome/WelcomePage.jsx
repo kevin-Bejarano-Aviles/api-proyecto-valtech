@@ -5,7 +5,6 @@ import Banner from './Components/Banner';
 import Proposal from '../../sharedComponents/Proposal';
 
 function Welcome() {
-  console.log(process.env.REACT_APP_MY_API_KEY);
 
   return (
     <div>

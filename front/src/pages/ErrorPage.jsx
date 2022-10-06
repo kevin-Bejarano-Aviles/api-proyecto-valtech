@@ -13,12 +13,10 @@ export default function ErrorPage() {
   return (
     <div className='bg-white'>
       <header className=''>
-        
         {
           (!state)
           && <Header/>
           }
-        
         </header>
       <div className='bg-imgheader h-[553px] w-full flex flex-col '>
           <img className='mt-[19px] h-[390px] w-[390px] ml-auto mr-auto' src={ImgError} alt='Error'/> 
