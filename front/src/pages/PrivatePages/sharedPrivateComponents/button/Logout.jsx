@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import Context from '../context/Context';
+import Context from '../../../../context/Context';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import IconUser from '../img/Icon_user.svg';
-import IconLogouat from '../img/Icon_logout.svg';
-
+import IconUser from '../../../../assets/icons/privatePage/Icon_user.svg';
+import IconLogouat from '../../../../assets/icons/privatePage/Icon_logout.svg';
 
 
 export default function Logout() {

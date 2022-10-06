@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Icon from '../img/vnegro.svg'
-import Button from '../component/PrivatePages/shared/Button';
+import Icon from '../../assets/logo/vnegro.svg'
+import Button from '../PrivatePages/sharedPrivateComponents/button/Button';
 
 function Header() {
   const DesktopStyle=''

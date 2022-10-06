@@ -1,10 +1,10 @@
 import {React, Fragment, useState} from 'react';
-import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
+import ProfilePictureHeader from '../../../../assets/admins/ProfilePictureHeader.svg';
 import ProfilePicture from '../ProfilePicture';
-import Logout from '../../../components/Logout';
+import Logout from '../button/Logout';
 import { Icon } from '@iconify/react';
-import IconV from '../img/vnegro.svg'
-import MenuResponsive from '../MenuResponsive';
+import IconV from '../../../../assets/logo/vnegro.svg'
+import MenuResponsive from '../menu/MenuResponsive';
 
 function HeaderAdmin({ Titulo }) {
   const [photo, setPhoto] = useState(false)
