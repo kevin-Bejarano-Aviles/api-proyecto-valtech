@@ -73,8 +73,8 @@ function Banner() {
                 <img className='w-[800px] h-[171px] tablet:w-full tablet:h-auto' src={featuredImg[currentIndex]} alt={currentIndex}></img>
             </div>
                 <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
-                    <button onClick={handleOnePrevClick}><img src={arrow_left} alt="" /></button>
-                    <button onClick={handleOneNextClick}><img src={arrow_rigth} alt="" /></button>
+                    <button onClick={()=>handleOnePrevClick()}><img src={arrow_left} alt="" /></button>
+                    <button onClick={()=>handleOneNextClick()}><img src={arrow_rigth} alt="" /></button>
                 </div>
                 {/* ver como hacer que varie dependiendo de las imagenes que se carguen */}
                 <div className='absolute w-full flex justify-center inset-x-0 bottom-3'>
