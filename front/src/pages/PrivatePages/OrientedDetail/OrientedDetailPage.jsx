@@ -40,11 +40,11 @@ function Oriented() {
           <section> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
-              <img
+              {/* <img
                 src={user.avatar ? require(`../../../../assets/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
-              />
+              /> */}
               <div className='flex flex-col gap-2'>
                 <h3 className='text-2xl'>{user.fullName}</h3>
                 <div className='flex flex-col gap-2'>
