@@ -37,9 +37,8 @@ function Welcome() {
           </ul>
         </div>
       </div>
-      {/* aca iria lo de la propuesta */}
       <Proposal/>
-      <div className='w-full flex flex-col justify-center items-center h-44 mobile:h-64'>
+      <div className='w-full flex flex-col justify-center items-center h-44 mobile:h-64 pb-16'>
           <p className='text-blue font-medium font mobile:text-[22px] tablet:text-[32px]'>Viví tu transformación personal.</p>
           <p className='text-blue font-bold mx-auto text-center text-[28px]	tablet:text-[44.8px]'>Viví tu experiencia V_Camp.</p>
         </div>
