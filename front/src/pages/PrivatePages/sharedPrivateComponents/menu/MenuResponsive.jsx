@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
-import ProfilePictureHeader from '../img/ProfilePictureHeader.svg';
-import MenuComponent from './menu/MenuComponent';
-import Logout from '../img/Icon_logout.svg'
+import ProfilePictureHeader from '../../../../assets/admins/ProfilePictureHeader.svg';
+import MenuComponent from './MenuComponent';
+import Logout from '../../../../assets/icons/privatePage/Icon_logout.svg'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios';
-import Context from '../../../context/Context';
+import Context from '../../../../context/Context';
 
 export default function MenuResponsive({menu, setMenu}) {
   const navigate = useNavigate();

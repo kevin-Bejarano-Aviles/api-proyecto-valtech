@@ -1,7 +1,6 @@
-import React from 'react'
-
-import Icon from '../img/vnegro.svg'
-import MenuComponent from '../component/PrivatePages/shared/MenuComponent'
+import React from 'react';
+import Icon from '../../../../assets/logo/vnegro.svg';
+import MenuComponent from './MenuComponent';
 
 /* const that i use later in NavLink classname */
 function Menu() {

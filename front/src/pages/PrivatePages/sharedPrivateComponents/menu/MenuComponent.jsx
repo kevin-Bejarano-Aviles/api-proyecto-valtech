@@ -1,7 +1,8 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 export default function MenuComponent() {
+   
         const navLinkStyles = ({ isActive}) => {
          return{
           font: 'rubik',
