@@ -2,13 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from '../../../components/Button';
-import HeaderAdmin from '../../../components/HeaderAdmin';
-import Menu from '../../../components/Menu';
-import iconError from '../img/icon_warning.svg';
-import iconArrow from '../img/list-control.svg';
-import iconPlus from '../img/icon-plus.svg';
-import addAvatar from '../img/add-avatar.svg';
+import Button from '../sharedPrivateComponents/button/Button';
+import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
+import Menu from '../sharedPrivateComponents/menu/Menu';
+import iconError from '../../../assets/icons/icon_warning.svg';
+// import iconArrow from '../../../assets/icons/privatePage';
+import iconPlus from '../../../assets/icons/icon-plus.svg';
+import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
 
 
 function OrientedSignUpPage() {
@@ -236,7 +236,7 @@ function OrientedSignUpPage() {
                           required: 'Selecciona una opción',
                         })}
                         className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(errors.program || formError.program) ? 'border-red-500' : ''}`}
-                        style={{backgroundImage: `url(${iconArrow})`}}
+                        // style={{backgroundImage: `url(${iconArrow})`}}
                         id='program'
                         onBlur={e => changeBackgroundColor(e)}
                         onFocus={e => e.target.classList.add('text-black')}

@@ -1,5 +1,5 @@
-import iconCheck from '../img/icon-check.svg';
-import iconClose from '../img/icon-close.svg';
+import iconCheck from '../../../assets/icons/icon-check.svg';
+import iconClose from '../../../assets/icons/privatePage/icon-close.svg';
 
 function Alert({ title, message, onclick }) {
   return (
