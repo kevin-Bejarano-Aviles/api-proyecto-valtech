@@ -42,29 +42,15 @@ function Banner() {
         slideRef.current.classList.add('fade-anim');
     }
 
-
     const removeAnimation= ()=>{
         slideRef.current.classList.remove('fade-anim');
     }
-    //  const cambios=()=>{
-    //     setInterval(()=>{
-    //         if(band===0){
-    //             setBand(1)
-    //         }
-    //         else if(band===1){
-    //             setBand(1)
-    //         }
-    //     },1000)
-    //  }
-    
+
     
     useEffect(()=>{
         slideRef.current.addEventListener("animationend", removeAnimation);
     },[currentIndex])
 
-    // useEffect(()=>{
-    //    handleOneNextClick()
-    // },[band])
 
     return ( 
         <div className="w-full  m-auto">
@@ -76,7 +62,6 @@ function Banner() {
                     <button onClick={()=>handleOnePrevClick()}><img src={arrow_left} alt="" /></button>
                     <button onClick={()=>handleOneNextClick()}><img src={arrow_rigth} alt="" /></button>
                 </div>
-                {/* ver como hacer que varie dependiendo de las imagenes que se carguen */}
                 <div className='absolute w-full flex justify-center inset-x-0 bottom-3'>
                     {
                         featuredImg.map( (user,index)=>(
