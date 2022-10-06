@@ -8,14 +8,14 @@ import ImgError from '../assets/ilustration/error/ImgError.svg'
 import Proposal from './sharedComponents/Proposal'
 
 export default function ErrorPage() {
-  const {estado}=useContext(Context)
+  const {state}=useContext(Context)
 
   return (
     <div className='bg-white'>
       <header className=''>
         
         {
-          (!estado)
+          (!state)
           && <Header/>
           }
         
@@ -24,7 +24,7 @@ export default function ErrorPage() {
           <img className='mt-[19px] h-[390px] w-[390px] ml-auto mr-auto' src={ImgError} alt='Error'/> 
           <h1 className='mt-[17px] text-center tablet:mx-auto text-3xl font-normal text-blue'>No encontramos la página que estás buscando</h1>
           <h2 className='mt-3.5 mx-auto text-center mx-2 tablet:mx-0  font-normal text-blue text-xl tablet:text-2xl'>Prueba buscando en la 
-          {(!estado) 
+          {(!state) 
           ? <Link to='/' className='text-green font-bold'> página de inicio</Link> 
           : <Link to='/inicio' className='text-green font-bold'> página de inicio</Link> 
           } 

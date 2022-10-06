@@ -24,7 +24,7 @@ function LoginPage() {
     //state variables showing error message
   const [errorMessage,SetErrorMessage]=useState(false);
 
-  const [datos,setDatos] = useState({
+  const [data,setData] = useState({
     email:'',
     pass:''
   });
@@ -38,10 +38,10 @@ function LoginPage() {
       navigate('/login',{replace:true})
   }
 
-  const postData = async (datos) => {
+  const postData = async (data) => {
     await axios.post(baseUrl,{
-      email:datos.email,
-      pass:datos.pass,
+      email:data.email,
+      pass:data.pass,
     },{withCredentials:true})
     .then(response=>{
         login();
@@ -59,12 +59,12 @@ function LoginPage() {
   //I need to validate the user and control the messages
   const alerta = async (e) =>{
     e.preventDefault();
-    postData(datos);
+    postData(data);
   }
 
   const handleInput= (ev)=>{
-    setDatos({
-      ...datos,
+    setData({
+      ...data,
       [ev.target.name]:ev.target.value
     })
     if(ev.target.name==='email'){
@@ -84,16 +84,16 @@ function LoginPage() {
   // check that the field is not empty
   const setErrors=()=>{
     
-    if(datos.pass.length<1 && !errorPassword && bandPass===1){
+    if(data.pass.length<1 && !errorPassword && bandPass===1){
       SetErrorPassword(true)
     }
-    else if(datos.pass.length>1 && errorPassword){
+    else if(data.pass.length>1 && errorPassword){
       SetErrorPassword(false)
     }
-    if(datos.email.length<1 && !errorEmail && bandEmail===1){
+    if(data.email.length<1 && !errorEmail && bandEmail===1){
       SetErrorEmail(true)
     }
-    else if(datos.email.length>1 && errorEmail){
+    else if(data.email.length>1 && errorEmail){
       SetErrorEmail(false)
     }
   }
@@ -105,10 +105,9 @@ function LoginPage() {
 
   useEffect(()=>{
     setErrors();
-  },[datos])
+  },[data])
  
   useEffect(()=>{
-    //makes the message disappear after 8 seconds on screen
     if(errorMessage){
       const timer=setTimeout(()=>{
         SetErrorMessage(false)
@@ -140,7 +139,7 @@ function LoginPage() {
         <label className='flex flex-col mt-2 mb-5'>
           <p className='font-bold desktop:font-normal
  tablet:font-normal text-zinc-600 text-lg'>Email</p>
-          <input className={`${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email' value={datos.email} onChange={handleInput}/>
+          <input className={`${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email' value={data.email} onChange={handleInput}/>
         </label>
         <div className={`${!errorEmail ? 'hidden' : 'flex'} text-red-500	`}>
           <img className='mr-2' src={warningImg} alt=''/>
@@ -149,7 +148,7 @@ function LoginPage() {
         
         <label className='flex flex-col mt-2 mb-5'>
         <p className='font-bold desktop:font-normal tablet:font-normal text-zinc-600 text-lg'>Contraseña</p>
-          <input className={`${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password' value={datos.password} onChange={handleInput}/>
+          <input className={`${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password' value={data.password} onChange={handleInput}/>
         </label>
 
         <div className={`${!errorPassword ? 'hidden' : 'flex '} text-red-500 `}>
