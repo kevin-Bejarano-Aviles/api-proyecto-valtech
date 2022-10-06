@@ -2,10 +2,10 @@ import React from 'react'
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../context/Context';
-import Header from '../components/HeaderPublic'
-import Footer from '../components/Footer'
-import ImgError from '../img/ImgError.svg'
-import Proposal from '../components/Proposal'
+import Header from './sharedComponents/HeaderPublic'
+import Footer from './sharedComponents/Footer'
+import ImgError from '../assets/ilustration/error/ImgError.svg'
+import Proposal from './sharedComponents/Proposal'
 
 export default function ErrorPage() {
   const {estado}=useContext(Context)

@@ -1,13 +1,13 @@
 import { React, useEffect, useState }  from "react";
-import Menu from '../../../components/Menu';
-import HeaderAdmin from '../../../components/HeaderAdmin';
-import AssingComponente from './AssignCounselorComponent/AssignComponent'
+import Menu from '../sharedPrivateComponents/menu/Menu';
+import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
+import AssingComponente from '../AssignCounselor/Components/AssignComponent'
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
-import Button from '../../../components/Button'
+import Button from '../sharedPrivateComponents/button/Button'
 import { useForm } from 'react-hook-form';
 import { useParams, NavLink } from 'react-router-dom';
-import Alert from '../../../components/Alert'
+import Alert from '../sharedPrivateComponents/Alert'
 
 /* import AssignOriented from "../components/AssignOriented"; */
 
