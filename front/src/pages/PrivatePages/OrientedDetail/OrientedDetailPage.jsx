@@ -14,6 +14,7 @@ function Oriented() {
   const [user, setUser] = useState([]);
   const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
+  
 
   const getAllStudents = async () => {
     try {
@@ -24,7 +25,8 @@ function Oriented() {
       let message = err.response.statusText || 'Ocurrió un error';
     }
   };
-
+ 
+  
 
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function Oriented() {
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
-                // src={user.avatar ? require(`../../../../assets/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
+                src={user.avatar ? require(`../../../assets/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
               /> 

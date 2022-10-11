@@ -61,7 +61,7 @@ function HomePage() {
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
               <CardText title='¿Qué querés aportar?' />
             </div>
-            <div className='hidden lap_tablet:flex absolute top-[136px] -right-6 justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full cursor-pointer'>&#62;</div>
+            {/* <div className='hidden lap_tablet:flex absolute top-[136px] -right-6 justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full cursor-pointer'>&#62;</div> */}
           </div>
         </main>
       </div>
