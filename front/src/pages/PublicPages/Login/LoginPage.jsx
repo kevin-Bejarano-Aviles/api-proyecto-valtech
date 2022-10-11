@@ -45,7 +45,7 @@ function LoginPage() {
     },{withCredentials:true})
     .then(response=>{
         login();
-        console.log(response.data.adminLog);
+        // console.log(response.data.adminLog);
         localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
       })
     .catch(error => {
