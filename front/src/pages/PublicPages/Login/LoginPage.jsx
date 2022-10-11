@@ -124,7 +124,6 @@ function LoginPage() {
             <p className='font-bold tablet:font-normal'>{errorMessage}</p>
         </div>
         }
-        {/*   */}
         
         <div className='mt-5'>
           <Button type='submit' name='log in' />        
