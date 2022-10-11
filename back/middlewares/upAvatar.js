@@ -4,7 +4,7 @@ const multer = require('multer')
 const path = require('path');
 const storage = multer.diskStorage({ //To save img
     destination: function (req, file, cb) {
-      cb(null,path.join(__dirname,'..','..','front','src','img','students')) //img destination from edit form
+      cb(null,path.join(__dirname,'..','..','front','src','assets','students')); //img destination from edit form
     },/*  */
     filename: function (req, file, cb) {
       // We name the img with the date, and a random number so will never repeat
@@ -15,4 +15,4 @@ const storage = multer.diskStorage({ //To save img
 
 const upload =  multer({ storage: storage }) 
 
-module.exports = upload
+module.exports = {upload}

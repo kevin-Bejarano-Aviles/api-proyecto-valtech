@@ -6,10 +6,10 @@ const db = require('./models/index');
 //const dotenv = require('dotenv');
 const session = require('express-session');
 /* const methodOverride = require('method-override'); */
-const port = process.env.PORT||8001;
+const port = process.env.PORT||8000;
 const cors = require('cors');
 const cookie = require('cookie-parser');
-const adminRoutes = require('./routes/admin.js')
+/* const adminRoutes = require('./routes/admin.js') */
 
 //Use express static to declare our public folder
 app.use(express.static('public'))
@@ -33,8 +33,10 @@ app.use(session({
 app.use(cookie())
 app.use(express.json());
 /* app.use(methodOverride('_method')); */
-
-app.use('/admin',adminRoutes);
+app.use('/advisers',require('./routes/admin/adviser'));
+app.use('/auth',require('./routes/admin/auth'));
+app.use('/events',require('./routes/admin/event'));
+app.use('/students',require('./routes/admin/student'));
 
 try {
   db.sequelize.authenticate()
@@ -43,7 +45,6 @@ try {
     console.log(`The error is: ${error}`)
   }
 
-//dotenv.config({path: './env/.env'})
 
 app.listen(port, ()=>{
     console.log(`SERVER UP running in http://localhost:${port}`);
