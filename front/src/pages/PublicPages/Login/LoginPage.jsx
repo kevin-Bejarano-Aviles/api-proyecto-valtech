@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios'
 
@@ -52,22 +52,14 @@ function LoginPage() {
 
 
 
-  // const postData = async (data) => {
-  //   await axios.post(baseUrl,{
-  //     email:data.email,
-  //     pass:data.pass,
-  //   },{withCredentials:true})
-  //   .then(response=>{
-  //       login();
-  //       localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
-  //     })
-  //   .catch(error => {
-  //     setMessage(error.response.data.message);
-  //     SetErrorMessage(true)
-
-  //   })
-
-  //   }
+  useEffect(() => {
+    if(errorMessage){
+      const timer=setTimeout(()=>{
+        setErrorrMessage('')
+      },8000);
+      return ()=> clearTimeout(timer)
+    }
+  },[errorMessage]);
 
   const deskTopviewIlustration='laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center'
   const deskTopviewForm='laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20'
@@ -75,7 +67,7 @@ function LoginPage() {
   const tabletviewIlustration='tablet:static  tablet:bg-graybackground tablet:h-screen tablet:w-3/5 tablet:flex tablet:flex-col tablet:justify-center '
   const tabletviewsForm='tablet:drop-shadow-none tablet:backdrop-blur-none tablet:bg-transparent tablet:flex tablet:flex-col tablet:justify-center laptop:items-start tablet:h-screen tablet:w-4/5 tablet:ml-14 '
 
-  const inputDesktopView='bg-graybackground h-10  mt-2  pl-3 rounded-lg border-slate-300  focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500 desktop:w-96 tablet:w-96 '
+  const inputDesktopView='bg-graybackground h-10  mt-2  pl-3 rounded-lg   focus:outline-none  focus:border-sky-500 focus:ring-1 focus:ring-sky-500 desktop:w-96 tablet:w-96 '
 
   const inputMobileView='w-72'
 
@@ -92,7 +84,7 @@ function LoginPage() {
         <label className='flex flex-col mt-2 mb-5'>
           <p className='font-bold desktop:font-normal
  tablet:font-normal text-zinc-600 text-lg'>Email</p>
-          <input className={`${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email'  onChange={dataForm.handleChange}/>
+          <input className={`${dataForm.errors.email ?'border-slate-300' : 'border-red-600'} ${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email'  onChange={dataForm.handleChange}/>
         </label>
 
         {
@@ -105,7 +97,7 @@ function LoginPage() {
         
         <label className='flex flex-col mt-2 mb-5'>
         <p className='font-bold desktop:font-normal tablet:font-normal text-zinc-600 text-lg'>Contraseña</p>
-          <input className={`${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password'  onChange={dataForm.handleChange}/>
+          <input className={` ${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password'  onChange={dataForm.handleChange}/>
         </label>
 
         {
@@ -126,7 +118,7 @@ function LoginPage() {
         }
         
         <div className='mt-5'>
-          <Button type='submit' name='log in' />        
+          <Button type='submit' name='log in' disabled={dataForm.isValid ? false : true}/>        
         </div>
       </form>    
     </div>
