@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 import IconV from '../../../../assets/logo/vnegro.svg'
 import MenuResponsive from '../menu/MenuResponsive';
 
-function HeaderAdmin({ Titulo }) {
+function HeaderAdmin({ Title }) {
   const [photo, setPhoto] = useState(false)
   const clickPhoto = () => {
     setPhoto (!photo);
@@ -22,7 +22,7 @@ function HeaderAdmin({ Titulo }) {
       {/** Desktop header */}
       <div className='pl-12 bg-blue'>
         <div className='hidden laptop:flex justify-between items-center w-5/6 h-[112px]'>
-          <h1 className='text-[32px] text-white'>{Titulo}</h1>
+          <h1 className='text-[32px] text-white'>{Title}</h1>
           <div className='relative'>
             <ProfilePicture
               styles='h-12 w-[46px] rounded-full cursor-pointer'

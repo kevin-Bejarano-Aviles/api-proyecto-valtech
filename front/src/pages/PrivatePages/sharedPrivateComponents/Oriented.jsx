@@ -21,7 +21,7 @@ function Oriented({ info ,asignOriented=false}) {
         
           { 
             (asignOriented && oriented) && 
-            <div className={`flex mb-8 mr-3 w-5 h-5 ${!asignOriented && 'hiden'}`}>
+            <div className={`flex mb-12 mr-4 w-4 h-4  ${!asignOriented && 'hiden'}`}>
               <img src={icon_user} alt="iconUser" />
             </div>
           }

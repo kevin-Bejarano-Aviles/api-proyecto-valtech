@@ -43,7 +43,7 @@ function HomePage() {
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
+        <HeaderAdmin Title={`¡Bienvenida, ${adminFirstName}!`} />
         <main className='max-w-max mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='flex-col gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
@@ -61,7 +61,7 @@ function HomePage() {
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
               <CardText title='¿Qué querés aportar?' />
             </div>
-            <div className='hidden lap_tablet:flex absolute top-[136px] -right-6 justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full cursor-pointer'>&#62;</div>
+            {/* <div className='hidden lap_tablet:flex absolute top-[136px] -right-6 justify-center items-center w-12 h-12 text-xl border-2 border-blue rounded-full cursor-pointer'>&#62;</div> */}
           </div>
         </main>
       </div>

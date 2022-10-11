@@ -15,8 +15,7 @@ function Profile() {
    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo={`¡Bienvenida, ${adminFirstName}!`} />
-          {/* cambiar titulo por title!!!!!!!!!!!!!!!!! gonza */}
+        <HeaderAdmin Title={`¡Bienvenida, ${adminFirstName}!`} />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center'>
             <h2 className='flex items-center justify-center h-[32px] w-[90px] text-2xl text-blue'>
