@@ -37,7 +37,7 @@ function Oriented() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo='Orientados' />
+        <HeaderAdmin Title='Orientados' />
         <main className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${showAlert ? 'pb-24' : 'pb-7'}`}>
           <section> {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
