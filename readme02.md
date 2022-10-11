@@ -16,8 +16,12 @@ El proyecto debera ser corrido con un ``npm install``, en las siguientes carpeta
   npm install 
 ```
 
-Luego de hacer esto es importante armar la base de datos, se utilizo sequelize-cli para hacer las migraciones.
-Para poder crear la base de datos primero tiene que crear el archivo '.env' dentro de la carpeta 'back' donde estaran las variables de entorno, tales variables tienen un ej en el archivo '.env.example'.
+Luego de hacer esto es importante armar la base de datos, se utilizo `sequelize-cli` para hacer las migraciones.
+
+Para poder crear la base de datos primero tiene que crear el archivo `.env` dentro de la carpeta `/back` donde estaran las variables de entorno, tales variables tienen un ej en el archivo `.env.example`.
+
+Del dentro de la carpeta `/front` también hay que crear el mismo archivo `.env` que tiene que tener como contenido el contenido del archivo `.env-example`.
+
 Una vez echo esto es momento de crear la base de datos.
 Dentro de la carpeta back escribir los siguientes comandos en la terminal
 
@@ -36,6 +40,17 @@ Dentro de la carpeta back escribir los siguientes comandos en la terminal
 - Este comando es para la insercion de datos predefinidos en la base de datos tales como el admin, estudiantes y profesores:
 ```bash
   npx sequelize-cli db:seed:all
+```
+
+Finalmente para ejecutar la aplicación hay que correr dos comandos. Primero nos posicionamos dentro de la carpeta `/back` y ejecutamos el siguiente comando:
+
+```
+nodemon
+```
+Luego nos posicinamos en la carpeta `/front` y ejecutamos el siguiente comando:
+
+```
+npm start
 ```
 
 ### Imagen de la tabla con sus relaciones
