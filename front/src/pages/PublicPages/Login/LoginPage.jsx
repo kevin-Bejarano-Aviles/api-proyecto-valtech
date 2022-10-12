@@ -80,7 +80,7 @@ function LoginPage() {
               })
         }}
         >
-          {( ) =>(
+          {(errors) =>(
       <Form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} >
         <h2 className='text-3xl	font-bold mb-8 text-zinc-600'>Ingresá a tu portal</h2>
         <label className='flex flex-col mt-2 mb-5'>
@@ -123,7 +123,7 @@ function LoginPage() {
         
 
           <div className='mt-5'>
-            <Button type='submit' name='log in' disabled={false}/>        
+            <Button type='submit' name='log in' disabled={errors.isValid ? false : true}/>        
           </div>
         </Form>
       )}
