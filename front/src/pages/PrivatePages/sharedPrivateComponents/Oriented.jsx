@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import icon_user from '../../../assets/icons/privatePage/Icon_user.svg'
 
 function Oriented({ info ,asignOriented=false}) {

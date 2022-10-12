@@ -22,16 +22,12 @@ function Oriented() {
       setUser(res.data.student);
     } catch (err) {
       navigate('error');
-      let message = err.response.statusText || 'Ocurrió un error';
     }
   };
  
-  
-
-
   useEffect(() => {
     getAllStudents();
-  },[]);
+  });
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
