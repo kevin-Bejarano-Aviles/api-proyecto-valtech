@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useFormik } from 'formik';
 import axios from 'axios';
+import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
@@ -20,6 +22,28 @@ function OrientedSignUpPage() {
     console.log(formError);
     if (formError.message) getAllStudents();
   },[formError]);
+
+  const formData = useFormik({
+    initialValues:{
+      fullName:'',
+      email:'',
+      phoneNumber:'',
+      program:'',
+      dni:'',
+      age:'',
+      school:'',
+      address:'',
+      motive:'',
+      user:'',
+      pass:'',
+      confirmPass:''
+    },
+    validationSchema:Yup.object({
+      fullName:Yup.string()
+    }),
+
+
+  })
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
     // {
@@ -85,7 +109,6 @@ function OrientedSignUpPage() {
       setFormError(response.data);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
-      console.log(err);
       setFormError(err.response.data);
     }
   };
