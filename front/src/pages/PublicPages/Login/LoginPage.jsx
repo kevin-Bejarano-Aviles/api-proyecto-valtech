@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import { useFormik } from 'formik';
+import { ErrorMessage, useFormik } from 'formik';
+import { Formik, Form, Field } from 'formik';
+
 import * as Yup from 'yup';
 import axios from 'axios'
 
@@ -25,31 +27,10 @@ function LoginPage() {
     navigate('/login',{replace:true})
   }
 
-  const dataForm=useFormik({
-      initialValues:{
-        email:'',
-        pass:''
-      },
-      validationSchema:Yup.object({
-        email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
-        pass:Yup.string().required('El campo contraseña no debe estar vacio'),
-      }),
-      onSubmit:async (data)=>{
-        await axios.post(baseUrl,{
-              email:data.email,
-              pass:data.pass,
-            },{withCredentials:true})
-            .then(response=>{
-              login();
-              localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
-            })
-            .catch(error => {
-              setErrorrMessage(error.response.data.message)
-            })
-      }
-    }
-  )
-
+  const DisplayingErrorMessagesSchema=Yup.object({
+      email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
+      pass:Yup.string().required('El campo contraseña no debe estar vacio'),
+    })
 
 
   useEffect(() => {
@@ -79,36 +60,59 @@ function LoginPage() {
         <img className='w-full tablet:w-full laptop:w-full' src={ilustration} alt='ilustracion'/>
       </div>
 
-      <form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} onSubmit={dataForm.handleSubmit}>
+      <Formik
+        initialValues={{
+          email:'',
+          pass:'',
+        }}
+        validationSchema={DisplayingErrorMessagesSchema}
+        onSubmit={async (data)=>{
+          await axios.post(baseUrl,{
+                email:data.email,
+                pass:data.pass,
+              },{withCredentials:true})
+              .then(response=>{
+                login();
+                localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+              })
+              .catch(error => {
+                setErrorrMessage(error.response.data.message)
+              })
+        }}
+        >
+          {( ) =>(
+      <Form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} >
         <h2 className='text-3xl	font-bold mb-8 text-zinc-600'>Ingresá a tu portal</h2>
         <label className='flex flex-col mt-2 mb-5'>
-          <p className='font-bold desktop:font-normal
- tablet:font-normal text-zinc-600 text-lg'>Email</p>
-          <input className={`${dataForm.errors.email ?'border-slate-300' : 'border-red-600'} ${inputDesktopView} ${inputMobileView}`} type='text' name='email' placeholder='email'  onChange={dataForm.handleChange}/>
+          <p className='font-bold desktop:font-normal tablet:font-normal text-zinc-600 text-lg'>Email</p>
+          <Field name='email' className={`${'border-slate-300'} ${inputDesktopView} ${inputMobileView}`} type='text' placeholder='ingresa email'/>
         </label>
 
+       <ErrorMessage name='email'>
         {
-          dataForm.errors.email &&
-          <div className={`flex text-red-500	`}>
+          msg =>
+            <div className='flex text-red-500'>
             <img className='mr-2' src={warningImg} alt=''/>
-            <p className='font-bold desktop:font-normal tablet:font-normal'>{dataForm.errors.email}</p>
+            <p className='font-bold desktop:font-normal tablet:font-normal'>{msg}</p>
           </div>
         }
-        
-        <label className='flex flex-col mt-2 mb-5'>
+       </ErrorMessage>
+       <label className='flex flex-col mt-2 mb-5'>
         <p className='font-bold desktop:font-normal tablet:font-normal text-zinc-600 text-lg'>Contraseña</p>
-          <input className={` ${inputDesktopView} ${inputMobileView}`} type='password' name='pass' placeholder='password'  onChange={dataForm.handleChange}/>
-        </label>
+        <Field name='pass' className={`border-slate-300 ${inputDesktopView} ${inputMobileView}`} type='password' placeholder='ingresa contraseña'/>
+      </label>
 
+      <ErrorMessage name='pass'>
         {
-          dataForm.errors.pass && 
-          <div className={`flex text-red-500 `}>
+          msg =>
+            <div className='flex text-red-500'>
             <img className='mr-2' src={warningImg} alt=''/>
-            <p className='font-bold desktop:font-normal tablet:font-normal'>{dataForm.errors.pass}</p>
+            <p className='font-bold desktop:font-normal tablet:font-normal'>{msg}</p>
           </div>
-
         }
-        
+       </ErrorMessage>
+
+
         {
             errorMessage &&
             <div className={`flex text-red-500`}>
@@ -117,10 +121,14 @@ function LoginPage() {
         </div>
         }
         
-        <div className='mt-5'>
-          <Button type='submit' name='log in' disabled={dataForm.isValid ? false : true}/>        
-        </div>
-      </form>    
+
+          <div className='mt-5'>
+            <Button type='submit' name='log in' disabled={false}/>        
+          </div>
+        </Form>
+      )}
+      </Formik>
+    
     </div>
   )
 }
