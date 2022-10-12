@@ -112,7 +112,6 @@ function LoginPage() {
         }
        </ErrorMessage>
 
-
         {
             errorMessage &&
             <div className={`flex text-red-500`}>

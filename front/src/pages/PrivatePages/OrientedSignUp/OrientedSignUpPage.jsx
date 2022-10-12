@@ -14,6 +14,7 @@ import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
 
 
 function OrientedSignUpPage() {
+  const url=process.env.REACT_APP_API_URL
   const navigate = useNavigate();
   const [formError, setFormError] = useState({});
   const [isEmpty, setIsEmpty] = useState(true);
@@ -22,6 +23,24 @@ function OrientedSignUpPage() {
     console.log(formError);
     if (formError.message) getAllStudents();
   },[formError]);
+
+  const validationSchemaForm=Yup.object({
+    fullName:Yup.string('Campo inválido')
+    .min(2,'Entre 2 y 500 caracteres')
+    .max(500,'')
+    .required('Campo requerido'),
+    email:Yup.required('Campo requerido').string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
+    phoneNumber:Yup.number('Ingresar solo numeros').min(10,'Entre 10 y 50 dígitos').max(50,'Entre 10 y 50 dígitos'),
+    program:Yup.required('Selecciona una opción'),
+    dni:Yup.required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
+    age:Yup.required('Campo requerido').number('Ingresar solo numeros').min(18,'Mínimo valor: 18').max(99,'Máximo valor: 99'),
+    school:Yup.required('Campo requerido').string('Campo inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
+    address:Yup.required('Campo requerido').string('Campo inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
+    motive:Yup.required('Campo requerido').string('Campo inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
+    user:Yup.required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
+    pass:Yup.required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
+    confirmPass:Yup.required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden'),
+  })
 
   const formData = useFormik({
     initialValues:{
@@ -38,9 +57,7 @@ function OrientedSignUpPage() {
       pass:'',
       confirmPass:''
     },
-    validationSchema:Yup.object({
-      fullName:Yup.string()
-    }),
+    validationSchema:{validationSchemaForm},
 
 
   })
@@ -64,28 +81,6 @@ function OrientedSignUpPage() {
     // }
   );
 
-  useEffect(() => {
-    if (
-      watch().address === '' ||
-      watch().age === '' ||
-      watch().avatar.length < 1 ||
-      watch().confirmPass === '' ||
-      watch().dni === '' ||
-      watch().email === '' ||
-      watch().fullName === '' ||
-      watch().motive === '' ||
-      watch().pass === '' ||
-      watch().phoneNumber === '' ||
-      watch().program === '' ||
-      watch().school === '' ||
-      watch().user === ''
-    ) {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
-  },[watch()]);
-
   // Function to 'Ingresar orietado' button.
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -104,7 +99,7 @@ function OrientedSignUpPage() {
             avatar: e.target.avatar.files[0],
           }
       };
-      const response = await axios('http://localhost:8000/admin/addStudent', options);
+      const response = await axios(`${url}/admin/addStudent`, options);
       localStorage.setItem('registrado',true)
       setFormError(response.data);
     } catch (err) {
@@ -116,7 +111,7 @@ function OrientedSignUpPage() {
   // Function to bring all students.
   const getAllStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
+      const response = await axios.get(`${url}/admin/addStudents`, { withCredentials: true });
       const json = await response.data;
       const lastUserId = json[json.length-1].id;
       setTimeout(() => {
