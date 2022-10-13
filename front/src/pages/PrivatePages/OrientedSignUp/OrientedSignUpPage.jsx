@@ -20,17 +20,17 @@ const MyFileInput = ({ label,children, ...props }) => {
 	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
 		<input
-		  className='flex gap-4 mobile:flex-col' 
-		  {...field}
-		  {...props}
-		/>
-		{children}
-		{meta.touched && meta.error ? (
+        	type='file'
+            accept='.png, .jpg, .jpeg, .gif'
+            id='inputFile'
+        />
+		
+		{/* {meta.touched && meta.error ? (
 		  <div className='text-red-500 flex mt-2'>
 				  <img src={warningImg} alt="warning" />
 				  <p className='ml-2'>{meta.error}</p>
 			  </div>
-		) : null}
+		) : null} */}
 	  </div>
 	);
   };
@@ -206,7 +206,11 @@ function OrientedSignUpPage() {
           <section>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
 			<div className=''>
+				<MyFileInput 
+				label=''
+				name='inputFile'/>
 				
+
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
 						<MyTextInput

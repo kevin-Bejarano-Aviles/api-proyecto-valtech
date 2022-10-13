@@ -156,7 +156,6 @@ function OrientedSignUpPage() {
                 <div className={`${(errors.avatar || formError.avatar) ? 'mobile:' : ''}`}>
                   <label htmlFor='inputFile'>
                     <input
-                      {...register('avatar', {required: 'Requerido'})}
                       type='file'
                       accept='.png, .jpg, .jpeg, .gif'
                       id='inputFile'
