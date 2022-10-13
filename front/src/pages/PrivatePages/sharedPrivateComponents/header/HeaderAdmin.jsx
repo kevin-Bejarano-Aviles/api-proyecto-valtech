@@ -49,7 +49,9 @@ function HeaderAdmin({ Title }) {
           <img className='mx-auto' src={IconV} alt='' />
       </div>
       {/** Show Menubar */}
+      <div className='laptop:hidden'>
       <MenuResponsive menu={menu} setMenu={setMenu} />
+      </div>
     </header>
   )
 }
