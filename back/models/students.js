@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Students.belongsTo(models.Advisers,{
         foreignKey:'adviserId',
-        //targetKey:'adviserId',
         targetKey:'id'
 
       })

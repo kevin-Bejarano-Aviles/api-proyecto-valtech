@@ -4,7 +4,11 @@ const {Advisers:AdviserModel,Students:StudentModel} = require('../../models');
 const getAllAdvisers = async (req,res) => {
     try {
         const advisers = await AdviserModel.findAll();
-        res.json({advisers});
+        res.status(200).json({
+            status:'200 OK',
+            message:'',
+            data:{advisers}
+        })
     } catch (error) {
         res.status(500).json({error:error.message});
     }
@@ -20,7 +24,11 @@ const assignAdviser = async (req,res) => {
             id : id
         }
        });
-       res.status(200).json({message:`adviser asignado al estudiante con id ${id}`});
+       res.status(200).json({
+            status:'200 OK',
+            message:`adviser assigned to the student with the id ${id}`,
+            data:''
+       });
     } catch (error) {
         res.status(500).json({error:error.message});
     }

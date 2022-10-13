@@ -1,8 +1,8 @@
-const adminCheck = require('./adminCheck');
+const isAuthorized = require('./isAuthorized');
 const upload = require('./upAvatar');
 const fieldValidation = require('./fieldValidation');
 module.exports = {
-    ...adminCheck,
+    ...isAuthorized,
     ...upload,
     ...fieldValidation
 }

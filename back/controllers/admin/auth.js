@@ -12,21 +12,33 @@ const login = async (req, res) => {
             }
         });
         if (!admin) {
-            return res.status(400).json({ message: 'Credenciales invalidas' });
+            return res.status(400).json({
+                status: '400 Bad request',
+                message:'Invalid credentials',
+                data:''
+            });
         } // We compare the password entered with the password we have in the db that's already hashed, with method "compareSync" 
         if (!bcryptjs.compareSync(pass, admin.password)) {
-            return res.status(400).json({ message: 'Credenciales invalidas' });
+            return res.status(400).json({
+                status: '400 Bad request',
+                message:'Invalid credentials',
+                data:''
+            });
         }
         req.session.adminLog = {
             id: admin.id,
             fullName: admin.fullName,
             avatar: admin.avatar,
             email: admin.email
-        }
-        res.json({adminLog:req.session.adminLog});
-
+        };
+        res.status(200).json({
+            status:'200 OK',
+            message:'',
+            data:{
+                admin:req.session.adminLog
+            }
+        });
     } catch (error) {
-        console.log({error:error.message});
         res.status(500).json({error:error.message});
     }
 };

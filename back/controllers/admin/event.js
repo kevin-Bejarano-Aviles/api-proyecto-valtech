@@ -1,4 +1,7 @@
-const {Events:EventModel,Students:StudentModel,Advisers:AdviserModel} = require('../../models');
+//const {Advisers:AdviserModel,Students:StudentModel,Events:EventModel} = require('../../models');
+const AdviserModel = require('../../models').Advisers;
+const StudentModel = require('../../models').Students;
+const EventModel = require('../../models').Events;
 const db = require('../../models/index');
 const {Op} = require('sequelize')
 const createEvent = async (req,res) => {
@@ -19,9 +22,13 @@ const createEvent = async (req,res) => {
                 id : item.id
                } 
             });
-            await event.addStudent(student); 
+            await event.addStudent(student);
         });
-    res.json({message:'Event created'});
+    res.status(200).json({
+        status:'200 OK',
+        message:'Event created',
+        data:''
+    });
     } catch (error) {
         res.status(500).json({error:error.message});
     }
@@ -29,6 +36,9 @@ const createEvent = async (req,res) => {
 const getAllEventsByFilters = async(req,res)=>{
     const {student='',from=0,limit=10} = req.query;
     try {
+        /* const events = await EventModel.findAll({
+            include:[{model:StudentModel,attributes:['id','fullName']},{model:AdviserModel}]      
+        }); */
         const events = await EventModel.findAll({
             include:[{
                 model:StudentModel,
@@ -39,15 +49,27 @@ const getAllEventsByFilters = async(req,res)=>{
                 },
                 attributes:['id','fullName']
             },{
-                model:AdviserModel
+                model:AdviserModel,
+                attributes:['id','fullName']
             }],
             offset:Number(from),
             limit:Number(limit)
         });
         if(events.length<1){
-            return res.status(404).json({message:'No se encontraron resultados'})
-        }
-        res.json({events,cant:events.length});
+            return res.status(404).json({
+                status:'404 Not found',
+                message:'No results found',
+                data:''
+            });
+        };
+        res.status(200).json({
+            status:'200 OK',
+            message:'',
+            data:{
+                events,
+                cant:events.length
+            }
+        });
     } catch (error) {
         res.status(500).json({error:error.message})
     }
@@ -55,15 +77,16 @@ const getAllEventsByFilters = async(req,res)=>{
 const deleteEvent = async(req,res)=>{
     const {id} = req.params;
     try {
-        const event = await EventModel.destroy({
+        await EventModel.destroy({
             where:{
                 id:id
             }
         });
-        if(!event){
-            return res.status(404).json({message:'No se puede eliminar el evento porque no existe en la base de datos'})
-        }
-        res.json({message:'Evento eliminado'});
+        res.status(200).json({
+            status:'200 OK',
+            message:'Deleted event',
+            data:''
+        });
     } catch (error) {
         res.status(500).json({error:error.message});
     }

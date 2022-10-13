@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const router = Router();
-const {adminCheck} = require('../../middlewares/index');
+const {isAuthorized} = require('../../middlewares/index');
 const {assignAdviser,getAllAdvisers} = require('../../controllers/admin/adviser');
-router.get('/',adminCheck,getAllAdvisers);
-router.put('/student/:id',adminCheck,assignAdviser);
+router.get('/',isAuthorized,getAllAdvisers);
+router.put('/student/:id',isAuthorized,assignAdviser);
 module.exports = router;

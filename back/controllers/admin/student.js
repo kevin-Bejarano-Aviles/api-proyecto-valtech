@@ -1,4 +1,6 @@
-const {Students:StudentModel,Advisers:AdviserModel} = require('../../models');
+//const {Students:StudentModel,Advisers:AdviserModel} = require('../../models'); 
+const StudentModel = require('../../models').Students;
+const AdviserModel = require('../../models').Advisers;
 const db = require('../../models/index');
 const bcryptjs = require('bcryptjs');
 //Method to add a student
@@ -22,7 +24,11 @@ const addStudent = async (req, res) => {
                 user: user,
                 password: passHash
             });
-            res.json({ message: 'Registro creado correctamente' });
+            res.status(200).json({
+                status:'200 OK',
+                message:'Student created successfully',
+                data:'',
+            });
         } catch (error) {
             res.status(500).json({error:error.message});
         }
@@ -30,8 +36,12 @@ const addStudent = async (req, res) => {
 //Method to get all students
 const getAllStudent = async (req, res) => {
     try {
-        const students = await StudentModel.findAll(); // excludes just one item
-        res.json({students});
+        const students = await StudentModel.findAll();
+        res.status(200).json({
+            status:'200 OK',
+            message:'',
+            data:{students}
+        });
     } catch (error) {
         res.status(500).json({error:error.message});
     }
@@ -47,11 +57,20 @@ const getStudent = async (req, res) => {
             }
         });
         if(!student[0]){
-            return res.status(404).json({message:'404 user not found'});
-        }
-        res.json({student:student[0]});
+            return res.status(404).json({
+                status:'404 Not found',
+                message:'user not found',
+                data:''
+            });
+        };
+        res.status(200).json({
+            status:'200 OK',
+            message:'',
+            data:{student:student[0]}
+        });
     } catch (error) {
         res.status(500).json({error:error.message});
+        /* throw new Error(error) */
     }
 };
 module.exports = {

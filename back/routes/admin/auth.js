@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const router = Router();
-const {adminCheck} = require('../../middlewares/index');
+const {isAuthorized} = require('../../middlewares/index');
 const {login,logOut} = require('../../controllers/admin/auth');
 router.post('/login',login);
-router.get('/logout',adminCheck,logOut);
+router.get('/logout',isAuthorized,logOut);
 module.exports = router;

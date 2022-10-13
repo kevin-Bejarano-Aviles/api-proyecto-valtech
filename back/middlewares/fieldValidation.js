@@ -6,10 +6,14 @@ const fieldValidation = (req,res,next)=>{
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         if(typeof req.files != 'undefined' && typeof req.files[0] != 'undefined'){
-            console.log(req.files[0]);
             fs.unlinkSync(path.join(__dirname,'..','..','front','src','assets','students',`${req.files[0].filename}`));
         }
-        return res.status(400).json(errors.mapped());
+        return res.status(400).json({
+            status:'400 Bad request',
+            message:'',
+            response:{
+                errors:errors.mapped()
+        }});
         // If we have an image will assign avatar
     }else{
         next()       
