@@ -1,8 +1,8 @@
 const isAuthorized = require('./isAuthorized');
 const upload = require('./upAvatar');
-const fieldValidation = require('./fieldValidation');
+const fieldValidations = require('./fieldValidations');
 module.exports = {
     ...isAuthorized,
     ...upload,
-    ...fieldValidation
+    ...fieldValidations
 }

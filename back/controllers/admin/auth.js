@@ -2,7 +2,7 @@ const {Admins:AdminModel} = require('../../models');
 const bcryptjs = require('bcryptjs');
 //Method to login our admin
 const login = async (req, res) => {
-    const { email, pass } = req.body;
+    const { email='', pass } = req.body;
     //const passHash = bcryptjs.hashSync(pass,12);
     try { 
          // We use the email to login, if our model find the email will comparate with the password, else we'll see the message "Credenciales inválidas"
@@ -42,14 +42,12 @@ const login = async (req, res) => {
         res.status(500).json({error:error.message});
     }
 };
-
 //Method to log out
 const logOut = (req = request, res) => {
     req.session.destroy((err) => {
     res.clearCookie('userId').send('cleared cookie');//If we add "send" it works, we don't know why
 });
 };
-
 module.exports = {
     login,
     logOut
