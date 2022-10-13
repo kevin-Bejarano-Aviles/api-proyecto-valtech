@@ -45,22 +45,22 @@ function OrientedSignUpPage() {
 
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
-    // {
-    //   defaultValues: {
-    //     fullName: 'Julian Martinez',
-    //     email: 'julian.martinez@gmail.com',
-    //     phoneNumber: '01162386020',
-    //     program: 'Orientacion vocacional',
-    //     dni: '28456387',
-    //     age: '18',
-    //     school: 'Nuestra señora del valle',
-    //     address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-    //     motive: 'Necesita orientación para elegir una carrera.',
-    //     user: '28456387',
-    //     pass: '12345678',
-    //     confirmPass: '12345678'
-    //   }
-    // }
+    {
+      defaultValues: {
+        fullName: 'Julian Martinez',
+        email: 'julian.martinez@gmail.com',
+        phoneNumber: '01162386020',
+        program: 'Orientacion vocacional',
+        dni: '28456387',
+        age: '18',
+        school: 'Nuestra señora del valle',
+        address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+        motive: 'Necesita orientación para elegir una carrera.',
+        user: '28456387',
+        pass: '12345678',
+        confirmPass: '12345678'
+      }
+    }
   );
 
   // Function to 'Ingresar orietado' button.

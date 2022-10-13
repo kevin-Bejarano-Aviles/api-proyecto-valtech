@@ -83,14 +83,14 @@ function OrientedSignUpPage() {
     .max(500,'')
     .required('Campo requerido'),
     email:Yup.string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres').required('Campo requerido'),
-    phoneNumber:Yup.number('Ingresar solo numeros').min(10,'Entre 10 y 50 dígitos').max(50,'Entre 10 y 50 dígitos'),
+    phoneNumber:Yup.number('Ingresar solo numeros').test('len', 'Entre 10 y 50 digitos', val => val.toString().length >= 10 && val.toString().length<=50),
     program:Yup.string().required('Selecciona una opción'),
-	dni:Yup.number('Ingresar solo numeros').test('len', 'Must be exactly 5 characters', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
+	dni:Yup.number('Ingresar solo numeros').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
     age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Mínimo valor: 18').max(99,'Máximo valor: 99'),
     school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    user:Yup.number().required('Campo requerido').test('len', 'Must be exactly 5 characters', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
+    user:Yup.number().required('Campo requerido').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
     pass:Yup.string().required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
     confirmPass:Yup.string().min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
   })
@@ -163,25 +163,25 @@ function OrientedSignUpPage() {
         <main className='pb-12 mx-12'>
           <Formik
             initialValues={{
-              fullName:'',
-              email:'',
-              phoneNumber:'',
-              program:'',
-              dni:'',
-              age:'',
-              school:'',
-              address:'',
-              motive:'',
-              user:'',
-              pass:'',
-              confirmPass:''
+				fullName: 'Julian Martinez',
+				email: 'julian.martinez@gmail.com',
+				phoneNumber: '01162386020',
+				program: 'Orientacion vocacional',
+				dni: '28456387',
+				age: '18',
+				school: 'Nuestra señora del valle',
+				address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+				motive: 'Necesita orientación para elegir una carrera.',
+				user: '28456387',
+				pass: '12345678',
+				confirmPass: '12345678'
             }}
             validationSchema={validationSchemaForm}
             onSubmit={(data)=>{
               onSubmit(data)
             }}
           >
-			
+		 {({ errors, touched ,values})=>(
           <Form action="">
           <section>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
@@ -276,9 +276,10 @@ function OrientedSignUpPage() {
 					/>
 				</div>
 			</section>
-			<Button type='submit' name='Ingresar orientado'  />
+			<Button type='submit' name='Ingresar orientado' />
 
           </Form>
+		 	)}
           </Formik>
         </main>
       </div>
