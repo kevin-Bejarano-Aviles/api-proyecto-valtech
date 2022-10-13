@@ -9,7 +9,7 @@ import { useParams, NavLink } from 'react-router-dom';
 import Alert from '../../PrivatePages/sharedPrivateComponents/Alert'
 
 
-function AssignCounselorPage() {
+function AssignAdviserPage() {
   const [userData, setUserData] = useState([]);
   const [adviserData, setAdviserData] = useState([]);
   const [isVisible, setIsVisible] = useState(false)
@@ -65,7 +65,7 @@ function AssignCounselorPage() {
 
   useEffect(() => {
     getAllAdvisers();
-  },[]);
+  });
 
 
 
@@ -74,10 +74,10 @@ function AssignCounselorPage() {
   
   const onSubmit = (data, e)=>{
     e.preventDefault();
-    postOrientador(data);  
+    assignAdviser(data);  
   };
 
-  const postOrientador = async (data) => {
+  const assignAdviser = async (data) => {
     try {
       let options = {
           method: 'PUT',
@@ -87,7 +87,7 @@ function AssignCounselorPage() {
       };
       
       const response = await axios(`http://localhost:8000/admin/assignAdviser/${params.id}`, options);  
-     
+      console.log(response.data); 
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);   
     }
@@ -99,13 +99,13 @@ function AssignCounselorPage() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
       <Menu />
       <div>
-      <HeaderAdmin Titulo='Orientados' />
+      <HeaderAdmin Title='Orientados' />
       <main className='mobile:max-w-max mobile:mx-auto laptop:mx-8  '>
       {/* I show the data of the oriented */}
         <section className=" mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row">
           <h2 className="text-2xl text-blue ml-[46px]  mt-8 ">Asignación de Orientador Referente</h2>
            <div>
-              <div className="py-4 flex flex-row  mt-4 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
+              <div className="min-w-[365px] py-4 flex flex-row  mt-4 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
                 <div className='w-[178px] h-[178px] flex justify-center items-center border-r-[1px] border-bordergray'>
                   <img className='w-[140px] h-[140px] rounded-full' 
                    src={userData.avatar ? require(`./../../../assets/students/${userData.avatar}`) : 'https://i.imgur.com/b08hxPY.png'} 
@@ -174,7 +174,7 @@ function AssignCounselorPage() {
                   </div>
                   <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
                     <div className=' mobile:mx-auto lap_tablet:mx-auto  tablet:mx-auto'>
-                      <h2 className='text-2xl font-normal ml-6 '></h2>
+                      <h2 className='text-2xl font-normal ml-6 '>Nombre</h2>
                       <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>Orientador</h4>
                     </div>
                     <div className='flex flex-row '>
@@ -212,7 +212,7 @@ function AssignCounselorPage() {
         {/* I show the data of the selected adviser */}
          <div  className={hideCard ? "hidden" : "block"}>
                <div className={userData.adviserId !==null ? "block" : "hidden"}>
-                  <div className="py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
+                  <div className="c py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
                     <div className='w-[178px] h-[178px] flex justify-center items-center border-r-[1px] border-bordergray'>
                       <img className='w-[140px] h-[140px] rounded-full' 
                       src={userData.Adviser && userData.Adviser.avatar ? require(`../../../assets/adviser/${userData.Adviser && userData.Adviser.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
@@ -220,7 +220,7 @@ function AssignCounselorPage() {
                     </div>
                   <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
                     <div className=' mobile:mx-auto lap_tablet:mx-auto  tablet:mx-auto'>
-                      <h2 className='text-2xl font-normal ml-6 '></h2>
+                      <h2 className='text-2xl font-normal ml-6 '>{userData.Adviser && userData.Adviser.fullName}</h2>
                       <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>Orientador</h4>
                     </div>
                     <div className='flex flex-row  h-auto'>
@@ -259,6 +259,6 @@ function AssignCounselorPage() {
   )
 }
 
-export default AssignCounselorPage; 
+export default AssignAdviserPage; 
 
 
