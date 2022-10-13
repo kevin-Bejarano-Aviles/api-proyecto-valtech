@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING(500)
       },
       duration: {
-        type: Sequelize.INTEGER
+        type: Sequelize.TIME
       },
       adviser_event_id: {
         type: Sequelize.INTEGER,
