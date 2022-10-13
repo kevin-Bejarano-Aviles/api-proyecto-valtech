@@ -1,23 +1,81 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import { Formik, Form, Field,ErrorMessage  } from 'formik';
+import { Formik, Form, Field ,ErrorMessage, useField} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
+import warningImg from '../../../assets/icons/icon_warning.svg'
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import iconError from '../../../assets/icons/icon_warning.svg';
 // import iconArrow from '../../../assets/icons/privatePage';
+import programs from './programs.json';
 import iconPlus from '../../../assets/icons/icon-plus.svg';
 import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
+
+
+
+const MyTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
+      <label htmlFor={props.name} className='text-sm'>{label}</label>
+      <input
+        className='mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 focus:outline-green' 
+        {...field}
+        {...props}
+      />
+      {meta.touched && meta.error ? (
+        <div className='text-red-500 flex mt-2'>
+				<img src={warningImg} alt="warning" />
+				<p className='ml-2'>{meta.error}</p>
+			</div>
+      ) : null}
+    </div>
+  );
+};
+
+const MyTextArea = ({ label, ...props }) => {
+	const [field, meta] = useField(props);
+	return (
+	  <div className='flex flex-col gap-1 mb-8'>
+		<label htmlFor={props.name} className='text-sm'>{label}</label>
+		<textarea
+            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${meta.touched && meta.error ? 'border-red-500' : ''}`}
+			{...field}
+		  	{...props}
+		/>
+		{meta.touched && meta.error ? (
+		  <div className='text-red-500 flex mt-2'>
+				  <img src={warningImg} alt="warning" />
+				  <p className='ml-2'>{meta.error}</p>
+			  </div>
+		) : null}
+	  </div>
+	);
+  };
+
+const MySelect = ({ label, ...props }) => {
+	const [field, meta] = useField(props);
+	return (
+	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+		<label htmlFor={props.name} className='text-sm'>{label}</label>
+		<select
+        	className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(meta.touched && meta.error) ? 'border-red-500' : ''}`}		  
+			{...field}
+		  	{...props}
+		/>
+		{meta.touched && meta.error ? (
+		  <div className='text-red-500'>{meta.error}</div>
+		) : null}
+	  </div>
+	);
+  };
 
 
 function OrientedSignUpPage() {
   const url=process.env.REACT_APP_API_URL
   const navigate = useNavigate();
-
-  
 
   const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
@@ -26,15 +84,15 @@ function OrientedSignUpPage() {
     .required('Campo requerido'),
     email:Yup.string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres').required('Campo requerido'),
     phoneNumber:Yup.number('Ingresar solo numeros').min(10,'Entre 10 y 50 dígitos').max(50,'Entre 10 y 50 dígitos'),
-    program:Yup.string.required('Selecciona una opción'),
-    dni:Yup.number().required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
+    program:Yup.string().required('Selecciona una opción'),
+	dni:Yup.number('Ingresar solo numeros').test('len', 'Must be exactly 5 characters', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
     age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Mínimo valor: 18').max(99,'Máximo valor: 99'),
     school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    user:Yup.string().required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
-    pass:Yup.string.required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
-    confirmPass:Yup.string.min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
+    user:Yup.number().required('Campo requerido').test('len', 'Must be exactly 5 characters', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
+    pass:Yup.string().required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
+    confirmPass:Yup.string().min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
   })
 
 
@@ -123,8 +181,103 @@ function OrientedSignUpPage() {
               onSubmit(data)
             }}
           >
+			
           <Form action="">
-            
+          <section>
+            <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
+			<div>
+			{/* espacio de inputs */}
+				<div className='tablet:grow'>
+					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+						<MyTextInput
+							label='Nombre y Apellido'
+							name='fullName'
+							placeholder='Ingresar nombre completo'
+						/>
+						<MyTextInput
+							label='Mail'
+							name='email'
+							placeholder='Ingresar mail'
+						/>
+					</div>
+					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+						<MyTextInput
+							label='Teléfono'
+							name='phoneNumber'
+							placeholder='Ingresar nombre completo'
+						/>
+			
+						<MySelect label='Programa' name='program'>
+							{
+								programs.programs.map(program=>(
+									<option value={program.value}>{program.name}</option>
+								))
+							}
+						</MySelect>
+					</div>
+				</div>
+			  </div>
+            </section>
+			<section className='mt-4'> {/* Personal information */}
+				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
+				<div>
+					<div className='flex gap-4 mobile:flex-col'>
+						<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+							<MyTextInput
+								label='Número de DNI'
+								name='dni'
+								placeholder='Ingresar dni'
+							/>
+							<MyTextInput
+								label='Ingresar edad'
+								name='age'
+								placeholder='Ingresar edad'
+							/>
+						</div>
+					</div>
+					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+						<MyTextInput
+							label='Colegio'
+							name='school'
+							placeholder='Ingresar colegio'
+						/>
+						<MyTextInput
+							label='Domicilio'
+							name='address'
+							placeholder='Ingresar domicilio'
+						/>
+					</div>
+					<div className='flex flex-col gap-1'>
+						<MyTextArea
+							label='¿Por qué se acercó a nuestra institución?'
+							name='motive'
+							placeholder='Escribe un comentario'
+						/>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2 className='my-4 text-2xl font-medium'>03. Crear usuario y contraseña</h2>
+				<div className='flex flex-col gap-3'>
+					<MyTextInput
+						label='Repetir Dni del orientado'
+						name='user'
+						placeholder='Ingresar DNI del Orientado'
+					/>
+					<MyTextInput
+						label='Contraseña'
+						name='pass'
+						placeholder='Ingresar contraseña'
+					/>
+					<MyTextInput
+						label='Repetir Contraseña'
+						name='confirmPass'
+						placeholder='Repetir contraseña'
+					/>
+				</div>
+			</section>
+			<Button type='submit' name='Ingresar orientado'  />
+
           </Form>
           </Formik>
         </main>

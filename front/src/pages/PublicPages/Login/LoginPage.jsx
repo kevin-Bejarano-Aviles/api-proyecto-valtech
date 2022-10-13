@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import { ErrorMessage, useFormik } from 'formik';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field ,ErrorMessage, useField} from 'formik';
 
 import * as Yup from 'yup';
 import axios from 'axios'
@@ -14,19 +13,36 @@ import ilustration from '../../../assets/ilustration/login/ilustration.svg';
 import title from '../../../assets/logo/vnegro.svg'
 import Context from '../../../context/Context';
 
+const MyTextInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+      <label htmlFor={props.name} className='text-sm'>{label}</label>
+      <input
+        className='mobile:w-full tablet:max-w-[320px] p-3 h-10 text-sm rounded-lg border-2 focus:outline-green'
+        {...field}
+        {...props}
+      />
+      {meta.touched && meta.error ? (
+        <div className='text-red-500'>{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
 function LoginPage() {
 
   const [errorMessage,setErrorrMessage]=useState('')
 
   const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/adminLogin`
+  const baseUrl =`${url}/admin/auth/login`
   const navigate = useNavigate();
   const {logIn} = useContext(Context);
   const login = ()=>{
     logIn()
     navigate('/login',{replace:true})
   }
-
+  console.log(baseUrl);
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
@@ -41,6 +57,8 @@ function LoginPage() {
       return ()=> clearTimeout(timer)
     }
   },[errorMessage]);
+
+
 
   const deskTopviewIlustration='laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center'
   const deskTopviewForm='laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20'
@@ -66,18 +84,22 @@ function LoginPage() {
           pass:'',
         }}
         validationSchema={DisplayingErrorMessagesSchema}
-        onSubmit={async (data)=>{
+        onSubmit={  async (data)=>{
           await axios.post(baseUrl,{
                 email:data.email,
                 pass:data.pass,
               },{withCredentials:true})
+              
               .then(response=>{
-                login();
-                localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+                // login();
+                console.log(response);
+                // localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
               })
               .catch(error => {
-                setErrorrMessage(error.response.data.message)
+                console.log(error);
+                // setErrorrMessage(error)
               })
+
         }}
         >
           {(errors) =>(

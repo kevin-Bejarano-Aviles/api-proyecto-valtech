@@ -26,7 +26,8 @@ function RoutersElement() {
           <Route path='mi-perfil' element={<PrivateRoutes><ProfilePage/></PrivateRoutes>} />
         
         <Route path='/orientados' element={<PrivateRoutes><OrientedsPage /></PrivateRoutes>} />
-        <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} />
+        {/* <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} /> */}
+        <Route path='/orientados/alta-orientado' element={<PublicRoutes><OrientedSignUpPage /></PublicRoutes>} />
         <Route path='/orientados/:id' element={<PrivateRoutes><OrientedDetail /></PrivateRoutes>} />
         <Route path='/orientados/:id/asignar-orientador' element={<PrivateRoutes><AssignCounselorPage /></PrivateRoutes>} />
   
