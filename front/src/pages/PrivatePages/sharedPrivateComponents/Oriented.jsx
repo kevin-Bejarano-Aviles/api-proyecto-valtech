@@ -4,7 +4,7 @@ import icon_user from '../../../assets/icons/privatePage/Icon_user.svg'
 function Oriented({ info ,asignOriented=false}) {
 
   const navigate = useNavigate();
-  let oriented=info.adviserId;
+  let   oriented = info.adviserId;
 
   return (
     <div className='flex items-center justify-between gap-4 pl-6 w-80 h-24 list-none border-solid border-2 rounded-lg border-slate-200 cursor-pointer'

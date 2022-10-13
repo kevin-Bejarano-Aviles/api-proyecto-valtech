@@ -9,7 +9,6 @@ import { useState } from 'react';
 import Context from '../../../context/Context';
 import axios from 'axios';
 
-
 //see orientedList
 function Orienteds() {
 
