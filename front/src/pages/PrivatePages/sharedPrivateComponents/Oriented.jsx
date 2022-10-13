@@ -6,7 +6,6 @@ function Oriented({ info ,asignOriented=false}) {
   const navigate = useNavigate();
   let oriented=info.adviserId;
 
-
   return (
     <div className='flex items-center justify-between gap-4 pl-6 w-80 h-24 list-none border-solid border-2 rounded-lg border-slate-200 cursor-pointer'
          onClick={() => {navigate(`/orientados/${info.id}`)}}>
@@ -18,14 +17,12 @@ function Oriented({ info ,asignOriented=false}) {
               <h4 className='text-sm text-lightgray'>{info.school}</h4>
             </div> 
         </div>
-        
           { 
             (asignOriented && oriented) && 
             <div className={`flex mb-12 mr-4 w-4 h-4  ${!asignOriented && 'hiden'}`}>
               <img src={icon_user} alt="iconUser" />
             </div>
           }
-
     </div>
   )
 }

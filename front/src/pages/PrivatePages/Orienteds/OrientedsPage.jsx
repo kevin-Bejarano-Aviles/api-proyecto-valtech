@@ -15,9 +15,8 @@ function Orienteds() {
 
   const navigate = useNavigate();
 
-  const {deslogearme} = useContext(Context);
-    // cambiar deslogearme a logout !!!!!!!!!!!!!!!!!!! preguntar
-
+  const {logOut} = useContext(Context);
+   
   const [usersList, setUsers] = useState([]);
 
   const [search,SetSearch] = useState('');
@@ -26,7 +25,7 @@ function Orienteds() {
 
 
   const login = ()=>{
-    deslogearme()
+    logOut()
     navigate('/login',{replace:true})
   }
   const getAll = async () => {
@@ -50,7 +49,7 @@ function Orienteds() {
 
   useEffect(() => {
     getAll();
-  },[]);
+  });
 
   let users = showAll ? usersList : usersList.filter(user=>(user.fullName.toLowerCase()).includes(search.toLowerCase()));
 
