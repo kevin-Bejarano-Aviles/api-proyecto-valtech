@@ -17,8 +17,7 @@ const createEvent = async (req,res) => {
             adviser_event_id : adviser_event_id
         });
         await event.addStudent(studentsId);    
-        
-    res.status(200).json({
+        res.status(200).json({
         status:'200 OK',
         message:'Event created',
         data:''
