@@ -6,6 +6,7 @@ import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import './styles/Calendar.css';
 import './styles/CreateEventPage.css';
+import iconSearch from '../../../assets/icons/privatePage/icon-search.svg';
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -96,11 +97,58 @@ const MyTextarea = ({ label, ...props }) => {
   );
 };
 
-const valuesForDurationInput = ['00:15', '00:30', '00:45', '01:00', '01:15', '01:30', '01:45', '02:00', '02:15', '02:30', '02:45', '03:00', '03:15', '03:30', '03:45', '04:00', '04:15', '04:30', '04:45', '05:00', '05:15', '05:30', '05:45', '06:00', '06:15', '06:30', '06:45', '07:00', '07:15', '07:30', '07:45', '08:00'];
+const MyAviserEventIdInput = (props) => {
+  const [field, meta] = useField(props);
+  const [selectedAdviser, setSelectedAdviser] = useState(null);
+
+  const handleSelectedAdviser = event => {
+    setSelectedAdviser(event.target.innerText);
+  };
+
+  return (
+    <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
+      <label htmlFor={props.name} className='text-sm'>{props.label}</label>
+      <div className={`flex items-center h-10 rounded-lg cursor-pointer border-2`}>
+        <div
+          {...field}
+          {...props}
+          className={`mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
+          onClick={props.setIsInputVisibled}
+        >
+          <p className={`${selectedAdviser === null ? 'text-lightgray' : ''}`}>{selectedAdviser || 'Selecciona orientador'}</p>
+        </div>
+        <img src={iconSearch} alt='' className='px-2' />
+      </div>
+      <ul className={`absolute top-[72px] z-10 list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${props.isInputVisibled.adviser_event_id ? '' : 'hidden'}`}>
+        {props.adviserObjectList.map(adviser => (
+            <li
+              key={adviser.id}
+              value={adviser.id}
+              className={`${adviser.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3 truncate cursor-pointer hover:font-bold hover:text-green`}
+              onClick={(event) => handleSelectedAdviser(event)}
+            >
+              {adviser.fullName}
+            </li>
+        ))}
+      </ul>
+      {meta.touched && meta.error ? (
+        <div className='text-red-500'>{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
 
 function CreateEventPage() {
   const [studentObjectList, setStudentObjectList] = useState([]);
   const [adviserObjectList, setAdviserObjectList] = useState([]);
+  const [isInputVisibled, setIsInputVisibled] = useState({
+    adviser_event_id: false,
+    studentsId: false,
+    date: false,
+    time: false,
+    duration: false
+  });
+  const valuesForDurationInput = ['00:15', '00:30', '00:45', '01:00', '01:15', '01:30', '01:45', '02:00', '02:15', '02:30', '02:45', '03:00', '03:15', '03:30', '03:45', '04:00', '04:15', '04:30', '04:45', '05:00', '05:15', '05:30', '05:45', '06:00', '06:15', '06:30', '06:45', '07:00', '07:15', '07:30', '07:45', '08:00'];
   const url = process.env.REACT_APP_API_URL;
 
   const getAllAdvisers = async () => {
@@ -138,7 +186,7 @@ function CreateEventPage() {
             initialValues={{
               name: '',
               adviser_event_id: '',
-              students: '',
+              studentsId: '',
               date: '',
               time: '',
               duration: '',
@@ -149,7 +197,7 @@ function CreateEventPage() {
                 .max(200, 'Sólo se aceptan 200 caracteres o menos')
                 .required('Requerido'),
               adviser_event_id: Yup.string().required('Requerido'),
-              students: Yup.array().required('Requerido'),
+              studentsId: Yup.array().required('Requerido'),
               date: Yup.string().required('Requerido'),
               time: Yup.string().required('Requerido'),
               duration: Yup.string().required('Requerido'),
@@ -170,13 +218,27 @@ function CreateEventPage() {
                     placeholder='Ingresar nombre'
                   />
 
-                  <MySelect label='Orientador participante' name='adviser_event_id'>
+                  <MyAviserEventIdInput
+                    label = 'Orientador participante'
+                    name='adviser_event_id'
+                    isInputVisibled={isInputVisibled}
+                    setIsInputVisibled={() => setIsInputVisibled({
+                      adviser_event_id: true,
+                      studentsId: false,
+                      date: false,
+                      time: false,
+                      duration: false
+                    })}
+                    adviserObjectList={adviserObjectList}
+                  />
+
+                  {/* <MySelect label='Orientador participante' name='adviser_event_id'>
                     {adviserObjectList.map(adviser => (
                       <option key={adviser.id} value={adviser.id}>{adviser.fullName}</option>
                     ))}
-                  </MySelect>
+                  </MySelect> */}
 
-                  <MySelect label='Orientado/s participante/s' name='students' multiple>
+                  <MySelect label='Orientado/s participante/s' name='studentsId' multiple>
                     {studentObjectList.map(student => (
                       <option key={student.id} value={student.id}>{student.fullName}</option>
                     ))}
