@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     adviser_event_id: DataTypes.INTEGER
   }, {
     sequelize,
+    paranoid:true,
     modelName: 'Events',
   });
   return Events;
