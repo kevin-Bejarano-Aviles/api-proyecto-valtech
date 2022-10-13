@@ -14,6 +14,26 @@ import iconPlus from '../../../assets/icons/icon-plus.svg';
 import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
 
 
+const MyFileInput = ({ label,children, ...props }) => {
+	const [field, meta] = useField(props);
+	return (
+	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
+		<label htmlFor={props.name} className='text-sm'>{label}</label>
+		<input
+		  className='flex gap-4 mobile:flex-col' 
+		  {...field}
+		  {...props}
+		/>
+		{children}
+		{meta.touched && meta.error ? (
+		  <div className='text-red-500 flex mt-2'>
+				  <img src={warningImg} alt="warning" />
+				  <p className='ml-2'>{meta.error}</p>
+			  </div>
+		) : null}
+	  </div>
+	);
+  };
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -185,8 +205,8 @@ function OrientedSignUpPage() {
           <Form action="">
           <section>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
-			<div>
-			{/* espacio de inputs */}
+			<div className=''>
+				
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
 						<MyTextInput
