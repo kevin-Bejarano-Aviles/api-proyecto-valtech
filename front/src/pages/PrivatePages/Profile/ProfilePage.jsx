@@ -38,7 +38,7 @@ function Profile() {
 
               <h6 className='text-xs text-lightgray'>TELÉFONO</h6>
               <h5 className='mb-6 mt-1'>1553678990</h5>  
-              {/* me falta traer estos datos del back oo dejarlos fijos !!!!!!!!!!!!!!! preguntar */}
+              
               <h6 className='text-xs text-lightgray'>LINKED IN</h6>
               <h5 className='mb-6  mt-1'>Sofia.serrano</h5>
               </div>
