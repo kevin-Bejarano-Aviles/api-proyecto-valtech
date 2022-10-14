@@ -75,11 +75,13 @@ function LoginPage() {
               },{withCredentials:true})
               
               .then(response=>{
-                login();
-                localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+                console.log(response);
+                // login();
+                // localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
               })
               .catch(error => {
-                setErrorrMessage(error)
+                console.log(error);
+                // setErrorrMessage(error)
               })
         }}
         >
