@@ -10,9 +10,9 @@ import Alert from '../sharedPrivateComponents/Alert';
 
 
 function Oriented() {
+  const params = useParams();
   const url=process.env.REACT_APP_API_URL
   const baseUrl =`${url}/admin/students/${params.id}`
-  const params = useParams();
   const [user, setUser] = useState([]);
   const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
