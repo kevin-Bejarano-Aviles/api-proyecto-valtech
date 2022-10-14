@@ -19,5 +19,6 @@
         "prettier"
     ],
     "rules": {
+        "singleQuote": "off"
     }
 }

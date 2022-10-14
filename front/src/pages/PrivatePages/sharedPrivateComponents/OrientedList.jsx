@@ -1,6 +1,12 @@
-import { useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { useState } from 'react-router-dom';
 import Oriented from './Oriented';
 
+// eslint-disable-next-line react/prop-types
 function OrientedList({ asignOriented = false, users }) {
   const [seeMore, setSeeMore] = useState(false);
 
@@ -10,6 +16,7 @@ function OrientedList({ asignOriented = false, users }) {
         {users.length === 0
           ? 'No hay orientados'
           : users.map((user, index) =>
+              // eslint-disable-next-line no-nested-ternary
               index <= 8 ? (
                 <Oriented
                   info={user}
@@ -47,7 +54,7 @@ function OrientedList({ asignOriented = false, users }) {
                 ? 'hidden'
                 : 'relative -z-10 bottom-[11px] h-3 bg-yellow'
             }
-          ></div>
+           />
         </div>
       )}
     </div>

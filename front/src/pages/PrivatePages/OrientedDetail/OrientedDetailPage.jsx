@@ -1,11 +1,15 @@
+import React from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  useEffect,
+  useState,
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import Alert from '../sharedPrivateComponents/Alert';
 
 function Oriented() {
@@ -16,7 +20,7 @@ function Oriented() {
 
   const getAllStudents = async () => {
     try {
-      let res = await axios.get(
+      const res = await axios.get(
         `http://localhost:8000/admin/students/${params.id}`,
         { withCredentials: true }
       );
@@ -48,6 +52,7 @@ function Oriented() {
               <img
                 src={
                   user.avatar
+                    // eslint-disable-next-line import/no-dynamic-require, global-require
                     ? require(`../../../assets/students/${user.avatar}`)
                     : 'https://i.imgur.com/b08hxPY.png'
                 }

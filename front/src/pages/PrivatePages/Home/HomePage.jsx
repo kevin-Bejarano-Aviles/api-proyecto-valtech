@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../sharedPrivateComponents/button/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Button from '../sharedPrivateComponents/button/Button';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import CardText from '../Home/components/CardText';
+import CardText from './components/CardText';
 import Context from '../../../context/Context';
-import axios from 'axios';
 
 function HomePage() {
   const admin = JSON.parse(localStorage.getItem('admin'));
-  let adminFirstName = admin.fullName.split(' ')[0];
+  const adminFirstName = admin.fullName.split(' ')[0];
 
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ function HomePage() {
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
               Nuevos orientados
             </h4>
-            <Link to={'/orientados/alta-orientado'}>
+            <Link to='/orientados/alta-orientado'>
               <Button type='button' name='Ingresar orientado' />
             </Link>
           </div>
