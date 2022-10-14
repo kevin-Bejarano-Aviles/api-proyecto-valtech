@@ -1,10 +1,10 @@
 import React from 'react';
 
-function CardText(title) {
+function CardText() {
   return (
     <div className='flex flex-col justify-between items-start h-[252px] w-[320px] rounded-lg border-[1px] border-slate-300 drop-shadow-[0_0_10px_rgba(135,152,173,0.1)] p-[32px] '>
       <h3 className='text-blue w-[245px] h-24 text-[24px] leading-[29px] font-medium ml-auto mr-auto font-Rubik'>
-        {title}
+        
       </h3>
       <p className=' ml-auto mr-auto w-[251px] text-slate-400'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
