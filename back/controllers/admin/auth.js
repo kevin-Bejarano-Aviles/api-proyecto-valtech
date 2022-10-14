@@ -39,7 +39,11 @@ const login = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 //Method to log out

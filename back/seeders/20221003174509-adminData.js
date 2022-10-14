@@ -1,6 +1,5 @@
 'use strict';
 const bcryptjs = require('bcryptjs');
-//const {sequelize} = require('../models/index');
 let pass = '4R8u$t47';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

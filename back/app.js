@@ -16,7 +16,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
   credentials:true,
-  origin:["http://localhost:3000"],
+  origin:[process.env.CORS_ORIGIN],
   methods:["GET","POST","PUT","DELETE"]
 }));
 app.use(session({
@@ -42,13 +42,13 @@ const dbConections = async()=>{
   try {
     await db.sequelize.authenticate()
     console.log('Succesfull connection')
+    app.listen(port, ()=>{
+      console.log(`SERVER UP running in http://localhost:${port}`);
+  });
     } catch (error) {
       console.log(`The error is: ${error}`) 
       throw new Error('Error a la hora de iniciar la base de datos');
     }
 }
-dbConections()
-app.listen(port, ()=>{
-    console.log(`SERVER UP running in http://localhost:${port}`);
-});
+dbConections();
 
