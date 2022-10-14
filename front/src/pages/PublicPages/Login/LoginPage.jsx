@@ -13,22 +13,7 @@ import ilustration from '../../../assets/ilustration/login/ilustration.svg';
 import title from '../../../assets/logo/vnegro.svg'
 import Context from '../../../context/Context';
 
-const MyTextInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <input
-        className='mobile:w-full tablet:max-w-[320px] p-3 h-10 text-sm rounded-lg border-2 focus:outline-green'
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
-        <div className='text-red-500'>{meta.error}</div>
-      ) : null}
-    </div>
-  );
-};
+
 
 function LoginPage() {
 
@@ -99,7 +84,6 @@ function LoginPage() {
                 console.log(error);
                 // setErrorrMessage(error)
               })
-
         }}
         >
           {(errors) =>(

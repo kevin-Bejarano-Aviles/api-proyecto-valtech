@@ -24,25 +24,6 @@ function OrientedSignUpPage() {
     if (formError.message) getAllStudents();
   },[formError]);
 
-  const validationSchemaForm=Yup.object({
-    fullName:Yup.string('Campo inválido')
-    .min(2,'Entre 2 y 500 caracteres')
-    .max(500,'')
-    .required('Campo requerido'),
-    email:Yup.string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres').required('Campo requerido'),
-    phoneNumber:Yup.number('Ingresar solo numeros').min(10,'Entre 10 y 50 dígitos').max(50,'Entre 10 y 50 dígitos'),
-    program:Yup.string.required('Selecciona una opción'),
-    dni:Yup.number().required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
-    age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Mínimo valor: 18').max(99,'Máximo valor: 99'),
-    school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    user:Yup.string().required('Campo requerido').min(7,'Entre 7 y 50 dígitos').max(50,'Entre 7 y 50 dígitos'),
-    pass:Yup.string.required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
-    confirmPass:Yup.string.min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
-  })
-
-
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm(
     {

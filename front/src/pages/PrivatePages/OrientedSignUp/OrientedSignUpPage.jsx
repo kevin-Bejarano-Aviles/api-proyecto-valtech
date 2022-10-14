@@ -13,24 +13,40 @@ import programs from './programs.json';
 import iconPlus from '../../../assets/icons/icon-plus.svg';
 import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
 
+const showSelectedImage = () => {
 
-const MyFileInput = ({ label,children, ...props }) => {
-	const [field, meta] = useField(props);
+    const $selectedImage = document.getElementById('selectedImage');
+    const $avatar = document.getElementById('avatar');
+    const objectURL = URL.createObjectURL($avatar.files[0]);
+    $selectedImage.src = objectURL;
+	// setFieldValue(e.target.files[0])
+	//investigar como setear los 
+};
+
+
+const MyFileInput = ({children, ...props }) => {
+	const [field, meta,helpers] = useField(props);
+	const { setValue } = helpers;
+	const { value } = field;
+	const [file, setFile] = useState(value.file);
+	
 	return (
-	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
-		<label htmlFor={props.name} className='text-sm'>{label}</label>
+	  <div className='flex mobile:flex-col'>
+		<label htmlFor={props.name} className='text-sm'>
 		<input
         	type='file'
             accept='.png, .jpg, .jpeg, .gif'
-            id='inputFile'
+	        hidden={true}
+			id={props.name}
+			onChangeCapture={(e)=>{
+				showSelectedImage()
+				setFile(e.target.files[0])
+			}}
+			{...field}
+			{...props}
         />
-		
-		{/* {meta.touched && meta.error ? (
-		  <div className='text-red-500 flex mt-2'>
-				  <img src={warningImg} alt="warning" />
-				  <p className='ml-2'>{meta.error}</p>
-			  </div>
-		) : null} */}
+		{children}
+		</label>
 	  </div>
 	);
   };
@@ -113,30 +129,28 @@ function OrientedSignUpPage() {
     user:Yup.number().required('Campo requerido').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
     pass:Yup.string().required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
     confirmPass:Yup.string().min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
-  })
-
-
-
+})
   
   // Function to 'Ingresar orietado' button.
-  const onSubmit = async (data, e) => {
-    postStudent(data, e);
+  const onSubmit = async (data) => {
+    postStudent(data);
   };
 
   // Function to send a new student.
-  const postStudent = async (data, e) => {
+  const postStudent = async (data) => {
     try {
       let options = {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data' },
           withCredentials: true,
           data: {
-            ...data,
-            avatar: e.target.avatar.files[0],
+            ...data
           }
       };
-      const response = await axios(`${url}/admin/addStudent`, options);
+      const response = await axios(`${url}/admin/students`, options);
+	  console.log(response.data);
       localStorage.setItem('registrado',true)
+	  getAllStudents()
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
@@ -145,7 +159,7 @@ function OrientedSignUpPage() {
   // Function to bring all students.
   const getAllStudents = async () => {
     try {
-      const response = await axios.get(`${url}/admin/addStudents`, { withCredentials: true });
+      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
       const json = await response.data;
       const lastUserId = json[json.length-1].id;
       setTimeout(() => {
@@ -157,12 +171,7 @@ function OrientedSignUpPage() {
   };
 
   // Function to show the selected image by screen.
-  const showSelectedImage = () => {
-    const $selectedImage = document.getElementById('selectedImage');
-    const $inputFile = document.getElementById('inputFile');
-    const objectURL = URL.createObjectURL($inputFile.files[0]);
-    $selectedImage.src = objectURL;
-  };
+
 
   // Function to change the background color of the input elements.
   const changeBackgroundColor = e => {
@@ -194,22 +203,31 @@ function OrientedSignUpPage() {
 				motive: 'Necesita orientación para elegir una carrera.',
 				user: '28456387',
 				pass: '12345678',
-				confirmPass: '12345678'
+				confirmPass: '12345678',
+				avatar:''
             }}
             validationSchema={validationSchemaForm}
             onSubmit={(data)=>{
-              onSubmit(data)
+				console.log(data);
+				onSubmit(data)
             }}
           >
 		 {({ errors, touched ,values})=>(
           <Form action="">
-          <section>
+          <section className='mt-12'>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
-			<div className=''>
-				<MyFileInput 
-				label=''
-				name='inputFile'/>
-				
+			<div className='flex flex-col gap-4 tablet:flex-row'>
+				<MyFileInput name='avatar'>
+					<div className='relative mobile:w-[96px]'>
+                      <img
+                        src={addAvatar}
+                        alt='avatar'
+                        className='w-[96px] h-[96px] cursor-pointer rounded-full'
+                        id='selectedImage'
+                      />
+                      <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
+                    </div>
+				</MyFileInput>
 
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
@@ -301,7 +319,6 @@ function OrientedSignUpPage() {
 				</div>
 			</section>
 			<Button type='submit' name='Ingresar orientado' />
-
           </Form>
 		 	)}
           </Formik>
