@@ -9,22 +9,23 @@ import { useState } from 'react';
 import Alert from '../sharedPrivateComponents/Alert';
 
 function Oriented() {
-
   const params = useParams();
   const [user, setUser] = useState([]);
   const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
-  
 
   const getAllStudents = async () => {
     try {
-      let res = await axios.get(`http://localhost:8000/admin/students/${params.id}`, { withCredentials: true });
+      let res = await axios.get(
+        `http://localhost:8000/admin/students/${params.id}`,
+        { withCredentials: true }
+      );
       setUser(res.data.student);
     } catch (err) {
       navigate('error');
     }
   };
- 
+
   useEffect(() => {
     getAllStudents();
   });
@@ -34,15 +35,25 @@ function Oriented() {
       <Menu />
       <div>
         <HeaderAdmin Title='Orientados' />
-        <main className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${showAlert ? 'pb-24' : 'pb-7'}`}>
-          <section> {/* Basic information */}
+        <main
+          className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
+            showAlert ? 'pb-24' : 'pb-7'
+          }`}
+        >
+          <section>
+            {' '}
+            {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
-                src={user.avatar ? require(`../../../assets/students/${user.avatar}`) : 'https://i.imgur.com/b08hxPY.png'}
+                src={
+                  user.avatar
+                    ? require(`../../../assets/students/${user.avatar}`)
+                    : 'https://i.imgur.com/b08hxPY.png'
+                }
                 alt='avatar'
                 className='w-[96px] h-[96px] rounded-full'
-              /> 
+              />
               <div className='flex flex-col gap-2'>
                 <h3 className='text-2xl'>{user.fullName}</h3>
                 <div className='flex flex-col gap-2'>
@@ -60,7 +71,9 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* Personal information */}
+          <section>
+            {' '}
+            {/* Personal information */}
             <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
             <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
               <div className='flex flex-col gap-2'>
@@ -73,7 +86,9 @@ function Oriented() {
                   <p>{user.school}</p>
                 </div>
                 <div className='flex flex-col gap-2'>
-                  <p className='text-xs text-gray-400'>POR QUÉ SE ACERCÓ A NUESTRA INSTITUCIÓN</p>
+                  <p className='text-xs text-gray-400'>
+                    POR QUÉ SE ACERCÓ A NUESTRA INSTITUCIÓN
+                  </p>
                   <p>{user.motive}</p>
                 </div>
               </div>
@@ -89,8 +104,12 @@ function Oriented() {
               </div>
             </div>
           </section>
-          <section> {/* User and a password */}
-            <h2 className='mb-4 text-2xl font-bold'>03. Usuario y contraseña</h2>
+          <section>
+            {' '}
+            {/* User and a password */}
+            <h2 className='mb-4 text-2xl font-bold'>
+              03. Usuario y contraseña
+            </h2>
             <div className='flex flex-col gap-2'>
               <div className='flex flex-col gap-2'>
                 <p className='text-xs text-gray-400'>USUARIO</p>
@@ -103,16 +122,27 @@ function Oriented() {
             </div>
           </section>
           <Link to={`/orientados/${user.id}/asignar-orientador`}>
-            <Button type='button' name={`${user.adviser!==null ? 'Visualizar orientador/a' : 'Asignar orientador/a'}`} />
+            <Button
+              type='button'
+              name={`${
+                user.adviser !== null
+                  ? 'Visualizar orientador/a'
+                  : 'Asignar orientador/a'
+              }`}
+            />
           </Link>
-          {
-            (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') < 10000 || showAlert)
-            && <Alert message='El orientado fue ingresado con éxito.' onclick={() => setShowAlert(false)} />
-          }
+          {(Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') <
+            10000 ||
+            showAlert) && (
+            <Alert
+              message='El orientado fue ingresado con éxito.'
+              onclick={() => setShowAlert(false)}
+            />
+          )}
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 export default Oriented;

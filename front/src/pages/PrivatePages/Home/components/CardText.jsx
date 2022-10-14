@@ -12,7 +12,7 @@ function CardText({ title }) {
         <div className='relative -z-10 bottom-[11px] h-3 bg-yellow'></div>
       </div>
     </div>
-  )
+  );
 }
 
 export default CardText;
