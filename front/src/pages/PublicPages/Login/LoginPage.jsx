@@ -27,7 +27,6 @@ function LoginPage() {
     logIn()
     navigate('/login',{replace:true})
   }
-  console.log(baseUrl);
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
@@ -76,13 +75,11 @@ function LoginPage() {
               },{withCredentials:true})
               
               .then(response=>{
-                // login();
-                console.log(response);
-                // localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+                login();
+                localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
               })
               .catch(error => {
-                console.log(error);
-                // setErrorrMessage(error)
+                setErrorrMessage(error)
               })
         }}
         >
