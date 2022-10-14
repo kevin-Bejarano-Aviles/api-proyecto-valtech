@@ -10,7 +10,11 @@ const getAllAdvisers = async (req,res) => {
             data:{advisers}
         })
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 const assignAdviser = async (req,res) => {
@@ -30,7 +34,11 @@ const assignAdviser = async (req,res) => {
             data:''
        });
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 
