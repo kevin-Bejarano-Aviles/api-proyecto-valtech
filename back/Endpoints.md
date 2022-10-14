@@ -2,6 +2,14 @@
 
 ## API Rutas para el lado de administrador.
 
+### Nota: Salvo para la ruta login, para todas las demas se debera agregar una variable en los headers, al enviar o recibir informacion
+- Ej: de como deberia ir
+```javascript
+headers:{
+    "x-token":`Bearer ${token}`
+}
+```
+
 ### URL: 'http://localhost:8000/admin/auth/login'
 - Metodo http: 'POST'
 - Login admin
@@ -12,10 +20,6 @@
     "pass": "4R8u$t47"
 }
 ```
-### URL: http://localhost:8000/admin/auth/logOut
-- Metodo http: 'GET'.
-- Logout admin
-
 ### URL: 'http://localhost:8000/admin/students'
 - Metodo http: 'POST'
 - Crear estudiate

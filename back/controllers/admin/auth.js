@@ -1,5 +1,6 @@
 const {Admins:AdminModel} = require('../../models');
 const bcryptjs = require('bcryptjs');
+const {generateJWT} = require('../../helpers/generate-jwt');
 //Method to login our admin
 const login = async (req, res) => {
     const { email='', pass } = req.body;
@@ -25,17 +26,19 @@ const login = async (req, res) => {
                 data:''
             });
         }
-        req.session.adminLog = {
-            id: admin.id,
-            fullName: admin.fullName,
+        const dataAdmin = {
+            id:admin.id,
+            fullName:admin.fullName,
             avatar: admin.avatar,
-            email: admin.email
+            email:admin.email
         };
+        const token = generateJWT(admin.id);
         res.status(200).json({
             status:'200 OK',
             message:'',
             data:{
-                admin:req.session.adminLog
+                admin:dataAdmin,
+                token
             }
         });
     } catch (error) {
@@ -46,13 +49,12 @@ const login = async (req, res) => {
         console.log({error:error.message});
     }
 };
-//Method to log out
+/* //Method to log out
 const logOut = (req = request, res) => {
     req.session.destroy((err) => {
     res.clearCookie('userId').send('cleared cookie');//If we add "send" it works, we don't know why
 });
-};
+}; */
 module.exports = {
-    login,
-    logOut
+    login
 }
