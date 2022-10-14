@@ -75,13 +75,13 @@ function LoginPage() {
               },{withCredentials:true})
               
               .then(response=>{
-                console.log(response);
-                // login();
-                // localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+                console.log(response.data.data.admin);
+                login();
+                localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
               })
               .catch(error => {
                 console.log(error);
-                // setErrorrMessage(error)
+                setErrorrMessage(error.response.data.message)
               })
         }}
         >
