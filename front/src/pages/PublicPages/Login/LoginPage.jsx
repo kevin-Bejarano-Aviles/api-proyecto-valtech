@@ -19,7 +19,7 @@ function LoginPage() {
   const [errorMessage,setErrorrMessage]=useState('')
 
   const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/adminLogin`
+  const baseUrl =`${url}/admin/auth/login`
   const navigate = useNavigate();
   const {logIn} = useContext(Context);
   const login = ()=>{

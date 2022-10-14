@@ -13,10 +13,11 @@ export default function Logout() {
       logOut()
       navigate('/login',{replace:true})
     }
+  /* const url = process.env.REACT_APP_API_URL */ /* It is in test mode */
 
     const getAll = async () => {
       try {
-        let res = await axios.get('http://localhost:8000/admin/logOut',{withCredentials:true});
+        let res = await axios.get(/* `${url}/admin/auth/logOut` */ 'http://localhost:8000/admin/logOut',{withCredentials:true});
         console.log(res);
         login()
       } catch (err) {
