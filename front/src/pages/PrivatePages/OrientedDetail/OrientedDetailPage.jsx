@@ -10,6 +10,8 @@ import Alert from '../sharedPrivateComponents/Alert';
 
 
 function Oriented() {
+  const url=process.env.REACT_APP_API_URL
+  const baseUrl =`${url}/admin/students/${params.id}`
   const params = useParams();
   const [user, setUser] = useState([]);
   const [showAlert, setShowAlert] = useState(true);
@@ -18,12 +20,13 @@ function Oriented() {
   const getAllStudents = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/admin/students/${params.id}`,
+
+        baseUrl,
         { withCredentials: true }
       );
-      setUser(res.data.student);
+      console.log(res.data.data.student);
     } catch (err) {
-      navigate('error');
+      console.log('error');
     }
   };
 
@@ -36,20 +39,17 @@ function Oriented() {
       <Menu />
       <div>
         <HeaderAdmin Title='Orientados' />
-        <main
+        {/* <main
           className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
             showAlert ? 'pb-24' : 'pb-7'
           }`}
         >
           <section>
-            {' '}
-            {/* Basic information */}
             <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
             <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
               <img
                 src={
                   user.avatar
-                    // eslint-disable-next-line import/no-dynamic-require, global-require
                     ? require(`../../../assets/students/${user.avatar}`)
                     : 'https://i.imgur.com/b08hxPY.png'
                 }
@@ -75,7 +75,6 @@ function Oriented() {
           </section>
           <section>
             {' '}
-            {/* Personal information */}
             <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
             <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
               <div className='flex flex-col gap-2'>
@@ -107,8 +106,6 @@ function Oriented() {
             </div>
           </section>
           <section>
-            {' '}
-            {/* User and a password */}
             <h2 className='mb-4 text-2xl font-bold'>
               03. Usuario y contraseña
             </h2>
@@ -141,7 +138,7 @@ function Oriented() {
               onclick={() => setShowAlert(false)}
             />
           )}
-        </main>
+        </main> */}
       </div>
     </div>
   );
