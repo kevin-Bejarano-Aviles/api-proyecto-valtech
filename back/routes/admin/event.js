@@ -1,9 +1,9 @@
 const {Router} = require('express');
 const router = Router();
-const eventCheck = require('../../validations/eventCheck');
-const {isAuthorized,fieldValidation} = require('../../middlewares/index');
+const eventValidations = require('../../validations/eventValidations');
+const {isAuthorized,fieldValidations} = require('../../middlewares/index');
 const {createEvent,getAllEventsByFilters,deleteEvent} = require('../../controllers/admin/event');
-router.post('/',isAuthorized,eventCheck,fieldValidation,createEvent);
+router.post('/',isAuthorized,eventValidations,fieldValidations,createEvent);
 router.get('/',isAuthorized,getAllEventsByFilters);
 router.delete('/:id',isAuthorized,deleteEvent);
 module.exports = router;
