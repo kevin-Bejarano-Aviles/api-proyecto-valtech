@@ -61,9 +61,9 @@ function HomePage() {
               Novedades
             </h2>
             <div className='grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
-              {/* <CardText title='¿Usás inteligentemente tu tiempo?' />
+              <CardText title='¿Usás inteligentemente tu tiempo?' />
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
-              <CardText title='¿Qué querés aportar?' /> */}
+              <CardText title='¿Qué querés aportar?' />
             </div>
           </div>
         </main>
