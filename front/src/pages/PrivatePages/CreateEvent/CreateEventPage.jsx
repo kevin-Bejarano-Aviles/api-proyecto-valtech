@@ -1,49 +1,21 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import AdviserEventIdInput from './components/AdviserEventIdInput';
 import NameInput from './components/NameInput';
-import './styles/Calendar.css';
-import './styles/CreateEventPage.css';
+import AdviserEventIdInput from './components/AdviserEventIdInput';
+import StudentsIdInput from './components/StudentsIdInput/StudentsIdInput';
+import DateInput from './components/DateInput/DateInput';
+import TimeInput from './components/TimeInput/TimeInput';
+import './CreateEventPage.css';
 
 const MySelect = ({ label, ...props }) => {
   return (
     <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={props.name} className='text-sm'>{label}</label>
       <select
-        className='h-10 rounded-lg border-2 focus:outline-green'
-      />
-      {/* {meta.touched && meta.error ? (
-        <div className='text-red-500'>{meta.error}</div>
-      ) : null} */}
-    </div>
-  );
-};
-
-const MyDateInput = ({ label, ...props }) => {
-  return (
-    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <input
-        type='date'
-        className='h-10 rounded-lg border-2 focus:outline-green'
-      />
-      {/* {meta.touched && meta.error ? (
-        <div className='text-red-500'>{meta.error}</div>
-      ) : null} */}
-    </div>
-  );
-};
-
-const MyTimeInput = ({ label, ...props }) => {
-  return (
-    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <input
-        type='time'
         className='h-10 rounded-lg border-2 focus:outline-green'
       />
       {/* {meta.touched && meta.error ? (
@@ -120,9 +92,9 @@ function CreateEventPage() {
         .max(200, 'Sólo se aceptan 200 caracteres o menos')
         .required('Requerido'),
       adviser_event_id: Yup.string().required('Requerido'),
-      // studentsId: Yup.array().required('Requerido'),
-      // date: Yup.string().required('Requerido'),
-      // time: Yup.string().required('Requerido'),
+      studentsId: Yup.array().of(Yup.string()).min(1, 'Requerido'),
+      date: Yup.string().required('Requerido'),
+      time: Yup.string().required('Requerido'),
       // duration: Yup.string().required('Requerido'),
       // detail: Yup.string().required('Requerido'),
     }),
@@ -172,27 +144,52 @@ function CreateEventPage() {
                   })}
                 />
 
-                <MySelect label='Orientado/s participante/s' name='studentsId' multiple>
-                  {studentObjectList.map(student => (
-                    <option key={student.id} value={student.id}>{student.fullName}</option>
-                  ))}
-                </MySelect>
+                <StudentsIdInput
+                  label='Orientado/s participante/s'
+                  name='studentsId'
+                  studentObjectList={studentObjectList}
+                  areInputVisible={areInputVisible}
+                  formik={formik}
+                  onChangeInputVisibility={() => setAreInputVisible({
+                    adviser_event_id: false,
+                    studentsId: true,
+                    date: false,
+                    time: false,
+                    duration: false
+                  })}
+                />
               </div>
             </section>
             <hr />
             <section className='mt-8 mb-8'>
               <h2 className='my-4 font-medium'>02. Días y Horarios disponibles</h2>
               <div className='flex gap-4 mobile:flex-col lap_tablet:flex-row'>
-                <MyDateInput
+                <DateInput
                   label='Fecha'
                   name='date'
-                  placeholder='Ingresar fecha'
+                  areInputVisible={areInputVisible}
+                  formik={formik}
+                  onChangeInputVisibility={() => setAreInputVisible({
+                    adviser_event_id: false,
+                    studentsId: false,
+                    date: true,
+                    time: false,
+                    duration: false
+                  })}
                 />
 
-                <MyTimeInput
+                <TimeInput
                   label='Horario'
                   name='time'
-                  placeholder='Seleccionar horario'
+                  areInputVisible={areInputVisible}
+                  formik={formik}
+                  onChangeInputVisibility={() => setAreInputVisible({
+                    adviser_event_id: false,
+                    studentsId: false,
+                    date: false,
+                    time: true,
+                    duration: false
+                  })}
                 />
 
                 <MySelect label='Duración' name='duration'>

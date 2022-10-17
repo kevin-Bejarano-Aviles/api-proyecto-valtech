@@ -12,10 +12,6 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
     formik.values.adviser_event_id = idAdviserSelected.toString();
   };
 
-  const handleChangeFocusColor = () => {
-
-  };
-
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='text-sm'>{label}</label>
@@ -23,10 +19,10 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
         <div
           name={name}
           id={name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.adviser_event_id}
-          className={`mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
+          // onChange={formik.handleChange}
+          // onBlur={formik.handleBlur}
+          // value={formik.values.adviser_event_id}
+          className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
           onClick={onChangeInputVisibility}
         >
           <p className={`${selectedAdviser === null ? 'text-lightgray' : ''}`}>{selectedAdviser || 'Selecciona orientador'}</p>
@@ -41,7 +37,6 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
               onClick={event => {
                 handleChangeSelectedAdviser(event);
                 handleChangeInputValue(adviser.id);
-                handleChangeFocusColor();
               }}
             >
               {adviser.fullName}
