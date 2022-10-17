@@ -51,7 +51,7 @@ const MyTextInput = ({ error,label, ...props }) => {
     <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
       <label htmlFor={props.name} className='text-sm'>{label}</label>
       <input
-        className='mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 focus:outline-green' 
+        className='mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2  focus:outline-green' 
 		onChange={props.onChange}
 		values={props.values}
 		{...props}
@@ -66,37 +66,35 @@ const MyTextInput = ({ error,label, ...props }) => {
   );
 };
 
-const MyTextArea = ({ label, ...props }) => {
+const MyTextArea = ({error, label, ...props }) => {
 	return (
 	  <div className='flex flex-col gap-1 mb-8'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
 		<textarea
-            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${meta.touched && meta.error ? 'border-red-500' : ''}`}
+            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${error ? 'border-red-500' : ''}`}
 		  	{...props}
 		/>
-		{/* {meta.touched && meta.error ? (
+		{ error? (
 		  <div className='text-red-500 flex mt-2'>
 				  <img src={warningImg} alt="warning" />
-				  <p className='ml-2'>{meta.error}</p>
+				  <p className='ml-2'>{error}</p>
 			  </div>
-		) : null} */}
+		) : null}
 	  </div>
 	);
   };
 
-const MySelect = ({ label, ...props }) => {
-	const [field, meta] = useField(props);
+const MySelect = ({error, label, ...props }) => {
 	return (
 	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
 		<select
-        	className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(meta.touched && meta.error) ? 'border-red-500' : ''}`}		  
-			{...field}
+        	className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(error) ? 'border-red-500' : ''}`}		  
 		  	{...props}
 		/>
-		{meta.touched && meta.error ? (
-		  <div className='text-red-500'>{meta.error}</div>
-		) : null}
+		{ error ? 
+		  <div className='text-red-500'>{error}</div>
+		 : null}
 	  </div>
 	);
   };
@@ -247,20 +245,21 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar nombre completo'
 							onChange={handleChange}
 							values={values.phoneNumber}
+							error={errors.phoneNumber}
 						/>
 			
-						{/* <MySelect label='Programa' name='program'>
+						<MySelect onChange={handleChange} error={errors.program} label='Programa' name='program'>
 							{
 								programs.programs.map(program=>(
 									<option value={program.value}>{program.name}</option>
 								))
 							}
-						</MySelect> */}
+						</MySelect>
 					</div>
 				</div>
 			  </div>
             </section>
-			{/* <section className='mt-4'>
+			<section className='mt-4'>
 				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
 				<div>
 					<div className='flex gap-4 mobile:flex-col'>
@@ -269,11 +268,19 @@ function OrientedSignUpPage() {
 								label='Número de DNI'
 								name='dni'
 								placeholder='Ingresar dni'
+								onChange={handleChange}
+								values={values.dni}
+								errors={errors.dni}
+
+								
 							/>
 							<MyTextInput
 								label='Ingresar edad'
 								name='age'
 								placeholder='Ingresar edad'
+								onChange={handleChange}
+								values={values.age}
+								errors={errors.age}
 							/>
 						</div>
 					</div>
@@ -282,11 +289,17 @@ function OrientedSignUpPage() {
 							label='Colegio'
 							name='school'
 							placeholder='Ingresar colegio'
+							onChange={handleChange}
+							values={values.school}
+							errors={errors.school}
 						/>
 						<MyTextInput
 							label='Domicilio'
 							name='address'
 							placeholder='Ingresar domicilio'
+							onChange={handleChange}
+							values={values.address}
+							errors={errors.address}
 						/>
 					</div>
 					<div className='flex flex-col gap-1'>
@@ -294,6 +307,9 @@ function OrientedSignUpPage() {
 							label='¿Por qué se acercó a nuestra institución?'
 							name='motive'
 							placeholder='Escribe un comentario'
+							onChange={handleChange}
+							value={values.motive}
+							error={errors.motive}
 						/>
 					</div>
 				</div>
@@ -305,19 +321,29 @@ function OrientedSignUpPage() {
 						label='Repetir Dni del orientado'
 						name='user'
 						placeholder='Ingresar DNI del Orientado'
+						onChange={handleChange}
+						values={values.user}
+						error={errors.user}
 					/>
 					<MyTextInput
 						label='Contraseña'
 						name='pass'
 						placeholder='Ingresar contraseña'
+						onChange={handleChange}
+						values={values.pass}
+						error={errors.pass}
+
 					/>
 					<MyTextInput
 						label='Repetir Contraseña'
 						name='confirmPass'
 						placeholder='Repetir contraseña'
+						onChange={handleChange}
+						values={values.confirmPass}
+						error={errors.confirmPass}
 					/>
 				</div>
-			</section> */}
+			</section>
 			<Button type='submit' name='Ingresar orientado' />
           </form>
 		 	
