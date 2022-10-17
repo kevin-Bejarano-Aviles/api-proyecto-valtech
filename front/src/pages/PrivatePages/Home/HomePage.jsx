@@ -33,15 +33,13 @@ function HomePage() {
       setUsers(response.data.data.students);
       console.log(response);
     } catch (error) {
-      // login();
+      login();
     }
   };
 
   useEffect(() => {
     getAll();
-  });
-
-
+  },[]);
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>

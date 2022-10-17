@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Formik, Form, Field ,ErrorMessage, useField} from 'formik';
+import { Formik, Form, Field ,ErrorMessage, useField, useFormik} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -24,47 +24,42 @@ const showSelectedImage = () => {
 };
 
 
-const MyFileInput = ({children, ...props }) => {
-	const [field, meta,helpers] = useField(props);
-	const { setValue } = helpers;
-	const { value } = field;
-	const [file, setFile] = useState(value.file);
+// const MyFileInput = ({children, ...props }) => {
 	
-	return (
-	  <div className='flex mobile:flex-col'>
-		<label htmlFor={props.name} className='text-sm'>
-		<input
-        	type='file'
-            accept='.png, .jpg, .jpeg, .gif'
-	        hidden={true}
-			id={props.name}
-			onChangeCapture={(e)=>{
-				showSelectedImage()
-				setFile(e.target.files[0])
-			}}
-			{...field}
-			{...props}
-        />
-		{children}
-		</label>
-	  </div>
-	);
-  };
+// 	return (
+// 	  <div className='flex mobile:flex-col'>
+// 		<label htmlFor={props.name} className='text-sm'>
+// 		<input
+//         	type='file'
+//             accept='.png, .jpg, .jpeg, .gif'
+// 	        hidden={true}
+// 			id={props.name}
+// 			onChangeCapture={(e)=>{
+// 				showSelectedImage()
+// 				setFile(e.target.files[0])
+// 			}}
+// 			{...props}
+//         />
+// 		{children}
+// 		</label>
+// 	  </div>
+// 	);
+//   };
 
-const MyTextInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+const MyTextInput = ({ error,label, ...props }) => {
   return (
     <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
       <label htmlFor={props.name} className='text-sm'>{label}</label>
       <input
         className='mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 focus:outline-green' 
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
+		onChange={props.onChange}
+		values={props.values}
+		{...props}
+	  />
+      {error ? (
         <div className='text-red-500 flex mt-2'>
 				<img src={warningImg} alt="warning" />
-				<p className='ml-2'>{meta.error}</p>
+				<p className='ml-2'>{error}</p>
 			</div>
       ) : null}
     </div>
@@ -72,21 +67,19 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const MyTextArea = ({ label, ...props }) => {
-	const [field, meta] = useField(props);
 	return (
 	  <div className='flex flex-col gap-1 mb-8'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
 		<textarea
             className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${meta.touched && meta.error ? 'border-red-500' : ''}`}
-			{...field}
 		  	{...props}
 		/>
-		{meta.touched && meta.error ? (
+		{/* {meta.touched && meta.error ? (
 		  <div className='text-red-500 flex mt-2'>
 				  <img src={warningImg} alt="warning" />
 				  <p className='ml-2'>{meta.error}</p>
 			  </div>
-		) : null}
+		) : null} */}
 	  </div>
 	);
   };
@@ -132,9 +125,7 @@ function OrientedSignUpPage() {
 })
   
   // Function to 'Ingresar orietado' button.
-  const onSubmit = async (data) => {
-    postStudent(data);
-  };
+
 
   // Function to send a new student.
   const postStudent = async (data) => {
@@ -184,40 +175,40 @@ function OrientedSignUpPage() {
     }
   };
 
+  const {handleSubmit,handleChange,errors,values}=useFormik({
+	initialValues:{
+		fullName: 'Julian Martinez',
+		email: 'julian.martinez@gmail.com',
+		phoneNumber: '01162386020',
+		program: 'Orientacion vocacional',
+		dni: '28456387',
+		age: '18',
+		school: 'Nuestra señora del valle',
+		address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
+		motive: 'Necesita orientación para elegir una carrera.',
+		user: '28456387',
+		pass: '12345678',
+		confirmPass: '12345678',
+		avatar:''
+	},
+	validationSchema:validationSchemaForm,
+	onSubmit:(values)=>{
+		console.log(values);
+	}
+  })
+
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
         <main className='pb-12 mx-12'>
-          <Formik
-            initialValues={{
-				fullName: 'Julian Martinez',
-				email: 'julian.martinez@gmail.com',
-				phoneNumber: '01162386020',
-				program: 'Orientacion vocacional',
-				dni: '28456387',
-				age: '18',
-				school: 'Nuestra señora del valle',
-				address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-				motive: 'Necesita orientación para elegir una carrera.',
-				user: '28456387',
-				pass: '12345678',
-				confirmPass: '12345678',
-				avatar:''
-            }}
-            validationSchema={validationSchemaForm}
-            onSubmit={(data)=>{
-				console.log(data);
-				onSubmit(data)
-            }}
-          >
-		 {({ errors, touched ,values})=>(
-          <Form action="">
+          
+          <form action="" onSubmit={handleSubmit}>
           <section className='mt-12'>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
 			<div className='flex flex-col gap-4 tablet:flex-row'>
-				<MyFileInput name='avatar'>
+				{/* <MyFileInput name='avatar'>
 					<div className='relative mobile:w-[96px]'>
                       <img
                         src={addAvatar}
@@ -227,7 +218,7 @@ function OrientedSignUpPage() {
                       />
                       <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
                     </div>
-				</MyFileInput>
+				</MyFileInput> */}
 
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
@@ -235,11 +226,18 @@ function OrientedSignUpPage() {
 							label='Nombre y Apellido'
 							name='fullName'
 							placeholder='Ingresar nombre completo'
+							onChange={handleChange}
+							values={values.fullName}
+							error={errors.fullName}
 						/>
+
 						<MyTextInput
 							label='Mail'
 							name='email'
 							placeholder='Ingresar mail'
+							onChange={handleChange}
+							values={values.email}
+							error={errors.email}
 						/>
 					</div>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
@@ -247,20 +245,22 @@ function OrientedSignUpPage() {
 							label='Teléfono'
 							name='phoneNumber'
 							placeholder='Ingresar nombre completo'
+							onChange={handleChange}
+							values={values.phoneNumber}
 						/>
 			
-						<MySelect label='Programa' name='program'>
+						{/* <MySelect label='Programa' name='program'>
 							{
 								programs.programs.map(program=>(
 									<option value={program.value}>{program.name}</option>
 								))
 							}
-						</MySelect>
+						</MySelect> */}
 					</div>
 				</div>
 			  </div>
             </section>
-			<section className='mt-4'> {/* Personal information */}
+			{/* <section className='mt-4'>
 				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
 				<div>
 					<div className='flex gap-4 mobile:flex-col'>
@@ -317,11 +317,10 @@ function OrientedSignUpPage() {
 						placeholder='Repetir contraseña'
 					/>
 				</div>
-			</section>
+			</section> */}
 			<Button type='submit' name='Ingresar orientado' />
-          </Form>
-		 	)}
-          </Formik>
+          </form>
+		 	
         </main>
       </div>
     </div>
