@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import iconCheck from '../../../assets/icons/icon-check.svg';
 import iconClose from '../../../assets/icons/privatePage/icon-close.svg';

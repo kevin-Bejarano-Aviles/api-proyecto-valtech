@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {
   useParams,
-  useEffect,
-  useState,
+ 
+ 
   Link,
   useNavigate,
 } from 'react-router-dom';
@@ -52,8 +52,7 @@ function Oriented() {
               <img
                 src={
                   user.avatar
-                    // eslint-disable-next-line import/no-dynamic-require, global-require
-                    ? require(`../../../assets/students/${user.avatar}`)
+                  ? require(`../../../assets/students/${user.avatar}`)
                     : 'https://i.imgur.com/b08hxPY.png'
                 }
                 alt='avatar'
