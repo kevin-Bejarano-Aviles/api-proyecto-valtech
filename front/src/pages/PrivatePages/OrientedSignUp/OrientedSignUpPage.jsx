@@ -12,7 +12,7 @@ import iconError from '../../../assets/icons/icon_warning.svg';
 // import iconArrow from '../../../assets/icons/privatePage';
 import programs from './programs.json';
 
-const MyTextInput = ({ error,label, ...props }) => {
+const TextInput = ({ error,label, ...props }) => {
   return (
     <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
       <label htmlFor={props.name} className='text-sm'>{label}</label>
@@ -32,7 +32,7 @@ const MyTextInput = ({ error,label, ...props }) => {
   );
 };
 
-const MyTextArea = ({error, label, ...props }) => {
+const TextArea = ({error, label, ...props }) => {
 	return (
 	  <div className='flex flex-col gap-1 mb-8'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
@@ -159,6 +159,7 @@ function OrientedSignUpPage() {
 	},
 	validationSchema:validationSchemaForm,
 	onSubmit:async (data) => {
+		console.log(data);
 		try {
 		  let options = {
 			  method: 'POST',
@@ -197,7 +198,7 @@ function OrientedSignUpPage() {
 
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
-						<MyTextInput
+						<TextInput
 							label='Nombre y Apellido'
 							name='fullName'
 							placeholder='Ingresar nombre completo'
@@ -206,7 +207,7 @@ function OrientedSignUpPage() {
 							error={errors.fullName}
 						/>
 
-						<MyTextInput
+						<TextInput
 							label='Mail'
 							name='email'
 							placeholder='Ingresar mail'
@@ -216,7 +217,7 @@ function OrientedSignUpPage() {
 						/>
 					</div>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
-						<MyTextInput
+						<TextInput
 							label='Teléfono'
 							name='phoneNumber'
 							placeholder='Ingresar nombre completo'
@@ -241,7 +242,7 @@ function OrientedSignUpPage() {
 				<div>
 					<div className='flex gap-4 mobile:flex-col'>
 						<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
-							<MyTextInput
+							<TextInput
 								label='Número de DNI'
 								name='dni'
 								placeholder='Ingresar dni'
@@ -251,7 +252,7 @@ function OrientedSignUpPage() {
 
 								
 							/>
-							<MyTextInput
+							<TextInput
 								label='Ingresar edad'
 								name='age'
 								placeholder='Ingresar edad'
@@ -262,7 +263,7 @@ function OrientedSignUpPage() {
 						</div>
 					</div>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
-						<MyTextInput
+						<TextInput
 							label='Colegio'
 							name='school'
 							placeholder='Ingresar colegio'
@@ -270,7 +271,7 @@ function OrientedSignUpPage() {
 							values={values.school}
 							errors={errors.school}
 						/>
-						<MyTextInput
+						<TextInput
 							label='Domicilio'
 							name='address'
 							placeholder='Ingresar domicilio'
@@ -280,7 +281,7 @@ function OrientedSignUpPage() {
 						/>
 					</div>
 					<div className='flex flex-col gap-1'>
-						<MyTextArea
+						<TextArea
 							label='¿Por qué se acercó a nuestra institución?'
 							name='motive'
 							placeholder='Escribe un comentario'
@@ -294,7 +295,7 @@ function OrientedSignUpPage() {
 			<section>
 				<h2 className='my-4 text-2xl font-medium'>03. Crear usuario y contraseña</h2>
 				<div className='flex flex-col gap-3'>
-					<MyTextInput
+					<TextInput
 						label='Repetir Dni del orientado'
 						name='user'
 						placeholder='Ingresar DNI del Orientado'
@@ -302,7 +303,7 @@ function OrientedSignUpPage() {
 						values={values.user}
 						error={errors.user}
 					/>
-					<MyTextInput
+					<TextInput
 						label='Contraseña'
 						name='pass'
 						placeholder='Ingresar contraseña'
@@ -311,7 +312,7 @@ function OrientedSignUpPage() {
 						error={errors.pass}
 
 					/>
-					<MyTextInput
+					<TextInput
 						label='Repetir Contraseña'
 						name='confirmPass'
 						placeholder='Repetir contraseña'
