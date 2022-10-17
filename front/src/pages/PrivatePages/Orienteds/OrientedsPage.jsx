@@ -1,9 +1,7 @@
 import React, {
   useContext,
   useEffect,
-  useState,
-  Link,
-  useNavigate,
+  useState
 } from 'react';
 import axios from 'axios';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -12,6 +10,8 @@ import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import Context from '../../../context/Context';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 // see orientedList
 function Orienteds() {
@@ -35,7 +35,7 @@ function Orienteds() {
         'http://localhost:8000/admin/students/',
         { withCredentials: true }
       );
-      setUsers(response.data.students);
+      setUsers(response.data.data.students);
     } catch (error) {
       login();
     }

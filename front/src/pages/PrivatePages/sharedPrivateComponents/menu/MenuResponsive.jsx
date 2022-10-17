@@ -39,7 +39,7 @@ export default function MenuResponsive({ menu, setMenu }) {
             <div className=''><img className='h-[70px] ml-8 rounded-full' src={ProfilePictureHeader} alt='Profile_picture_admin' /></div>
             <div className='ml-3.5'>
               <h4>¡Bienvenido!</h4>
-              <h4 className='text-lightgray'>{admin.fullName}</h4>
+              {/* <h4 className='text-lightgray'>{admin.fullName}</h4> */}
             </div>
           </div>
           <div className='mt-10'>
