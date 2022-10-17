@@ -365,3 +365,179 @@ function AssignAdviserPage() {
 }
 
 export default AssignAdviserPage;
+
+
+
+
+// Changed the form with the select (UseForm) to a form with the select (Formik). It will be implemented in the code soon
+
+/* import { React, useEffect, useState } from "react";
+import { Formik, Form, Field } from "formik";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Button from "../components/Button";
+
+
+const Af = () => {  */
+  /* const [formularioEnviado, cambiarFormularioEnviado] = useState(false); */
+   /* const [oriented, setOriented] = useState([]);
+  const [selectOption, setSelectOption] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const navigate = useNavigate();  */
+/*   let asd = document.getElementById('idAdviser');
+  let valueText = asd.options[asd.selectedIndex].text;
+ */
+  
+
+/* 
+   useEffect(() => {
+    if ( isVisible === !true  ) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+  });
+  // Traigo los datos de los adviser
+  const getAllOriented = async () => {
+    try {
+      let Orientador = await axios.get(`http://localhost:8000/admin/advisers`, {
+        withCredentials: true,
+      });
+      setOriented(Orientador.data.advisers);
+      // console.log(Orientador.data.advisers)
+    } catch (Orientador) {
+      navigate("error");
+      let message = Orientador.response.statusText || "Ocurrió un error";
+      console.log(message);
+    }
+  };
+
+  // ----
+
+  const params = useParams();
+  const postOrientador = async (data) => {
+    try {
+      let options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        withCredentials: true,
+        data: { ...data },
+      };
+      console.log(options.data);
+      const response = await axios(
+        `http://localhost:8000/admin/assignAdviser/${params.id}`,
+        options
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.error(`${err.response.status}: ${err.response.statusText}`);
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getAllOriented();
+  }, []);
+
+  return (
+    <>
+      <Formik
+        initialValues={{
+            idAdviser: "",
+        }}
+
+        
+        onSubmit={(data) => {
+          postOrientador(data);
+        }}
+      >
+        {() => (
+          <Form className="formulario">
+            <div>
+              <Field
+                className="border-[3px] border-black"
+                name="idAdviser"
+                as="select"
+                onClick={() => setIsVisible(true)} 
+                
+              >
+                
+                <option  selected hidden>
+                  Seleccionar orientador
+                </option>
+                {oriented.map((elemento) => (
+                  <option
+                  onChange={(a)=>{
+                    const valueOption = a.target.value;
+                    setSelectOption(valueOption);
+                  }}
+                    key={elemento.id}
+                    value={[
+                      `${elemento.id}`,
+                      ` ${elemento.email}`,
+                      ` ${elemento.phoneNumber}`,
+                    ]}
+                  >
+                    {elemento.fullName}
+                  </option>
+                ))}
+              </Field>
+            </div>
+           
+
+             <div className={isVisible ? "block" : "hidden"}>
+              <div className="py-4 flex flex-row  mt-4 mb-6 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg ">
+                <div className="w-[178px] h-[178px] flex justify-center items-center border-r-[1px] border-bordergray">
+                  <img
+                    className="w-[140px] h-[140px] rounded-full"
+                    src={
+                      ""
+                        ? require(`../img/adviser/${""}`)
+                        : "https://i.imgur.com/b08hxPY.png"
+                    }
+                    alt={selectOption}
+                  />
+                </div>
+                <div className="laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center">
+                  <div className=" mobile:mx-auto lap_tablet:mx-auto  tablet:mx-auto">
+                    <h2 className="text-2xl font-normal ml-6 ">c</h2>
+                    <h4 className="text-[15px] leading-[22px]  ml-6 text-lightgray">
+                      Orientador
+                    </h4>
+                  </div>
+                  <div className="flex flex-row ">
+                    <div className="w-1/2 px-6 ">
+                      <h5 className=" text-xs text-lightgray">mail</h5>
+                      <p className=" text-[16pxpx] leading-[26px] text-blue ">
+                        {selectOption}email@arbusta.com
+                      </p>
+                    </div>
+                    <div className="w-1/2 px-6 ">
+                      <h5 className=" text-xs text-lightgray">Telefono</h5>
+                      <p className=" text-[16pxpx] leading-[26px] text-blue ">
+                        1156897432
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+                <Button
+                  type="submit"
+                  name="Modificar orientador/a"
+                  disabled={isEmpty}
+                />
+              </div>
+          </Form>
+        )}
+      </Formik>
+    </>
+  );
+};
+
+export default Af;
+ */
