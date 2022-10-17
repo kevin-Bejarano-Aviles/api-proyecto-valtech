@@ -11,43 +11,6 @@ import PreviewImage from './components/PreviewImage';
 import iconError from '../../../assets/icons/icon_warning.svg';
 // import iconArrow from '../../../assets/icons/privatePage';
 import programs from './programs.json';
-import iconPlus from '../../../assets/icons/icon-plus.svg';
-import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
-import { useRef } from 'react';
-
-
-const showSelectedImage = () => {
-
-    const $selectedImage = document.getElementById('selectedImage');
-    const $avatar = document.getElementById('avatar');
-    const objectURL = URL.createObjectURL($avatar.files[0]);
-    $selectedImage.src = objectURL;
-	// setFieldValue(e.target.files[0])
-	//investigar como setear los 
-};
-
-
-// const MyFileInput = ({children, ...props }) => {
-	
-// 	return (
-// 	  <div className='flex mobile:flex-col'>
-// 		<label htmlFor={props.name} className='text-sm'>
-// 		<input
-//         	type='file'
-//             accept='.png, .jpg, .jpeg, .gif'
-// 	        hidden={true}
-// 			id={props.name}
-// 			onChangeCapture={(e)=>{
-// 				showSelectedImage()
-// 				setFile(e.target.files[0])
-// 			}}
-// 			{...props}
-//         />
-// 		{children}
-// 		</label>
-// 	  </div>
-// 	);
-//   };
 
 const MyTextInput = ({ error,label, ...props }) => {
   return (
@@ -104,7 +67,6 @@ const MySelect = ({error, label, ...props }) => {
 
 
 function OrientedSignUpPage() {
-	const fileInputRef=useRef();
   const url=process.env.REACT_APP_API_URL
   const navigate = useNavigate();
 
@@ -160,7 +122,8 @@ function OrientedSignUpPage() {
         navigate(`/orientados/${lastUserId}`);
       }, 1000);
     } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
+		console.log(err);
+    //   console.error(`${err.response.status}: ${err.response.statusText}`);
     }
   };
 
@@ -195,9 +158,22 @@ function OrientedSignUpPage() {
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:(values)=>{
-		console.log(values);
-	}
+	onSubmit:async (data) => {
+		try {
+		  let options = {
+			  method: 'POST',
+			  headers: { 'Content-Type': 'multipart/form-data' },
+			  withCredentials: true,
+			  data: {data}
+		  };
+		  const response = await axios(`${url}/admin/students`, options);
+		  console.log(response.data);
+		} catch (err) {
+		  console.error(`${err.response.status}: ${err.response.statusText}`);
+		  console.log(err);
+		}
+	  }
+	
   })
 
   return (
@@ -211,32 +187,12 @@ function OrientedSignUpPage() {
           <section className='mt-12'>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
 			<div className='flex flex-col gap-4 tablet:flex-row'>
-				{/* <MyFileInput name='avatar'>
-					<div className='relative mobile:w-[96px]'>
-                      <img
-                        src={addAvatar}
-                        alt='avatar'
-                        className='w-[96px] h-[96px] cursor-pointer rounded-full'
-                        id='selectedImage'
-                      />
-                      <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
-                    </div>
-				</MyFileInput> */}
+			
 				<div className='flex mobile:flex-col'>
-					 <PreviewImage file={values.avatar} Change={(e)=>{
+					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
-						}}/>
-					{/* {
-							values.avatar ? <PreviewImage file={values.avatar}/> : <div className='relative mobile:w-[96px]'>
-							<img
-								src={addAvatar}
-								alt='avatar'
-								className='w-[96px] h-[96px] cursor-pointer rounded-full'
-								id='selectedImage'
-								/>
-							<img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
-						</div>
-					} */}
+					}}/>
+					
 				</div>
 
 				<div className='tablet:grow'>
