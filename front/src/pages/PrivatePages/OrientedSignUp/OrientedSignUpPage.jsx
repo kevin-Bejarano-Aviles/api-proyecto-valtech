@@ -143,18 +143,18 @@ function OrientedSignUpPage() {
 
   const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
 	initialValues:{
-		fullName: 'Julian Martinez',
-		email: 'julian.martinez@gmail.com',
+		fullName: 'Maria garcia',
+		email: 'Maria.garcia@gmail.com',
 		phoneNumber: '01162386020',
 		program: 'Orientacion vocacional',
-		dni: '28456387',
-		age: '18',
+		dni: '28456389',
+		age: '21',
 		school: 'Nuestra señora del valle',
 		address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
 		motive: 'Necesita orientación para elegir una carrera.',
-		user: '28456387',
-		pass: '12345678',
-		confirmPass: '12345678',
+		user: '28456389',
+		pass: '12345677',
+		confirmPass: '12345677',
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
@@ -165,7 +165,7 @@ function OrientedSignUpPage() {
 			  method: 'POST',
 			  headers: { 'Content-Type': 'multipart/form-data' },
 			  withCredentials: true,
-			  data: {data}
+			  data: data
 		  };
 		  const response = await axios(`${url}/admin/students`, options);
 		  console.log(response.data);
