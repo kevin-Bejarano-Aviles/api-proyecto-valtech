@@ -1,7 +1,8 @@
+import React from 'react';
 import iconCheck from '../../../assets/icons/icon-check.svg';
 import iconClose from '../../../assets/icons/privatePage/icon-close.svg';
 
-function Alert({ title, message, onclick }) {
+function Alert( title, message, onclick ) {
   return (
     <div className='
       mobile:bottom-3 mobile:w-[300px]

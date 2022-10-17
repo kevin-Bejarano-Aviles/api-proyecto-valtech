@@ -1,33 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Button from '../sharedPrivateComponents/button/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Button from '../sharedPrivateComponents/button/Button';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import CardText from '../Home/components/CardText';
+import CardText from './components/CardText';
 import Context from '../../../context/Context';
-import axios from 'axios';
 
 function HomePage() {
-
-
   const admin = JSON.parse(localStorage.getItem('admin'));
-  let adminFirstName = admin.fullName.split(' ')[0];
+  const adminFirstName = admin.fullName.split(' ')[0];
 
   const navigate = useNavigate();
 
-  const {logOut} = useContext(Context);
+  const { logOut } = useContext(Context);
 
   const [users, setUsers] = useState([]);
 
-  
-  const login = ()=>{
-    logOut()
-    navigate('/login',{replace:true})
-  }
+  const login = () => {
+    logOut();
+    navigate('/login', { replace: true });
+  };
   const getAll = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/admin/students/', {withCredentials: true});
+      const response = await axios.get(
+        'http://localhost:8000/admin/students/',
+        { withCredentials: true }
+      );
       setUsers(response.data.students);
     } catch (error) {
       login();
@@ -37,7 +37,6 @@ function HomePage() {
   useEffect(() => {
     getAll();
   });
-
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -49,13 +48,15 @@ function HomePage() {
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
               Nuevos orientados
             </h4>
-            <Link to={'/orientados/alta-orientado'}>
-              <Button  type='button' name='Ingresar orientado'/>
+            <Link to='/orientados/alta-orientado'>
+              <Button type='button' name='Ingresar orientado' />
             </Link>
           </div>
-          <OrientedList users={users}/>
+          <OrientedList users={users} />
           <div className='relative mt-16'>
-            <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>Novedades</h2>
+            <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>
+              Novedades
+            </h2>
             <div className='grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
               <CardText title='¿Usás inteligentemente tu tiempo?' />
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
@@ -65,7 +66,7 @@ function HomePage() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 export default HomePage;
