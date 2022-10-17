@@ -72,12 +72,11 @@ function LoginPage() {
           await axios.post(baseUrl,{
                 email:data.email,
                 pass:data.pass,
-              },{withCredentials:true})
-              
+              })
               .then(response=>{
                 console.log(response.data.data.admin);
-                login();
-                localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
+                // login();
+                // localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
               })
               .catch(error => {
                 console.log(error);
