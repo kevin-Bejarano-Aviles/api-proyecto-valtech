@@ -1,4 +1,4 @@
-const {Admins:AdminModel} = require('../models');
+const {adminById} = require('../helpers/findAdminBy');
 const jwt = require('jsonwebtoken');
 const isAuthorized = async(req, res, next) => {
     let token = req.header('x-token');
@@ -12,20 +12,16 @@ const isAuthorized = async(req, res, next) => {
     try {
         token = token.split(' ');
         const { id } = jwt.verify(token[1],process.env.SECRET_SESSION);
-        const admin = await AdminModel.findOne({
-            where:{
-                id:id
-            }
-        });
+        const admin = await adminById(id);
         if(!admin){
             return res.status(401).json({
                 status:'401 Unauthorized',
-                message: 'Invalid token',
+                message: 'Invalid token user not found',
                 data:''
             });
         }
         req.admin = admin;
-        next()
+        next();
     } catch (error) {
         res.status(401).json({
             status:'401 Unauthorized',

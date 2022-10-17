@@ -39,7 +39,7 @@ const existingAdviser = async(idAdviser)=>{
         }
     });
     if(!adviser){
-        throw new Error('El orientador no existe en nuestra base de datos')
+        throw new Error('El orientador no existe en nuestra base de datos');
     }
 }
 const studentsInDb = async(studentsId)=>{
@@ -48,8 +48,8 @@ const studentsInDb = async(studentsId)=>{
             id:studentsId
         }
     });
-    if(students.length != studentsId.length){
-        throw new Error('Estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes')
+    if(students.length !== studentsId.length){
+        throw new Error('Uno o mas estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes');
     }
 }
 module.exports = {
