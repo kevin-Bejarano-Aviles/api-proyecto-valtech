@@ -4,69 +4,17 @@ import { Formik, Form, Field ,ErrorMessage, useField, useFormik} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
-import warningImg from '../../../assets/icons/icon_warning.svg'
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import PreviewImage from './components/PreviewImage';
-import iconError from '../../../assets/icons/icon_warning.svg';
-// import iconArrow from '../../../assets/icons/privatePage';
+import TextArea from './components/TextArea';
+import TextInput from './components/TextInput';
+import Select from './components/Select';
 import programs from './programs.json';
-
-const TextInput = ({ error,label, ...props }) => {
-  return (
-    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <input
-        className='mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2  focus:outline-green' 
-		onChange={props.onChange}
-		values={props.values}
-		{...props}
-	  />
-      {error ? (
-        <div className='text-red-500 flex mt-2'>
-				<img src={warningImg} alt="warning" />
-				<p className='ml-2'>{error}</p>
-			</div>
-      ) : null}
-    </div>
-  );
-};
-
-const TextArea = ({error, label, ...props }) => {
-	return (
-	  <div className='flex flex-col gap-1 mb-8'>
-		<label htmlFor={props.name} className='text-sm'>{label}</label>
-		<textarea
-            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${error ? 'border-red-500' : ''}`}
-		  	{...props}
-		/>
-		{ error? (
-		  <div className='text-red-500 flex mt-2'>
-				  <img src={warningImg} alt="warning" />
-				  <p className='ml-2'>{error}</p>
-			  </div>
-		) : null}
-	  </div>
-	);
-  };
-
-const MySelect = ({error, label, ...props }) => {
-	return (
-	  <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-		<label htmlFor={props.name} className='text-sm'>{label}</label>
-		<select
-        	className={`mobile:w-full tablet:max-w-[320px] pl-1 pr-2 h-10 rounded-lg text-gray-400 appearance-none bg-no-repeat bg-[right_10px_center] border-2 ${(error) ? 'border-red-500' : ''}`}		  
-		  	{...props}
-		/>
-		{ error ? 
-		  <div className='text-red-500'>{error}</div>
-		 : null}
-	  </div>
-	);
-  };
 
 
 function OrientedSignUpPage() {
+	const [errorList,setErrorList]=useState(null)
   const url=process.env.REACT_APP_API_URL
   const navigate = useNavigate();
 
@@ -79,7 +27,7 @@ function OrientedSignUpPage() {
     phoneNumber:Yup.number('Ingresar solo numeros').test('len', 'Entre 10 y 50 digitos', val => val.toString().length >= 10 && val.toString().length<=50),
     program:Yup.string().required('Selecciona una opción'),
 	dni:Yup.number('Ingresar solo numeros').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
-    age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Mínimo valor: 18').max(99,'Máximo valor: 99'),
+    age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Edad Mínima: 18').max(99,'Edad Máxima: 99'),
     school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
@@ -89,45 +37,21 @@ function OrientedSignUpPage() {
 	avatar:Yup.mixed().required('Es requerido'),
 })
   
-  // Function to 'Ingresar orietado' button.
 
-
-  // Function to send a new student.
-  const postStudent = async (data) => {
-    try {
-      let options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'multipart/form-data' },
-          withCredentials: true,
-          data: {
-            ...data
-          }
-      };
-      const response = await axios(`${url}/admin/students`, options);
-	  console.log(response.data);
-      localStorage.setItem('registrado',true)
-	  getAllStudents()
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
-  };
-
-  // Function to bring all students.
   const getAllStudents = async () => {
     try {
       const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
       const json = await response.data;
+	  console.log(json);
       const lastUserId = json[json.length-1].id;
       setTimeout(() => {
         navigate(`/orientados/${lastUserId}`);
       }, 1000);
     } catch (err) {
-		console.log(err);
-    //   console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
+
+console.log(err);	}
   };
 
-  // Function to show the selected image by screen.
 
 
   // Function to change the background color of the input elements.
@@ -144,22 +68,21 @@ function OrientedSignUpPage() {
   const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
 	initialValues:{
 		fullName: 'Maria garcia',
-		email: 'Maria.garcia@gmail.com',
+		email: 'Maria.garcia2@gmail.com',
 		phoneNumber: '01162386020',
 		program: 'Orientacion vocacional',
-		dni: '28456389',
+		dni: '18456389',
 		age: '21',
 		school: 'Nuestra señora del valle',
-		address: 'Av. Córdoba 2445 piso 6 dpto C, CABA',
-		motive: 'Necesita orientación para elegir una carrera.',
-		user: '28456389',
+		address: 'Av. Córdoba 24454 piso 6 dpto C, CABA',
+		motive: 'Necesita orientación para elegir una carrera5.',
+		user: '18456389',
 		pass: '12345677',
 		confirmPass: '12345677',
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
 	onSubmit:async (data) => {
-		console.log(data);
 		try {
 		  let options = {
 			  method: 'POST',
@@ -168,10 +91,9 @@ function OrientedSignUpPage() {
 			  data: data
 		  };
 		  const response = await axios(`${url}/admin/students`, options);
-		  console.log(response.data);
+		  getAllStudents()
 		} catch (err) {
-		  console.error(`${err.response.status}: ${err.response.statusText}`);
-		  console.log(err);
+		console.log(err.response.data.response.errors);
 		}
 	  }
 	
@@ -220,19 +142,19 @@ function OrientedSignUpPage() {
 						<TextInput
 							label='Teléfono'
 							name='phoneNumber'
-							placeholder='Ingresar nombre completo'
+							placeholder='Ingresar numero'
 							onChange={handleChange}
 							values={values.phoneNumber}
 							error={errors.phoneNumber}
 						/>
 			
-						<MySelect onChange={handleChange} error={errors.program} label='Programa' name='program'>
+						<Select onChange={handleChange} error={errors.program} label='Programa' name='program'>
 							{
 								programs.programs.map(program=>(
 									<option value={program.value}>{program.name}</option>
 								))
 							}
-						</MySelect>
+						</Select>
 					</div>
 				</div>
 			  </div>
@@ -248,7 +170,7 @@ function OrientedSignUpPage() {
 								placeholder='Ingresar dni'
 								onChange={handleChange}
 								values={values.dni}
-								errors={errors.dni}
+								error={errors.dni}
 
 								
 							/>
@@ -258,7 +180,7 @@ function OrientedSignUpPage() {
 								placeholder='Ingresar edad'
 								onChange={handleChange}
 								values={values.age}
-								errors={errors.age}
+								error={errors.age}
 							/>
 						</div>
 					</div>
@@ -269,7 +191,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar colegio'
 							onChange={handleChange}
 							values={values.school}
-							errors={errors.school}
+							error={errors.school}
 						/>
 						<TextInput
 							label='Domicilio'
@@ -277,7 +199,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar domicilio'
 							onChange={handleChange}
 							values={values.address}
-							errors={errors.address}
+							error={errors.address}
 						/>
 					</div>
 					<div className='flex flex-col gap-1'>
