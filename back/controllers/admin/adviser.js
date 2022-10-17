@@ -1,5 +1,4 @@
 const {Advisers:AdviserModel,Students:StudentModel} = require('../../models');
-
 //Method to get all the advisers
 const getAllAdvisers = async (req,res) => {
     try {
@@ -8,7 +7,7 @@ const getAllAdvisers = async (req,res) => {
             status:'200 OK',
             message:'',
             data:{advisers}
-        })
+        });
     } catch (error) {
         res.status(500).json({
             status: '500 Internar server error',

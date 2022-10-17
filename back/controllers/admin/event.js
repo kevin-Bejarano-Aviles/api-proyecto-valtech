@@ -1,4 +1,3 @@
-//const {Advisers:AdviserModel,Students:StudentModel,Events:EventModel} = require('../../models');
 const AdviserModel = require('../../models').Advisers;
 const StudentModel = require('../../models').Students;
 const EventModel = require('../../models').Events;

@@ -54,7 +54,6 @@ const getAllStudent = async (req, res) => {
         console.log({error:error.message});
     }
 };
-
 //Method to get one student
 const getStudent = async (req, res) => {
     try {
