@@ -7,11 +7,14 @@ import Button from '../sharedPrivateComponents/button/Button';
 import warningImg from '../../../assets/icons/icon_warning.svg'
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
+import PreviewImage from './components/PreviewImage';
 import iconError from '../../../assets/icons/icon_warning.svg';
 // import iconArrow from '../../../assets/icons/privatePage';
 import programs from './programs.json';
 import iconPlus from '../../../assets/icons/icon-plus.svg';
 import addAvatar from '../../../assets/icons/privatePage/add-avatar.svg';
+import { useRef } from 'react';
+
 
 const showSelectedImage = () => {
 
@@ -101,6 +104,7 @@ const MySelect = ({error, label, ...props }) => {
 
 
 function OrientedSignUpPage() {
+	const fileInputRef=useRef();
   const url=process.env.REACT_APP_API_URL
   const navigate = useNavigate();
 
@@ -120,6 +124,7 @@ function OrientedSignUpPage() {
     user:Yup.number().required('Campo requerido').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
     pass:Yup.string().required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
     confirmPass:Yup.string().min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
+	avatar:Yup.mixed().required('Es requerido'),
 })
   
   // Function to 'Ingresar orietado' button.
@@ -173,7 +178,7 @@ function OrientedSignUpPage() {
     }
   };
 
-  const {handleSubmit,handleChange,errors,values}=useFormik({
+  const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
 	initialValues:{
 		fullName: 'Julian Martinez',
 		email: 'julian.martinez@gmail.com',
@@ -217,6 +222,22 @@ function OrientedSignUpPage() {
                       <img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
                     </div>
 				</MyFileInput> */}
+				<div className='flex mobile:flex-col'>
+					 <PreviewImage file={values.avatar} Change={(e)=>{
+						setFieldValue('avatar',e.target.files[0])
+						}}/>
+					{/* {
+							values.avatar ? <PreviewImage file={values.avatar}/> : <div className='relative mobile:w-[96px]'>
+							<img
+								src={addAvatar}
+								alt='avatar'
+								className='w-[96px] h-[96px] cursor-pointer rounded-full'
+								id='selectedImage'
+								/>
+							<img src={iconPlus} alt='Agregar imagen' className='absolute bottom-0 right-0' />
+						</div>
+					} */}
+				</div>
 
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
