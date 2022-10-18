@@ -11,13 +11,13 @@ import TextArea from './components/TextArea';
 import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
+import usePost from '../hooks/usePost';
 
 
 function OrientedSignUpPage() {
-	const [errorList,setErrorList]=useState(null)
-  const url=process.env.REACT_APP_API_URL
-  const navigate = useNavigate();
 
+  	const navigate = useNavigate();
+	const {postStudent}=usePost()
   const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
@@ -82,20 +82,20 @@ console.log(err);	}
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:async (data) => {
-		try {
-		  let options = {
-			  method: 'POST',
-			  headers: { 'Content-Type': 'multipart/form-data' },
-			  withCredentials: true,
-			  data: data
-		  };
-		  const response = await axios(`${url}/admin/students`, options);
-		  getAllStudents()
-		} catch (err) {
-		console.log(err.response.data.response.errors);
-		}
-	  }
+	onSubmit:(data)=>postStudent(data)
+	// async (data) => {
+	// 	try {
+	// 	  let options = {
+	// 		  method: 'POST',
+	// 		  headers: { 'Content-Type': 'multipart/form-data' },
+	// 		  withCredentials: true,
+	// 		  data: data
+	// 	  };
+	// 	  const response = await axios(`${url}/admin/students`, options);
+	// 	} catch (err) {
+	// 	console.log(err.response.data.response.errors);
+	// 	}
+	//   }
 	
   })
 
