@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -9,6 +9,8 @@ import CardText from './components/CardText';
 import Context from '../../../context/Context';
 
 function HomePage() {
+  const url=process.env.REACT_APP_API_URL
+  const baseUrl =`${url}/admin/students`
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
 
@@ -25,10 +27,11 @@ function HomePage() {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/admin/students/',
+        baseUrl,
         { withCredentials: true }
       );
-      setUsers(response.data.students);
+      setUsers(response.data.data.students);
+      console.log(response);
     } catch (error) {
       login();
     }
@@ -36,7 +39,7 @@ function HomePage() {
 
   useEffect(() => {
     getAll();
-  });
+  },[]);
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>

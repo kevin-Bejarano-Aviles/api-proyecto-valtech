@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import { ErrorMessage, useFormik } from 'formik';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field ,ErrorMessage, useField} from 'formik';
 
 import * as Yup from 'yup';
 import axios from 'axios'
@@ -14,19 +13,20 @@ import ilustration from '../../../assets/ilustration/login/ilustration.svg';
 import title from '../../../assets/logo/vnegro.svg'
 import Context from '../../../context/Context';
 
+
+
 function LoginPage() {
 
   const [errorMessage,setErrorrMessage]=useState('')
 
   const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/adminLogin`
+  const baseUrl =`${url}/admin/auth/login`
   const navigate = useNavigate();
   const {logIn} = useContext(Context);
   const login = ()=>{
     logIn()
     navigate('/login',{replace:true})
   }
-
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
@@ -41,6 +41,8 @@ function LoginPage() {
       return ()=> clearTimeout(timer)
     }
   },[errorMessage]);
+
+
 
   const deskTopviewIlustration='laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center'
   const deskTopviewForm='laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20'
@@ -66,16 +68,19 @@ function LoginPage() {
           pass:'',
         }}
         validationSchema={DisplayingErrorMessagesSchema}
-        onSubmit={async (data)=>{
+        onSubmit={  async (data)=>{
           await axios.post(baseUrl,{
                 email:data.email,
                 pass:data.pass,
               },{withCredentials:true})
+              
               .then(response=>{
+                console.log(response.data.data.admin);
                 login();
-                localStorage.setItem('admin', JSON.stringify(response.data.adminLog));
+                localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
               })
               .catch(error => {
+                console.log(error);
                 setErrorrMessage(error.response.data.message)
               })
         }}
@@ -111,7 +116,6 @@ function LoginPage() {
           </div>
         }
        </ErrorMessage>
-
 
         {
             errorMessage &&

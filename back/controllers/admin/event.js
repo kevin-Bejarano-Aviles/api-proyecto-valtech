@@ -1,4 +1,3 @@
-//const {Advisers:AdviserModel,Students:StudentModel,Events:EventModel} = require('../../models');
 const AdviserModel = require('../../models').Advisers;
 const StudentModel = require('../../models').Students;
 const EventModel = require('../../models').Events;
@@ -23,7 +22,11 @@ const createEvent = async (req,res) => {
         data:''
     });
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
 
     }
 };
@@ -62,7 +65,11 @@ const getAllEventsByFilters = async(req,res)=>{
             }
         });
     } catch (error) {
-        res.status(500).json({error:error.message})
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 const deleteEvent = async(req,res)=>{
@@ -79,7 +86,11 @@ const deleteEvent = async(req,res)=>{
             data:''
         });
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 module.exports = {

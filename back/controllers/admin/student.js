@@ -30,7 +30,11 @@ const addStudent = async (req, res) => {
                 data:'',
             });
         } catch (error) {
-            res.status(500).json({error:error.message});
+            res.status(500).json({
+                status: '500 Internar server error',
+                message: 'Error MySQL/Express/Node'
+            });
+            console.log({error:error.message});
         }
 };
 //Method to get all students
@@ -43,10 +47,13 @@ const getAllStudent = async (req, res) => {
             data:{students}
         });
     } catch (error) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
-
 //Method to get one student
 const getStudent = async (req, res) => {
     try {
@@ -69,8 +76,11 @@ const getStudent = async (req, res) => {
             data:{student:student[0]}
         });
     } catch (error) {
-        res.status(500).json({error:error.message});
-        /* throw new Error(error) */
+        res.status(500).json({
+            status: '500 Internar server error',
+            message: 'Error MySQL/Express/Node'
+        });
+        console.log({error:error.message});
     }
 };
 module.exports = {
