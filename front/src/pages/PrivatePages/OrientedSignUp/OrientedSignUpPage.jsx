@@ -17,8 +17,8 @@ import usePost from '../hooks/usePost';
 function OrientedSignUpPage() {
 
   	const navigate = useNavigate();
-	const {postStudent}=usePost()
-  const validationSchemaForm=Yup.object({
+	const {postStudent,errorSignUpObject}=usePost()
+  	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
     .max(500,'')
@@ -83,22 +83,7 @@ console.log(err);	}
 	},
 	validationSchema:validationSchemaForm,
 	onSubmit:(data)=>postStudent(data)
-	// async (data) => {
-	// 	try {
-	// 	  let options = {
-	// 		  method: 'POST',
-	// 		  headers: { 'Content-Type': 'multipart/form-data' },
-	// 		  withCredentials: true,
-	// 		  data: data
-	// 	  };
-	// 	  const response = await axios(`${url}/admin/students`, options);
-	// 	} catch (err) {
-	// 	console.log(err.response.data.response.errors);
-	// 	}
-	//   }
-	
   })
-
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
@@ -136,6 +121,7 @@ console.log(err);	}
 							onChange={handleChange}
 							values={values.email}
 							error={errors.email}
+							errorPost={errorSignUpObject.email?.msg}
 						/>
 					</div>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>

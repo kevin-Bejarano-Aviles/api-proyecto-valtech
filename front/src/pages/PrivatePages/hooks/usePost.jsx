@@ -4,7 +4,7 @@ import axios from "axios";
 
 function usePost(){
     const url=process.env.REACT_APP_API_URL
-    const [errorSignUpList,setErrorSignUpList]=useState(null);
+    const [errorSignUpObject,seteErrorSignUpObject]=useState({});
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     let token=localStorage.getItem('token')
     const postStudent = async (data) => {
@@ -19,14 +19,12 @@ function usePost(){
 		  const response = await axios(`${url}/admin/students`, options);
           console.log(response);
 		} catch (err) {
-		    console.log(err.response.data.data.errors);
-            setErrorSignUpList(err.response.data.data.errors)
-            console.log(err.response.data.data.errors.avatar?.msg);
-
+            seteErrorSignUpObject(err.response.data.data.errors)
         }
 	  }
     return {
-        postStudent
+        postStudent,
+        errorSignUpObject
     }
 }
 
