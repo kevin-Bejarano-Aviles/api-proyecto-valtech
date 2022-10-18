@@ -1,13 +1,12 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import iconUser from '../../../assets/icons/privatePage/Icon_user.svg';
+import icon_user from '../../../assets/icons/privatePage/Icon_user.svg';
 
 function Oriented({ info, asignOriented = false }) {
   const navigate = useNavigate();
- const oriented = info.adviserId;
+  let oriented = info.adviserId;
 
   return (
-   <div
+    <div
       className='flex items-center justify-between gap-4 pl-6 w-80 h-24 list-none border-solid border-2 rounded-lg border-slate-200 cursor-pointer'
       onClick={() => {
         navigate(`/orientados/${info.id}`);
@@ -28,7 +27,7 @@ function Oriented({ info, asignOriented = false }) {
         <div
           className={`flex mb-12 mr-4 w-4 h-4  ${!asignOriented && 'hiden'}`}
         >
-          <img src={iconUser} alt='iconUser' />
+          <img src={icon_user} alt='iconUser' />
         </div>
       )}
     </div>

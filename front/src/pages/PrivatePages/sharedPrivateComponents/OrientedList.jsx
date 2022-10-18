@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { useState } from 'react';
 import Oriented from './Oriented';
 
 function OrientedList({ asignOriented = false, users }) {
@@ -48,7 +47,7 @@ function OrientedList({ asignOriented = false, users }) {
                 ? 'hidden'
                 : 'relative -z-10 bottom-[11px] h-3 bg-yellow'
             }
-           />
+          ></div>
         </div>
       )}
     </div>
