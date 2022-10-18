@@ -49,7 +49,7 @@ function OrientedList({ asignOriented = false, users }) {
                 ? 'hidden'
                 : 'relative -z-10 bottom-[11px] h-3 bg-yellow'
             }
-           />
+          ></div>
         </div>
       )}
     </div>

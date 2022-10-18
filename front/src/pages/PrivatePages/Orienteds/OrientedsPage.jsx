@@ -1,19 +1,16 @@
-import React, {
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import {React, UseState, useContext,useEffect} from 'react';
 import axios from 'axios';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import Context from '../../../context/Context';
-import { Link, useNavigate } from 'react-router-dom';
 
 
-// see orientedList
+
+//see orientedList
 function Orienteds() {
   const navigate = useNavigate();
 
@@ -41,7 +38,7 @@ function Orienteds() {
     }
   };
   const handleSearch = (event) => {
-    // If the input is empty, show one that meets the criteria. Otherwise, the message was not found.
+    //If the input is empty, show one that meets the criteria. Otherwise, the message was not found.
     SetSearch(event.target.value);
     if (search.length > 1) {
       setShowAll(false);
@@ -54,7 +51,7 @@ function Orienteds() {
     getAll();
   });
 
-  const users = showAll
+  let users = showAll
     ? usersList
     : usersList.filter((user) =>
         user.fullName.toLowerCase().includes(search.toLowerCase())
@@ -64,7 +61,7 @@ function Orienteds() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo="Orientados" />
+        <HeaderAdmin Titulo={`Orientados`} />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center'>
             <div>
@@ -73,7 +70,7 @@ function Orienteds() {
               </h2>
             </div>
             <div className='w-full flex justify-end py-3'>
-              <Link to="/orientados/alta-orientado">
+              <Link to={'/orientados/alta-orientado'}>
                 <Button type='button' name='Ingresar orientado' />
               </Link>
             </div>
@@ -81,10 +78,10 @@ function Orienteds() {
 
           <div className='relative mt-8'>
             <Search
-              placeholder="Buscar orientado por nombre y apellido"
+              placeholder={`Buscar orientado por nombre y apellido`}
               handleChange={handleSearch}
             />
-            <OrientedList asignOriented users={users} />
+            <OrientedList asignOriented={true} users={users} />
           </div>
         </main>
       </div>

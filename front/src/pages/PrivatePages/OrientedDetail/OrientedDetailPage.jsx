@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {useParams , Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import {useParams,Link,useNavigate} from 'react-router-dom';
@@ -50,11 +51,7 @@ function Oriented() {
               <img
                 src={
                   user.avatar
-<<<<<<< HEAD
                   ? require(`../../../assets/students/${user.avatar}`)
-=======
-                    ? require(`../../../assets/students/${user.avatar}`)
->>>>>>> serrano-DEVJ1-81/refactoriza-codigo-con-formik-y-yup
                     : 'https://i.imgur.com/b08hxPY.png'
                 }
                 alt='avatar'
