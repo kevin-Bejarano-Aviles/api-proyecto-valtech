@@ -12,6 +12,7 @@ import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
 import usePost from '../hooks/usePost';
+import useGet from '../hooks/useGet';
 import warningImg from '../../../assets/icons/icon_warning.svg'
 
 
@@ -19,7 +20,9 @@ import warningImg from '../../../assets/icons/icon_warning.svg'
 function OrientedSignUpPage() {
 
   	const navigate = useNavigate();
-	const {postStudent,errorSignUpObject}=usePost()
+	const {postStudent,errorSignUpObject}=usePost();
+	const {getAllStudentsList}=useGet();
+
   	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
@@ -40,19 +43,7 @@ function OrientedSignUpPage() {
 })
   
 
-  const getAllStudents = async () => {
-    try {
-      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
-      const json = await response.data;
-	  console.log(json);
-      const lastUserId = json[json.length-1].id;
-      setTimeout(() => {
-        navigate(`/orientados/${lastUserId}`);
-      }, 1000);
-    } catch (err) {
 
-console.log(err);	}
-  };
 
 
 
@@ -84,8 +75,9 @@ console.log(err);	}
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:(data)=>postStudent(data)
+	onSubmit:(data)=>{postStudent(data)}
   })
+  getAllStudentsList()
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
