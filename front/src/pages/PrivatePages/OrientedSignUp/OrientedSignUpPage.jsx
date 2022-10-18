@@ -12,6 +12,8 @@ import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
 import usePost from '../hooks/usePost';
+import warningImg from '../../../assets/icons/icon_warning.svg'
+
 
 
 function OrientedSignUpPage() {
@@ -85,7 +87,7 @@ console.log(err);	}
 	onSubmit:(data)=>postStudent(data)
   })
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
@@ -100,14 +102,17 @@ console.log(err);	}
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
-					{
-
-					}
+					{ errorSignUpObject.avatar?.msg !=undefined ? (
+						<div className='text-red-500 flex mt-2 w-20 mobile:w-48'>
+								<img src={warningImg} className='w-5' alt="warning" />
+								<p className='ml-2'>{errorSignUpObject.avatar?.msg}</p>
+							</div>
+						) : null}
 				</div>
 
 
-				<div className='tablet:grow'>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+				<div className='grow'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Nombre y Apellido'
 							name='fullName'
@@ -127,7 +132,7 @@ console.log(err);	}
 							errorPost={errorSignUpObject.email?.msg}
 						/>
 					</div>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Teléfono'
 							name='phoneNumber'
@@ -151,8 +156,8 @@ console.log(err);	}
 			<section className='mt-4'>
 				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
 				<div>
-					<div className='flex gap-4 mobile:flex-col'>
-						<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-4 flex-col'>
+						<div className='flex gap-3 flex-col tablet:flex-row'>
 							<TextInput
 								label='Número de DNI'
 								name='dni'
@@ -173,7 +178,7 @@ console.log(err);	}
 							/>
 						</div>
 					</div>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Colegio'
 							name='school'

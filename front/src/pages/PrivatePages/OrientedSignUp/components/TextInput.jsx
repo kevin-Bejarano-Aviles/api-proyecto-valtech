@@ -5,7 +5,7 @@ function TextInput ({ errorPost=null,error,label, ...props })  {
       <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>
         <label htmlFor={props.name} className='text-sm'>{label}</label>
         <input
-          className={`mobile:w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${error || errorPost ? 'border-red-500' : ''} focus:outline-green`} 
+          className={`w-full tablet:max-w-[320px] p-2 h-10 rounded-lg border-2 ${error || errorPost ? 'border-red-500' : ''} focus:outline-green`} 
           onChange={props.onChange}
           values={props.values}
           {...props}
