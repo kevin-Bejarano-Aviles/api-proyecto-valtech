@@ -98,12 +98,12 @@ console.log(err);	}
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
 			<div className='flex flex-col gap-4 tablet:flex-row'>
 			
-				<div className='flex mobile:flex-col'>
+				<div className='flex flex-col'>
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
 					{ errorSignUpObject.avatar?.msg !=undefined ? (
-						<div className='text-red-500 flex mt-2 w-20 mobile:w-48'>
+						<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
 								<img src={warningImg} className='w-5' alt="warning" />
 								<p className='ml-2'>{errorSignUpObject.avatar?.msg}</p>
 							</div>
@@ -154,7 +154,7 @@ console.log(err);	}
 			  </div>
             </section>
 			<section className='mt-4'>
-				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
+				<h2 className='text-2xl font-medium mb-5'>02. Datos personales</h2>
 				<div>
 					<div className='flex gap-4 flex-col'>
 						<div className='flex gap-3 flex-col tablet:flex-row'>
