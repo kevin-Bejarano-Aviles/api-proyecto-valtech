@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Context from "../../../context/Context";
 
-function useLoginAdmin (URI){
+function useLoginAdmin (){
+    const url=process.env.REACT_APP_API_URL;
+    const baseUrl =`${url}/admin/auth/login`;
     const navigate = useNavigate();
     const {logIn} = useContext(Context);
     const login = ()=>{
@@ -12,7 +14,7 @@ function useLoginAdmin (URI){
   }
     const [error, setErrorrMessage] = useState(null);
     const postAdmin = async (data)=>{
-        await axios.post(URI,{
+        await axios.post(baseUrl,{
               email:data.email,
               pass:data.pass,
             })

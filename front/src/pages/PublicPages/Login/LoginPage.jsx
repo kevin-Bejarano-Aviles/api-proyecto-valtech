@@ -11,15 +11,13 @@ import Button from '../../PrivatePages/sharedPrivateComponents/button/Button';
 import warningImg from '../../../assets/icons/icon_warning.svg'
 import ilustration from '../../../assets/ilustration/login/ilustration.svg';
 import title from '../../../assets/logo/vnegro.svg'
-import Context from '../../../context/Context';
 import useLoginAdmin from '../hooks/useLoginAdmin';
 
 function LoginPage() {
 
   const [errorMessage,setErrorrMessage]=useState('')
 
-  const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/auth/login`
+  
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
@@ -34,7 +32,7 @@ function LoginPage() {
     }
   },[errorMessage]);
 
-  const {postAdmin,error}=useLoginAdmin(baseUrl)
+  const {postAdmin,error}=useLoginAdmin()
 
   const deskTopviewIlustration='laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center'
   const deskTopviewForm='laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20'
@@ -62,7 +60,7 @@ function LoginPage() {
         validationSchema={DisplayingErrorMessagesSchema}
         onSubmit={(data)=>postAdmin(data)}
         >
-          {(errors) =>(
+        {(errors) =>(
       <Form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} >
         <h2 className='text-3xl	font-bold mb-8 text-zinc-600'>Ingresá a tu portal</h2>
         <label className='flex flex-col mt-2 mb-5'>
