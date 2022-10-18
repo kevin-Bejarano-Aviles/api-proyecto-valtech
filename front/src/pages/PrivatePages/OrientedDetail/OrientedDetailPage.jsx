@@ -1,18 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import {
-  useParams,
- 
- 
-  Link,
-  useNavigate,
-} from 'react-router-dom';
-=======
 import { useState } from 'react';
 import { useEffect } from 'react';
 import {useParams,Link,useNavigate} from 'react-router-dom';
->>>>>>> serrano-DEVJ1-81/refactoriza-codigo-con-formik-y-yup
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
