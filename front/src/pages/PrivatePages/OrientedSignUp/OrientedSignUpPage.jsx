@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Formik, Form, Field ,ErrorMessage, useField, useFormik} from 'formik';
+import {useFormik} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -100,8 +100,11 @@ console.log(err);	}
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
-					
+					{
+
+					}
 				</div>
+
 
 				<div className='tablet:grow'>
 					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
@@ -157,7 +160,7 @@ console.log(err);	}
 								onChange={handleChange}
 								values={values.dni}
 								error={errors.dni}
-
+								errorPost={errorSignUpObject.dni?.msg}
 								
 							/>
 							<TextInput
@@ -210,6 +213,7 @@ console.log(err);	}
 						onChange={handleChange}
 						values={values.user}
 						error={errors.user}
+						errorPost={errorSignUpObject.user?.msg}
 					/>
 					<TextInput
 						label='Contraseña'
