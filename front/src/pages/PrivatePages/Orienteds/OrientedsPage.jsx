@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import {React, UseState, useContext,useEffect} from 'react';
 import axios from 'axios';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
@@ -10,9 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
-import { useState } from 'react';
 import Context from '../../../context/Context';
-import { Link, useNavigate } from 'react-router-dom';
+
 
 
 //see orientedList

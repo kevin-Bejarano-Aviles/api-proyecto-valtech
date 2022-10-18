@@ -6,6 +6,7 @@
     },
     "extends": [
         "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
         "airbnb",
         "prettier"
     ],
@@ -19,6 +20,7 @@
         "prettier"
     ],
     "rules": {
-        "singleQuote": "off"
+        "singleQuote": "off",
+        "react/react-in-jsx-scope": "off"
     }
 }

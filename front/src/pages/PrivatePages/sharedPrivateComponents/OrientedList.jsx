@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import React from 'react';
-<<<<<<< HEAD
-
-=======
 import { useState } from 'react';
-// import { useState } from 'react-router-dom';
->>>>>>> serrano-DEVJ1-81/refactoriza-codigo-con-formik-y-yup
->>>>>>> develop
 import Oriented from './Oriented';
 
 function OrientedList({ asignOriented = false, users }) {

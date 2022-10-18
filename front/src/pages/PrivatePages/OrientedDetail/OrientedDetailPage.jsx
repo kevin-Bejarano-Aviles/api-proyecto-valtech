@@ -1,12 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {
-  useParams,
- 
- 
-  Link,
-  useNavigate,
-} from 'react-router-dom';
+import {useParams , Link, useNavigate} from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';

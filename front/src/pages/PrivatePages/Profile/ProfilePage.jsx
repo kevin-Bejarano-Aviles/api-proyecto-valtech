@@ -1,3 +1,4 @@
+import React from 'react';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import ProfilePictureHeader from '../../../assets/admins/ProfilePictureHeader.svg';
