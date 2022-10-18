@@ -12,8 +12,7 @@ import warningImg from '../../../assets/icons/icon_warning.svg'
 import ilustration from '../../../assets/ilustration/login/ilustration.svg';
 import title from '../../../assets/logo/vnegro.svg'
 import Context from '../../../context/Context';
-
-
+import useLoginAdmin from '../hooks/useLoginAdmin';
 
 function LoginPage() {
 
@@ -21,18 +20,11 @@ function LoginPage() {
 
   const url=process.env.REACT_APP_API_URL
   const baseUrl =`${url}/admin/auth/login`
-  const navigate = useNavigate();
-  const {logIn} = useContext(Context);
-  const login = ()=>{
-    logIn()
-    navigate('/login',{replace:true})
-  }
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
     })
-
-
+    
   useEffect(() => {
     if(errorMessage){
       const timer=setTimeout(()=>{
@@ -42,7 +34,7 @@ function LoginPage() {
     }
   },[errorMessage]);
 
-
+  const {postAdmin,error}=useLoginAdmin(baseUrl)
 
   const deskTopviewIlustration='laptop:static laptop:bg-graybackground laptop:h-screen laptop:w-3/5 laptop:flex laptop:flex-col laptop:justify-center'
   const deskTopviewForm='laptop:drop-shadow-none laptop:backdrop-blur-none laptop:bg-transparent laptop:flex laptop:flex-col laptop:justify-center laptop:items-start laptop:h-screen laptop:w-4/5 laptop:ml-20'
@@ -68,21 +60,7 @@ function LoginPage() {
           pass:'',
         }}
         validationSchema={DisplayingErrorMessagesSchema}
-        onSubmit={  async (data)=>{
-          await axios.post(baseUrl,{
-                email:data.email,
-                pass:data.pass,
-              })
-              .then(response=>{
-                console.log(response.data.data.admin);
-                // login();
-                // localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
-              })
-              .catch(error => {
-                console.log(error);
-                setErrorrMessage(error.response.data.message)
-              })
-        }}
+        onSubmit={(data)=>postAdmin(data)}
         >
           {(errors) =>(
       <Form className={`flex flex-col items-center h-screen justify-center	z-0 bg-white bg-opacity-40 backdrop-blur-md rounded drop-shadow-lg ${deskTopviewForm} ${tabletviewsForm}`} >
@@ -117,10 +95,10 @@ function LoginPage() {
        </ErrorMessage>
 
         {
-            errorMessage &&
+            error &&
             <div className={`flex text-red-500`}>
             <img className='mr-2' src={warningImg} alt=''/>
-            <p className='font-bold tablet:font-normal'>{errorMessage}</p>
+            <p className='font-bold tablet:font-normal'>{error}</p>
         </div>
         }
         
