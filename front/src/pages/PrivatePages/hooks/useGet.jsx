@@ -6,24 +6,6 @@ import axios from "axios";
 function useGet(){
     const [listStudent,setListStudent]=useState([]);
     const [loading,setLoading]=useState('pending')
-    // const [studentDeatil, setStudentDeatil] = useState({
-    //     Adviser: null,
-    //     address: "Calle falsa 123",
-    //     adviserId: null,
-    //     age: 22,
-    //     avatar: "student1.jpg",
-    //     createdAt: "2022-10-17T2:4:54.000Z",
-    //     dni: 40124214,
-    //     email: "lautaroCoria@gmail.com",
-    //     fullName: "Lautaro Coria",
-    //     id: 1,
-    //     motive: "Para mejorar",
-    //     phoneNumber: 1123415321,
-    //     program: "Orientación vocacional",
-    //     school: "Arbusta",
-    //     updatedAt: "2022-10-17T20:41:54.000Z",
-    //     user: "40124214"
-    // });
     const [studentDeatil, setStudentDeatil] = useState();
     const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('')
     const url=process.env.REACT_APP_API_URL;
