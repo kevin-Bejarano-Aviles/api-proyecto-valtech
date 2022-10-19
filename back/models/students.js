@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Students extends Model {
     /**
@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Students.belongsTo(models.Advisers,{
-        foreignKey:'adviserId',
-        targetKey:'id'
+      Students.belongsTo(models.Advisers, {
+        foreignKey: 'adviserId',
+        targetKey: 'id',
 
-      })
-      Students.belongsToMany(models.Events,{
-        through:models.Students_events
-      })
+      });
+      Students.belongsToMany(models.Events, {
+        through: models.Students_events,
+      });
       // define association here
     }
   }
@@ -34,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
     motive: DataTypes.STRING(500),
     user: DataTypes.STRING(45),
     password: DataTypes.STRING(500),
-    adviserId: DataTypes.INTEGER
-  },{
+    adviserId: DataTypes.INTEGER,
+  }, {
     sequelize,
-    defaultScope:{
-      attributes:{exclude:['password']}
-    }
+    defaultScope: {
+      attributes: { exclude: ['password'] },
+    },
   }, {
     sequelize,
     modelName: 'Students',
