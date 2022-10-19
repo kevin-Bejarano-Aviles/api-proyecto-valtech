@@ -12,6 +12,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
     formik.values.adviser_event_id = idAdviserSelected.toString();
   };
 
+
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='text-sm'>{label}</label>
@@ -19,28 +20,29 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
         <div
           name={name}
           id={name}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          // value={formik.values.adviser_event_id}
-          className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
+          className={`${selectedAdviser === null ? 'text-lightgray' : ''} mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
           onClick={onChangeInputVisibility}
+          tabIndex='0'
+          onBlur={formik.handleBlur}
         >
-          <p className={`${selectedAdviser === null ? 'text-lightgray' : ''}`}>{selectedAdviser || 'Seleccionar orientador'}</p>
+          {selectedAdviser || 'Seleccionar orientador'}
         </div>
         <img src={iconSearch} alt='' className='px-2' />
       </div>
       <ul className={`absolute top-[72px] z-10 list-none w-full h-[120px] overflow-x-auto rounded-lg border-2 shadow-lg ${areInputVisible.adviser_event_id ? '' : 'hidden'}`}>
         {adviserObjectList.map(adviser => (
-            <li
-              key={adviser.id}
-              className={`${adviser.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3 truncate cursor-pointer hover:font-bold hover:text-green`}
-              onClick={event => {
-                handleChangeSelectedAdviser(event);
-                handleChangeFormikValue(adviser.id);
-              }}
-            >
-              {adviser.fullName}
-            </li>
+          <li
+            key={adviser.id}
+            id={adviser.id}
+            className={`${adviser.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3 truncate cursor-pointer hover:font-bold hover:text-green`}
+            onClick={event => {
+              handleChangeSelectedAdviser(event);
+              handleChangeFormikValue(adviser.id);
+              formik.handleBlur(event);
+            }}
+          >
+            {adviser.fullName}
+          </li>
         ))}
       </ul>
       {formik.touched.adviser_event_id && formik.errors.adviser_event_id ? (
