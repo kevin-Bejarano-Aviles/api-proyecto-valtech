@@ -9,8 +9,8 @@ function useLoginAdmin (){
     const navigate = useNavigate();
     const {logIn} = useContext(Context);
     const login = ()=>{
-    logIn()
-    navigate('/login',{replace:true})
+      logIn()
+      navigate('/login',{replace:true})
   }
     const [error, setErrorrMessage] = useState(null);
     const postAdmin = async (data)=>{

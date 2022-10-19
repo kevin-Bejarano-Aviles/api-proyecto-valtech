@@ -12,7 +12,7 @@ import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
 import usePost from '../hooks/usePost';
-import useGet from '../hooks/useGet';
+import functions from '../functions/redirectionDetailStudent'
 import warningImg from '../../../assets/icons/icon_warning.svg'
 
 
@@ -86,7 +86,10 @@ console.log(err);	}
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:(data)=>postStudent(data)
+	onSubmit:(data)=>{
+		postStudent(data)
+		
+	}
   })
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
