@@ -4,44 +4,26 @@ import React, {
   useState
 } from 'react';
 import axios from 'axios';
+import useGet from '../hooks/useGet';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import Context from '../../../context/Context';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 
 
 // see orientedList
 function Orienteds() {
-  const navigate = useNavigate();
-
-  const { logOut } = useContext(Context);
-
-  const [usersList, setUsers] = useState([]);
-
+  const {getAllStudentsList,listStudent}=useGet()
   const [search, SetSearch] = useState('');
-
   const [showAll, setShowAll] = useState(true);
 
-  const login = () => {
-    logOut();
-    navigate('/login', { replace: true });
-  };
-  const getAll = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:8000/admin/students/',
-        { withCredentials: true }
-      );
-      setUsers(response.data.data.students);
-    } catch (error) {
-      login();
-    }
-  };
   const handleSearch = (event) => {
     // If the input is empty, show one that meets the criteria. Otherwise, the message was not found.
+    console.log(event.target.value);
     SetSearch(event.target.value);
     if (search.length > 1) {
       setShowAll(false);
@@ -51,12 +33,12 @@ function Orienteds() {
   };
 
   useEffect(() => {
-    getAll();
+    getAllStudentsList();
   });
 
-  const users = showAll
-    ? usersList
-    : usersList.filter((user) =>
+  const studentsListShow = showAll
+    ? listStudent
+    : listStudent.filter((user) =>
         user.fullName.toLowerCase().includes(search.toLowerCase())
       );
 
@@ -84,7 +66,7 @@ function Orienteds() {
               placeholder="Buscar orientado por nombre y apellido"
               handleChange={handleSearch}
             />
-            <OrientedList asignOriented users={users} />
+            <OrientedList asignOriented users={studentsListShow} />
           </div>
         </main>
       </div>

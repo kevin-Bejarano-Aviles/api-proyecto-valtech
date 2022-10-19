@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useGet from '../hooks/useGet';
 import Button from '../sharedPrivateComponents/button/Button';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -13,32 +14,10 @@ function HomePage() {
   const baseUrl =`${url}/admin/students`
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
-
-  const navigate = useNavigate();
-
-  const { logOut } = useContext(Context);
-
-  const [users, setUsers] = useState([]);
-
-  const login = () => {
-    logOut();
-    navigate('/login', { replace: true });
-  };
-  const getAll = async () => {
-    try {
-      const response = await axios.get(
-        baseUrl,
-        { withCredentials: true }
-      );
-      setUsers(response.data.data.students);
-      console.log(response);
-    } catch (error) {
-      login();
-    }
-  };
+  const {getAllStudentsList,listStudent}=useGet()
 
   useEffect(() => {
-    getAll();
+    getAllStudentsList();
   },[]);
 
   return (
@@ -55,7 +34,7 @@ function HomePage() {
               <Button type='button' name='Ingresar orientado' />
             </Link>
           </div>
-          <OrientedList users={users} />
+          <OrientedList users={listStudent} />
           <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>
               Novedades

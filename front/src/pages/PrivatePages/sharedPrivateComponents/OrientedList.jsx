@@ -1,13 +1,8 @@
 import React from 'react';
-<<<<<<< HEAD
-
-=======
 import { useState } from 'react';
-// import { useState } from 'react-router-dom';
->>>>>>> serrano-DEVJ1-81/refactoriza-codigo-con-formik-y-yup
 import Oriented from './Oriented';
 
-function OrientedList({ asignOriented = false, users }) {
+function OrientedList({ users }) {
   const [seeMore, setSeeMore] = useState(false);
 
   return (
@@ -19,13 +14,13 @@ function OrientedList({ asignOriented = false, users }) {
               index <= 8 ? (
                 <Oriented
                   info={user}
-                  asignOriented={asignOriented}
+                  asignOriented={user.adviserId}
                   key={user.id}
                 />
               ) : seeMore ? (
                 <Oriented
                   info={user}
-                  asignOriented={asignOriented}
+                  asignOriented={user.adviserId}
                   key={user.id}
                 />
               ) : (
@@ -33,7 +28,7 @@ function OrientedList({ asignOriented = false, users }) {
               )
             )}
       </ul>
-      {!asignOriented && (
+      {users.length !== 0 && (
         <div className='max-w-max'>
           <span
             className='ml-2 h-4 max-w-max underline cursor-pointer'

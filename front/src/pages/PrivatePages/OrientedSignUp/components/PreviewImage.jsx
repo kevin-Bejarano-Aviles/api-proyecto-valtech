@@ -21,7 +21,7 @@ function PreviewImage({file,change}) {
 				onChange={change}
                 ref={fileInputRef}
 			/> 
-        <div className='relative mobile:w-[96px]'
+        <div className='relative w-[96px] mr-5'
              onClick={(e)=>{
             e.preventDefault();
            fileInputRef.current.click() 

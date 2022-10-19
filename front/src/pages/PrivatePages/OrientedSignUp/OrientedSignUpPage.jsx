@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Formik, Form, Field ,ErrorMessage, useField, useFormik} from 'formik';
+import {useFormik} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -11,14 +11,14 @@ import TextArea from './components/TextArea';
 import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
-
+import usePost from '../hooks/usePost';
+import warningImg from '../../../assets/icons/icon_warning.svg'
 
 function OrientedSignUpPage() {
-	const [errorList,setErrorList]=useState(null)
-  const url=process.env.REACT_APP_API_URL
-  const navigate = useNavigate();
 
-  const validationSchemaForm=Yup.object({
+	const {postStudent,errorSignUpObject}=usePost();
+
+  	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
     .max(500,'')
@@ -37,23 +37,6 @@ function OrientedSignUpPage() {
 	avatar:Yup.mixed().required('Es requerido'),
 })
   
-
-  const getAllStudents = async () => {
-    try {
-      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
-      const json = await response.data;
-	  console.log(json);
-      const lastUserId = json[json.length-1].id;
-      setTimeout(() => {
-        navigate(`/orientados/${lastUserId}`);
-      }, 1000);
-    } catch (err) {
-
-console.log(err);	}
-  };
-
-
-
   // Function to change the background color of the input elements.
   const changeBackgroundColor = e => {
     if (e.target.value) {
@@ -68,39 +51,27 @@ console.log(err);	}
   const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
 	initialValues:{
 		fullName: 'Maria garcia',
-		email: 'Maria.garcia2@gmail.com',
+		email: 'Maria.garcie2@gmail.com',
 		phoneNumber: '01162386020',
 		program: 'Orientacion vocacional',
-		dni: '18456389',
+		dni: '18456309',
 		age: '21',
 		school: 'Nuestra señora del valle',
 		address: 'Av. Córdoba 24454 piso 6 dpto C, CABA',
 		motive: 'Necesita orientación para elegir una carrera5.',
-		user: '18456389',
+		user: '18456309',
 		pass: '12345677',
 		confirmPass: '12345677',
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:async (data) => {
-		try {
-		  let options = {
-			  method: 'POST',
-			  headers: { 'Content-Type': 'multipart/form-data' },
-			  withCredentials: true,
-			  data: data
-		  };
-		  const response = await axios(`${url}/admin/students`, options);
-		  getAllStudents()
-		} catch (err) {
-		console.log(err.response.data.response.errors);
-		}
-	  }
-	
+	onSubmit:(data)=>{
+		postStudent(data)
+		
+	}
   })
-
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
@@ -111,15 +82,21 @@ console.log(err);	}
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
 			<div className='flex flex-col gap-4 tablet:flex-row'>
 			
-				<div className='flex mobile:flex-col'>
+				<div className='flex flex-col'>
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
-					
+					{ errorSignUpObject.avatar?.msg !=undefined ? (
+						<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
+								<img src={warningImg} className='w-5' alt="warning" />
+								<p className='ml-2'>{errorSignUpObject.avatar?.msg}</p>
+							</div>
+						) : null}
 				</div>
 
-				<div className='tablet:grow'>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+
+				<div className='grow'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Nombre y Apellido'
 							name='fullName'
@@ -136,9 +113,10 @@ console.log(err);	}
 							onChange={handleChange}
 							values={values.email}
 							error={errors.email}
+							errorPost={errorSignUpObject.email?.msg}
 						/>
 					</div>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Teléfono'
 							name='phoneNumber'
@@ -160,10 +138,10 @@ console.log(err);	}
 			  </div>
             </section>
 			<section className='mt-4'>
-				<h2 className='text-2xl font-medium'>02. Datos personales</h2>
+				<h2 className='text-2xl font-medium mb-5'>02. Datos personales</h2>
 				<div>
-					<div className='flex gap-4 mobile:flex-col'>
-						<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-4 flex-col'>
+						<div className='flex gap-3 flex-col tablet:flex-row'>
 							<TextInput
 								label='Número de DNI'
 								name='dni'
@@ -171,7 +149,7 @@ console.log(err);	}
 								onChange={handleChange}
 								values={values.dni}
 								error={errors.dni}
-
+								errorPost={errorSignUpObject.dni?.msg}
 								
 							/>
 							<TextInput
@@ -184,7 +162,7 @@ console.log(err);	}
 							/>
 						</div>
 					</div>
-					<div className='flex gap-3 mobile:flex-col tablet:flex-row'>
+					<div className='flex gap-3 flex-col tablet:flex-row'>
 						<TextInput
 							label='Colegio'
 							name='school'
@@ -224,6 +202,7 @@ console.log(err);	}
 						onChange={handleChange}
 						values={values.user}
 						error={errors.user}
+						errorPost={errorSignUpObject.user?.msg}
 					/>
 					<TextInput
 						label='Contraseña'
