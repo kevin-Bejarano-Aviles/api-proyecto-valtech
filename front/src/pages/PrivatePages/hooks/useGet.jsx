@@ -2,22 +2,29 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-// const getAllStudents = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8000/admin/students', { withCredentials: true });
-//       const response = await axios.get(`${url}/admin/addStudents`, { withCredentials: true });
-//       const json = await response.data;
-//       const lastUserId = json[json.length-1].id;
-//       setTimeout(() => {
-//         navigate(`/orientados/${lastUserId}`);
-//       }, 1000);
-//     } catch (err) {
-//       console.error(`${err.response.status}: ${err.response.statusText}`);
-//     }
-//   };
 
 function useGet(){
-    const [listStudent,setListStudent]=useState([])
+    const [listStudent,setListStudent]=useState([]);
+    const [loading,setLoading]=useState('pending')
+    // const [studentDeatil, setStudentDeatil] = useState({
+    //     Adviser: null,
+    //     address: "Calle falsa 123",
+    //     adviserId: null,
+    //     age: 22,
+    //     avatar: "student1.jpg",
+    //     createdAt: "2022-10-17T2:4:54.000Z",
+    //     dni: 40124214,
+    //     email: "lautaroCoria@gmail.com",
+    //     fullName: "Lautaro Coria",
+    //     id: 1,
+    //     motive: "Para mejorar",
+    //     phoneNumber: 1123415321,
+    //     program: "Orientación vocacional",
+    //     school: "Arbusta",
+    //     updatedAt: "2022-10-17T20:41:54.000Z",
+    //     user: "40124214"
+    // });
+    const [studentDeatil, setStudentDeatil] = useState();
     const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('')
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin/students`;
@@ -31,39 +38,36 @@ function useGet(){
                 ,"x-token":`Bearer ${token}`},
             };
             const response = await axios(baseUrl,options)
-            setListStudent(response.data.data.students)
+            setListStudent(response.data?.data.students)
         }
         catch(err){
             console.log(err);
         }
     }
 
-    // const redirectionDetailStudent = async () => {
-    //     let navigate = useNavigate();
-    //     try{
-    //         let options = {
-    //             method: 'GET',
-    //             headers: { 'Content-Type': 'multipart/form-data'
-    //             ,"x-token":`Bearer ${token}`},
-    //         };
-    //         const response = await axios(baseUrl,options)
-    //         setListStudent(response.data.data.students)
-    //         const detailStudent=await response.data.data.students;
-    //         const lastUserId = detailStudent[detailStudent.length-1].id;
-    //         setTimeout(() => {
-    //             navigate(`/orientados/${lastUserId}`);
-    //           },8000);
-    //     }
-    //     catch(err){
-    //         console.log(err);
-    //     }
-    // }
+    const getOneStudent = async(id)=>{
+       try{
+            let options = {
+                method: 'GET',
+                headers: { 'Content-Type': 'multipart/form-data'
+                ,"x-token":`Bearer ${token}`},
+            };
+            const response = await axios(`${baseUrl}/${id}`,options)
+            setStudentDeatil(response.data?.data.student)
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+    
 
     return{
         getAllStudentsList,
-        listStudent
+        getOneStudent,
+        listStudent,
+        studentDeatil
     }
-
 }
+
 
 export default useGet;

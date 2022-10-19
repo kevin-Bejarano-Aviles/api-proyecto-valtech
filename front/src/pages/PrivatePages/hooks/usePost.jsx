@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import functions from '../functions/redirectionDetailStudent'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 
@@ -16,7 +15,6 @@ function usePost(){
     let token=localStorage.getItem('token')
 
     const redirectionDetailStudent = async () => {
-      console.log('se esta redireccionando');
       try{
           let options = {
               method: 'GET',

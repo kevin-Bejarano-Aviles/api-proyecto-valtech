@@ -12,14 +12,10 @@ import TextInput from './components/TextInput';
 import Select from './components/Select';
 import programs from './programs.json';
 import usePost from '../hooks/usePost';
-import functions from '../functions/redirectionDetailStudent'
 import warningImg from '../../../assets/icons/icon_warning.svg'
-
-
 
 function OrientedSignUpPage() {
 
-  	const navigate = useNavigate();
 	const {postStudent,errorSignUpObject}=usePost();
 
   	const validationSchemaForm=Yup.object({
@@ -41,23 +37,6 @@ function OrientedSignUpPage() {
 	avatar:Yup.mixed().required('Es requerido'),
 })
   
-
-  const getAllStudents = async () => {
-    try {
-      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
-      const json = await response.data;
-	  console.log(json);
-      const lastUserId = json[json.length-1].id;
-      setTimeout(() => {
-        navigate(`/orientados/${lastUserId}`);
-      }, 1000);
-    } catch (err) {
-
-console.log(err);	}
-  };
-
-
-
   // Function to change the background color of the input elements.
   const changeBackgroundColor = e => {
     if (e.target.value) {
