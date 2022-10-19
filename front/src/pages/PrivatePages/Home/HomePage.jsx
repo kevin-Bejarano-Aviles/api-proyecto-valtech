@@ -14,10 +14,6 @@ function HomePage() {
   const baseUrl =`${url}/admin/students`
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
-
-  const navigate = useNavigate();
-
-  const { logOut } = useContext(Context);
   const {getAllStudentsList,listStudent}=useGet()
 
   useEffect(() => {
