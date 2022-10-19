@@ -28,7 +28,7 @@ function OrientedList({ users }) {
               )
             )}
       </ul>
-      {(
+      {users.length !== 0 && (
         <div className='max-w-max'>
           <span
             className='ml-2 h-4 max-w-max underline cursor-pointer'
