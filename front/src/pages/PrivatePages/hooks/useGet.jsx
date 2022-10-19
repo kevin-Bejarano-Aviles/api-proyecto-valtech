@@ -37,7 +37,6 @@ function useGet(){
             };
             const response = await axios(`${baseUrl}/${id}`,options)
             setStudentDetail(response.data?.data.student)
-            console.log(response.data?.data.student.avatar);
         }
         catch(err){
             console.log(err);
