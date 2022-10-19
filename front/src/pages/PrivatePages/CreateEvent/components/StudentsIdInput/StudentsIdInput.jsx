@@ -19,12 +19,12 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
     }
   };
 
-  const handleChangeInputValue = () => {
+  const handleChangeFormikValue = () => {
     formik.values.studentsId = selectedStudents.ids;
   };
 
   useEffect(() => {
-    handleChangeInputValue();
+    handleChangeFormikValue();
   },[selectedStudents]);
 
   return (
@@ -40,7 +40,7 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
           className='mobile:w-full tablet:max-w-[320px] pl-3 text-sm appearance-none select-none truncate'
           onClick={onChangeInputVisibility}
         >
-          <p className={`${selectedStudents.ids.length === 0 ? 'text-lightgray' : ''} truncate`}>{selectedStudents.ids.length === 0 ? 'Seleccionar orientados' : selectedStudents.names.join(', ')}</p>
+          <p className={`${selectedStudents.ids.length === 0 ? 'text-lightgray' : ''} truncate`}>{selectedStudents.ids.length === 0 ? 'Seleccionar orientado' : selectedStudents.names.join(', ')}</p>
         </div>
         <img src={iconSearch} alt='' className='px-2' />
       </div>

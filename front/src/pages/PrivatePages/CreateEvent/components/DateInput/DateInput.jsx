@@ -13,12 +13,12 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
     setSelectedDate(`${selectedDay}/${selectedMonth}/${selectedYear}`);
   };
 
-  const handleChangeInputValue = () => {
+  const handleChangeFormikValue = () => {
     formik.values.date = selectedDate;
   };
 
   useEffect(() => {
-    handleChangeInputValue();
+    handleChangeFormikValue();
   },[selectedDate]);
 
   return (

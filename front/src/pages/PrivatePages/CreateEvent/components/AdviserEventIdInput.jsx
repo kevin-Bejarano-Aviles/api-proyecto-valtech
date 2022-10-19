@@ -8,7 +8,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
     setSelectedAdviser(event.target.innerText);
   };
 
-  const handleChangeInputValue = idAdviserSelected => {
+  const handleChangeFormikValue = idAdviserSelected => {
     formik.values.adviser_event_id = idAdviserSelected.toString();
   };
 
@@ -25,7 +25,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
           className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
           onClick={onChangeInputVisibility}
         >
-          <p className={`${selectedAdviser === null ? 'text-lightgray' : ''}`}>{selectedAdviser || 'Selecciona orientador'}</p>
+          <p className={`${selectedAdviser === null ? 'text-lightgray' : ''}`}>{selectedAdviser || 'Seleccionar orientador'}</p>
         </div>
         <img src={iconSearch} alt='' className='px-2' />
       </div>
@@ -36,7 +36,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
               className={`${adviser.id % 2 === 0 ? 'bg-bgStudents' : 'bg-white'} h-10 flex items-center gap-3 pl-3 truncate cursor-pointer hover:font-bold hover:text-green`}
               onClick={event => {
                 handleChangeSelectedAdviser(event);
-                handleChangeInputValue(adviser.id);
+                handleChangeFormikValue(adviser.id);
               }}
             >
               {adviser.fullName}

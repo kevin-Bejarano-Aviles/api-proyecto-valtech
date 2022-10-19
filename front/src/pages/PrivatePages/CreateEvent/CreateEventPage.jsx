@@ -9,39 +9,12 @@ import AdviserEventIdInput from './components/AdviserEventIdInput';
 import StudentsIdInput from './components/StudentsIdInput/StudentsIdInput';
 import DateInput from './components/DateInput/DateInput';
 import TimeInput from './components/TimeInput/TimeInput';
+import DurationInput from './components/DurationInput';
+import DetailInput from './components/DetailInput';
 import './CreateEventPage.css';
 
-const MySelect = ({ label, ...props }) => {
-  return (
-    <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <select
-        className='h-10 rounded-lg border-2 focus:outline-green'
-      />
-      {/* {meta.touched && meta.error ? (
-        <div className='text-red-500'>{meta.error}</div>
-      ) : null} */}
-    </div>
-  );
-};
-
-const MyTextarea = ({ label, ...props }) => {
-  return (
-    <>
-      <label htmlFor={props.name} className='text-sm'>{label}</label>
-      <textarea
-        cols='60'
-        rows='5'
-        className='block rounded-lg border-2 focus:outline-green'
-      />
-      {/* {meta.touched && meta.error ? (
-        <div className='text-red-500'>{meta.error}</div>
-      ) : null} */}
-    </>
-  );
-};
-
 function CreateEventPage() {
+  const url = process.env.REACT_APP_API_URL;
   const [studentObjectList, setStudentObjectList] = useState([]);
   const [adviserObjectList, setAdviserObjectList] = useState([]);
   const [areInputVisible, setAreInputVisible] = useState({
@@ -51,8 +24,6 @@ function CreateEventPage() {
     time: false,
     duration: false
   });
-  const valuesForDurationInput = ['00:15', '00:30', '00:45', '01:00', '01:15', '01:30', '01:45', '02:00', '02:15', '02:30', '02:45', '03:00', '03:15', '03:30', '03:45', '04:00', '04:15', '04:30', '04:45', '05:00', '05:15', '05:30', '05:45', '06:00', '06:15', '06:30', '06:45', '07:00', '07:15', '07:30', '07:45', '08:00'];
-  const url = process.env.REACT_APP_API_URL;
 
   const getAllAdvisers = async () => {
     try {
@@ -95,8 +66,8 @@ function CreateEventPage() {
       studentsId: Yup.array().of(Yup.string()).min(1, 'Requerido'),
       date: Yup.string().required('Requerido'),
       time: Yup.string().required('Requerido'),
-      // duration: Yup.string().required('Requerido'),
-      // detail: Yup.string().required('Requerido'),
+      duration: Yup.string().required('Requerido'),
+      detail: Yup.string().required('Requerido'),
     }),
     onSubmit: values => {
       console.log(values);
@@ -192,20 +163,36 @@ function CreateEventPage() {
                   })}
                 />
 
-                <MySelect label='Duración' name='duration'>
-                  {valuesForDurationInput.map((value, index) => (
-                    <option key={index + 1} value={value}>{value}</option>
-                  ))}
-                </MySelect>
+                <DurationInput
+                  label='Duración'
+                  name='duration'
+                  areInputVisible={areInputVisible}
+                  formik={formik}
+                  onChangeInputVisibility={() => setAreInputVisible({
+                    adviser_event_id: false,
+                    studentsId: false,
+                    date: false,
+                    time: false,
+                    duration: true
+                  })}
+                />
               </div>
             </section>
             <hr />
             <section className='mt-8 mb-12'>
               <h2 className='my-4 font-medium'>03. Detalle</h2>
-              <MyTextarea
+              <DetailInput
                 label='Comentarios del evento'
                 name='detail'
-                placeholder='Escribe un comentario'
+                areInputVisible={areInputVisible}
+                formik={formik}
+                onChangeInputVisibility={() => setAreInputVisible({
+                  adviser_event_id: false,
+                  studentsId: false,
+                  date: false,
+                  time: false,
+                  duration: false
+                })}
               />
             </section>
             <button type='submit'>Enviar</button>
@@ -217,3 +204,4 @@ function CreateEventPage() {
 }
 
 export default CreateEventPage;
+
