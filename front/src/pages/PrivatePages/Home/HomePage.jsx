@@ -23,7 +23,6 @@ function HomePage() {
   useEffect(() => {
     getAllStudentsList();
   },[]);
-  console.log(listStudent);
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
