@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Oriented from './Oriented';
 
-function OrientedList({ asignOriented = false, users }) {
+function OrientedList({ users }) {
   const [seeMore, setSeeMore] = useState(false);
 
   return (
@@ -14,13 +14,13 @@ function OrientedList({ asignOriented = false, users }) {
               index <= 8 ? (
                 <Oriented
                   info={user}
-                  asignOriented={asignOriented}
+                  asignOriented={user.adviserId}
                   key={user.id}
                 />
               ) : seeMore ? (
                 <Oriented
                   info={user}
-                  asignOriented={asignOriented}
+                  asignOriented={user.adviserId}
                   key={user.id}
                 />
               ) : (
@@ -28,7 +28,7 @@ function OrientedList({ asignOriented = false, users }) {
               )
             )}
       </ul>
-      {/* {!asignOriented && (
+      {(
         <div className='max-w-max'>
           <span
             className='ml-2 h-4 max-w-max underline cursor-pointer'
@@ -50,7 +50,7 @@ function OrientedList({ asignOriented = false, users }) {
             }
            />
         </div>
-      )} */}
+      )}
     </div>
   );
 }
