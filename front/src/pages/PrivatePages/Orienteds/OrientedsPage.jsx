@@ -1,4 +1,4 @@
-import {React, UseState, useContext,useEffect} from 'react';
+import {React, useState, useContext,useEffect} from 'react';
 import axios from 'axios';
 import useGet from '../hooks/useGet';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -9,10 +9,6 @@ import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import Context from '../../../context/Context';
 
-import { Link } from 'react-router-dom';
-
-
-
 //see orientedList
 function Orienteds() {
   const {getAllStudentsList,listStudent}=useGet()
@@ -20,8 +16,6 @@ function Orienteds() {
   const [showAll, setShowAll] = useState(true);
 
   const handleSearch = (event) => {
-    // If the input is empty, show one that meets the criteria. Otherwise, the message was not found.
-    console.log(event.target.value);
     SetSearch(event.target.value);
     if (search.length > 1) {
       setShowAll(false);
