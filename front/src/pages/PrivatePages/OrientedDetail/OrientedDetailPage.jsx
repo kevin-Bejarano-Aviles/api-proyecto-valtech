@@ -26,20 +26,20 @@ function Oriented() {
 
 
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Title='Orientados' />
         
         {
           studentDeatil!=undefined ? (<main
-            className={`mobile:max-w-max mobile:mx-auto mobile:px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
+            className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
               showAlert ? 'pb-24' : 'pb-7'
             }`}
           >
             <section>
               <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
-              <div className='mobile:flex-col mobile:gap-3 tablet:flex-row tablet:gap-9 flex'>
+              <div className='flex-col gap-3 tablet:flex-row tablet:gap-9 flex'>
                 <img
                   src={
                     studentDeatil.avatar
@@ -69,7 +69,7 @@ function Oriented() {
 
             <section>
               <h2 className='mb-4 text-2xl font-bold'>02. Datos personales</h2>
-              <div className='mobile:flex-col mobile:gap-2 tablet:flex-row tablet:gap-4 flex'>
+              <div className='flex-col gap-2 tablet:flex-row tablet:gap-4 flex'>
                 <div className='flex flex-col gap-2'>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>NÚMERO DE DNI</p>
