@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-// import { useState } from 'react-router-dom';
 import Oriented from './Oriented';
 
 function OrientedList({ asignOriented = false, users }) {
@@ -29,7 +28,7 @@ function OrientedList({ asignOriented = false, users }) {
               )
             )}
       </ul>
-      {!asignOriented && (
+      {/* {!asignOriented && (
         <div className='max-w-max'>
           <span
             className='ml-2 h-4 max-w-max underline cursor-pointer'
@@ -51,7 +50,7 @@ function OrientedList({ asignOriented = false, users }) {
             }
            />
         </div>
-      )}
+      )} */}
     </div>
   );
 }

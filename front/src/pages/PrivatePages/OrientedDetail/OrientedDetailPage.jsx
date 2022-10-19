@@ -122,7 +122,8 @@ function Oriented() {
                 }`}
               />
             </Link>
-            {/* {(Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') <
+            {/* {
+              (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') <
               10000 ||
               showAlert) && (
               <Alert

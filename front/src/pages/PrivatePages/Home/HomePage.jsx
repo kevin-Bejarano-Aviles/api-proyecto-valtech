@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useGet from '../hooks/useGet';
 import Button from '../sharedPrivateComponents/button/Button';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -17,29 +18,12 @@ function HomePage() {
   const navigate = useNavigate();
 
   const { logOut } = useContext(Context);
-
-  const [users, setUsers] = useState([]);
-
-  const login = () => {
-    logOut();
-    navigate('/login', { replace: true });
-  };
-  const getAll = async () => {
-    try {
-      const response = await axios.get(
-        baseUrl,
-        { withCredentials: true }
-      );
-      setUsers(response.data.data.students);
-      console.log(response);
-    } catch (error) {
-      login();
-    }
-  };
+  const {getAllStudentsList,listStudent}=useGet()
 
   useEffect(() => {
-    getAll();
+    getAllStudentsList();
   },[]);
+  console.log(listStudent);
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -55,16 +39,16 @@ function HomePage() {
               <Button type='button' name='Ingresar orientado' />
             </Link>
           </div>
-          <OrientedList users={users} />
+          <OrientedList users={listStudent} />
           <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>
               Novedades
             </h2>
-            <div className='grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
+            {/* <div className='grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 cursor-pointer grid'>
               <CardText title='¿Usás inteligentemente tu tiempo?' />
               <CardText title='¿Estás todavía con dudas sobre qué carrera seguir?' />
               <CardText title='¿Qué querés aportar?' />
-            </div>
+            </div> */}
           </div>
         </main>
       </div>

@@ -16,7 +16,7 @@ function Oriented({ info, asignOriented = false }) {
       <div className='flex  '>
         <img
           className='w-16 h-16 rounded-full ml-[-5px] mt-[-4px] mx-1'
-          src={require(`../../../assets/students/${info.avatar}`)}
+          // src={require(`../../../assets/students/${info.avatar}`)}
           alt=''
         />
         <div className='ml-2'>
