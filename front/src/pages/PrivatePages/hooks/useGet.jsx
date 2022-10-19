@@ -35,7 +35,7 @@ function useGet(){
                 headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
             };
-            const response = await axios(`${baseUrl}/${id}`,options)
+            const response = await axios(`${baseUrl}/students/${id}`,options)
             setStudentDetail(response.data?.data.student)
         }
         catch(err){
