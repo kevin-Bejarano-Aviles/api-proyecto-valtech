@@ -21,7 +21,6 @@ function OrientedSignUpPage() {
 
   	const navigate = useNavigate();
 	const {postStudent,errorSignUpObject}=usePost();
-	const {getAllStudentsList}=useGet();
 
   	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
@@ -43,7 +42,19 @@ function OrientedSignUpPage() {
 })
   
 
+  const getAllStudents = async () => {
+    try {
+      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
+      const json = await response.data;
+	  console.log(json);
+      const lastUserId = json[json.length-1].id;
+      setTimeout(() => {
+        navigate(`/orientados/${lastUserId}`);
+      }, 1000);
+    } catch (err) {
 
+console.log(err);	}
+  };
 
 
 
@@ -61,23 +72,22 @@ function OrientedSignUpPage() {
   const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
 	initialValues:{
 		fullName: 'Maria garcia',
-		email: 'Maria.garcia2@gmail.com',
+		email: 'Maria.garcie2@gmail.com',
 		phoneNumber: '01162386020',
 		program: 'Orientacion vocacional',
-		dni: '18456389',
+		dni: '18456309',
 		age: '21',
 		school: 'Nuestra señora del valle',
 		address: 'Av. Córdoba 24454 piso 6 dpto C, CABA',
 		motive: 'Necesita orientación para elegir una carrera5.',
-		user: '18456389',
+		user: '18456309',
 		pass: '12345677',
 		confirmPass: '12345677',
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
-	onSubmit:(data)=>{postStudent(data)}
+	onSubmit:(data)=>postStudent(data)
   })
-  getAllStudentsList()
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
