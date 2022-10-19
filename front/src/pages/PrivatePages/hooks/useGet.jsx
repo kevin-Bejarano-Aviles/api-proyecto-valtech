@@ -41,7 +41,6 @@ function useGet(){
             console.log(err);
         }
     }
-    
 
     return{
         getAllStudentsList,

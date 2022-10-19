@@ -19,9 +19,7 @@ function Oriented() {
   const {getOneStudent,studentDeatil}=useGet()
 
   useEffect(()=>{
-   getOneStudent(1) 
-   { studentDeatil!=undefined &&
-    console.log(studentDeatil.id)}
+   getOneStudent(idStudent) 
   },[])
 
 
