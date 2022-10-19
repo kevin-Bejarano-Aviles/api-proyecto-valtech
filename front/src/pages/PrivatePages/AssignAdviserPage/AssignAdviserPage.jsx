@@ -85,7 +85,7 @@ function AssignAdviserPage() {
     try {
       let options = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        headers: { 'Content-Type': 'application/json; charset=utf-8', /* "x-token":`Bearer ${token}` */ },
         withCredentials: true,
         data: { ...data },
       };
