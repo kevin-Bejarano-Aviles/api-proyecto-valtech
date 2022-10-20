@@ -17,19 +17,7 @@ function LoginPage() {
 
   const [errorMessage,setErrorrMessage]=useState('')
 
-<<<<<<< HEAD
-  const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/auth/login`
-  const navigate = useNavigate();
-  const {logIn} = useContext(Context);
-  const login = ()=>{
-    logIn()
-    navigate('/login',{replace:true})
-  }
-
-=======
   
->>>>>>> origin/develop
   const DisplayingErrorMessagesSchema=Yup.object({
       email:Yup.string().email('Debe ser un email valido').required('El campo email no debe estar vacio'),
       pass:Yup.string().required('El campo contraseña no debe estar vacio'),
