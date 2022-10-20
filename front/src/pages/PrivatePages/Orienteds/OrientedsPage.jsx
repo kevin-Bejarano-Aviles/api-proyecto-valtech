@@ -9,7 +9,7 @@ import OrientedList from '../sharedPrivateComponents/OrientedList';
 
 //see orientedList
 function Orienteds() {
-  const {studentList,setStudentList}=useGet()
+  const {studentList,getAllStudents}=useGet()
   const [search, SetSearch] = useState('');
   const [showAll, setShowAll] = useState(true);
 
@@ -23,12 +23,12 @@ function Orienteds() {
   };
 
   useEffect(() => {
-    studentList();
+    getAllStudents();
   });
 
   const studentsListShow = showAll
-    ? setStudentList
-    : setStudentList.filter((user) =>
+    ? studentList
+    : studentList.filter((user) =>
         user.fullName.toLowerCase().includes(search.toLowerCase())
       );
 
@@ -56,7 +56,7 @@ function Orienteds() {
               placeholder={`Buscar orientado por nombre y apellido`}
               handleChange={handleSearch}
             />
-            <OrientedList asignOriented users={studentsListShow} />
+            <OrientedList  users={studentsListShow} />
           </div>
         </main>
       </div>
