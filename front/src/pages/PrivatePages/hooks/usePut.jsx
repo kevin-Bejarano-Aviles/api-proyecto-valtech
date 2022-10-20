@@ -21,7 +21,7 @@ function usePut() {
     
         } catch (err) {
             setSumbitState('refuse')
-            console.log(error);
+            console.log(err);
           }
       }
       return {
