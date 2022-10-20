@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 function useGet(){
-    const [listStudent,setListStudent]=useState([]);
+    const [studentList,setStudentList]=useState([]);
     const [loading,setLoading]=useState('pending');
     const [studentDetail, setStudentDetail] = useState();
     const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('');
@@ -15,7 +15,7 @@ function useGet(){
     const baseUrl =`${url}/admin`;
     let token=localStorage.getItem('token');
 
-    const getAllStudentsList = async () => {
+    const getAllStudents = async () => {
         try{
             let options = {
                 method: 'GET',
@@ -23,7 +23,7 @@ function useGet(){
                 ,"x-token":`Bearer ${token}`},
             };
             const response = await axios(`${baseUrl}/students`,options)
-            setListStudent(response.data?.data.students)
+            setStudentList(response.data?.data.students)
         }
         catch(err){
             console.log(err);
@@ -76,11 +76,11 @@ function useGet(){
     }
 
     return{
-        getAllStudentsList,
+        getAllStudents,
         getOneStudent,
         getAllEvents,
         getAllAdvisers,
-        listStudent,
+        studentList,
         studentDetail,
         eventList,
         adviserList
