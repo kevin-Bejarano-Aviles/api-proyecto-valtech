@@ -10,7 +10,9 @@ function usePost(){
     const url=process.env.REACT_APP_API_URL
     const baseUrl= `${url}/admin/students`;
     const [errorSignUpObject,seteErrorSignUpObject]=useState({});
-    const [navigationState,setNavigationState]=useState('pending')
+    const [navigationStateStudent,setNavigationStateStudent]=useState('pending');
+    const [navigationStateEvents,setNavigationStateEvent]=useState('pending')
+
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     let token=localStorage.getItem('token')
 
@@ -42,23 +44,49 @@ function usePost(){
 			  withCredentials: true,
 			  data: data
 		  };
-		  const response = await axios(`${url}/admin/students`, options);
+		  const response = await axios(baseUrl, options);
         console.log(response);
-        setNavigationState('accept')
+        setNavigationStateStudent('accept')
 
 		} catch (err) {
             seteErrorSignUpObject(err.response?.data.data.errors)
-            setNavigationState('refuse')
+            setNavigationStateStudent('refuse')
         }
 	  }
+
+    const postEvent =async (data)=>{
+      try {
+        let options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'multipart/form-data'
+                ,"x-token":`Bearer ${token}`},
+          withCredentials: true,
+          data: data
+        };
+        const response = await axios(`${url}/admin/events`, options);
+          console.log(response);
+          setNavigationStateEvent('accept')
+  
+      } catch (err) {
+              seteErrorSignUpObject(err.response?.data.data.errors)
+              setNavigationStateEvent('refuse')
+          }
+
+    }
 
     useEffect(()=>{
     if(navigationState==='accept'){
       redirectionDetailStudent();
+      setNavigationState('pending')
     }
-    },[navigationState])
+    },[navigationStateStudent])
+
+    useEffect(()=>{
+
+    },[])
 
     return {
+        postEvent ,
         postStudent,
         errorSignUpObject
     }
