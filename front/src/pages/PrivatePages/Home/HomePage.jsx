@@ -14,10 +14,10 @@ function HomePage() {
   const baseUrl =`${url}/admin/students`
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
-  const {getAllStudentsList,listStudent}=useGet()
+  const {studentList,setStudentList}=useGet();
 
   useEffect(() => {
-    getAllStudentsList();
+    studentList();
   },[]);
 
   return (
@@ -34,7 +34,7 @@ function HomePage() {
               <Button type='button' name='Ingresar orientado' />
             </Link>
           </div>
-          <OrientedList users={listStudent} />
+          <OrientedList users={setStudentList} />
           <div className='relative mt-16'>
             <h2 className='mb-4 h-[26px] w-[135px] pb-3 border-b-8 text-2xl font-medium text-blue '>
               Novedades
