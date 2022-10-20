@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import {useParams,Link,useNavigate} from 'react-router-dom';
@@ -16,10 +15,10 @@ function Oriented() {
   const url=process.env.REACT_APP_API_URL
   const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
-  const {getOneStudent,studentDetail}=useGet()
+  const {studentDetail,setStudentDetail}=useGet() 
 
   useEffect(()=>{
-   getOneStudent(idStudent) 
+    studentDetail(idStudent) 
   },[])
 
 
@@ -30,7 +29,7 @@ function Oriented() {
         <HeaderAdmin Title='Orientados' />
         
         {
-          studentDetail!=undefined ? (<main
+         setStudentDetail!=undefined ? (<main
             className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
               showAlert ? 'pb-24' : 'pb-7'
             }`}
@@ -40,26 +39,26 @@ function Oriented() {
               <div className='flex-col gap-3 tablet:flex-row tablet:gap-9 flex'>
                 <img
                   src={
-                    studentDetail.avatar
-                      ? require(`../../../assets/students/${studentDetail.avatar}`)
+                    setStudentDetail.avatar
+                      ? require(`../../../assets/students/${setStudentDetail.avatar}`)
                       : 'https://i.imgur.com/b08hxPY.png'
                   }
                   alt='avatar'
                   className='w-[96px] h-[96px] rounded-full'
                 />
                 <div className='flex flex-col gap-2'>
-                  <h3 className='text-2xl'>{studentDetail.fullName}</h3>
+                  <h3 className='text-2xl'>{setStudentDetail.fullName}</h3>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>EMAIL</p>
-                    <p>{studentDetail.email}</p>
+                    <p>{setStudentDetail.email}</p>
                   </div>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>TELEFONO</p>
-                    <p>{studentDetail.phoneNumber}</p>
+                    <p>{setStudentDetail.phoneNumber}</p>
                   </div>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>PROGRAMA POR INICIAR</p>
-                    <p>{studentDetail.program}</p>
+                    <p>{setStudentDetail.program}</p>
                   </div>
                 </div>
               </div>
@@ -71,27 +70,27 @@ function Oriented() {
                 <div className='flex flex-col gap-2'>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>NÚMERO DE DNI</p>
-                    <p>{studentDetail.dni}</p>
+                    <p>{setStudentDetail.dni}</p>
                   </div>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>COLEGIO</p>
-                    <p>{studentDetail.school}</p>
+                    <p>{setStudentDetail.school}</p>
                   </div>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>
                       POR QUÉ SE ACERCÓ A NUESTRA INSTITUCIÓN
                     </p>
-                    <p>{studentDetail.motive}</p>
+                    <p>{setStudentDetail.motive}</p>
                   </div>
                 </div>
                 <div className='flex flex-col gap-2'>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>EDAD</p>
-                    <p>{studentDetail.age} años</p>
+                    <p>{setStudentDetail.age} años</p>
                   </div>
                   <div className='flex flex-col gap-2'>
                     <p className='text-xs text-gray-400'>DOMICILIO</p>
-                    <p>{studentDetail.address}</p>
+                    <p>{setStudentDetail.address}</p>
                   </div>
                 </div>
               </div>
@@ -104,7 +103,7 @@ function Oriented() {
               <div className='flex flex-col gap-2'>
                 <div className='flex flex-col gap-2'>
                   <p className='text-xs text-gray-400'>USUARIO</p>
-                  <p>{studentDetail.user}</p>
+                  <p>{setStudentDetail.user}</p>
                 </div>
                 <div className='flex flex-col gap-2'>
                   <p className='text-xs text-gray-400'>CONTRASEÑA</p>
@@ -112,11 +111,11 @@ function Oriented() {
                 </div>
               </div>
             </section>
-            <Link to={`/orientados/${studentDetail.id}/asignar-orientador`}>
+            <Link to={`/orientados/${setStudentDetail.id}/asignar-orientador`}>
               <Button
                 type='button'
                 name={`${
-                  studentDetail.adviser !== null
+                  setStudentDetail.adviser !== null
                     ? 'Visualizar orientador/a'
                     : 'Asignar orientador/a'
                 }`}

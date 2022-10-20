@@ -1,17 +1,15 @@
-import {React, useState, useContext,useEffect} from 'react';
-import axios from 'axios';
+import {React, useState, useEffect} from 'react';
 import useGet from '../hooks/useGet';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
-import Context from '../../../context/Context';
 
 //see orientedList
 function Orienteds() {
-  const {getAllStudentsList,listStudent}=useGet()
+  const {studentList,setStudentList}=useGet()
   const [search, SetSearch] = useState('');
   const [showAll, setShowAll] = useState(true);
 
@@ -25,12 +23,12 @@ function Orienteds() {
   };
 
   useEffect(() => {
-    getAllStudentsList();
+    studentList();
   });
 
   const studentsListShow = showAll
-    ? listStudent
-    : listStudent.filter((user) =>
+    ? setStudentList
+    : setStudentList.filter((user) =>
         user.fullName.toLowerCase().includes(search.toLowerCase())
       );
 
