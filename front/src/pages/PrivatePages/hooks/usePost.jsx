@@ -54,27 +54,20 @@ function usePost(){
         }
 	  }
 
-    const postEvent =async (values)=>{
-      try {
-        let options = {
-          method: 'POST',
-          headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-          withCredentials: true,
-          data: {...values}
-        };
-        const response = await axios(`${url}/admin/events`, options);
-        setNavigationStateEvent('accept');
-        navigate('/eventos');
-
-  
-      } catch (err) {
-        console.log(err);
-            setNavigationStateEvent('refuse');
-            setErrorCreateEventList(err.response?.data.data.errors)
-          }
-
+   const postEvent = async (values) => {
+    try {
+      let options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8'
+        ,'x-token':`Bearer ${token}`},
+        data: values,
+      };
+      const response = await axios(`${url}/admin/events`, options);
+      navigate('/eventos');
+    } catch (err) {
+      console.error(`${err.response.status}: ${err.response.statusText}`);
     }
+  };
 
     const putCounselor=async(data,id)=>{
       try {
@@ -102,7 +95,6 @@ function usePost(){
 
     useEffect(()=>{
       if(navigationStateEvent==='accept'){
-          navigate('/eventos');
           setNavigationStateEvent('´pending')
       }
     },[navigationStateEvent])

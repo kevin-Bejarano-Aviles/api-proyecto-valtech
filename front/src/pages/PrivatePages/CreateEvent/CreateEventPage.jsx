@@ -20,7 +20,6 @@ import usePost from '../hooks/usePost';
 function CreateEventPage() {
   const url = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
   const {getAllAdvisers,getAllStudentsList,listStudent,adviserList}=useGet();
   const {postEvent}=usePost();
   const [studentObjectList, setStudentObjectList] = useState([]);
@@ -39,20 +38,6 @@ function CreateEventPage() {
     getAllAdvisers();
   },[]);
 
-//   const postEvent = async (values) => {
-//     try {
-//       let options = {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json; charset=utf-8'
-//         ,'x-token':`Bearer ${token}`},
-//         data: values,
-//       };
-//       const response = await axios(`${url}/admin/events`, options);
-//       navigate('/eventos');
-//     } catch (err) {
-//       console.error(`${err.response.status}: ${err.response.statusText}`);
-//     }
-//   };
 
   const formik = useFormik({
     initialValues: {
@@ -75,9 +60,9 @@ function CreateEventPage() {
       duration: Yup.string().required('Requerido'),
       detail: Yup.string().required('Requerido'),
     }),
-    onSubmit: values => {
-      postEvent(values);
-    },
+    onSubmit: (values) => {
+      postEvent(values)
+    }
   });
 
   return (
