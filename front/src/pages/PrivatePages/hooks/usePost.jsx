@@ -2,17 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
-
+import useGet from "./useGet";
 
 
 function usePost(){
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const url=process.env.REACT_APP_API_URL
     const baseUrl= `${url}/admin/students`;
     const [errorSignUpObject,seteErrorSignUpObject]=useState({});
     const [navigationStateStudent,setNavigationStateStudent]=useState('pending');
-    const [navigationStateEvents,setNavigationStateEvent]=useState('pending')
-
+    const [navigationStateEvent,setNavigationStateEvent]=useState('pending')
+    const [sumbitState,setSumbitState]=useState('pending')
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     let token=localStorage.getItem('token')
 
@@ -64,27 +64,46 @@ function usePost(){
           data: data
         };
         const response = await axios(`${url}/admin/events`, options);
-          console.log(response);
-          setNavigationStateEvent('accept')
+        setNavigationStateEvent('accept')
   
       } catch (err) {
-              seteErrorSignUpObject(err.response?.data.data.errors)
               setNavigationStateEvent('refuse')
           }
 
     }
 
+    const postCounselor=async(data,id)=>{
+      try {
+        let options = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'multipart/form-data'
+                ,"x-token":`Bearer ${token}`},
+          withCredentials: true,
+          data: data
+        };
+        const response = await axios(`${url}/advisers/student/${id}`, options);
+        setSumbitState('accept')
+  
+      } catch (err) {
+              setSumbitState('refuse')
+          }
+    }
+
     useEffect(()=>{
-    if(navigationState==='accept'){
+    if(navigationStateStudent==='accept'){
       redirectionDetailStudent();
-      setNavigationState('pending')
+      setNavigationStateStudent('pending')
     }
     },[navigationStateStudent])
 
     useEffect(()=>{
+      if(navigationStateEvent==='accept'){
+          navigate('/eventos');
+          setNavigationStateEvent('´pending')
+      }
+    },[navigationStateEvent])
 
-    },[])
-
+ 
     return {
         postEvent ,
         postStudent,

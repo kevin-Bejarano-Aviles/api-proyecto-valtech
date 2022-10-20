@@ -52,7 +52,7 @@ function useGet(){
                 headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
             };
-            const response = await axios(`${baseUrl}/events`,options)
+            const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
         }
         catch(err){
@@ -67,8 +67,7 @@ function useGet(){
                 headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
             };
-            const response = await axios(`${baseUrl}/advisers`,options)
-            console.log(response);
+            const response = await axios(`${baseUrl}/advisers`,options);
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
