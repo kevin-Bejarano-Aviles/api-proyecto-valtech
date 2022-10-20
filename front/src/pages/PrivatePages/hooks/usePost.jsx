@@ -54,19 +54,22 @@ function usePost(){
         }
 	  }
 
-    const postEvent =async (data)=>{
+    const postEvent =async (values)=>{
       try {
         let options = {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
           withCredentials: true,
-          data: data
+          data: {...values}
         };
         const response = await axios(`${url}/admin/events`, options);
         setNavigationStateEvent('accept');
+        navigate('/eventos');
+
   
       } catch (err) {
+        console.log(err);
             setNavigationStateEvent('refuse');
             setErrorCreateEventList(err.response?.data.data.errors)
           }
