@@ -68,22 +68,7 @@ function usePost(){
       }
     };
 
-    const putCounselor=async(data,id)=>{
-      try {
-        let options = {
-          method: 'PUT',
-          headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-          withCredentials: true,
-          data: data
-        };
-        const response = await axios(`${url}/admin/advisers/student/${id}`, options);
-        setSumbitState('accept')
-  
-      } catch (err) {
-          setSumbitState('refuse')
-        }
-    }
+ 
 
     useEffect(()=>{
     if(navigationStateStudent==='accept'){
