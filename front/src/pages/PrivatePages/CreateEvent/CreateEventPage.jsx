@@ -24,11 +24,18 @@ function CreateEventPage() {
     time: false,
     duration: false
   });
-
+  let token = localStorage.getItem('token');
+  
   const getAllAdvisers = async () => {
     try {
-      const response = await axios.get(`${url}/admin/advisers`, { withCredentials: true });
-      setAdviserObjectList(response.data.advisers);
+      let options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'multipart/form-data'
+        ,'x-token':`Bearer ${token}`},
+      };
+      const response = await axios(`${url}/admin/advisers`, options);
+      console.log
+      setAdviserObjectList(response.data?.data.advisers);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
@@ -36,8 +43,13 @@ function CreateEventPage() {
 
   const getAllStudents = async () => {
     try {
-      const response = await axios.get(`${url}/admin/students`, { withCredentials: true });
-      setStudentObjectList(response.data.students);
+      let options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'multipart/form-data'
+        ,'x-token':`Bearer ${token}`},
+      };
+      const response = await axios.get(`${url}/admin/students`, options);
+      setStudentObjectList(response.data?.data.students);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
