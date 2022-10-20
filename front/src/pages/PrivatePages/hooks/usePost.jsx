@@ -82,7 +82,7 @@ function usePost(){
           withCredentials: true,
           data: data
         };
-        const response = await axios(`${url}/advisers/student/${id}`, options);
+        const response = await axios(`${url}/admin/advisers/student/${id}`, options);
         setSumbitState('accept')
   
       } catch (err) {
