@@ -53,6 +53,7 @@ function useGet(){
                 ,"x-token":`Bearer ${token}`},
             };
             const response = await axios(`${baseUrl}/events`,options);
+            console.log(response.data?.data.events);
             setEventsList(response.data?.data.events)
         }
         catch(err){

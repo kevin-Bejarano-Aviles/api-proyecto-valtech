@@ -230,7 +230,7 @@ function EventsPage() {
 													className='relative inline-block  text-blue leading-tight'>
 													<span aria-hidden
 														className='absolute inset-0 bg-green-200 opacity-50 rounded-full'></span>
-												<span className='relative'>{eve.adviser.fullName}</span>
+												<span className='relative'>{eve.Adviser.fullName}</span>
 												</span>
 											</td>
 											<td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
