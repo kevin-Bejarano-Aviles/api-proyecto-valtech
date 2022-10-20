@@ -14,11 +14,14 @@ import DurationInput from './components/DurationInput';
 import DetailInput from './components/DetailInput';
 import Button from '../sharedPrivateComponents/button/Button';
 import './CreateEventPage.css';
+import useGet from '../hooks/useGet';
+import usePost from '../hooks/usePost';
 
 function CreateEventPage() {
   const url = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
+  const {getAllAdvisers,getAllStudentsList,listStudent,adviserList}=useGet();
+  const {postEvent}=usePost();
   const [studentObjectList, setStudentObjectList] = useState([]);
   const [adviserObjectList, setAdviserObjectList] = useState([]);
   const [areInputVisible, setAreInputVisible] = useState({
@@ -29,53 +32,10 @@ function CreateEventPage() {
     duration: false
   });
 
-  const getAllAdvisers = async () => {
-    try {
-      let options = {
-        method: 'GET',
-        headers: { 'Content-Type': 'multipart/form-data'
-        ,'x-token':`Bearer ${token}`},
-      };
-      const response = await axios(`${url}/admin/advisers`, options);
-      setAdviserObjectList(response.data?.data.advisers);
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
-  };
-
-  const getAllStudents = async () => {
-    try {
-      let options = {
-        method: 'GET',
-        headers: { 'Content-Type': 'multipart/form-data'
-        ,'x-token':`Bearer ${token}`},
-      };
-      const response = await axios.get(`${url}/admin/students`, options);
-      setStudentObjectList(response.data?.data.students);
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
-  };
-
   useEffect(() => {
-    getAllStudents();
+    getAllStudentsList();
     getAllAdvisers();
   },[]);
-
-  const postEvent = async (values) => {
-    try {
-      let options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=utf-8'
-        ,'x-token':`Bearer ${token}`},
-        data: values,
-      };
-      const response = await axios(`${url}/admin/events`, options);
-      navigate('/eventos');
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -98,9 +58,9 @@ function CreateEventPage() {
       duration: Yup.string().required('Requerido'),
       detail: Yup.string().required('Requerido'),
     }),
-    onSubmit: values => {
-      postEvent(values);
-    },
+    onSubmit: (values) => {
+      postEvent(values)
+    }
   });
 
   return (
@@ -131,7 +91,7 @@ function CreateEventPage() {
                 <AdviserEventIdInput
                   label='Orientador participante'
                   name='adviser_event_id'
-                  adviserObjectList={adviserObjectList}
+                  adviserObjectList={adviserList}
                   areInputVisible={areInputVisible}
                   formik={formik}
                   onChangeInputVisibility={() => setAreInputVisible({
@@ -146,7 +106,7 @@ function CreateEventPage() {
                 <StudentsIdInput
                   label='Orientado/s participante/s'
                   name='studentsId'
-                  studentObjectList={studentObjectList}
+                  studentObjectList={listStudent}
                   areInputVisible={areInputVisible}
                   formik={formik}
                   onChangeInputVisibility={() => setAreInputVisible({

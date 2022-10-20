@@ -2,15 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
-
+import useGet from "./useGet";
 
 
 function usePost(){
-  const navigate = useNavigate();
+    const navigate = useNavigate();
     const url=process.env.REACT_APP_API_URL
     const baseUrl= `${url}/admin/students`;
     const [errorSignUpObject,seteErrorSignUpObject]=useState({});
-    const [navigationState,setNavigationState]=useState('pending')
+    const [navigationStateStudent,setNavigationStateStudent]=useState('pending');
+    const [navigationStateEvent,setNavigationStateEvent]=useState('pending')
+    const [sumbitState,setSumbitState]=useState('pending')
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     let token=localStorage.getItem('token')
 
@@ -42,25 +44,67 @@ function usePost(){
 			  withCredentials: true,
 			  data: data
 		  };
-		  const response = await axios(`${url}/admin/students`, options);
-        console.log(response);
-        setNavigationState('accept')
+		  const response = await axios(baseUrl, options);
+        setNavigationStateStudent('accept')
 
 		} catch (err) {
             seteErrorSignUpObject(err.response?.data.data.errors)
-            setNavigationState('refuse')
+            setNavigationStateStudent('refuse')
         }
 	  }
 
-    useEffect(()=>{
-    if(navigationState==='accept'){
-      redirectionDetailStudent();
-    }
-    },[navigationState])
+    const postEvent = async (values) => {
+      try {
+        let options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json; charset=utf-8'
+          ,'x-token':`Bearer ${token}`},
+          data: values,
+        };
+        const response = await axios(`${url}/admin/events`, options);
+        navigate('/eventos');
+      } catch (err) {
+        console.error(`${err.response.status}: ${err.response.statusText}`);
+      }
+    };
 
+    const putCounselor=async(data,id)=>{
+      try {
+        let options = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'multipart/form-data'
+                ,"x-token":`Bearer ${token}`},
+          withCredentials: true,
+          data: data
+        };
+        const response = await axios(`${url}/admin/advisers/student/${id}`, options);
+        setSumbitState('accept')
+  
+      } catch (err) {
+          setSumbitState('refuse')
+        }
+    }
+
+    useEffect(()=>{
+    if(navigationStateStudent==='accept'){
+      redirectionDetailStudent();
+      setNavigationStateStudent('pending')
+    }
+    },[navigationStateStudent])
+
+    useEffect(()=>{
+      if(navigationStateEvent==='accept'){
+          setNavigationStateEvent('´pending')
+      }
+    },[navigationStateEvent])
+
+ 
     return {
+        postEvent ,
         postStudent,
-        errorSignUpObject
+        putCounselor,
+        errorSignUpObject,
+        errorCreateEventList
     }
 }
 
