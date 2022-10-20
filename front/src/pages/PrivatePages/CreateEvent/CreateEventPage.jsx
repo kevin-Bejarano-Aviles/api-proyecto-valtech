@@ -18,12 +18,8 @@ import useGet from '../hooks/useGet';
 import usePost from '../hooks/usePost';
 
 function CreateEventPage() {
-  const url = process.env.REACT_APP_API_URL;
-  const token = localStorage.getItem('token');
-  const {getAllAdvisers,getAllStudentsList,listStudent,adviserList}=useGet();
-  const {postEvent}=usePost();
-  const [studentObjectList, setStudentObjectList] = useState([]);
-  const [adviserObjectList, setAdviserObjectList] = useState([]);
+  const { getAllAdvisers, getAllStudents, studentList, adviserList } = useGet();
+  const { postEvent } = usePost();
   const [areInputVisible, setAreInputVisible] = useState({
     adviser_event_id: false,
     studentsId: false,
@@ -33,7 +29,7 @@ function CreateEventPage() {
   });
 
   useEffect(() => {
-    getAllStudentsList();
+    getAllStudents();
     getAllAdvisers();
   },[]);
 
@@ -106,7 +102,7 @@ function CreateEventPage() {
                 <StudentsIdInput
                   label='Orientado/s participante/s'
                   name='studentsId'
-                  studentObjectList={listStudent}
+                  studentObjectList={studentList}
                   areInputVisible={areInputVisible}
                   formik={formik}
                   onChangeInputVisibility={() => setAreInputVisible({
