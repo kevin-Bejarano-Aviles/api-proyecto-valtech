@@ -4,16 +4,18 @@ import axios from "axios";
 
 
 function useGet(){
-    const [listStudent,setListStudent]=useState([]);
+    const [studentList,setStudentList]=useState([]);
     const [loading,setLoading]=useState('pending');
     const [studentDetail, setStudentDetail] = useState();
     const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('');
-    const [eventList,setEventsList]=useState([])
+    const [eventList,setEventsList]=useState([]);
+    const [adviserList,setAdviserList]=useState([]);
+
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
     let token=localStorage.getItem('token');
 
-    const getAllStudentsList = async () => {
+    const getAllStudents = async () => {
         try{
             let options = {
                 method: 'GET',
@@ -21,7 +23,7 @@ function useGet(){
                 ,"x-token":`Bearer ${token}`},
             };
             const response = await axios(`${baseUrl}/students`,options)
-            setListStudent(response.data?.data.students)
+            setStudentList(response.data?.data.students)
         }
         catch(err){
             console.log(err);
@@ -50,8 +52,7 @@ function useGet(){
                 headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
             };
-            const response = await axios(`${baseUrl}/events`,options)
-            console.log(response);
+            const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
         }
         catch(err){
@@ -59,15 +60,33 @@ function useGet(){
         }
     }
 
+    const getAllAdvisers = async () => {
+        try{
+            let options = {
+                method: 'GET',
+                headers: { 'Content-Type': 'multipart/form-data'
+                ,"x-token":`Bearer ${token}`},
+            };
+            const response = await axios(`${baseUrl}/advisers`,options);
+            setAdviserList(response.data?.data.advisers)
+        }
+        catch (err) {
+            console.error(`${err.response.status}: ${err.response.statusText}`);
+        }
+    }
+
     return{
-        getAllStudentsList,
+        getAllStudents,
         getOneStudent,
         getAllEvents,
-        listStudent,
+        getAllAdvisers,
+        studentList,
         studentDetail,
-        eventList
+        eventList,
+        adviserList
     }
+
 }
 
 
-export default useGet;
+export default useGet

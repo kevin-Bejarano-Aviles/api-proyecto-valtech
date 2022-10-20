@@ -23,8 +23,7 @@ function EventsPage() {
 	const [orderListband,SetOrderListband]=useState(true);
 	const [showAll, setShowAll] = useState(false);
 	const [search,SetSearch] = useState('');
-	const {getAllEvents,eventList}=useGet()
-	
+	const {getAllEvents,getAllAdvisers,adviserList,eventList}=useGet()
 	const deleteEvent = async (id)=>{
 
         try {
@@ -131,7 +130,7 @@ function EventsPage() {
 	},[eventList])
 
 	useEffect(()=>{
-		getAllEvents()	
+		getAllEvents();
 	},[])
 
 
@@ -145,7 +144,6 @@ function EventsPage() {
 		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
 		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
-		console.log(showAll);
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
@@ -232,7 +230,7 @@ function EventsPage() {
 													className='relative inline-block  text-blue leading-tight'>
 													<span aria-hidden
 														className='absolute inset-0 bg-green-200 opacity-50 rounded-full'></span>
-												<span className='relative'>{eve.adviser.fullName}</span>
+												<span className='relative'>{eve.Adviser.fullName}</span>
 												</span>
 											</td>
 											<td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
