@@ -54,6 +54,7 @@ function useGet(){
             };
             const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
+            console.log(response.data?.data.events);
         }
         catch(err){
             console.log(err);

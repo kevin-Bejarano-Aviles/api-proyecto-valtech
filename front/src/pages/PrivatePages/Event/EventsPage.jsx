@@ -10,6 +10,7 @@ import Icon_arrow_left from '../../../assets/icons/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../../../assets/icons/Icon_arrow-right.svg'
 import Search from '../sharedPrivateComponents/Search';
 import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
+import useDelete from '../hooks/useDelete';
 
 
 function EventsPage() {
@@ -23,18 +24,9 @@ function EventsPage() {
 	const [orderListband,SetOrderListband]=useState(true);
 	const [showAll, setShowAll] = useState(false);
 	const [search,SetSearch] = useState('');
-	const {getAllEvents,getAllAdvisers,adviserList,eventList}=useGet()
-	const deleteEvent = async (id)=>{
-
-        try {
-            await axios.delete(`http://localhost:8000/admin/deleteEvent/${id}`)
-            let newArray=eventList.filter(event=> event.id!==id);
-			setEventsList(newArray);
-			
-		} catch (error) {
-            console.error(error.response)
-        }
-    }
+	const {getAllEvents,adviserList,eventList}=useGet();
+	const {deleteEvent}=useDelete();
+	
 
 	
     // function orderList(list){
