@@ -1,1 +1,5 @@
-ffc
+function useDelete() {
+
+}
+
+export default useDelete;
