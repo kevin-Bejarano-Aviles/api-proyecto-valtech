@@ -22,12 +22,19 @@ const DurationInput = ({ label, name, areInputVisible, formik, onChangeInputVisi
     setSelectedDuration(newValue);
   };
 
+  const handleValidateErrors = () => {
+    selectedDuration === ''
+    ? formik.setErrors({ ...formik.errors, duration: 'Required'})
+    : formik.setErrors({ ...formik.errors, duration: ''});
+  };
+
   const handleChangeFormikValue = () => {
     formik.values.duration = selectedDuration;
   };
 
   useEffect(() => {
     handleChangeFormikValue();
+    handleValidateErrors();
   },[selectedDuration]);
 
   return (
@@ -37,13 +44,12 @@ const DurationInput = ({ label, name, areInputVisible, formik, onChangeInputVisi
         <div
           name={name}
           id={name}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          // value={formik.values.adviser_event_id}
-          className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
+          className={`${selectedDuration === '' ? 'text-lightgray' : ''} mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
           onClick={onChangeInputVisibility}
+          tabIndex='0'
+          onBlur={formik.handleBlur}
         >
-          <p className={`${selectedDuration === '' ? 'text-lightgray' : ''}`}>{selectedDuration === '' ? 'Seleccionar duración' : `${selectedDuration} hs`}</p>
+          {selectedDuration === '' ? 'Seleccionar duración' : `${selectedDuration} hs`}
         </div>
         <img src={iconArrow} alt='' className='px-2' />
       </div>

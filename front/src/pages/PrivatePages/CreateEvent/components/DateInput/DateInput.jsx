@@ -13,11 +13,18 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
     setSelectedDate(`${selectedDay}/${selectedMonth}/${selectedYear}`);
   };
 
+  const handleValidateErrors = () => {
+    selectedDate === ''
+    ? formik.setErrors({ ...formik.errors, date: 'Required'})
+    : formik.setErrors({ ...formik.errors, date: ''});
+  };
+
   const handleChangeFormikValue = () => {
     formik.values.date = selectedDate;
   };
 
   useEffect(() => {
+    handleValidateErrors();
     handleChangeFormikValue();
   },[selectedDate]);
 
@@ -28,13 +35,12 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
         <div
           name={name}
           id={name}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          // value={formik.values.date}
-          className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
+          className={`${selectedDate === '' ? 'text-lightgray' : ''} mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
           onClick={onChangeInputVisibility}
+          tabIndex='0'
+          onBlur={formik.handleBlur}
         >
-          <p className={`${selectedDate === '' ? 'text-lightgray' : ''}`}>{selectedDate || 'Ingresar Fecha'}</p>
+          {selectedDate || 'Ingresar Fecha'}
         </div>
         <img src={iconCalendar} alt='' className='px-2 w-[32px]' />
       </div>

@@ -22,6 +22,12 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
     });
   };
 
+  const handleValidateErrors = () => {
+    Object.values(selectedTime).some(value => value === null)
+    ? formik.setErrors({ ...formik.errors, time: 'Required'})
+    : formik.setErrors({ ...formik.errors, time: ''});
+  };
+
   const handleChangeFormikValue = () => {
     if (!Object.values(selectedTime).some(value => value === null)) {
       formik.values.time = Object.values(selectedTime).join(':');
@@ -30,6 +36,7 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
 
   useEffect(() => {
     handleChangeFormikValue();
+    handleValidateErrors();
   },[selectedTime]);
 
   return (
@@ -39,19 +46,16 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
         <div
           name={name}
           id={name}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          // value={formik.values.time}
-          className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
+          className={`${Object.values(selectedTime).some(value => value === null) ? 'text-lightgray' : ''} mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
           onClick={onChangeInputVisibility}
+          tabIndex='0'
+          onBlur={formik.handleBlur}
         >
-          <p className={Object.values(selectedTime).some(value => value === null) ? 'text-lightgray' : ''}>
-            {
-              Object.values(selectedTime).some(value => value === null)
-              ? 'Seleccionar horario'
-              : `${Object.values(selectedTime).join(':')} hs`
-            }
-          </p>
+          {
+            Object.values(selectedTime).some(value => value === null)
+            ? 'Seleccionar horario'
+            : `${Object.values(selectedTime).join(':')} hs`
+          }
         </div>
         <img src={iconArrow} alt='' className='px-2 w-[32px]' />
       </div>

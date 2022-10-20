@@ -20,7 +20,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
         <div
           name={name}
           id={name}
-          className={`${selectedAdviser === null ? 'text-lightgray' : ''} mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
+          className={`${selectedAdviser === null ? 'text-lightgray' : 'bg-red-300'} mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
           onClick={onChangeInputVisibility}
           tabIndex='0'
           onBlur={formik.handleBlur}

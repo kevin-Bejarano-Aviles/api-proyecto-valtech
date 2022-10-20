@@ -19,11 +19,20 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
     }
   };
 
+  const handleValidateErrors = () => {
+    if (selectedStudents.ids.length === 0) {
+      formik.setErrors({ ...formik.errors, studentsId: 'Required'});
+    } else {
+      formik.setErrors({ ...formik.errors, studentsId: ''});
+    }
+  };
+
   const handleChangeFormikValue = () => {
     formik.values.studentsId = selectedStudents.ids;
   };
 
   useEffect(() => {
+    handleValidateErrors();
     handleChangeFormikValue();
   },[selectedStudents]);
 
@@ -34,13 +43,12 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
         <div
           name={name}
           id={name}
-          // onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
-          // value={formik.values.studentsId}
-          className='mobile:w-full tablet:max-w-[320px] pl-3 text-sm appearance-none select-none truncate'
+          className={`${selectedStudents.ids.length === 0 ? 'text-lightgray' : ''} mobile:w-[284px] h-full flex items-center pl-3 text-sm appearance-none select-none`}
           onClick={onChangeInputVisibility}
+          tabIndex='0'
+          onBlur={formik.handleBlur}
         >
-          <p className={`${selectedStudents.ids.length === 0 ? 'text-lightgray' : ''} truncate`}>{selectedStudents.ids.length === 0 ? 'Seleccionar orientado' : selectedStudents.names.join(', ')}</p>
+          <p className='truncate'>{selectedStudents.ids.length === 0 ? 'Seleccionar orientado' : selectedStudents.names.join(', ')}</p>
         </div>
         <img src={iconSearch} alt='' className='px-2' />
       </div>
@@ -50,10 +58,12 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
             <input
               className='input-checked'
               type='checkbox'
-              id={student.id}
-              onClick={event => handleChangeSelectedStudents(event, student.id, student.fullName)}
+              id={student.fullName}
+              onClick={(event) => handleChangeSelectedStudents(event, student.id, student.fullName)}
             />
-            <label htmlFor={student.id} className='relative pl-6 w-full cursor-pointer label-checked'>{student.fullName}</label>
+            <label htmlFor={student.fullName} className='relative pl-6 w-full cursor-pointer label-checked'>
+              {student.fullName}
+            </label>
           </li>
         ))}
       </ul>
