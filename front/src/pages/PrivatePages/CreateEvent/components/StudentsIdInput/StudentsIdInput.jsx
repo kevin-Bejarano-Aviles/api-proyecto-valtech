@@ -39,11 +39,11 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='text-sm'>{label}</label>
-      <div className={`${areInputVisible.studentsId ? 'border-green' : ''} ${selectedStudents.ids.length === 0 ? 'text-lightgray' : 'bg-inputbackground'} flex items-center h-10 border-2 rounded-lg overflow-hidden cursor-pointer`}>
+      <div className={`${areInputVisible.studentsId ? 'border-green' : ''} ${selectedStudents.ids.length === 0 ? 'text-lightgray' : 'bg-inputbackground'} flex justify-between items-center h-10 border-2 rounded-lg overflow-hidden cursor-pointer`}>
         <div
           name={name}
           id={name}
-          className='mobile:w-[284px] h-full flex items-center pl-3 text-sm appearance-none select-none'
+          className='w-10/12 h-full flex items-center pl-3 text-sm appearance-none select-none'
           onClick={onChangeInputVisibility}
           tabIndex='0'
           onBlur={formik.handleBlur}
