@@ -16,11 +16,11 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='text-sm'>{label}</label>
-      <div className={`${areInputVisible.adviser_event_id ? 'border-green' : ''} flex items-center h-10 rounded-lg cursor-pointer border-2`}>
+      <div className={`${areInputVisible.adviser_event_id ? 'border-green' : ''} ${selectedAdviser === null ? 'text-lightgray' : 'bg-inputbackground'} flex items-center h-10 rounded-lg cursor-pointer border-2`}>
         <div
           name={name}
           id={name}
-          className={`${selectedAdviser === null ? 'text-lightgray' : 'bg-red-300'} mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate`}
+          className='mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
           onClick={onChangeInputVisibility}
           tabIndex='0'
           onBlur={formik.handleBlur}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
@@ -11,10 +12,13 @@ import DateInput from './components/DateInput/DateInput';
 import TimeInput from './components/TimeInput/TimeInput';
 import DurationInput from './components/DurationInput';
 import DetailInput from './components/DetailInput';
+import Button from '../sharedPrivateComponents/button/Button';
 import './CreateEventPage.css';
 
 function CreateEventPage() {
   const url = process.env.REACT_APP_API_URL;
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const [studentObjectList, setStudentObjectList] = useState([]);
   const [adviserObjectList, setAdviserObjectList] = useState([]);
   const [areInputVisible, setAreInputVisible] = useState({
@@ -24,8 +28,7 @@ function CreateEventPage() {
     time: false,
     duration: false
   });
-  let token = localStorage.getItem('token');
-  
+
   const getAllAdvisers = async () => {
     try {
       let options = {
@@ -34,7 +37,6 @@ function CreateEventPage() {
         ,'x-token':`Bearer ${token}`},
       };
       const response = await axios(`${url}/admin/advisers`, options);
-      console.log
       setAdviserObjectList(response.data?.data.advisers);
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
@@ -60,6 +62,21 @@ function CreateEventPage() {
     getAllAdvisers();
   },[]);
 
+  const postEvent = async (values) => {
+    try {
+      let options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8'
+        ,'x-token':`Bearer ${token}`},
+        data: values,
+      };
+      const response = await axios(`${url}/admin/events`, options);
+      navigate('/eventos');
+    } catch (err) {
+      console.error(`${err.response.status}: ${err.response.statusText}`);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -82,8 +99,7 @@ function CreateEventPage() {
       detail: Yup.string().required('Requerido'),
     }),
     onSubmit: values => {
-      console.log(values);
-      console.log('Formulario enviado...');
+      postEvent(values);
     },
   });
 
@@ -207,7 +223,11 @@ function CreateEventPage() {
                 })}
               />
             </section>
-            <button type='submit'>Enviar</button>
+            <Button
+              type='submit'
+              name='Agendar evento'
+              disabled={Object.values(formik.values).some(value => value === '')}
+            />
           </form>
         </main>
       </div>

@@ -10,7 +10,8 @@ const DetailInput = ({ label, name, formik, onChangeInputVisibility }) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.detail}
-        className='block rounded-lg border-2 focus:outline-green'
+        className={`${formik.values.detail ? 'bg-inputbackground' : ''} block p-2 text-sm rounded-lg border-2 focus:outline-green'`}
+        placeholder='Escribe un comentario'
         onClick={onChangeInputVisibility}
       />
       {formik.touched.detail && formik.errors.detail ? (

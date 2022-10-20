@@ -8,7 +8,7 @@ const NameInput = ({ label, name, formik, onChangeInputVisibility }) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values.name}
-        className='mobile:w-full tablet:max-w-[320px] p-3 h-10 text-sm rounded-lg border-2 focus:outline-green'
+        className={`${formik.values.name ? 'bg-inputbackground' : ''} mobile:w-full tablet:max-w-[320px] p-3 h-10 text-sm rounded-lg border-2 focus:outline-green`}
         placeholder='Ingresar nombre'
         onClick={onChangeInputVisibility}
       />
