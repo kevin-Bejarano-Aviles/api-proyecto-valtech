@@ -45,7 +45,6 @@ function usePost(){
 			  data: data
 		  };
 		  const response = await axios(baseUrl, options);
-        console.log(response);
         setNavigationStateStudent('accept')
 
 		} catch (err) {
@@ -54,20 +53,20 @@ function usePost(){
         }
 	  }
 
-   const postEvent = async (values) => {
-    try {
-      let options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=utf-8'
-        ,'x-token':`Bearer ${token}`},
-        data: values,
-      };
-      const response = await axios(`${url}/admin/events`, options);
-      navigate('/eventos');
-    } catch (err) {
-      console.error(`${err.response.status}: ${err.response.statusText}`);
-    }
-  };
+    const postEvent = async (values) => {
+      try {
+        let options = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json; charset=utf-8'
+          ,'x-token':`Bearer ${token}`},
+          data: values,
+        };
+        const response = await axios(`${url}/admin/events`, options);
+        navigate('/eventos');
+      } catch (err) {
+        console.error(`${err.response.status}: ${err.response.statusText}`);
+      }
+    };
 
     const putCounselor=async(data,id)=>{
       try {

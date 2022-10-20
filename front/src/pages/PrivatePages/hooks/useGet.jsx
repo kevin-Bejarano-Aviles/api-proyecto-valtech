@@ -53,7 +53,6 @@ function useGet(){
                 ,"x-token":`Bearer ${token}`},
             };
             const response = await axios(`${baseUrl}/events`,options);
-            console.log(response.data?.data.events);
             setEventsList(response.data?.data.events)
         }
         catch(err){
@@ -72,7 +71,7 @@ function useGet(){
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
-        console.error(`${err.response.status}: ${err.response.statusText}`);
+            console.error(`${err.response.status}: ${err.response.statusText}`);
         }
     }
 

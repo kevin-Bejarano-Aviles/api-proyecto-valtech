@@ -32,12 +32,10 @@ function CreateEventPage() {
     duration: false
   });
 
-
   useEffect(() => {
     getAllStudentsList();
     getAllAdvisers();
   },[]);
-
 
   const formik = useFormik({
     initialValues: {
