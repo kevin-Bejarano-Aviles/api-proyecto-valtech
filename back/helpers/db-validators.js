@@ -36,7 +36,9 @@ const studentsInDb = async (studentsId) => {
     },
   });
   if (students.length !== studentsId.length) {
-    throw new Error('Uno o mas estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes');
+    throw new Error(
+      'Uno o mas estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes',
+    );
   }
 };
 module.exports = {

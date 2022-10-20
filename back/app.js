@@ -6,15 +6,16 @@ const cors = require('cors');
 const db = require('./models/index');
 
 const port = process.env.PORT || 8000;
-
 // Use express static to declare our public folder
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  credentials: true,
-  origin: [process.env.CORS_ORIGIN],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
+app.use(
+  cors({
+    credentials: true,
+    origin: [process.env.CORS_ORIGIN],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  }),
+);
 app.use(express.json());
 
 app.use('/admin/advisers', require('./routes/admin/adviser'));

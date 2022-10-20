@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   /* eslint camelcase: "off" */
@@ -14,12 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Students_events.init({
-    studentId: DataTypes.INTEGER,
-    eventId: DataTypes.INTEGER,
-  }, {
-    sequelize,
-    modelName: 'Students_events',
-  });
+  Students_events.init(
+    {
+      studentId: DataTypes.INTEGER,
+      eventId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Students_events',
+    },
+  );
   return Students_events;
 };

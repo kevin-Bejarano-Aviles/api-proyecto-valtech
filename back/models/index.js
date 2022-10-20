@@ -16,9 +16,8 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 /* log */
-fs
-  .readdirSync(__dirname)
-  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+fs.readdirSync(__dirname)
+  .filter((file) => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
   .forEach((file) => {
     /* eslint global-require:"off" */
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);

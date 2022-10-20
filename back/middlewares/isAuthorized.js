@@ -6,7 +6,7 @@ const isAuthorized = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       status: '401 Unauthorized',
-      message: 'No hay token en la peticion',
+      message: 'No token in request',
       data: '',
     });
   }

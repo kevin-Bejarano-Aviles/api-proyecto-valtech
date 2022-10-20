@@ -7,7 +7,18 @@ const fieldValidations = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     if (typeof req.files !== 'undefined' && typeof req.files[0] !== 'undefined') {
-      fs.unlinkSync(path.join(__dirname, '..', '..', 'front', 'src', 'assets', 'students', `${req.files[0].filename}`));
+      fs.unlinkSync(
+        path.join(
+          __dirname,
+          '..',
+          '..',
+          'front',
+          'src',
+          'assets',
+          'students',
+          `${req.files[0].filename}`,
+        ),
+      );
     }
     return res.status(400).json({
       status: '400 Bad request',

@@ -5,7 +5,17 @@ const { studentBy } = require('../../helpers/findStudentBy');
 // Method to add a student
 const addStudent = async (req, res) => {
   const {
-    fullName, email, phoneNumber, program, dni, school, age, address, motive, user, pass,
+    fullName,
+    email,
+    phoneNumber,
+    program,
+    dni,
+    school,
+    age,
+    address,
+    motive,
+    user,
+    pass,
   } = req.body;
   try {
     const avatar = req.files[0].filename;
@@ -33,7 +43,7 @@ const addStudent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }
@@ -50,7 +60,7 @@ const getAllStudent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }
@@ -74,7 +84,7 @@ const getStudent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }

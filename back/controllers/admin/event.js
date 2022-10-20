@@ -3,12 +3,17 @@ const AdviserModel = require('../../models').Advisers;
 const StudentModel = require('../../models').Students;
 const EventModel = require('../../models').Events;
 const db = require('../../models/index');
-
+/* eslint camelcase:"off" */
 const createEvent = async (req, res) => {
   try {
     const {
-      /* eslint camelcase:"off" */
-      studentsId, name, date, time, detail, duration, adviser_event_id,
+      studentsId,
+      name,
+      date,
+      time,
+      detail,
+      duration,
+      adviser_event_id,
     } = req.body;
     await db.sequelize.query('ALTER TABLE events AUTO_INCREMENT = 1');
     const event = await EventModel.create({
@@ -28,7 +33,7 @@ const createEvent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }
@@ -37,18 +42,21 @@ const getAllEventsByFilters = async (req, res) => {
   const { student = '', from = 0, limit = 10 } = req.query;
   try {
     const events = await EventModel.findAll({
-      include: [{
-        model: StudentModel,
-        where: {
-          fullName: {
-            [Op.substring]: student,
+      include: [
+        {
+          model: StudentModel,
+          where: {
+            fullName: {
+              [Op.substring]: student,
+            },
           },
+          attributes: ['id', 'fullName'],
         },
-        attributes: ['id', 'fullName'],
-      }, {
-        model: AdviserModel,
-        attributes: ['id', 'fullName'],
-      }],
+        {
+          model: AdviserModel,
+          attributes: ['id', 'fullName'],
+        },
+      ],
       offset: Number(from),
       limit: Number(limit),
     });
@@ -70,7 +78,7 @@ const getAllEventsByFilters = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }
@@ -91,7 +99,7 @@ const deleteEvent = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }

@@ -3,7 +3,7 @@ const { adminBy } = require('../../helpers/findAdminBy');
 const { checkPassword } = require('../../helpers/checkCredentials');
 // Method to login our admin
 const login = async (req, res) => {
-  const { email = '', pass } = req.body;
+  const { email, pass } = req.body;
   try {
     const admin = await adminBy('email', email);
     if (!admin) {
@@ -37,7 +37,7 @@ const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: '500 Internar server error',
-      message: 'Error MySQL/Express/Node',
+      message: 'Server Error',
     });
     console.log({ error: error.message });
   }
