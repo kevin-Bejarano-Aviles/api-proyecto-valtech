@@ -64,15 +64,16 @@ function usePost(){
           data: data
         };
         const response = await axios(`${url}/admin/events`, options);
-        setNavigationStateEvent('accept')
+        setNavigationStateEvent('accept');
   
       } catch (err) {
-              setNavigationStateEvent('refuse')
+            setNavigationStateEvent('refuse');
+            setErrorCreateEventList(err.response?.data.data.errors)
           }
 
     }
 
-    const postCounselor=async(data,id)=>{
+    const putCounselor=async(data,id)=>{
       try {
         let options = {
           method: 'PUT',
@@ -85,8 +86,8 @@ function usePost(){
         setSumbitState('accept')
   
       } catch (err) {
-              setSumbitState('refuse')
-          }
+          setSumbitState('refuse')
+        }
     }
 
     useEffect(()=>{
@@ -107,7 +108,9 @@ function usePost(){
     return {
         postEvent ,
         postStudent,
-        errorSignUpObject
+        putCounselor,
+        errorSignUpObject,
+        errorCreateEventList
     }
 }
 
