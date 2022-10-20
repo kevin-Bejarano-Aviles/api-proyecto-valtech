@@ -47,7 +47,7 @@ export default function MenuResponsive({ menu, setMenu }) {
             </div>
             <div className="ml-3.5">
               <h4>¡Bienvenido!</h4>
-              <h4 className="text-lightgray">{admin.fullName}</h4>
+              {/* <h4 className='text-lightgray'>{admin.fullName}</h4> */}
             </div>
           </div>
           <div className="mt-10">

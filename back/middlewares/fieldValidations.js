@@ -1,7 +1,7 @@
 const {validationResult} = require('express-validator')
 const path = require('path');
 const fs = require('fs');
-const fieldValidation = (req,res,next)=>{
+const fieldValidations = (req,res,next)=>{
     //If validationResult of "errors" is empty can create a new student, else we will see the error
     const errors = validationResult(req)
     if(!errors.isEmpty()){
@@ -11,7 +11,7 @@ const fieldValidation = (req,res,next)=>{
         return res.status(400).json({
             status:'400 Bad request',
             message:'',
-            response:{
+            data:{
                 errors:errors.mapped()
         }});
         // If we have an image will assign avatar
@@ -20,5 +20,5 @@ const fieldValidation = (req,res,next)=>{
     }
 }
 module.exports = {
-    fieldValidation
+    fieldValidations
 }

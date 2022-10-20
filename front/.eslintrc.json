@@ -6,7 +6,9 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "plugin:react/jsx-runtime",
+        "airbnb",
+        "prettier"
     ],
     "overrides": [
     ],
@@ -14,8 +16,11 @@
         "ecmaVersion": "latest"
     },
     "plugins": [
-        "react"
+       
+        "prettier"
     ],
     "rules": {
+        "singleQuote": "off",
+        "react/react-in-jsx-scope": "off"
     }
 }

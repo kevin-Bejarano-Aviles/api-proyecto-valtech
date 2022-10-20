@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     time: DataTypes.TIME,
     detail: DataTypes.STRING(500),
-    duration: DataTypes.INTEGER,
+    duration: DataTypes.TIME,
     adviser_event_id: DataTypes.INTEGER
   }, {
     sequelize,

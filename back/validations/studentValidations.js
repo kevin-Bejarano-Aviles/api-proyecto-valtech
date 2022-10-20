@@ -15,13 +15,7 @@ module.exports = [ //Export our validations
     body('dni') //This validation is to check if the dni is already in our db
         .custom(existingDni),
     check('school').notEmpty().withMessage('Ingrese su colegio'),
-    check('age').notEmpty().withMessage('Ingrese su edad').isInt({min:18,max:99}).withMessage('La edad debe de ser un numero con un minimo de 18 y un maximo de 99 años '),/* .isLength({min:18,max:99}).withMessage('La edad tiene que ser minimo de 18 años y maximo de 99 años'), *//* body('age').custom(value=>{
-        if(value < 18 || value > 99){
-            return false
-        }else{
-            return true
-        }
-    }).withMessage('La edad tiene que ser mayor a 18 y menor a 99'), */
+    check('age').notEmpty().withMessage('Ingrese su edad').isInt({min:18,max:99}).withMessage('La edad debe de ser un numero con un minimo de 18 y un maximo de 99 años '),
     check('address').notEmpty().withMessage('Ingrese su dirección'),
     check('motive').notEmpty().withMessage('Ingrese el motivo por el cual se acerca a la institución'),
     check('pass').notEmpty().withMessage('Ingrese una contraseña'),
