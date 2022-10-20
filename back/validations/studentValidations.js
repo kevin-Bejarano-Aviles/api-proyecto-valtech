@@ -1,22 +1,11 @@
+const {existingDni,existingEmail,existingUser} = require('../helpers/db-validators');
 // Require student model
-const StudentModel = require('../models').Students //Require student Model
 const { check, body } = require('express-validator');//Require express validator to add validations
 module.exports = [ //Export our validations
     check('fullName').notEmpty().withMessage('Ingrese su nombre y apellido'),
     check('email').isEmail().withMessage('Debe ingresar un email en el campo'),
     body('email') // This validation is to check if the email is already in our db
-        .custom(function (value) {
-            return StudentModel.findOne({
-                where: {
-                    email: value
-                },attributes:['email']
-            })
-                .then(email => {
-                    if (email) { // if email is already in our db will reject 
-                        return Promise.reject('Este email ya tiene una cuenta en nuestra base de datos')
-                    }
-                })
-        }),
+        .custom(existingEmail),
     check('phoneNumber').notEmpty().withMessage('Ingrese su número de celular')
         .isLength({ max: 50 }).withMessage('Máximo 50 números'),
     check('program').notEmpty().withMessage('Ingrese a qué programa ingresará'),
@@ -24,27 +13,9 @@ module.exports = [ //Export our validations
         .isInt().withMessage('El dni solo tiene que tener números sin puntos')
         .isLength({min: 7, max: 50 }).withMessage('El dni debe tener un minimo de 7 caracteres y un maximo de 50 caracteres'), 
     body('dni') //This validation is to check if the dni is already in our db
-        .custom(function (value) {
-            return StudentModel.findOne({
-                where: {
-                    dni: value
-                },attributes:['dni']
-            })
-                .then(dni => {
-                    if (dni) {
-                        // if dni is already in our db will reject 
-                        return Promise.reject('Este dni ya existe en nuestra base de datos')
-                    }
-                })
-        }),
+        .custom(existingDni),
     check('school').notEmpty().withMessage('Ingrese su colegio'),
-    check('age').notEmpty().withMessage('Ingrese su edad').isInt({min:18,max:99}).withMessage('La edad debe de ser un numero con un minimo de 18 y un maximo de 99 años '),/* .isLength({min:18,max:99}).withMessage('La edad tiene que ser minimo de 18 años y maximo de 99 años'), *//* body('age').custom(value=>{
-        if(value < 18 || value > 99){
-            return false
-        }else{
-            return true
-        }
-    }).withMessage('La edad tiene que ser mayor a 18 y menor a 99'), */
+    check('age').notEmpty().withMessage('Ingrese su edad').isInt({min:18,max:99}).withMessage('La edad debe de ser un numero con un minimo de 18 y un maximo de 99 años '),
     check('address').notEmpty().withMessage('Ingrese su dirección'),
     check('motive').notEmpty().withMessage('Ingrese el motivo por el cual se acerca a la institución'),
     check('pass').notEmpty().withMessage('Ingrese una contraseña'),
@@ -66,19 +37,7 @@ module.exports = [ //Export our validations
         }
     }).withMessage('El usuario y el dni deben coincidir'),
     body('user')
-        .custom(function (value) {
-            return StudentModel.findOne({
-                where: {
-                    user: value
-                },attributes:['user']
-            })
-                .then(user => {
-                    if (user) {
-                        // if user is already in our db will reject 
-                        return Promise.reject('Este usuario ya existe en nuestra base de datos')
-                    }
-                })
-        }),
+        .custom(existingUser),
         body('avatar').custom((value,{req})=>{
             value = req.files[0];
             if(!value){
