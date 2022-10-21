@@ -23,7 +23,7 @@ app.use('/admin/auth', require('./routes/admin/auth'));
 app.use('/admin/events', require('./routes/admin/event'));
 app.use('/admin/students', require('./routes/admin/student'));
 
-const dbConections = async () => {
+const dbConnectionServerUp = async () => {
   try {
     await db.sequelize.authenticate();
     console.log('Succesfull connection');
@@ -32,7 +32,7 @@ const dbConections = async () => {
     });
   } catch (error) {
     console.log(`The error is: ${error}`);
-    throw new Error('Error a la hora de iniciar la base de datos');
+    throw new Error('Error when starting the database');
   }
 };
-dbConections();
+dbConnectionServerUp();

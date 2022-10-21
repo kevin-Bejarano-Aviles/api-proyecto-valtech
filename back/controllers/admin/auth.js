@@ -8,21 +8,18 @@ const login = async (req, res) => {
     const admin = await adminBy('email', email);
     if (!admin) {
       return res.status(400).json({
-        status: '400 Bad request',
         message: 'Invalid credentials',
         data: '',
       });
     }
     if (!checkPassword(pass, admin.password)) {
       return res.status(400).json({
-        status: '400 Bad request',
         message: 'Invalid credentials',
         data: '',
       });
     }
     const token = generateJWT(admin.id);
     res.status(200).json({
-      status: '200 OK',
       message: '',
       data: {
         admin: {
@@ -36,10 +33,9 @@ const login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 module.exports = {

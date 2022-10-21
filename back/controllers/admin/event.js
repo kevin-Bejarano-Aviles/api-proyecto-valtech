@@ -26,16 +26,14 @@ const createEvent = async (req, res) => {
     });
     await event.addStudent(studentsId);
     res.status(200).json({
-      status: '200 OK',
       message: 'Event created',
       data: '',
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 const getAllEventsByFilters = async (req, res) => {
@@ -62,13 +60,11 @@ const getAllEventsByFilters = async (req, res) => {
     });
     if (events.length < 1) {
       return res.status(404).json({
-        status: '404 Not found',
         message: 'No results found',
         data: '',
       });
     }
     res.status(200).json({
-      status: '200 OK',
       message: '',
       data: {
         events,
@@ -77,10 +73,9 @@ const getAllEventsByFilters = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 const deleteEvent = async (req, res) => {
@@ -101,7 +96,7 @@ const deleteEvent = async (req, res) => {
       status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 module.exports = {

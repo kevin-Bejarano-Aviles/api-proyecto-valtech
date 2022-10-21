@@ -21,7 +21,6 @@ const fieldValidations = (req, res, next) => {
       );
     }
     return res.status(400).json({
-      status: '400 Bad request',
       message: '',
       data: {
         errors: errors.mapped(),

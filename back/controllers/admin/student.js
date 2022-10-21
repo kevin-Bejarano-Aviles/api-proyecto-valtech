@@ -36,16 +36,14 @@ const addStudent = async (req, res) => {
       password: passHash,
     });
     res.status(200).json({
-      status: '200 OK',
       message: 'Student created successfully',
       data: '',
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 // Method to get all students
@@ -53,16 +51,14 @@ const getAllStudent = async (req, res) => {
   try {
     const students = await StudentModel.findAll();
     res.status(200).json({
-      status: '200 OK',
       message: '',
       data: { students },
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 // Method to get one student
@@ -71,22 +67,19 @@ const getStudent = async (req, res) => {
     const student = await studentBy('id', req.params.id);
     if (!student) {
       return res.status(404).json({
-        status: '404 Not found',
         message: 'user not found',
         data: '',
       });
     }
     res.status(200).json({
-      status: '200 OK',
       message: '',
       data: { student },
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 module.exports = {

@@ -5,7 +5,6 @@ const isAuthorized = async (req, res, next) => {
   let token = req.header('x-token');
   if (!token) {
     return res.status(401).json({
-      status: '401 Unauthorized',
       message: 'No token in request',
       data: '',
     });
@@ -16,7 +15,6 @@ const isAuthorized = async (req, res, next) => {
     const admin = await adminBy('id', id);
     if (!admin) {
       return res.status(401).json({
-        status: '401 Unauthorized',
         message: 'Invalid token user not found',
         data: '',
       });
@@ -25,7 +23,6 @@ const isAuthorized = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({
-      status: '401 Unauthorized',
       message: 'Invalid token',
       data: '',
     });

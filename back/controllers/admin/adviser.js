@@ -1,19 +1,17 @@
-const { Advisers: AdviserModel, Students: StudentModel } = require('../../models');
+const { Adviser: AdviserModel, Students: StudentModel } = require('../../models');
 // Method to get all the advisers
 const getAllAdvisers = async (req, res) => {
   try {
     const advisers = await AdviserModel.findAll();
     res.status(200).json({
-      status: '200 OK',
       message: '',
       data: { advisers },
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 const assignAdviser = async (req, res) => {
@@ -31,16 +29,14 @@ const assignAdviser = async (req, res) => {
       },
     );
     res.status(200).json({
-      status: '200 OK',
       message: `adviser assigned to the student with the id ${id}`,
       data: '',
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.log({ error: error.message });
+    console.error(error);
   }
 };
 
