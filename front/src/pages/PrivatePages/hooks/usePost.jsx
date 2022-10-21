@@ -65,7 +65,6 @@ function usePost(){
       }
     },[navigationStateEvent])
 
- 
     return {
         postEvent ,
         postStudent,

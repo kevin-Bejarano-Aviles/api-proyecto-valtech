@@ -4,10 +4,11 @@ import axios from "axios";
 
 function useDelete( ) {
     const url=process.env.REACT_APP_API_URL
-    const [sumbitState,setSumbitState]=useState('pending')
+    const [sumbitState,setSumbitState]=useState('')
     let token=localStorage.getItem('token');
 
     const deleteEvent=async (id)=>{
+        setSumbitState('pending')
         try {
             let options = {
               method: 'DELETE',
@@ -18,10 +19,12 @@ function useDelete( ) {
             setSumbitState('accept')
       
           } catch (err) {
-            console.log(id);
               setSumbitState('refuse')
             }
     }
+
+
+
     return {
         deleteEvent
     }
