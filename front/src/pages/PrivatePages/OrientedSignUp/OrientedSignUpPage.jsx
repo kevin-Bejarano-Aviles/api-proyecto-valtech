@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {useFormik} from 'formik';
+import {Formik, useFormik} from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -24,10 +24,10 @@ function OrientedSignUpPage() {
     .max(500,'')
     .required('Campo requerido'),
     email:Yup.string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres').required('Campo requerido'),
-    phoneNumber:Yup.number('Ingresar solo numeros').test('len', 'Entre 10 y 50 digitos', val => val.toString().length >= 10 && val.toString().length<=50),
-    program:Yup.string().required('Selecciona una opción'),
-	dni:Yup.number('Ingresar solo numeros').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
-    age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Edad Mínima: 18').max(99,'Edad Máxima: 99'),
+	phoneNumber:Yup.string().matches(/^[0-9]\d{10,50}$/, 'Sólo números entre 10 y 50 dígitos'),    
+	program:Yup.string().required('Selecciona una opción'),
+	phoneNumber:Yup.string().matches(/^[0-9]\d{10,20}$/, 'Sólo números entre 7 y 20 dígitos'),    
+	age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Edad Mínima: 18').max(99,'Edad Máxima: 99'),
     school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
@@ -48,7 +48,7 @@ function OrientedSignUpPage() {
     }
   };
 
-  const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
+  const {handleSubmit,handleChange,errors,values,setFieldValue,isValid}=useFormik({
 	initialValues:{
 		fullName: 'Maria garcia',
 		email: 'Maria.garcie2@gmail.com',
@@ -223,7 +223,7 @@ function OrientedSignUpPage() {
 					/>
 				</div>
 			</section>
-			<Button type='submit' name='Ingresar orientado' />
+			<Button type='submit' name='Ingresar orientado' disabled={!isValid}/>
           </form>
 		 	
         </main>

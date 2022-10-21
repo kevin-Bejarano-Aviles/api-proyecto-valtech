@@ -28,23 +28,6 @@ function EventsPage() {
 	const {deleteEvent}=useDelete();
 	
 
-	
-    // function orderList(list){
-	// 	let orderListArray;
-	// 	if (list.length>0) {
-	// 		if(!orderListband){
-	// 			orderListArray=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
-	// 		}
-	// 		else{
-	
-	// 			orderListArray=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
-	
-	// 		}
-	// 		setEventsList(orderListArray)
-	// 	}
-		
-	// }
-
 	const handleSearch = (event)=>{
 		SetSearch(event.target.value)
 		if (search) {
@@ -103,32 +86,6 @@ function EventsPage() {
 
 	}
 
-
-
-	useEffect(()=>{
-		if(search.length>1){
-			let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
-			setCantEvents(cant.length);
-			setRange(0);
-		}
-		else{
-			let cant=eventList.length
-			setCantEvents(cant)		}
-	},[search])
-
-	useEffect(()=>{
-		let cant=eventList.length
-		setCantEvents(cant)
-	},[eventList])
-
-	useEffect(()=>{
-		getAllEvents();
-	},[])
-
-
-	
-	
-
 	let eventsToShow=(showAll || search.length<1) 
 	
 	? newArray(eventList,initrange,initrange+8) 
@@ -136,6 +93,26 @@ function EventsPage() {
 		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
 		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
+		useEffect(()=>{
+			if(search.length>1){
+				let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
+				setCantEvents(cant.length);
+				setRange(0);
+			}
+			else{
+				let cant=eventList.length
+				setCantEvents(cant)		}
+		},[search])
+	
+		useEffect(()=>{
+			let cant=eventList.length
+			setCantEvents(cant)
+		},[eventList])
+	
+		useEffect(()=>{
+			getAllEvents();
+		},[])
+		
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
