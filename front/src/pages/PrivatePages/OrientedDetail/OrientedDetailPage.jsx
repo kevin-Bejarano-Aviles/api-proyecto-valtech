@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import {useParams,Link,useNavigate} from 'react-router-dom';
@@ -16,11 +15,11 @@ function Oriented() {
   const url=process.env.REACT_APP_API_URL
   const [showAlert, setShowAlert] = useState(true);
   const navigate = useNavigate();
-  const {getOneStudent,studentDetail}=useGet()
+  const {studentDetail,getOneStudent}=useGet() 
 
   useEffect(()=>{
-   getOneStudent(idStudent) 
-  },[])
+    getOneStudent(idStudent) 
+  },[]);
 
 
   return (
@@ -30,7 +29,7 @@ function Oriented() {
         <HeaderAdmin Title='Orientados' />
         
         {
-          studentDetail!=undefined ? (<main
+         studentDetail!=undefined ? (<main
             className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
               showAlert ? 'pb-24' : 'pb-7'
             }`}
