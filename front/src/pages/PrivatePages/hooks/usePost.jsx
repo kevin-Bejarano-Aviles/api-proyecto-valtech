@@ -1,11 +1,11 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
+import axios from "axios";
 import useGet from "./useGet";
 
 
 function usePost(){
+    const {getLastStudent} =useGet();
     const navigate = useNavigate();
     const url=process.env.REACT_APP_API_URL
     const baseUrl= `${url}/admin/students`;
@@ -16,24 +16,24 @@ function usePost(){
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     let token=localStorage.getItem('token')
 
-    const redirectionDetailStudent = async () => {
-      try{
-          let options = {
-              method: 'GET',
-              headers: { 'Content-Type': 'multipart/form-data'
-              ,"x-token":`Bearer ${token}`},
-          };
-          const response = await axios(baseUrl,options)
-          const detailStudent=await response.data.data.students;
-          const lastUserId = detailStudent[detailStudent.length-1].id;
-          setTimeout(() => {
-              navigate(`/orientados/${lastUserId}`);
-            },5000);
-      }
-      catch(err){
-          console.log(err);
-      }
-  }
+  //   const redirectionDetailStudent = async () => {
+  //     try{
+  //         let options = {
+  //             method: 'GET',
+  //             headers: { 'Content-Type': 'multipart/form-data'
+  //             ,"x-token":`Bearer ${token}`},
+  //         };
+  //         const response = await axios(baseUrl,options)
+  //         const detailStudent=await response.data.data.students;
+  //         const lastUserId = detailStudent[detailStudent.length-1].id;
+  //         setTimeout(() => {
+  //             navigate(`/orientados/${lastUserId}`);
+  //           },5000);
+  //     }
+  //     catch(err){
+  //         console.log(err);
+  //     }
+  // }
 
     const postStudent = async (data) => {
 		try {
@@ -72,7 +72,7 @@ function usePost(){
 
     useEffect(()=>{
     if(navigationStateStudent==='accept'){
-      redirectionDetailStudent();
+      getLastStudent()
       setNavigationStateStudent('pending')
     }
     },[navigationStateStudent])

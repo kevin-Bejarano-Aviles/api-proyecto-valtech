@@ -10,7 +10,7 @@ function useGet(){
     const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('');
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
-
+    const navigate = useNavigate();
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
     let token=localStorage.getItem('token');
@@ -22,8 +22,8 @@ function useGet(){
                 headers: { 'Content-Type': 'multipart/form-data'
                 ,"x-token":`Bearer ${token}`},
             };
-            const response = await axios(`${baseUrl}/students`,options)
-            setStudentList(response.data?.data.students)
+            const response = await axios(`${baseUrl}/students`,options);
+            setStudentList(response.data?.data.students);
         }
         catch(err){
             console.log(err);
@@ -76,11 +76,33 @@ function useGet(){
         }
     }
 
+    const getLastStudent= async() => {
+      try{
+        let options = {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'multipart/form-data'
+                        ,"x-token":`Bearer ${token}`},
+                    };
+        console.log('llama a la funcion');
+        const response = await axios(`${baseUrl}/students`,options);
+        let detailStudent=await response.data.data.student;
+        let lastUserId = detailStudent[detailStudent.length-1].id;
+          setTimeout(() => {
+              navigate(`/orientados/${lastUserId}`);
+            },5000);
+      }
+      catch(err){
+          console.log(err);
+      }
+  
+    }
+
     return{
         getAllStudents,
         getOneStudent,
         getAllEvents,
         getAllAdvisers,
+        getLastStudent,
         studentList,
         studentDetail,
         eventList,

@@ -24,7 +24,7 @@ function Orienteds() {
 
   useEffect(() => {
     getAllStudents();
-  });
+  },[]);
 
   const studentsListShow = showAll
     ? studentList
