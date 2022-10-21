@@ -87,7 +87,6 @@ function usePost(){
     return {
         postEvent ,
         postStudent,
-        putCounselor,
         errorSignUpObject,
         errorCreateEventList
     }

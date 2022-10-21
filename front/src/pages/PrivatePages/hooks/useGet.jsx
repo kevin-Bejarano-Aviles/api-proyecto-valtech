@@ -13,15 +13,16 @@ function useGet(){
 
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
-    let token=localStorage.getItem('token');
+    const token=localStorage.getItem('token');
+
+    const options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'multipart/form-data'
+        ,"x-token":`Bearer ${token}`},
+    };
 
     const getAllStudents = async () => {
         try{
-            let options = {
-                method: 'GET',
-                headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-            };
             const response = await axios(`${baseUrl}/students`,options)
             setStudentList(response.data?.data.students)
         }
@@ -32,11 +33,6 @@ function useGet(){
 
     const getOneStudent = async(id)=>{
        try{
-            let options = {
-                method: 'GET',
-                headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-            };
             const response = await axios(`${baseUrl}/students/${id}`,options)
             setStudentDetail(response.data?.data.student)
             console.log((response.data?.data.student))
@@ -48,11 +44,6 @@ function useGet(){
 
     const getAllEvents=async()=>{
         try{
-            let options = {
-                method: 'GET',
-                headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-            };
             const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
         }
@@ -63,11 +54,6 @@ function useGet(){
 
     const getAllAdvisers = async () => {
         try{
-            let options = {
-                method: 'GET',
-                headers: { 'Content-Type': 'multipart/form-data'
-                ,"x-token":`Bearer ${token}`},
-            };
             const response = await axios(`${baseUrl}/advisers`,options);
             setAdviserList(response.data?.data.advisers)
         }
