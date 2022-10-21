@@ -13,11 +13,12 @@ import Select from './components/Select';
 import programs from './programs.json';
 import usePost from '../hooks/usePost';
 import warningImg from '../../../assets/icons/icon_warning.svg'
+import useGet from '../hooks/useGet';
 
 function OrientedSignUpPage() {
 
 	const {postStudent,errorSignUpObject}=usePost();
-
+	
   	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
@@ -65,8 +66,7 @@ function OrientedSignUpPage() {
 	},
 	validationSchema:validationSchemaForm,
 	onSubmit:(data)=>{
-		postStudent(data)
-		
+		postStudent(data);
 	}
   })
   return (

@@ -76,7 +76,7 @@ function useGet(){
         }
     }
 
-    const getLastStudent= async() => {
+    const getLastStudentAndRedirect= async() => {
       try{
         let options = {
                         method: 'GET',
@@ -85,7 +85,8 @@ function useGet(){
                     };
         console.log('llama a la funcion');
         const response = await axios(`${baseUrl}/students`,options);
-        let detailStudent=await response.data.data.student;
+        console.log(response.data.data.students);
+        let detailStudent=await response.data.data.students;
         let lastUserId = detailStudent[detailStudent.length-1].id;
           setTimeout(() => {
               navigate(`/orientados/${lastUserId}`);
@@ -102,7 +103,7 @@ function useGet(){
         getOneStudent,
         getAllEvents,
         getAllAdvisers,
-        getLastStudent,
+        getLastStudentAndRedirect,
         studentList,
         studentDetail,
         eventList,
