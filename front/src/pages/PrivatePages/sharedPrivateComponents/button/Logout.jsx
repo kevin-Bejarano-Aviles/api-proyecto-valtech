@@ -13,7 +13,7 @@ export default function Logout() {
       logOut()
       navigate('/login',{replace:true})
     }
-  /* const url = process.env.REACT_APP_API_URL */ /* It is in test mode */
+   const url = process.env.REACT_APP_API_URL  /* It is in test mode */
 
     const getAll = async () => {
       try {
@@ -23,7 +23,7 @@ export default function Logout() {
       } catch (err) {
         console.log(err);
       }
-    };
+    }; 
 
 
   return (
