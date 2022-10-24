@@ -8,7 +8,7 @@ function useGet(){
 
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
-    let token=localStorage.getItem('token');
+    const token=localStorage.getItem('token');
 
     const { logOut } = useContext(Context);
 
@@ -77,7 +77,7 @@ function useGet(){
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
-            let status=err.response.status;
+            const status=err.response.status;
             if(status===401){
                 LogOut();
             }        
@@ -87,14 +87,14 @@ function useGet(){
     const getLastStudentAndRedirect= async() => {
       try{
         const response = await axios(`${baseUrl}/students`,options);
-        let detailStudent=await response.data.data.students;
-        let lastUserId = detailStudent[detailStudent.length-1].id;
+        const detailStudent= response.data.data.students;
+        const lastUserId = detailStudent[detailStudent.length-1].id;
           setTimeout(() => {
               navigate(`/orientados/${lastUserId}`);
             },5000);
       }
       catch(err){
-        let status=err.response.status;
+        const status=err.response.status;
         if(status===401){
             LogOut();
         }      

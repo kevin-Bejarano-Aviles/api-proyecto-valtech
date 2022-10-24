@@ -4,22 +4,22 @@ import axios from "axios";
 
 function useDelete( ) {
     const url=process.env.REACT_APP_API_URL
-    const [sumbitState,setSumbitState]=useState('')
-    let token=localStorage.getItem('token');
+    const [submitState,setSubmitState]=useState('')
+    const token=localStorage.getItem('token');
 
     const deleteEvent=async (id)=>{
-        setSumbitState('pending')
+        setSubmitState('pending')
         try {
-            let options = {
+            const options = {
               method: 'DELETE',
               headers: { 'Content-Type': 'multipart/form-data'
                     ,"x-token":`Bearer ${token}`}
             };
             const response = await axios(`${url}/admin/events/${id}`, options);
-            setSumbitState('accept')
+            setSubmitState('accept')
       
           } catch (err) {
-              setSumbitState('refuse')
+              setSubmitState('refuse')
             }
     }
 

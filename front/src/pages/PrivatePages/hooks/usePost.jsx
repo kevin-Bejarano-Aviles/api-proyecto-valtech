@@ -10,14 +10,14 @@ function usePost(){
     const [errorSignUpObject,seteErrorSignUpObject]=useState({});
     const [navigationStateStudent,setNavigationStateStudent]=useState('');
     const [navigationStateEvent,setNavigationStateEvent]=useState('')
-    const [sumbitState,setSumbitState]=useState('')
+    const [submit,setSubmitState]=useState('')
     const [errorCreateEventList,setErrorCreateEventList]=useState(null);
-    let token=localStorage.getItem('token')
+    const token=localStorage.getItem('token')
 
     const postStudent = async (data) => {
       setNavigationStateStudent('pending')
 		try {
-		  let options = {
+		  const options = {
 			  method: 'POST',
 			  headers: { 'Content-Type': 'multipart/form-data'
               ,"x-token":`Bearer ${token}`},
@@ -34,9 +34,9 @@ function usePost(){
 	  }
 
     const postEvent = async (values) => {
-      setSumbitState('pending');
+      setSubmitState('pending');
       try {
-        let options = {
+        const options = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8'
           ,'x-token':`Bearer ${token}`},
@@ -44,9 +44,9 @@ function usePost(){
         };
         const response = await axios(`${url}/admin/events`, options);
         navigate('/eventos');
-        setSumbitState('accept');
+        setSubmitState('accept');
       } catch (err) {
-        setSumbitState('reject');
+        setSubmitState('reject');
       }
     };
 
@@ -59,7 +59,7 @@ function usePost(){
 
     useEffect(()=>{
       if(navigationStateEvent==='accept'){
-          setSumbitState('');
+          setSubmitState('');
       }
     },[navigationStateEvent]);
 

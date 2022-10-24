@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function usePut() {
-    const [sumbitState,setSumbitState]=useState('pending')
+    const [submitState,setSubmitState]=useState('pending')
 
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
-    let token=localStorage.getItem('token');
+    const token=localStorage.getItem('token');
     const putCounselor=async(data,id)=>{
         try {
           let options = {
@@ -17,10 +17,10 @@ function usePut() {
             data: data
           };
           const response = await axios(`${url}/admin/advisers/student/${id}`, options);
-          setSumbitState('accept')
+          setSubmitState('accept')
     
         } catch (err) {
-            setSumbitState('refuse')
+            setSubmitState('refuse')
             console.log(err);
           }
       }
