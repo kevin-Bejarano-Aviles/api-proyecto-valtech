@@ -25,16 +25,16 @@ function usePost(){
 			  data: data
 		  };
 		  const response = await axios(`${url}/admin/students`, options);
-        setNavigationStateStudent('accept')
+        setNavigationStateStudent('accept');
 
 		} catch (err) {
-            seteErrorSignUpObject(err.response?.data.data.errors)
-            setNavigationStateStudent('reject')
+            seteErrorSignUpObject(err.response?.data.data.errors);
+            setNavigationStateStudent('reject');
         }
 	  }
 
     const postEvent = async (values) => {
-      setSumbitState('pending')
+      setSumbitState('pending');
       try {
         let options = {
           method: 'POST',
@@ -44,24 +44,24 @@ function usePost(){
         };
         const response = await axios(`${url}/admin/events`, options);
         navigate('/eventos');
-        setSumbitState('accept')
+        setSumbitState('accept');
       } catch (err) {
-        setSumbitState('reject')
+        setSumbitState('reject');
       }
     };
 
     useEffect(()=>{
     if(navigationStateStudent==='accept'){
       getLastStudentAndRedirect();
-      setNavigationStateStudent('')
+      setNavigationStateStudent('');
     }
     },[navigationStateStudent])
 
     useEffect(()=>{
       if(navigationStateEvent==='accept'){
-          setSumbitState('')
+          setSumbitState('');
       }
-    },[navigationStateEvent])
+    },[navigationStateEvent]);
 
     return {
         postEvent ,
