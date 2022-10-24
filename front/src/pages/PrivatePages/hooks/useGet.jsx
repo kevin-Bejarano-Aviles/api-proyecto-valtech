@@ -1,9 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import Context from "../../../context/Context";
 import axios from "axios";
 
 
 function useGet(){
+
+    const url=process.env.REACT_APP_API_URL;
+    const baseUrl =`${url}/admin`;
+    let token=localStorage.getItem('token');
+
+    const { logOut } = useContext(Context);
+
     const [studentList,setStudentList]=useState([]);
     const [loading,setLoading]=useState('pending');
     const [studentDetail, setStudentDetail] = useState();
@@ -11,9 +19,11 @@ function useGet(){
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
     const navigate = useNavigate();
-    const url=process.env.REACT_APP_API_URL;
-    const baseUrl =`${url}/admin`;
-    let token=localStorage.getItem('token');
+    
+    const LogOut = () => {
+        logOut();
+        navigate('/login', { replace: true })
+    }
 
     const getAllStudents = async () => {
         try{
@@ -26,9 +36,12 @@ function useGet(){
             setStudentList(response.data?.data.students);
         }
         catch(err){
-            console.log(err);
+            let status=err.response.status;
+            if(status===401){
+                LogOut();
+            }
         }
-    }
+    };
 
     const getOneStudent = async(id)=>{
        try{
@@ -41,9 +54,12 @@ function useGet(){
             setStudentDetail(response.data?.data.student)
         }
         catch(err){
-            console.log(err);
+            let status=err.response.status;
+            if(status===401){
+                LogOut();
+            }
         }
-    }
+    };
 
     const getAllEvents=async()=>{
         try{
@@ -57,9 +73,12 @@ function useGet(){
             console.log(response.data?.data.events);
         }
         catch(err){
-            console.log(err);
+            let status=err.response.status;
+            if(status===401){
+                LogOut();
+            }
         }
-    }
+    };
 
     const getAllAdvisers = async () => {
         try{
@@ -72,9 +91,11 @@ function useGet(){
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
-            console.error(`${err.response.status}: ${err.response.statusText}`);
-        }
-    }
+            let status=err.response.status;
+            if(status===401){
+                LogOut();
+            }        }
+    };
 
     const getLastStudentAndRedirect= async() => {
       try{
@@ -91,10 +112,13 @@ function useGet(){
             },5000);
       }
       catch(err){
-          console.log(err);
-      }
+        let status=err.response.status;
+        if(status===401){
+            LogOut();
+        }      
+        }
   
-    }
+    };
 
     return{
         getAllStudents,
