@@ -83,9 +83,7 @@ function useGet(){
                         headers: { 'Content-Type': 'multipart/form-data'
                         ,"x-token":`Bearer ${token}`},
                     };
-        console.log('llama a la funcion');
         const response = await axios(`${baseUrl}/students`,options);
-        console.log(response.data.data.students);
         let detailStudent=await response.data.data.students;
         let lastUserId = detailStudent[detailStudent.length-1].id;
           setTimeout(() => {
