@@ -20,17 +20,17 @@ function useGet(){
     const [adviserList,setAdviserList]=useState([]);
     const navigate = useNavigate();
 
+    const LogOut = () => {
+        logOut();
+        navigate('/login', { replace: true })
+    }
+    
     const options= {
         method: 'GET',
         headers: { 'Content-Type': 'multipart/form-data'
         ,"x-token":`Bearer ${token}`},
     };
     
-    const LogOut = () => {
-        logOut();
-        navigate('/login', { replace: true })
-    }
-
     const getAllStudents = async () => {
         try{
             
