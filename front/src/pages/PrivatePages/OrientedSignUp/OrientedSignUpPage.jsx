@@ -207,6 +207,7 @@ function OrientedSignUpPage() {
 						label='Contraseña'
 						name='pass'
 						placeholder='Ingresar contraseña'
+						type='password'
 						onChange={handleChange}
 						values={values.pass}
 						error={errors.pass}
@@ -216,6 +217,7 @@ function OrientedSignUpPage() {
 						label='Repetir Contraseña'
 						name='confirmPass'
 						placeholder='Repetir contraseña'
+						type='password'
 						onChange={handleChange}
 						values={values.confirmPass}
 						error={errors.confirmPass}
