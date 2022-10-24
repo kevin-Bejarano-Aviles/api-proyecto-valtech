@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import useGet from "./useGet";
 
-
 function usePost(){
     const {getLastStudentAndRedirect} =useGet();
     const navigate = useNavigate();
@@ -47,7 +46,6 @@ function usePost(){
         navigate('/eventos');
         setSumbitState('accept')
       } catch (err) {
-        console.error(`${err.response.status}: ${err.response.statusText}`);
         setSumbitState('reject')
       }
     };

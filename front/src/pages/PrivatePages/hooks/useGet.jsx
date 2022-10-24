@@ -15,7 +15,7 @@ function useGet(){
     const [studentList,setStudentList]=useState([]);
     const [loading,setLoading]=useState('pending');
     const [studentDetail, setStudentDetail] = useState();
-    const [errorMsgGetStudents,setErrorMsgGetStudents]=useState('');
+    const [errorMsg,setErrorMsg]=useState('');
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ function useGet(){
         logOut();
         navigate('/login', { replace: true })
     }
-    
+
     const options= {
         method: 'GET',
         headers: { 'Content-Type': 'multipart/form-data'
@@ -33,7 +33,6 @@ function useGet(){
     
     const getAllStudents = async () => {
         try{
-            
             const response = await axios(`${baseUrl}/students`,options);
             setStudentList(response.data?.data.students);
         }
@@ -42,6 +41,7 @@ function useGet(){
             if(status===401){
                 LogOut();
             }
+           
         }
     };
 
@@ -80,7 +80,8 @@ function useGet(){
             let status=err.response.status;
             if(status===401){
                 LogOut();
-            }        }
+            }        
+        }
     };
 
     const getLastStudentAndRedirect= async() => {
