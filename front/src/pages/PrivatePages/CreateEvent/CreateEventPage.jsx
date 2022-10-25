@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
+import { getValidationSchema } from './getValidationSchema';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import NameInput from './components/NameInput';
@@ -48,19 +46,9 @@ function CreateEventPage() {
       duration: '',
       detail: '',
     },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .max(200, 'Sólo se aceptan 200 caracteres o menos')
-        .required('Requerido'),
-      adviser_event_id: Yup.string().required('Requerido'),
-      studentsId: Yup.array().of(Yup.string()).min(1, 'Requerido'),
-      date: Yup.string().required('Requerido'),
-      time: Yup.string().required('Requerido'),
-      duration: Yup.string().required('Requerido'),
-      detail: Yup.string().required('Requerido'),
-    }),
-    onSubmit: (values) => {
-      postEvent(values)
+    validationSchema: getValidationSchema(),
+    onSubmit: values => {
+      postEvent(values);
     }
   });
 
