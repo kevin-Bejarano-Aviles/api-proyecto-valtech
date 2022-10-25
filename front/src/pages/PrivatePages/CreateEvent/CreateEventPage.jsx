@@ -20,18 +20,23 @@ import usePost from '../hooks/usePost';
 function CreateEventPage() {
   const { getAllAdvisers, getAllStudents, studentList, adviserList } = useGet();
   const { postEvent } = usePost();
-  const [areInputVisible, setAreInputVisible] = useState({
+  const initialValues = {
     adviser_event_id: false,
     studentsId: false,
     date: false,
     time: false,
     duration: false
-  });
+  };
+  const [areInputVisible, setAreInputVisible] = useState(initialValues);
 
   useEffect(() => {
     getAllStudents();
     getAllAdvisers();
   },[]);
+
+  const handleAreInputVisible = newState => {
+    setAreInputVisible(newState);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -75,13 +80,8 @@ function CreateEventPage() {
                   label='Nombre del evento'
                   name='name'
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: false,
-                    studentsId: false,
-                    date: false,
-                    time: false,
-                    duration: false
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
 
                 <AdviserEventIdInput
@@ -90,13 +90,8 @@ function CreateEventPage() {
                   adviserObjectList={adviserList}
                   areInputVisible={areInputVisible}
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: true,
-                    studentsId: false,
-                    date: false,
-                    time: false,
-                    duration: false
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
 
                 <StudentsIdInput
@@ -105,13 +100,8 @@ function CreateEventPage() {
                   studentObjectList={studentList}
                   areInputVisible={areInputVisible}
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: false,
-                    studentsId: true,
-                    date: false,
-                    time: false,
-                    duration: false
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
               </div>
             </section>
@@ -124,13 +114,8 @@ function CreateEventPage() {
                   name='date'
                   areInputVisible={areInputVisible}
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: false,
-                    studentsId: false,
-                    date: true,
-                    time: false,
-                    duration: false
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
 
                 <TimeInput
@@ -138,13 +123,8 @@ function CreateEventPage() {
                   name='time'
                   areInputVisible={areInputVisible}
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: false,
-                    studentsId: false,
-                    date: false,
-                    time: true,
-                    duration: false
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
 
                 <DurationInput
@@ -152,13 +132,8 @@ function CreateEventPage() {
                   name='duration'
                   areInputVisible={areInputVisible}
                   formik={formik}
-                  onChangeInputVisibility={() => setAreInputVisible({
-                    adviser_event_id: false,
-                    studentsId: false,
-                    date: false,
-                    time: false,
-                    duration: true
-                  })}
+                  initialValues={initialValues}
+                  handleAreInputVisible={handleAreInputVisible}
                 />
               </div>
             </section>
@@ -168,21 +143,15 @@ function CreateEventPage() {
               <DetailInput
                 label='Comentarios del evento'
                 name='detail'
-                areInputVisible={areInputVisible}
                 formik={formik}
-                onChangeInputVisibility={() => setAreInputVisible({
-                  adviser_event_id: false,
-                  studentsId: false,
-                  date: false,
-                  time: false,
-                  duration: false
-                })}
+                initialValues={initialValues}
+                handleAreInputVisible={handleAreInputVisible}
               />
             </section>
             <Button
               type='submit'
               name='Agendar evento'
-              disabled={Object.values(formik.values).some(value => value === '')}
+              disabled={!formik.isValid}
             />
           </form>
         </main>

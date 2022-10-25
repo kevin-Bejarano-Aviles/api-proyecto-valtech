@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import iconCalendar from '../../../../../assets/icons/privatePage/icon-calendar.svg';
 import './DateInput.css';
 
-const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibility }) => {
+const DateInput = ({ label, name, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
   const [selectedDate, setSelectedDate] = useState('');
 
   const handleSelectedDate = date => {
@@ -28,6 +28,13 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
     handleChangeFormikValue();
   },[selectedDate]);
 
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      date: !(areInputVisible.date)
+    });
+  };
+
   return (
     <div className='relative flex flex-col tablet:max-w-[320px] gap-1 tablet:grow'>
       <label htmlFor={name} className='text-sm'>{label}</label>
@@ -36,7 +43,7 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
           name={name}
           id={name}
           className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none'
-          onClick={onChangeInputVisibility}
+          onClick={handleClick}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >

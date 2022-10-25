@@ -1,17 +1,13 @@
-import { React, useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { React, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useGet from '../hooks/useGet';
 import Button from '../sharedPrivateComponents/button/Button';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import CardText from './components/CardText';
-import Context from '../../../context/Context';
 
 function HomePage() {
-  const url=process.env.REACT_APP_API_URL
-  const baseUrl =`${url}/admin/students`
   const admin = JSON.parse(localStorage.getItem('admin'));
   const adminFirstName = admin.fullName.split(' ')[0];
   const {studentList,getAllStudents}=useGet();
