@@ -1,4 +1,5 @@
-import {useState,useParams,useEffect, Link} from 'react';
+import {useState, useEffect} from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
@@ -7,7 +8,7 @@ import useGet from '../hooks/useGet';
 
 function Oriented() {
   const params = useParams();
-  const idStudent=params.id;
+  const idStudent = params.id;
   const [showAlert, setShowAlert] = useState(true);
   const {studentDetail,getOneStudent}=useGet() 
 
