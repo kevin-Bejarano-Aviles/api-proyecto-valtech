@@ -1,4 +1,3 @@
-'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,68 +6,68 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       fullName: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       email: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       phoneNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       program: {
-        type: Sequelize.STRING(100)
+        type: Sequelize.STRING(100),
       },
       avatar: {
-        type: Sequelize.STRING(100)
+        type: Sequelize.STRING(100),
       },
       dni: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       school: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       address: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       motive: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       user: {
-        type: Sequelize.STRING(45)
+        type: Sequelize.STRING(45),
       },
       password: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       adviserId: {
         type: Sequelize.INTEGER,
-        references:{
-          model:'Advisers',
-          key:'id'
+        references: {
+          model: 'Advisers',
+          key: 'id',
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
-      deletedAt:{
+      deletedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('Students');
-  }
+  },
 };

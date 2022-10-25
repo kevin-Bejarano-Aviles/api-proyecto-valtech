@@ -1,4 +1,3 @@
-'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,47 +6,47 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.STRING(200)
+        type: Sequelize.STRING(200),
       },
       date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       time: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       detail: {
-        type: Sequelize.STRING(500)
+        type: Sequelize.STRING(500),
       },
       duration: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       adviser_event_id: {
         type: Sequelize.INTEGER,
-        references:{
-          model:'Advisers',
-          key:'id'
+        references: {
+          model: 'Advisers',
+          key: 'id',
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
-      deletedAt:{
+      deletedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('Events');
-  }
+  },
 };
