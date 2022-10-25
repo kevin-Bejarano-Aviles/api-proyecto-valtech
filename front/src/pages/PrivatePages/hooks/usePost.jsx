@@ -8,10 +8,10 @@ function usePost(){
     const navigate = useNavigate();
     const url=process.env.REACT_APP_API_URL
     const [errorSignUpObject,seteErrorSignUpObject]=useState({});
+    const [errorCreateEventObject,seteErrorCreateEventObject]=useState({});
     const [navigationStateStudent,setNavigationStateStudent]=useState('');
     const [navigationStateEvent,setNavigationStateEvent]=useState('')
     const [submit,setSubmitState]=useState('')
-    const [errorCreateEventList,setErrorCreateEventList]=useState(null);
     const token=localStorage.getItem('token')
 
     const postStudent = async (data) => {
@@ -25,7 +25,7 @@ function usePost(){
 			  data: data
 		  };
 		  const response = await axios(`${url}/admin/students`, options);
-        setNavigationStateStudent('accept');
+      setNavigationStateStudent('accept');
 
 		} catch (err) {
             seteErrorSignUpObject(err.response?.data.data.errors);
@@ -46,6 +46,7 @@ function usePost(){
         navigate('/eventos');
         setSubmitState('accept');
       } catch (err) {
+        seteErrorCreateEventObject(err.response?.data.data.errors);
         setSubmitState('reject');
       }
     };
@@ -67,7 +68,7 @@ function usePost(){
         postEvent ,
         postStudent,
         errorSignUpObject,
-        errorCreateEventList
+        errorCreateEventObject
     }
 }
 
