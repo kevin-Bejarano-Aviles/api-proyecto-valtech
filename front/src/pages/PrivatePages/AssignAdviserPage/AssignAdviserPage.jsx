@@ -95,6 +95,14 @@ function AssignAdviserPage() {
             <h2 className='text-2xl text-blue  mt-8'>
               Selección de un Orientador Referente
             </h2>
+            <div  className={
+                        hideCard ||
+                        (studentDetail && studentDetail.adviserId === null)
+                          ? 'block'
+                          : 'hidden'
+                      }>
+              <h4>Referente</h4>
+            </div>
 
             <div className=''>
               <Formik
@@ -117,7 +125,7 @@ function AssignAdviserPage() {
                     >
                       <div>
                         <Field
-                          className='border-[3px] border-black'
+                          className='border-[1px] rounded-lg border-bordergray mt-4'
                           name='idAdviser'
                           as='select'
                           onClick={() => setcardAdviserIsVisible(true)}
