@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import iconCalendar from '../../../../../assets/icons/privatePage/icon-calendar.svg';
 import './DateInput.css';
 
-const DateInput = ({ label, name, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
+const DateInput = ({ label, name, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedDate, setSelectedDate] = useState('');
 
   const handleSelectedDate = date => {
@@ -59,6 +59,9 @@ const DateInput = ({ label, name, areInputVisible, formik, initialValues, handle
       />
       {formik.touched.date && formik.errors.date ? (
         <div className='text-red-500'>{formik.errors.date}</div>
+      ) : null}
+      {errorCreateEventObject.date ? (
+        <div className='text-red-500'>{errorCreateEventObject.date.msg}</div>
       ) : null}
     </div>
   );

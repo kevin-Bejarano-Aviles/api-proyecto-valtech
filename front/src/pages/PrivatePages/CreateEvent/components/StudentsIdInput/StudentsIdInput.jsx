@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import iconSearch from '../../../../../assets/icons/privatePage/icon-search.svg';
 import './StudentsIdInput.css';
 
-function StudentsIdInput({ label, name, studentObjectList, areInputVisible, formik, initialValues, handleAreInputVisible }) {
+function StudentsIdInput({ label, name, studentObjectList, areInputVisible, formik, errorCreateEventObject,initialValues, handleAreInputVisible }) {
   const [selectedStudents, setSelectedStudents] = useState({ids: [], names: []});
 
   const handleChangeSelectedStudents = (event, studentId, studentFullName) => {
@@ -76,6 +76,9 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
       </ul>
       {formik.touched.studentsId && formik.errors.studentsId ? (
         <div className='text-red-500'>{formik.errors.studentsId}</div>
+      ) : null}
+      {errorCreateEventObject.studentsId ? (
+        <div className='text-red-500'>{errorCreateEventObject.studentsId.msg}</div>
       ) : null}
   </div>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import iconSearch from '../../../../assets/icons/privatePage/icon-search.svg';
 
-const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
+const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedAdviser, setSelectedAdviser] = useState(null);
 
   const handleChangeSelectedAdviser = event => {
@@ -53,6 +53,9 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
       </ul>
       {formik.touched.adviser_event_id && formik.errors.adviser_event_id ? (
         <div className='text-red-500'>{formik.errors.adviser_event_id}</div>
+      ) : null}
+      {errorCreateEventObject.adviser_event_id ? (
+        <div className='text-red-500'>{errorCreateEventObject.adviser_event_id.msg}</div>
       ) : null}
     </div>
   );

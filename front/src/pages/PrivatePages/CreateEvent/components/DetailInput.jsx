@@ -1,4 +1,4 @@
-const DetailInput = ({ label, name, formik, initialValues, handleAreInputVisible }) => {
+const DetailInput = ({ label, name, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
 
   const handleClick = () => {
     handleAreInputVisible({...initialValues});
@@ -21,6 +21,9 @@ const DetailInput = ({ label, name, formik, initialValues, handleAreInputVisible
       />
       {formik.touched.detail && formik.errors.detail ? (
         <div className='text-red-500'>{formik.errors.detail}</div>
+      ) : null}
+      {errorCreateEventObject.detail ? (
+        <div className='text-red-500'>{errorCreateEventObject.detail.msg}</div>
       ) : null}
     </>
   );

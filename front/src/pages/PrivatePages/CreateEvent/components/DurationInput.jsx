@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import iconArrow from '../../../../assets/icons/privatePage/list-control.svg';
 
-const DurationInput = ({ label, name, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
+const DurationInput = ({ label, name, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedDuration, setSelectedDuration] = useState('');
 
   const durationInputValues = [];
@@ -73,6 +73,9 @@ const DurationInput = ({ label, name, areInputVisible, formik, initialValues, ha
       </ul>
       {formik.touched.duration && formik.errors.duration ? (
         <div className='text-red-500'>{formik.errors.duration}</div>
+      ) : null}
+      {errorCreateEventObject.duration ? (
+        <div className='text-red-500'>{errorCreateEventObject.duration.msg}</div>
       ) : null}
   </div>
   );
