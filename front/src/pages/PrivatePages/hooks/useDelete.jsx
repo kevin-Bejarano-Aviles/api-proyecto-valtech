@@ -24,8 +24,6 @@ function useDelete( ) {
             }
     }
 
-
-
     return {
         deleteEvent
     }
