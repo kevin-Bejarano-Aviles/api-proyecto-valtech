@@ -12,7 +12,9 @@ export default function ErrorPage() {
 
   return (
     <div className='bg-white'>
-      <header className=''>{!state && <Header />}</header>
+      <header>
+        <Header />
+      </header>
       <div className='bg-imgheader h-[553px] w-full flex flex-col '>
         <img
           className='mt-[19px] h-[390px] w-[390px] ml-auto mr-auto'
@@ -24,17 +26,12 @@ export default function ErrorPage() {
         </h1>
         <h2 className='mt-3.5 mx-auto text-center tablet:mx-0  font-normal text-blue text-xl tablet:text-2xl'>
           Prueba buscando en la
-          {!state ? (
-            <Link to='/' className='text-green font-bold'>
-              {' '}
-              página de inicio
-            </Link>
-          ) : (
-            <Link to='/inicio' className='text-green font-bold'>
-              {' '}
-              página de inicio
-            </Link>
-          )}
+          <Link
+            to={!state ? '/' : '/inicio'}
+            className='text-green font-bold ml-2'
+          >
+            página de inicio
+          </Link>
         </h2>
       </div>
       <Proposal />

@@ -7,40 +7,41 @@ import { useParams, NavLink } from 'react-router-dom';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
 import { Formik, Form, Field } from 'formik';
+import CardStudents from './Components/CardStudents';
+import CardAdivser from './Components/CardAdivser';
 
 function AssignAdviserPage() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
   const [selectOption, setSelectOption] = useState('');
   const [isEmpty, setIsEmpty] = useState(true);
   const [viewButton, setViewButton] = useState(true);
   const [hideMessage, setHideMessage] = useState(true);
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const clickShowAlert = () => {
+  const handleClickShowAlert = () => {
     setShowAlert(!showAlert);
   };
 
   const params = useParams();
   const idStudent = params.id;
-  let token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
-    if (isVisible === !true) {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
+      cardAdviserIsVisible === !true ? setIsEmpty(true) : setIsEmpty(false)
   });
+
 
   /* I bring the oriented data*/
   const { studentDetail, getOneStudent } = useGet();
 
-  useEffect(() => {
-    getOneStudent(idStudent);
-  }, []);
   /* I bring the data of the advisers  */
 
   const { adviserList, getAllAdvisers } = useGet();
+
+  //---
+
   useEffect(() => {
+    getOneStudent(idStudent);
     getAllAdvisers();
   }, []);
 
@@ -80,7 +81,173 @@ function AssignAdviserPage() {
               Asignación de Orientador Referente
             </h2>
 
-            <div className='min-w-[365px] py-4 flex flex-row mobile:h-[475px]  mobile:mx-auto  tablet:h-auto  mt-4  mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
+            <CardStudents
+              avatar={studentDetail && studentDetail.avatar}
+              ruta={'students'}
+              fullName={studentDetail && studentDetail.fullName}
+              email={studentDetail && studentDetail.email}
+              school={studentDetail && studentDetail.school}
+              phoneNumber={studentDetail && studentDetail.phoneNumber}
+              program={studentDetail && studentDetail.program}
+            />
+          </section>
+
+          <section>
+            {/* select adviser */}
+            <h2 className='text-2xl text-blue  mt-8'>
+              Selección de un Orientador Referente
+            </h2>
+
+            <div className=''>
+              <Formik
+                initialValues={{
+                  idAdviser: '',
+                }}
+                onSubmit={(idAdviser) => {
+                  assignAdviser(idAdviser);
+                }}
+              >
+                {() => (
+                  <Form className='formulario'>
+                    <div
+                      className={
+                        hideCard ||
+                        (studentDetail && studentDetail.adviserId === null)
+                          ? 'block'
+                          : 'hidden'
+                      }
+                    >
+                      <div>
+                        <Field
+                          className='border-[3px] border-black'
+                          name='idAdviser'
+                          as='select'
+                          onClick={() => setcardAdviserIsVisible(true)}
+                        >
+                          <option hidden value='Seleccionar orientador'>
+                            Seleccionar orientador
+                          </option>
+                          {adviserList.map((elemento) => (
+                            <option
+                              onChange={(a) => {
+                                const valueOption = a.target.value;
+                                setSelectOption(valueOption);
+                              }}
+                              key={elemento.id}
+                              value={[
+                                `${elemento.id}`,
+                                ` ${elemento.email}`,
+                                ` ${elemento.phoneNumber}`,
+                              ]}
+                            >
+                              {elemento.fullName}
+                            </option>
+                          ))}
+                        </Field>
+                      </div>
+                    </div>
+
+                    <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
+                      {/* show the data of the adviser */}
+                      <div className='mt-16'>
+                        <CardAdivser
+                          avatar={''}
+                          fullName={'Nombre Orientador'}
+                          email={'Orientador@mail.com'}
+                          phoneNumber={'1125464851'}
+                        />
+                      </div>
+                    </div>
+                    {/* buttons to send the data */}
+                    <div
+                      className='ml-10 mt-16 mb-8 flex flex-row '
+                      onClick={() => setViewButton(false)}
+                    >
+                      <div
+                        className={`${showAlert ? 'hidden' : 'block'} ${
+                          hideCard ||
+                          (studentDetail && studentDetail.adviserId === null)
+                            ? 'block'
+                            : 'hidden'
+                        } `}
+                        /* onClick={clickShowAlert} */
+                      >
+                        <div
+                          className='relative left-[-40px]'
+                          /* onClick={clickShowAlert} */
+                        >
+                          <Button
+                            type='submit'
+                            name='Asignar orientador/a'
+                            disabled={isEmpty}
+                           
+                          />
+                        </div>
+                      </div>
+                      <div className='hidden'>.</div>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+
+            {/* I show the data of the selected adviser */}
+            <div className={hideCard ? 'hidden' : 'block'}>
+              {studentDetail && studentDetail.adviserId !== null ? (
+                <CardAdivser
+                  avatar={studentDetail && studentDetail.Adviser.avatar}
+                  fullName={studentDetail && studentDetail.Adviser.fullName}
+                  email={studentDetail && studentDetail.Adviser.email}
+                  phoneNumber={studentDetail && studentDetail.phoneNumber}
+                />
+              ) : (
+                ''
+              )}
+
+              {/* button 'Volver' */}
+              <div
+                className={
+                  studentDetail && studentDetail.adviserId !== null
+                    ? 'block'
+                    : 'hidden'
+                }
+              >
+                <div className='flex flex-row ml-10 mt-16 relative bottom-10 items-center'>
+                  <Button
+                    type='button'
+                    handleFunction={() => setHideCard(true)}
+                    name='Modificar orientador/a'
+                  />
+                  <div className='ml-4 underline'>
+                    <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* show alert */}
+            <div className='mt-24 ml-10'>
+              <div className={!hideMessage ? 'hidden' : 'block'}>
+                {showAlert ? (
+                  <Alert
+                    message='El orientado ya fue asignado a su referente.'
+                    onclick={() => setHideMessage(false)}
+                  />
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+export default AssignAdviserPage;
+
+{
+  /* <div className='min-w-[365px] py-4 flex flex-row mobile:h-[475px]  mobile:mx-auto  tablet:h-auto  mt-4  mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
               <div className='w-[178px] h-[178px] flex justify-center items-center laptop:border-r-[1px]  laptop:border-bordergray'>
                 <img
                   className='w-[140px] h-[140px] rounded-full'
@@ -127,236 +294,45 @@ function AssignAdviserPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-
-          <section>
-            {/* select adviser */}
-            <h2 className='text-2xl text-blue  mt-8'>
-              Selección de un Orientador Referente
-            </h2>
-
-            <div className=''>
-              <Formik
-                initialValues={{
-                  idAdviser: '',
-                }}
-                onSubmit={(idAdviser) => {
-                  assignAdviser(idAdviser);
-                }}
-              >
-                {() => (
-                  <Form className='formulario'>
-                    <div
-                      className={
-                        hideCard ||
-                        (studentDetail && studentDetail.adviserId === null)
-                          ? 'block'
-                          : 'hidden'
-                      }
-                    >
-                      <div>
-                        <Field
-                          className='border-[3px] border-black'
-                          name='idAdviser'
-                          as='select'
-                          onClick={() => setIsVisible(true)}
-                        >
-                          <option hidden value='Seleccionar orientador'>
-                            Seleccionar orientador
-                          </option>
-                          {adviserList.map((elemento) => (
-                            <option
-                              onChange={(a) => {
-                                const valueOption = a.target.value;
-                                setSelectOption(valueOption);
-                              }}
-                              key={elemento.id}
-                              value={[
-                                `${elemento.id}`,
-                                ` ${elemento.email}`,
-                                ` ${elemento.phoneNumber}`,
-                              ]}
-                            >
-                              {elemento.fullName}
-                            </option>
-                          ))}
-                        </Field>
-                      </div>
-                    </div>
-
-                    <div className={isVisible ? 'block' : 'hidden'}>
-                      {/* show the data of the adviser */}
-                      <div className=' mt-20 mobile:mx-auto py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
-                        <div className='w-[178px] h-[178px] flex justify-center items-center laptop:border-r-[1px]  laptop:border-bordergray'>
-                          <img
-                            className='w-[140px] h-[140px] rounded-full'
-                            src={
-                              ''
-                                ? require(`../../../assets/adviser/${''}`)
-                                : 'https://i.imgur.com/b08hxPY.png'
-                            }
-                            alt={selectOption}
-                          />
-                        </div>
-                        <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
-                          <div className=' mobile:left-40  lap_tablet:mx-auto  tablet:mx-auto'>
-                            <h2 className='text-2xl font-normal ml-6 '>
-                              Nombre Orientador
-                            </h2>
-                            <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>
-                              Orientador
-                            </h4>
-                          </div>
-                          <div className='flex flex-row  h-auto mobile:flex-col tablet:flex-row'>
-                            <div className='max-w-1/2 pl-6 h-auto '>
-                              <h5 className=' text-xs text-lightgray'>mail</h5>
-                              <p className='w-auto h-auto text-[16pxpx] leading-[26px] text-blue flex justify-center items-center'>
-                                Orientador@mail.com
-                              </p>
-                            </div>
-                            <div className='max-w-1/2   px-6 mobile:flex-col tablet:flex-row'>
-                              <h5 className=' text-xs text-lightgray'>
-                                Telefono
-                              </h5>
-                              <p className=' text-[16pxpx] leading-[26px] text-blue '>
-                                1125464851
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* buttons to send the data */}
-                    <div
-                      className='ml-10 mt-16 mb-8 flex flex-row '
-                      onClick={() => setViewButton(false)}
-                    >
-                      <div
-                        className={`${showAlert ? 'hidden' : 'block'} ${
-                          hideCard ||
-                          (studentDetail && studentDetail.adviserId === null)
-                            ? 'block'
-                            : 'hidden'
-                        } `}
-                        /* onClick={clickShowAlert} */
-                      >
-                        <div
-                          className='relative left-[-40px]'
-                          onClick={clickShowAlert}
-                        >
-                          <Button
-                            type='submit'
-                            name='Asignar orientador/a'
-                            disabled={isEmpty}
-                          />
-                        </div>
-                      </div>
-                      <div className='hidden'>.</div>
-                    </div>
-                    {/*                     <div className={viewButton ? 'hidden' : 'block'}>
-                      <div className='flex flex-row  relative bottom-10 items-center'>
-                        <Button
-                          type='submit'
-                          name='Modificar orientador/a'
-                          disabled={isEmpty}
-                        />
-                        <div className='ml-4 underline'>
-                          <NavLink to={`/orientados/${params.id}`}>
-                            Volver
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div> */}
-                  </Form>
-                )}
-              </Formik>
-            </div>
-
-            {/* I show the data of the selected adviser */}
-            <div className={hideCard ? 'hidden' : 'block'}>
-              {studentDetail && studentDetail.adviserId !== null ? (
-                <div className=' mobile:mx-auto py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
-                  <div className='w-[178px] h-[178px] flex justify-center items-center laptop:border-r-[1px]  laptop:border-bordergray'>
-                    <img
-                      className='w-[140px] h-[140px] rounded-full'
-                      src={
-                        studentDetail && studentDetail.Adviser.avatar
-                          ? require(`../../../assets/adviser/${
-                              studentDetail && studentDetail.Adviser.avatar
-                            }`)
-                          : 'https://i.imgur.com/b08hxPY.png'
-                      }
-                      alt={selectOption}
-                    />
-                  </div>
-                  <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
-                    <div className=' mobile:left-40  lap_tablet:mx-auto  tablet:mx-auto'>
-                      <h2 className='text-2xl font-normal ml-6 '>
-                        {studentDetail && studentDetail.Adviser.fullName}
-                      </h2>
-                      <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>
-                        Orientador
-                      </h4>
-                    </div>
-                    <div className='flex flex-row  h-auto mobile:flex-col tablet:flex-row'>
-                      <div className='max-w-1/2 pl-6 h-auto '>
-                        <h5 className=' text-xs text-lightgray'>mail</h5>
-                        <p className='w-auto h-auto text-[16pxpx] leading-[26px] text-blue flex justify-center items-center'>
-                          {studentDetail && studentDetail.Adviser.email}
-                        </p>
-                      </div>
-                      <div className='max-w-1/2   px-6 mobile:flex-col tablet:flex-row'>
-                        <h5 className=' text-xs text-lightgray'>Telefono</h5>
-                        <p className=' text-[16pxpx] leading-[26px] text-blue '>
-                          {studentDetail && studentDetail.Adviser.phoneNumber}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                ''
-              )}
-
-              {/* button 'Volver' */}
-              <div
-                className={
-                  studentDetail && studentDetail.adviserId !== null
-                    ? 'block'
-                    : 'hidden'
-                }
-              >
-                <div className='flex flex-row ml-10 mt-16 relative bottom-10 items-center'>
-                  <Button
-                    type='button'
-                    handleFunction={() => setHideCard(true)}
-                    name='Modificar orientador/a'
-                  />
-                  <div className='ml-4 underline'>
-                    <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* show alert */}
-            <div className='mt-24 ml-10'>
-              <div className={!hideMessage ? 'hidden' : 'block'}>
-                {showAlert ? (
-                  <Alert
-                    message='El orientado ya fue asignado a su referente.'
-                    onclick={() => setHideMessage(false)}
-                  />
-                ) : (
-                  ''
-                )}
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-    </div>
-  );
+                </div> */
 }
 
-export default AssignAdviserPage;
+/*              <div className=' mobile:mx-auto py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
+                <div className='w-[178px] h-[178px] flex justify-center items-center laptop:border-r-[1px]  laptop:border-bordergray'>
+                  <img
+                    className='w-[140px] h-[140px] rounded-full'
+                    src={
+                      studentDetail && studentDetail.Adviser.avatar
+                        ? require(`../../../assets/adviser/${
+                            studentDetail && studentDetail.Adviser.avatar
+                          }`)
+                        : 'https://i.imgur.com/b08hxPY.png'
+                    }
+                    alt={selectOption}
+                  />
+                </div>
+                <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
+                  <div className=' mobile:left-40  lap_tablet:mx-auto  tablet:mx-auto'>
+                    <h2 className='text-2xl font-normal ml-6 '>
+                      {studentDetail && studentDetail.Adviser.fullName}
+                    </h2>
+                    <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>
+                      Orientador
+                    </h4>
+                  </div>
+                  <div className='flex flex-row  h-auto mobile:flex-col tablet:flex-row'>
+                    <div className='max-w-1/2 pl-6 h-auto '>
+                      <h5 className=' text-xs text-lightgray'>mail</h5>
+                      <p className='w-auto h-auto text-[16pxpx] leading-[26px] text-blue flex justify-center items-center'>
+                        {studentDetail && studentDetail.Adviser.email}
+                      </p>
+                    </div>
+                    <div className='max-w-1/2   px-6 mobile:flex-col tablet:flex-row'>
+                      <h5 className=' text-xs text-lightgray'>Telefono</h5>
+                      <p className=' text-[16pxpx] leading-[26px] text-blue '>
+                        {studentDetail && studentDetail.Adviser.phoneNumber}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div> */

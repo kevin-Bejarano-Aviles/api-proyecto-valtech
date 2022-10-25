@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function ProposalBox({ Title, description }) {
   return (
-    <div className='flex tablet:align flex-col  mt-10 tablet:mt-0 w-[300px] tablet:w-[224px] laptop:w-[284px] h-60 bg-white rounded-lg drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)]'>
+    <div className='flex tablet:align flex-col mr-4   mt-10 tablet:mt-0 w-[300px] tablet:w-[224px] laptop:w-[284px] h-60 bg-white rounded-lg drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)]'>
       <h3 className=' text-green  text-[24px] leading-[29px] font-bold relative top-4  mr-auto font-Rubik ml-4'>
         {Title}
       </h3>
