@@ -61,6 +61,7 @@ function useGet(){
         try{
             const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
+            console.log(response.data?.data);
         }
         catch(err){
             let status=err.response.status;
@@ -69,6 +70,15 @@ function useGet(){
             }
         }
     };
+
+    const getAllEventsByFilter=async()=>{
+        try{
+
+        }
+        catch{
+            
+        }
+    }
 
     const getAllAdvisers = async () => {
         try{

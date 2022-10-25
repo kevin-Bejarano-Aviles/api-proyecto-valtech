@@ -15,14 +15,11 @@ import useDelete from '../hooks/useDelete';
 
 function EventsPage() {
 
-
     let navigate = useNavigate();
 	
-	const [cantEvents,setCantEvents]=useState(0);
 	const [banSearch,SetBandSearch]=useState(true);
 	const [initrange,setRange]=useState(0)
-	const [orderListband,SetOrderListband]=useState(true);
-	const [showAll, setShowAll] = useState(false);
+	const [showAll, setShowAll] = useState(true);
 	const [search,SetSearch] = useState('');
 	const {getAllEvents,adviserList,eventList}=useGet();
 	const {deleteEvent}=useDelete();
@@ -31,38 +28,28 @@ function EventsPage() {
 	const handleSearch = (event)=>{
 		SetSearch(event.target.value)
 		if (search) {
-		  setShowAll(false)
 		  SetBandSearch(true)
 		}
 		else{
-		  setShowAll(true)
 		  SetBandSearch(false)
 		}
 	}
 
 	function arrowRigth() {
-		if(initrange+eventsToShow.length < cantEvents ){
-			setRange(initrange+8)
-		}
+		// if(initrange+eventsToShow.length < cantEvents ){
+		// 	setRange(initrange+8)
+		// }
+		console.log('alo');
+
 	}
 
 	function arrowLeft() {
-		if(initrange!==0){
-			setRange(initrange-8)
-		}
+		// if(initrange!==0){
+		// 	setRange(initrange-8)
+		// }
+		console.log('alo');
 	}
 
-	function newArray(arrayList,init,end){
-		let arrayLimitEvent=[]
-		if(end>arrayList.length){
-			end=arrayList.length;
-		}
-		for (let index = init; index < end; index++) {
-			const element = arrayList[index];
-			arrayLimitEvent.push(element)
-		}
-		return arrayLimitEvent
-	}
 
 
 	function convertDate(date){
@@ -85,29 +72,7 @@ function EventsPage() {
 		return timeString;
 
 	}
-
-	let eventsToShow=(showAll || search.length<1) 
 	
-	? newArray(eventList,initrange,initrange+8) 
-	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 
-		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
-		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
-
-		useEffect(()=>{
-			if(search.length>1){
-				let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
-				setCantEvents(cant.length);
-				setRange(0);
-			}
-			else{
-				let cant=eventList.length
-				setCantEvents(cant)		}
-		},[search])
-	
-		useEffect(()=>{
-			let cant=eventList.length
-			setCantEvents(cant)
-		},[eventList])
 	
 		useEffect(()=>{
 			getAllEvents();
@@ -144,7 +109,7 @@ function EventsPage() {
 				</div>
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
+						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>de </p>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
 				</div>
@@ -176,9 +141,9 @@ function EventsPage() {
 							</tr>
 						</thead>
 						<tbody className='table-row-group'>
+
 							{
-								cantEvents===0 ? ((!showAll && search.length<1) ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  ml-5'>No se encontro el evento con el orientado</p> )
-								: (eventsToShow.map((eve,index)=>(
+								 (eventList.map((eve,index)=>(
 									<>
 										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
 											<td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
@@ -237,7 +202,7 @@ function EventsPage() {
 						</tbody>
 					</table>
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
+						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1 -2 </p>
 						<div className='flex '>
 						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
