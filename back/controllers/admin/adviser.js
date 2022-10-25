@@ -1,4 +1,4 @@
-const { Adviser: AdviserModel, Students: StudentModel } = require('../../models');
+const { Advisers: AdviserModel, Students: StudentModel } = require('../../models');
 // Method to get all the advisers
 const getAllAdvisers = async (req, res) => {
   try {
