@@ -3,8 +3,9 @@ import axios from "axios";
 
 
 function useDelete( ) {
-    const url=process.env.REACT_APP_API_URL
-    const [submitState,setSubmitState]=useState('')
+    const url=process.env.REACT_APP_API_URL;
+    const [submitState,setSubmitState]=useState('');
+
     const token=localStorage.getItem('token');
 
     const deleteEvent=async (id)=>{
@@ -16,8 +17,8 @@ function useDelete( ) {
                     ,"x-token":`Bearer ${token}`}
             };
             const response = await axios(`${url}/admin/events/${id}`, options);
-            setSubmitState('accept')
-      
+            setSubmitState('accept');
+            location.reload();
           } catch (err) {
               setSubmitState('refuse')
             }

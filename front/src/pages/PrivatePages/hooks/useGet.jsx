@@ -41,7 +41,6 @@ function useGet(){
             if(status===401){
                 LogOut();
             }
-           
         }
     };
 
