@@ -16,7 +16,6 @@
         "ecmaVersion": "latest"
     },
     "plugins": [
-       
         "prettier"
     ],
     "rules": {

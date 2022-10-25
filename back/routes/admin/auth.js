@@ -1,7 +1,9 @@
-const {Router} = require('express');
+const { Router } = require('express');
+
 const router = Router();
-/* const {isAuthorized} = require('../../middlewares/index'); */
-const {login} = require('../../controllers/admin/auth');
-router.post('/login',login);
-/* router.get('/logout',isAuthorized,logOut); */
+const { login } = require('../../controllers/admin/auth');
+const loginValidations = require('../../validations/loginValidations');
+const { fieldValidations } = require('../../middlewares/index');
+
+router.post('/login', loginValidations, fieldValidations, login);
 module.exports = router;
