@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import iconArrow from '../../../../assets/icons/privatePage/list-control.svg';
 
-const DurationInput = ({ label, name, areInputVisible, formik, onChangeInputVisibility }) => {
+const DurationInput = ({ label, name, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
   const [selectedDuration, setSelectedDuration] = useState('');
 
   const durationInputValues = [];
@@ -37,6 +37,13 @@ const DurationInput = ({ label, name, areInputVisible, formik, onChangeInputVisi
     handleValidateErrors();
   },[selectedDuration]);
 
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      duration: !(areInputVisible.duration)
+    });
+  };
+
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='relative -z-10 text-sm'>{label}</label>
@@ -45,7 +52,7 @@ const DurationInput = ({ label, name, areInputVisible, formik, onChangeInputVisi
           name={name}
           id={name}
           className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
-          onClick={onChangeInputVisibility}
+          onClick={handleClick}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >

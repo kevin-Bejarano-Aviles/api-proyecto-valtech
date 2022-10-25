@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import iconSearch from '../../../../../assets/icons/privatePage/icon-search.svg';
 import './StudentsIdInput.css';
 
-function StudentsIdInput({ label, name, studentObjectList, areInputVisible, formik, onChangeInputVisibility }) {
+function StudentsIdInput({ label, name, studentObjectList, areInputVisible, formik, initialValues, handleAreInputVisible }) {
   const [selectedStudents, setSelectedStudents] = useState({ids: [], names: []});
 
   const handleChangeSelectedStudents = (event, studentId, studentFullName) => {
@@ -36,6 +36,13 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
     handleChangeFormikValue();
   },[selectedStudents]);
 
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      studentsId: !(areInputVisible.studentsId)
+    });
+  };
+
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='text-sm'>{label}</label>
@@ -44,7 +51,7 @@ function StudentsIdInput({ label, name, studentObjectList, areInputVisible, form
           name={name}
           id={name}
           className='w-10/12 h-full flex items-center pl-3 text-sm appearance-none select-none'
-          onClick={onChangeInputVisibility}
+          onClick={() => handleClick()}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >
