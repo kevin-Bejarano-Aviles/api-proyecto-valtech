@@ -1,15 +1,16 @@
 import {React, useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import useGet from '../hooks/useGet';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import { Link } from 'react-router-dom';
+
 import Button from '../sharedPrivateComponents/button/Button';
 import Search from '../sharedPrivateComponents/Search';
 import OrientedList from '../sharedPrivateComponents/OrientedList';
 
-//see orientedList
+// see orientedList
 function Orienteds() {
-  const {studentList,getAllStudents}=useGet()
+  const {studentList,getAllStudents}=useGet();
   const [search, SetSearch] = useState('');
   const [showAll, setShowAll] = useState(true);
 
@@ -36,7 +37,7 @@ function Orienteds() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo={`Orientados`} />
+        <HeaderAdmin Titulo='Orientados' />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center'>
             <div>
@@ -45,7 +46,7 @@ function Orienteds() {
               </h2>
             </div>
             <div className='w-full flex justify-end py-3'>
-              <Link to={'/orientados/alta-orientado'}>
+              <Link to='/orientados/alta-orientado'>
                 <Button type='button' name='Ingresar orientado' />
               </Link>
             </div>
@@ -53,7 +54,7 @@ function Orienteds() {
 
           <div className='relative mt-8'>
             <Search
-              placeholder={`Buscar orientado por nombre y apellido`}
+              placeholder='Buscar orientado por nombre y apellido'
               handleChange={handleSearch}
             />
             <OrientedList  users={studentsListShow} />
