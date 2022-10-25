@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "eslint ../back",
+    "lint-fix": "eslint ../back --fix"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,9 @@
     "sequelize": "^6.21.4"
   },
   "devDependencies": {
+    "eslint": "^8.25.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.1"
   }
