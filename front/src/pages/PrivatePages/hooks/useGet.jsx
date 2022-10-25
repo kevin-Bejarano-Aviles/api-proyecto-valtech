@@ -92,12 +92,12 @@ function useGet(){
           setTimeout(() => {
               navigate(`/orientados/${lastUserId}`);
             },5000);
-      }
+        }
       catch(err){
         const status=err.response.status;
         if(status===401){
-            LogOut();
-        }      
+                LogOut();
+            }      
         }
   
     };

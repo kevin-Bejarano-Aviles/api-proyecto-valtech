@@ -66,7 +66,8 @@ function EventsPage() {
 
 
 	function convertDate(date){
-        let convertDatestring=''
+		
+        
         for (let index = 0; index < date.length; index++) {
             const element = date[index];
             if(element==='-'){
@@ -74,7 +75,7 @@ function EventsPage() {
             }
             else{
                 convertDatestring=convertDatestring+element;
-            }
+          let convertDatestring=''  }
         }
         return convertDatestring;
     }
