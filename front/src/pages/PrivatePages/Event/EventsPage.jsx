@@ -73,7 +73,6 @@ function EventsPage() {
 
 	}
 	
-	
 		useEffect(()=>{
 			getAllEvents();
 		},[])
