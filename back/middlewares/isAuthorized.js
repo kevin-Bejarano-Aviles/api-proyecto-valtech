@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { adminBy } = require('../helpers/findAdminBy');
+const logger = require('../utils/logger');
 
 const isAuthorized = async (req, res, next) => {
   let token = req.header('x-token');
@@ -26,6 +27,7 @@ const isAuthorized = async (req, res, next) => {
       message: 'Invalid token',
       data: '',
     });
+    logger.error(error);
   }
 };
 module.exports = {

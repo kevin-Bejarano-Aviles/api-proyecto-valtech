@@ -1,4 +1,5 @@
-const { Adviser: AdviserModel, Students: StudentModel } = require('../../models');
+const { Adviser: AdviserModel, Students: StudentModel } = require('../../data/models');
+const logger = require('../../utils/logger');
 // Method to get all the advisers
 const getAllAdvisers = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const getAllAdvisers = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 const assignAdviser = async (req, res) => {
@@ -36,7 +37,7 @@ const assignAdviser = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 

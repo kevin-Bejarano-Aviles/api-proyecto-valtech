@@ -1,19 +1,14 @@
 const { Op } = require('sequelize');
-const AdviserModel = require('../../models').Advisers;
-const StudentModel = require('../../models').Students;
-const EventModel = require('../../models').Events;
-const db = require('../../models/index');
+const AdviserModel = require('../../data/models').Advisers;
+const StudentModel = require('../../data/models').Students;
+const EventModel = require('../../data/models').Events;
+const db = require('../../data/models/index');
+const logger = require('../../utils/logger');
 /* eslint camelcase:"off" */
 const createEvent = async (req, res) => {
   try {
     const {
-      studentsId,
-      name,
-      date,
-      time,
-      detail,
-      duration,
-      adviser_event_id,
+      studentsId, name, date, time, detail, duration, adviser_event_id,
     } = req.body;
     await db.sequelize.query('ALTER TABLE events AUTO_INCREMENT = 1');
     const event = await EventModel.create({
@@ -33,13 +28,14 @@ const createEvent = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 const getAllEventsByFilters = async (req, res) => {
   const { student = '', from = 0, limit = 10 } = req.query;
   try {
-    const events = await EventModel.findAll({
+    /* const cantEvent = await EventModel.count(); */
+    const events = await EventModel.findAndCountAll({
       include: [
         {
           model: StudentModel,
@@ -58,7 +54,7 @@ const getAllEventsByFilters = async (req, res) => {
       offset: Number(from),
       limit: Number(limit),
     });
-    if (events.length < 1) {
+    if (events.count < 1) {
       return res.status(404).json({
         message: 'No results found',
         data: '',
@@ -68,14 +64,14 @@ const getAllEventsByFilters = async (req, res) => {
       message: '',
       data: {
         events,
-        cant: events.length,
+        cantsRows: events.rows.length,
       },
     });
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 const deleteEvent = async (req, res) => {
@@ -96,7 +92,7 @@ const deleteEvent = async (req, res) => {
       status: '500 Internar server error',
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 module.exports = {

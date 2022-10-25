@@ -3,10 +3,12 @@ const { check, body } = require('express-validator');// Require express validato
 const { existingAdviser, studentsInDb } = require('../helpers/db-validators');
 
 module.exports = [
-  check('studentsId').notEmpty().withMessage('Tiene que ingresar un array de id de estudiantes'),
+  check('studentsId').notEmpty().withMessage('El campo no puede estar vacío'),
   body('studentsId').custom(studentsInDb),
   check('name')
-    .notEmpty().withMessage('El evento debe contener un nombre'),
+    .notEmpty().withMessage('El evento debe contener un nombre')
+    .isLength({ max: 200 })
+    .withMessage('El nombre del evento debe de tener un maximo de 200 caracteres'),
   check('date')
     .notEmpty().withMessage('El evento debe contener una fecha'),
   check('date')
@@ -25,7 +27,7 @@ module.exports = [
   check('detail')
     .notEmpty().withMessage('El evento debe contener un detalle'),
   check('duration')
-    .notEmpty().withMessage('El evento debe contener un horario')
+    .notEmpty().withMessage('El evento debe contener una duración')
     .matches(correctTime)
     .withMessage('Tiene que ingresar una hora correcta')
     .custom((value) => {
