@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import iconArrow from '../../../../../assets/icons/privatePage/list-control.svg';
 import timeInputValues from './timeInputValues.json';
 
-const TimeInput = ({ label, name, areInputVisible, formik, initialValues, handleAreInputVisible }) => {
+const TimeInput = ({ label, name, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedTime, setSelectedTime] = useState({
     hour: null,
     minute: null
@@ -92,6 +92,9 @@ const TimeInput = ({ label, name, areInputVisible, formik, initialValues, handle
       </div>
       {formik.touched.time && formik.errors.time ? (
         <div className='text-red-500'>{formik.errors.time}</div>
+      ) : null}
+      {errorCreateEventObject.time ? (
+        <div className='text-red-500'>{errorCreateEventObject.time.msg}</div>
       ) : null}
   </div>
   );

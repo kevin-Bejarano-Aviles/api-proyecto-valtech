@@ -19,7 +19,7 @@ import usePost from '../hooks/usePost';
 
 function CreateEventPage() {
   const { getAllAdvisers, getAllStudents, studentList, adviserList } = useGet();
-  const { postEvent } = usePost();
+  const { postEvent, errorCreateEventObject } = usePost();
   const initialValues = {
     adviser_event_id: false,
     studentsId: false,
@@ -80,6 +80,7 @@ function CreateEventPage() {
                   label='Nombre del evento'
                   name='name'
                   formik={formik}
+                  errorCreateEventObject={errorCreateEventObject}
                   initialValues={initialValues}
                   handleAreInputVisible={handleAreInputVisible}
                 />
@@ -90,6 +91,7 @@ function CreateEventPage() {
                   adviserObjectList={adviserList}
                   areInputVisible={areInputVisible}
                   formik={formik}
+                  errorCreateEventObject={errorCreateEventObject}
                   initialValues={initialValues}
                   handleAreInputVisible={handleAreInputVisible}
                 />
@@ -100,6 +102,7 @@ function CreateEventPage() {
                   studentObjectList={studentList}
                   areInputVisible={areInputVisible}
                   formik={formik}
+                  errorCreateEventObject={errorCreateEventObject}
                   initialValues={initialValues}
                   handleAreInputVisible={handleAreInputVisible}
                 />
@@ -114,6 +117,7 @@ function CreateEventPage() {
                   name='date'
                   areInputVisible={areInputVisible}
                   formik={formik}
+                  errorCreateEventObject={errorCreateEventObject}
                   initialValues={initialValues}
                   handleAreInputVisible={handleAreInputVisible}
                 />
@@ -124,6 +128,7 @@ function CreateEventPage() {
                   areInputVisible={areInputVisible}
                   formik={formik}
                   initialValues={initialValues}
+                  errorCreateEventObject={errorCreateEventObject}
                   handleAreInputVisible={handleAreInputVisible}
                 />
 
@@ -132,6 +137,7 @@ function CreateEventPage() {
                   name='duration'
                   areInputVisible={areInputVisible}
                   formik={formik}
+                  errorCreateEventObject={errorCreateEventObject}
                   initialValues={initialValues}
                   handleAreInputVisible={handleAreInputVisible}
                 />
@@ -144,6 +150,7 @@ function CreateEventPage() {
                 label='Comentarios del evento'
                 name='detail'
                 formik={formik}
+                errorCreateEventObject={errorCreateEventObject}
                 initialValues={initialValues}
                 handleAreInputVisible={handleAreInputVisible}
               />
