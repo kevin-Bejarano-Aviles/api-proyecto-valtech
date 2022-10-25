@@ -4,14 +4,12 @@ import Reducer from './Reducer';
 import types from './types';
 
 const init=()=>{
-    const vlue=localStorage.getItem('state')
     return{
-        state:!!vlue 
+        state:!!localStorage.getItem('state')
     }
 }
 
 const Provider = ({children}) =>{
-    // localStorage.removeItem('state')
     const logIn =()=>{
         const action={
             type:types.login
