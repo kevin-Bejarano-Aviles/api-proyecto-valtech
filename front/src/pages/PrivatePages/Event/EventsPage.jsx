@@ -10,6 +10,7 @@ import Icon_arrow_left from '../../../assets/icons/Icon_arrow-left.svg'
 import Icon_arrow_rigth from '../../../assets/icons/Icon_arrow-right.svg'
 import Search from '../sharedPrivateComponents/Search';
 import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
+import useDelete from '../hooks/useDelete';
 
 
 function EventsPage() {
@@ -23,35 +24,9 @@ function EventsPage() {
 	const [orderListband,SetOrderListband]=useState(true);
 	const [showAll, setShowAll] = useState(false);
 	const [search,SetSearch] = useState('');
-	const {getAllEvents,getAllAdvisers,adviserList,eventList}=useGet()
-	const deleteEvent = async (id)=>{
-
-        try {
-            await axios.delete(`http://localhost:8000/admin/deleteEvent/${id}`)
-            let newArray=eventList.filter(event=> event.id!==id);
-			setEventsList(newArray);
-			
-		} catch (error) {
-            console.error(error.response)
-        }
-    }
-
+	const {getAllEvents,adviserList,eventList}=useGet();
+	const {deleteEvent}=useDelete();
 	
-    // function orderList(list){
-	// 	let orderListArray;
-	// 	if (list.length>0) {
-	// 		if(!orderListband){
-	// 			orderListArray=list.sort((a,b)=>new Date(a.date)-new Date(b.date))
-	// 		}
-	// 		else{
-	
-	// 			orderListArray=list.sort((a,b)=>new Date(b.date)-new Date(a.date))
-	
-	// 		}
-	// 		setEventsList(orderListArray)
-	// 	}
-		
-	// }
 
 	const handleSearch = (event)=>{
 		SetSearch(event.target.value)
@@ -111,32 +86,6 @@ function EventsPage() {
 
 	}
 
-
-
-	useEffect(()=>{
-		if(search.length>1){
-			let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
-			setCantEvents(cant.length);
-			setRange(0);
-		}
-		else{
-			let cant=eventList.length
-			setCantEvents(cant)		}
-	},[search])
-
-	useEffect(()=>{
-		let cant=eventList.length
-		setCantEvents(cant)
-	},[eventList])
-
-	useEffect(()=>{
-		getAllEvents();
-	},[])
-
-
-	
-	
-
 	let eventsToShow=(showAll || search.length<1) 
 	
 	? newArray(eventList,initrange,initrange+8) 
@@ -144,6 +93,26 @@ function EventsPage() {
 		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
 		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
 
+		useEffect(()=>{
+			if(search.length>1){
+				let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
+				setCantEvents(cant.length);
+				setRange(0);
+			}
+			else{
+				let cant=eventList.length
+				setCantEvents(cant)		}
+		},[search])
+	
+		useEffect(()=>{
+			let cant=eventList.length
+			setCantEvents(cant)
+		},[eventList])
+	
+		useEffect(()=>{
+			getAllEvents();
+		},[])
+		
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />

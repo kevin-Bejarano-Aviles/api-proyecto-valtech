@@ -1,7 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import {useFormik} from 'formik';
-import axios from 'axios';
 import * as Yup from 'yup';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -15,68 +12,54 @@ import usePost from '../hooks/usePost';
 import warningImg from '../../../assets/icons/icon_warning.svg'
 
 function OrientedSignUpPage() {
-
 	const {postStudent,errorSignUpObject}=usePost();
-
+	
   	const validationSchemaForm=Yup.object({
     fullName:Yup.string('Campo inválido')
     .min(2,'Entre 2 y 500 caracteres')
     .max(500,'')
     .required('Campo requerido'),
     email:Yup.string('Campo inválido').email('Email inválido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres').required('Campo requerido'),
-    phoneNumber:Yup.number('Ingresar solo numeros').test('len', 'Entre 10 y 50 digitos', val => val.toString().length >= 10 && val.toString().length<=50),
-    program:Yup.string().required('Selecciona una opción'),
-	dni:Yup.number('Ingresar solo numeros').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('user')],'Los dni no coinciden'),
-    age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Edad Mínima: 18').max(99,'Edad Máxima: 99'),
+	phoneNumber:Yup.string().matches(/^[0-9]\d{10,50}$/, 'Sólo números entre 10 y 50 dígitos'),    program:Yup.string().required('Selecciona una opción'),
+	dni:Yup.string().matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos').oneOf([Yup.ref('user')],'Los dni no coinciden'),    
+	age:Yup.number('Ingresar solo numeros').required('Campo requerido').min(18,'Edad Mínima: 18').max(99,'Edad Máxima: 99'),
     school:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     address:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
     motive:Yup.string('Campo inválido').required('Campo requerido').min(3,'Entre 3 y 500 caracteres').max(500,'Entre 3 y 500 caracteres'),
-    user:Yup.number().required('Campo requerido').test('len', 'Entre 7 y 50 digitos', val => val.toString().length >= 7 && val.toString().length<=50).oneOf([Yup.ref('dni')],'Los dni no coinciden'),
+    user:Yup.string().matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos').oneOf([Yup.ref('dni')],'Los dni no coinciden'),
     pass:Yup.string().required('Campo requerido').min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('confirmPass')],'Las contraseñas no coinciden'),
     confirmPass:Yup.string().min(8,'Mínimo 8 caracteres').oneOf([Yup.ref('pass')],'Las contraseñas no coinciden').required('Campo requerido'),
 	avatar:Yup.mixed().required('Es requerido'),
 })
-  
-  // Function to change the background color of the input elements.
-  const changeBackgroundColor = e => {
-    if (e.target.value) {
-      e.target.classList.remove('bg-white');
-      e.target.classList.add('bg-inputbackground');
-    } else {
-      e.target.classList.add('bg-white');
-      e.target.classList.remove('bg-inputbackground');
-    }
-  };
 
-  const {handleSubmit,handleChange,errors,values,setFieldValue}=useFormik({
+  const {handleSubmit,handleChange,handleBlur,setFieldValue,errors,values,isValid,touched}=useFormik({
 	initialValues:{
-		fullName: 'Maria garcia',
-		email: 'Maria.garcie2@gmail.com',
-		phoneNumber: '01162386020',
-		program: 'Orientacion vocacional',
-		dni: '18456309',
-		age: '21',
-		school: 'Nuestra señora del valle',
-		address: 'Av. Córdoba 24454 piso 6 dpto C, CABA',
-		motive: 'Necesita orientación para elegir una carrera5.',
-		user: '18456309',
-		pass: '12345677',
-		confirmPass: '12345677',
+		fullName: '',
+		email: '',
+		phoneNumber: '',
+		program: '',
+		dni: '',
+		age: '',
+		school: '',
+		address: '',
+		motive: '',
+		user: '',
+		pass: '',
+		confirmPass: '',
 		avatar:''
 	},
 	validationSchema:validationSchemaForm,
 	onSubmit:(data)=>{
-		postStudent(data)
-		
+		postStudent(data);
 	}
   })
+
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Titulo='Orientados' />
         <main className='pb-12 mx-12'>
-          
           <form action="" onSubmit={handleSubmit}>
           <section className='mt-12'>
             <h2 className='my-4 text-2xl font-medium'>01. Información básica</h2>
@@ -102,6 +85,8 @@ function OrientedSignUpPage() {
 							name='fullName'
 							placeholder='Ingresar nombre completo'
 							onChange={handleChange}
+							onBlur={handleBlur}
+							touched={touched}
 							values={values.fullName}
 							error={errors.fullName}
 						/>
@@ -122,14 +107,17 @@ function OrientedSignUpPage() {
 							name='phoneNumber'
 							placeholder='Ingresar numero'
 							onChange={handleChange}
+							onBlur={handleBlur}
+							touched={touched}
 							values={values.phoneNumber}
 							error={errors.phoneNumber}
 						/>
 			
-						<Select onChange={handleChange} error={errors.program} label='Programa' name='program'>
+						<Select onChange={handleChange} error={errors.program} label='Programa' name='program' onBlur={handleBlur} touched={touched.program}>
+							<option value="" selected="true" disabled="disabled">seleccione opcion</option>
 							{
 								programs.programs.map(program=>(
-									<option value={program.value}>{program.name}</option>
+									<option value={program.value} className='bg-backgroundGray'>{program.name}</option>
 								))
 							}
 						</Select>
@@ -147,6 +135,8 @@ function OrientedSignUpPage() {
 								name='dni'
 								placeholder='Ingresar dni'
 								onChange={handleChange}
+								onBlur={handleBlur}
+								touched={touched}
 								values={values.dni}
 								error={errors.dni}
 								errorPost={errorSignUpObject.dni?.msg}
@@ -157,6 +147,8 @@ function OrientedSignUpPage() {
 								name='age'
 								placeholder='Ingresar edad'
 								onChange={handleChange}
+								onBlur={handleBlur}
+								touched={touched}
 								values={values.age}
 								error={errors.age}
 							/>
@@ -168,6 +160,8 @@ function OrientedSignUpPage() {
 							name='school'
 							placeholder='Ingresar colegio'
 							onChange={handleChange}
+							onBlur={handleBlur}
+							touched={touched}
 							values={values.school}
 							error={errors.school}
 						/>
@@ -176,6 +170,8 @@ function OrientedSignUpPage() {
 							name='address'
 							placeholder='Ingresar domicilio'
 							onChange={handleChange}
+							onBlur={handleBlur}
+							touched={touched}
 							values={values.address}
 							error={errors.address}
 						/>
@@ -200,6 +196,8 @@ function OrientedSignUpPage() {
 						name='user'
 						placeholder='Ingresar DNI del Orientado'
 						onChange={handleChange}
+						onBlur={handleBlur}
+						touched={touched}
 						values={values.user}
 						error={errors.user}
 						errorPost={errorSignUpObject.user?.msg}
@@ -208,7 +206,10 @@ function OrientedSignUpPage() {
 						label='Contraseña'
 						name='pass'
 						placeholder='Ingresar contraseña'
+						type='password'
 						onChange={handleChange}
+						onBlur={handleBlur}
+						touched={touched}
 						values={values.pass}
 						error={errors.pass}
 
@@ -217,13 +218,16 @@ function OrientedSignUpPage() {
 						label='Repetir Contraseña'
 						name='confirmPass'
 						placeholder='Repetir contraseña'
+						type='password'
 						onChange={handleChange}
+						onBlur={handleBlur}
+						touched={touched}
 						values={values.confirmPass}
 						error={errors.confirmPass}
 					/>
 				</div>
 			</section>
-			<Button type='submit' name='Ingresar orientado' />
+			<Button type='submit' name='Ingresar orientado' disabled={!isValid}/>
           </form>
 		 	
         </main>

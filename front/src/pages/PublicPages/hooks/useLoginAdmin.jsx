@@ -19,7 +19,6 @@ function useLoginAdmin (){
               pass:data.pass,
             })
             .then(response=>{
-              console.log(response.data.data.token);
               login();
               localStorage.setItem('admin', JSON.stringify(response.data.data.admin));
               localStorage.setItem('token',response?.data.data.token)

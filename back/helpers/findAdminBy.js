@@ -1,21 +1,13 @@
-const {Admins:AdminModel} = require('../models');
-const adminById = async(id)=>{
-    const admin = await AdminModel.findOne({
-        where:{
-            id:id
-        }
-    });
-    return admin;
-};
-const adminByEmail = async(email) =>{
-    const admin = await AdminModel.findOne({
-        where:{
-            email:email
-        }
-    });
-    return admin;
+const { Admins: AdminModel } = require('../models');
+
+const adminBy = async (colum, value) => {
+  const admin = await AdminModel.findOne({
+    where: {
+      [colum]: value,
+    },
+  });
+  return admin;
 };
 module.exports = {
-    adminByEmail,
-    adminById
-}
+  adminBy,
+};
