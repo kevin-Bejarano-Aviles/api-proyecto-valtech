@@ -1,4 +1,4 @@
-const { Adviser: AdviserModel, Students: StudentModel } = require('../../data/models');
+const { Advisers: AdviserModel, Students: StudentModel } = require('../../data/models');
 const logger = require('../../utils/logger');
 // Method to get all the advisers
 const getAllAdvisers = async (req, res) => {

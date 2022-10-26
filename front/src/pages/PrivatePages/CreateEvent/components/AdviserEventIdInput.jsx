@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import iconSearch from '../../../../assets/icons/privatePage/icon-search.svg';
 
-const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, formik, onChangeInputVisibility }) => {
+const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedAdviser, setSelectedAdviser] = useState(null);
 
   const handleChangeSelectedAdviser = event => {
@@ -12,6 +12,12 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
     formik.values.adviser_event_id = idAdviserSelected.toString();
   };
 
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      adviser_event_id: !(areInputVisible.adviser_event_id)
+    });
+  };
 
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
@@ -21,7 +27,7 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
           name={name}
           id={name}
           className='mobile:w-full h-full flex items-center tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
-          onClick={onChangeInputVisibility}
+          onClick={handleClick}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >
@@ -47,6 +53,9 @@ const AdviserEventIdInput = ({ label, name, adviserObjectList, areInputVisible, 
       </ul>
       {formik.touched.adviser_event_id && formik.errors.adviser_event_id ? (
         <div className='text-red-500'>{formik.errors.adviser_event_id}</div>
+      ) : null}
+      {errorCreateEventObject.adviser_event_id ? (
+        <div className='text-red-500'>{errorCreateEventObject.adviser_event_id.msg}</div>
       ) : null}
     </div>
   );

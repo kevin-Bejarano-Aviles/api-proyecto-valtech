@@ -1,20 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import {useParams,Link,useNavigate} from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
 
 
 function Oriented() {
   const params = useParams();
-  const idStudent=params.id;
-  const url=process.env.REACT_APP_API_URL
+  const idStudent = params.id;
   const [showAlert, setShowAlert] = useState(true);
-  const navigate = useNavigate();
   const {studentDetail,getOneStudent}=useGet() 
 
   useEffect(()=>{
@@ -29,7 +24,7 @@ function Oriented() {
         <HeaderAdmin Title='Orientados' />
         
         {
-         studentDetail!=undefined ? (<main
+         studentDetail!==undefined ? (<main
             className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
               showAlert ? 'pb-24' : 'pb-7'
             }`}
