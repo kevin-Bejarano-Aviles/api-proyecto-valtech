@@ -19,9 +19,10 @@
         "prettier"
     ],
     "rules": {
-        "singleQuote": "off",
+        "quotes": ["error", "single"],
         "react/react-in-jsx-scope": "off",
-        "no-dynamic-require": "off",
+        "global-require": "off",
+        "no-dynamic-require":"off",
         "react/prop-types": "off",
         "no-unused-vars": "off"
     }
