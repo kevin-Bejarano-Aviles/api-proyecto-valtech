@@ -26,7 +26,7 @@ function usePut() {
       }
       return {
         putCounselor,
-        sumbitState
+        submitState
         
       }
 

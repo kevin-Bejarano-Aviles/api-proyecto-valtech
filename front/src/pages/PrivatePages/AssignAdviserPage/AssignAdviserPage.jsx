@@ -1,37 +1,36 @@
 import { React, useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams, NavLink } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
-import axios from 'axios';
 import Button from '../sharedPrivateComponents/button/Button';
-import { useParams, NavLink } from 'react-router-dom';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
-import { Formik, Form, Field } from 'formik';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
 
 function AssignAdviserPage() {
-  const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
-  const [selectOption, setSelectOption] = useState('');
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [viewButton, setViewButton] = useState(true);
-  const [hideMessage, setHideMessage] = useState(true);
-  const [hideCard, setHideCard] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
   const baseUrl = process.env.REACT_APP_API_URL;
-  const handleClickShowAlert = () => {
-    setShowAlert(!showAlert);
-  };
-
   const params = useParams();
   const idStudent = params.id;
   const token = localStorage.getItem('token');
+  const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
+  /*   const [selectOption, setSelectOption] = useState(''); */
+  const [isEmpty, setIsEmpty] = useState(true);
+  /*  const [viewButton, setViewButton] = useState(true); */
+  const [hideMessage, setHideMessage] = useState(true);
+  const [hideCard, setHideCard] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const handleClickShowAlert = () => {
+    setShowAlert(!showAlert);
+  };
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
   });
 
-  /* I bring the oriented data*/
+  /* I bring the oriented data */
   const { studentDetail, getOneStudent } = useGet();
 
   /* I bring the data of the advisers  */
@@ -49,7 +48,7 @@ function AssignAdviserPage() {
 
   const assignAdviser = async (idAdviser) => {
     try {
-      let options = {
+      const options = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -81,7 +80,7 @@ function AssignAdviserPage() {
 
             <CardStudents
               avatar={studentDetail && studentDetail.avatar}
-              ruta={'students'}
+              ruta='students'
               fullName={studentDetail && studentDetail.fullName}
               email={studentDetail && studentDetail.email}
               school={studentDetail && studentDetail.school}
@@ -95,12 +94,13 @@ function AssignAdviserPage() {
             <h2 className='text-2xl text-blue  mt-8'>
               Selección de un Orientador Referente
             </h2>
-            <div  className={
-                        hideCard ||
-                        (studentDetail && studentDetail.adviserId === null)
-                          ? 'block'
-                          : 'hidden'
-                      }>
+            <div
+              className={
+                hideCard || (studentDetail && studentDetail.adviserId === null)
+                  ? 'block'
+                  : 'hidden'
+              }
+            >
               <h4>Referente</h4>
             </div>
 
@@ -135,10 +135,10 @@ function AssignAdviserPage() {
                           </option>
                           {adviserList.map((elemento) => (
                             <option
-                              onChange={(a) => {
+                              /*                               onChange={(a) => {
                                 const valueOption = a.target.value;
-                                setSelectOption(valueOption);
-                              }}
+                                setSelectOption(valueOption); 
+                              }} */
                               key={elemento.id}
                               value={[
                                 `${elemento.id}`,
@@ -157,17 +157,17 @@ function AssignAdviserPage() {
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
                         <CardAdivser
-                          avatar={''}
-                          fullName={'Nombre Orientador'}
-                          email={'Orientador@mail.com'}
-                          phoneNumber={'1125464851'}
+                          avatar=''
+                          fullName='Nombre Orientador'
+                          email='Orientador@mail.com'
+                          phoneNumber='1125464851'
                         />
                       </div>
                     </div>
                     {/* buttons to send the data */}
                     <div
                       className='ml-10 mt-16 mb-8 flex flex-row '
-                      onClick={() => setViewButton(false)}
+                      /* onClick={() => setViewButton(false)} */
                     >
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
@@ -182,6 +182,7 @@ function AssignAdviserPage() {
                             type='submit'
                             name='Asignar orientador/a'
                             disabled={isEmpty}
+                            /* handleFunction={handleClickShowAlert} */
                           />
                         </div>
                       </div>
