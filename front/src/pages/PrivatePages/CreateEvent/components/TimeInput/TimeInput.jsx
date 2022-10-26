@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import iconArrow from '../../../../../assets/icons/privatePage/list-control.svg';
 import timeInputValues from './timeInputValues.json';
 
-const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibility }) => {
+const TimeInput = ({ label, name, areInputVisible, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
   const [selectedTime, setSelectedTime] = useState({
     hour: null,
     minute: null
@@ -39,6 +39,13 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
     handleValidateErrors();
   },[selectedTime]);
 
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      time: !(areInputVisible.time)
+    });
+  };
+
   return (
     <div className='relative flex flex-col gap-1 tablet:grow tablet:max-w-[320px]'>
       <label htmlFor={name} className='relative -z-10 text-sm'>{label}</label>
@@ -47,7 +54,7 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
           name={name}
           id={name}
           className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none truncate'
-          onClick={onChangeInputVisibility}
+          onClick={handleClick}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >
@@ -85,6 +92,9 @@ const TimeInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
       </div>
       {formik.touched.time && formik.errors.time ? (
         <div className='text-red-500'>{formik.errors.time}</div>
+      ) : null}
+      {errorCreateEventObject.time ? (
+        <div className='text-red-500'>{errorCreateEventObject.time.msg}</div>
       ) : null}
   </div>
   );

@@ -1,4 +1,9 @@
-const DetailInput = ({ label, name, formik, onChangeInputVisibility }) => {
+const DetailInput = ({ label, name, formik, errorCreateEventObject, initialValues, handleAreInputVisible }) => {
+
+  const handleClick = () => {
+    handleAreInputVisible({...initialValues});
+  };
+
   return (
     <>
       <label htmlFor={name} className='text-sm'>{label}</label>
@@ -12,10 +17,13 @@ const DetailInput = ({ label, name, formik, onChangeInputVisibility }) => {
         value={formik.values.detail}
         className={`${formik.values.detail ? 'bg-inputbackground' : ''} block p-2 text-sm rounded-lg border-2 focus:outline-green`}
         placeholder='Escribe un comentario'
-        onClick={onChangeInputVisibility}
+        onClick={handleClick}
       />
       {formik.touched.detail && formik.errors.detail ? (
         <div className='text-red-500'>{formik.errors.detail}</div>
+      ) : null}
+      {errorCreateEventObject.detail ? (
+        <div className='text-red-500'>{errorCreateEventObject.detail.msg}</div>
       ) : null}
     </>
   );

@@ -48,6 +48,7 @@ function useGet(){
        try{
             const response = await axios(`${baseUrl}/students/${id}`,options)
             setStudentDetail(response.data?.data.student)
+            console.log((response.data?.data.student))
         }
         catch(err){
             let status=err.response.status;
