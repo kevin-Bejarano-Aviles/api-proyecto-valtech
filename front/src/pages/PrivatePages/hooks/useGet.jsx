@@ -1,7 +1,7 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Context from "../../../context/Context";
-import axios from "axios";
 
 
 function useGet(){
@@ -60,7 +60,7 @@ function useGet(){
 
     const getAllEvents=async()=>{
         try{
-            const response = await axios(`${baseUrl}/events/`,options);
+            const response = await axios(`${baseUrl}/events`,options);
             setEventsList(response.data?.data.events)
             console.log(response.data?.data);
         }

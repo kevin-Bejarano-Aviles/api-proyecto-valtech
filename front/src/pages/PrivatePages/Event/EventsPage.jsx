@@ -1,6 +1,7 @@
-import { useState,useEffect } from 'react';
+import { useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import useGet from '../hooks/useGet';
+import functionsEvents from './functions/functionsEvents';
 
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -15,65 +16,13 @@ import useDelete from '../hooks/useDelete';
 function EventsPage() {
 
     const navigate = useNavigate();
-	
-	const [banSearch,SetBandSearch]=useState(true);
-	const [initrange,setRange]=useState(0)
-	const [showAll, setShowAll] = useState(true);
-	const [search,SetSearch] = useState('');
 	const {getAllEvents,eventList}=useGet();
-	const {deleteEvent}=useDelete();
-	
+	const {deleteEvent}=useDelete(); 
+	const {converTime,convertDate}=functionsEvents();
 
-	const handleSearch = (event)=>{
-		SetSearch(event.target.value)
-		if (search) {
-		  SetBandSearch(true)
-		}
-		else{
-		  SetBandSearch(false)
-		}
-	}
-
-	function arrowRigth() {
-		// if(initrange+eventsToShow.length < cantEvents ){
-		// 	setRange(initrange+8)
-		// }
-		console.log('alo');
-
-	}
-
-	function arrowLeft() {
-		// if(initrange!==0){
-		// 	setRange(initrange-8)
-		// }
-		console.log('alo');
-	}
-
-
-
-	function convertDate(date){
-        let convertDatestring=''
-        for (let index = 0; index < date.length; index++) {
-            const element = date[index];
-            if(element==='-'){
-                convertDatestring+='/'
-            }
-            else{
-                convertDatestring+=element;
-            }
-        }
-        return convertDatestring;
-    }
-
-	function converTime(time){
-		const timeArray=time.split(':')
-		const timeString= timeArray[0]+':'+timeArray[2]
-		return timeString;
-	}
-	
-		useEffect(()=>{
-			getAllEvents();
-		},[])
+	useEffect(()=>{
+		getAllEvents();
+	},[])
 		
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -101,13 +50,13 @@ function EventsPage() {
                 </div>
                 <div className='mt-5 mx-5 tablet:mx-0'>
                     <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
-					<Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/>
+					{/* <Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/> */}
 				</div>
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>de </p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' />
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth'/>
 				</div>
 					
                     <table className='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
@@ -199,8 +148,8 @@ function EventsPage() {
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1 -2 </p>
 						<div className='flex '>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
 					</div>
 					<div className='flex tablet:hidden mt-16 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button

@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 
@@ -16,16 +16,17 @@ function useDelete( ) {
               headers: { 'Content-Type': 'multipart/form-data'
                     ,"x-token":`Bearer ${token}`}
             };
-            const response = await axios(`${url}/admin/events/${id}`, options);
+            await axios(`${url}/admin/events/${id}`, options);
             setSubmitState('accept');
             location.reload();
           } catch (err) {
               setSubmitState('refuse')
             }
-    }
+        }
 
     return {
-        deleteEvent
+        deleteEvent,
+        submitState
     }
 
 }
