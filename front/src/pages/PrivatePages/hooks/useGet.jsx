@@ -37,7 +37,7 @@ function useGet(){
             setStudentList(response.data?.data.students);
         }
         catch(err){
-            let status=err.response.status;
+            const status=err.response.status;
             if(status===401){
                 LogOut();
             }
@@ -51,7 +51,7 @@ function useGet(){
             console.log((response.data?.data.student))
         }
         catch(err){
-            let status=err.response.status;
+            const status=err.response.status;
             if(status===401){
                 LogOut();
             }
@@ -60,26 +60,26 @@ function useGet(){
 
     const getAllEvents=async()=>{
         try{
-            const response = await axios(`${baseUrl}/events`,options);
+            const response = await axios(`${baseUrl}/events/`,options);
             setEventsList(response.data?.data.events)
             console.log(response.data?.data);
         }
         catch(err){
-            let status=err.response.status;
+            const status=err.response.status;
             if(status===401){
                 LogOut();
             }
         }
     };
 
-    const getAllEventsByFilter=async()=>{
-        try{
+    // const getAllEventsByFilter=async()=>{
+    //     try{
 
-        }
-        catch{
+    //     }
+    //     catch{
             
-        }
-    }
+    //     }
+    // }
 
     const getAllAdvisers = async () => {
         try{
