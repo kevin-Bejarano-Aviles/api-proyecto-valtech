@@ -18,9 +18,9 @@ function EventsPage() {
     const navigate = useNavigate();
 	const [band,setBand]=useState(true);
 	const {deleteEvent}=useDelete(); 
-	const {getAllEvents,currentPage, converTime,convertDate,eventList,nextPage}=functionsEvents();
+	const {eventList,getAllEvents, converTime,convertDate,nextPage,prevPage}=functionsEvents();
 	useEffect(()=>{
-		getAllEvents(currentPage);
+		getAllEvents(0);
 	},[]);
 
     return ( 
@@ -54,7 +54,7 @@ function EventsPage() {
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>de </p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left'/>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>prevPage()}/>
 						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
 					
