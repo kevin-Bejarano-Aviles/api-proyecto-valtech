@@ -34,9 +34,12 @@ const createEvent = async (req, res) => {
 const getAllEventsByFilters = async (req, res) => {
   const { student = '', from = 0, limit = 10 } = req.query;
   try {
-    /* const cantEvent = await EventModel.count(); */
-    const events = await EventModel.findAndCountAll({
+    const { count: totalCount, rows: events } = await EventModel.findAndCountAll({
       include: [
+        {
+          model: AdviserModel,
+          attributes: ['id', 'fullName'],
+        },
         {
           model: StudentModel,
           where: {
@@ -46,15 +49,12 @@ const getAllEventsByFilters = async (req, res) => {
           },
           attributes: ['id', 'fullName'],
         },
-        {
-          model: AdviserModel,
-          attributes: ['id', 'fullName'],
-        },
       ],
       offset: Number(from),
       limit: Number(limit),
+      distinct: true,
     });
-    if (events.count < 1) {
+    if (totalCount < 1) {
       return res.status(404).json({
         message: 'No results found',
         data: '',
@@ -63,8 +63,9 @@ const getAllEventsByFilters = async (req, res) => {
     res.status(200).json({
       message: '',
       data: {
+        totalCount,
+        lengthEventsSent: events.length,
         events,
-        cantsRows: events.rows.length,
       },
     });
   } catch (error) {
