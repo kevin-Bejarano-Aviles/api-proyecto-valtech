@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState,useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import useGet from '../hooks/useGet';
@@ -15,7 +14,7 @@ import useDelete from '../hooks/useDelete';
 
 function EventsPage() {
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 	
 	const [banSearch,SetBandSearch]=useState(true);
 	const [initrange,setRange]=useState(0)
