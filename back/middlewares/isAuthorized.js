@@ -15,6 +15,7 @@ const isAuthorized = async (req, res, next) => {
     const { id } = jwt.verify(token[1], process.env.SECRET_SESSION);
     const admin = await adminBy('id', id);
     if (!admin) {
+      logger.error('Error, access with non-existent user');
       return res.status(401).json({
         message: 'Invalid token user not found',
         data: '',

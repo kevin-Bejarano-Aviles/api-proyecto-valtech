@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const db = require('./data/models/index');
+const logger = require('./utils/logger');
 
 const port = process.env.PORT || 8000;
 // Use express static to declare our public folder
@@ -25,6 +26,10 @@ app.use('/admin/auth', require('./routes/admin/auth'));
 app.use('/admin/events', require('./routes/admin/event'));
 app.use('/admin/students', require('./routes/admin/student'));
 
+app.use((req, res) => {
+  logger.warn(`Page:${req.originalUrl} not found`);
+  res.status(404).json({ message: '404 Not Found' });
+});
 const dbConnectionServerUp = async () => {
   try {
     await db.sequelize.authenticate();

@@ -19,7 +19,7 @@ const assignAdviser = async (req, res) => {
   try {
     const { idAdviser } = req.body;
     const { id } = req.params;
-    await StudentModel.update(
+    const student = await StudentModel.update(
       {
         adviserId: idAdviser,
       },
@@ -29,9 +29,15 @@ const assignAdviser = async (req, res) => {
         },
       },
     );
-    res.status(200).json({
-      message: `adviser assigned to the student with the id ${id}`,
-      data: '',
+    if (student < 1) {
+      logger.warn(`ID Student: '${id}', not found in db. Method: PUT.  Url: ${req.originalUrl}.`);
+      return res.status(204).json({
+        message: 'Student not found',
+        data: '',
+      });
+    }
+    res.status(201).json({
+      message: `Adviser assigned to the student with the id ${id}`,
     });
   } catch (error) {
     res.status(500).json({

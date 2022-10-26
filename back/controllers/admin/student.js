@@ -1,4 +1,5 @@
 const bcryptjs = require('bcryptjs');
+const { request, response } = require('express');
 const StudentModel = require('../../data/models').Students;
 const db = require('../../data/models/index');
 const { studentBy } = require('../../helpers/findStudentBy');
@@ -26,7 +27,7 @@ const addStudent = async (req, res) => {
       user,
       password: passHash,
     });
-    res.status(200).json({
+    res.status(201).json({
       message: 'Student created successfully',
       data: '',
     });
@@ -53,11 +54,12 @@ const getAllStudent = async (req, res) => {
   }
 };
 // Method to get one student
-const getStudent = async (req, res) => {
+const getStudent = async (req = request, res = response) => {
   try {
     const student = await studentBy('id', req.params.id);
     if (!student) {
-      return res.status(404).json({
+      logger.warn(`ID Student: '${req.params.id}' not found in db. Method: GET. Url: ${req.originalUrl}.`);
+      return res.status(204).json({
         message: 'user not found',
         data: '',
       });
