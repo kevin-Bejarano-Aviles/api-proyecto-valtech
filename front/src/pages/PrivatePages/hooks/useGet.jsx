@@ -9,16 +9,41 @@ function useGet(){
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
     const token=localStorage.getItem('token');
-
     const { logOut } = useContext(Context);
 
     const [studentList,setStudentList]=useState([]);
-    const [loading,setLoading]=useState('pending');
-    const [studentDetail, setStudentDetail] = useState();
-    const [errorMsg,setErrorMsg]=useState('');
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
+    const [studentDetail, setStudentDetail] = useState();
+    const [initRange,setInitRange]=useState(0);
+    const [totalEventPages,seTotalEventPages]=useState(0);
+    const [totalEventsShow,setTotalEventshow]=useState(0);
+
+    const [loading,setLoading]=useState('pending');
+    const [errorMsg,setErrorMsg]=useState('');
+
     const navigate = useNavigate();
+
+    const calculateTotalPages = (totalEvent)=>{
+        let totalPages=0
+        let restEvents=0
+        let total=totalEvent;
+        while(total>10){
+          if(total>10){
+            totalPages+=1
+          }
+          total-=10;
+          restEvents=totalPages;
+        }
+        if(restEvents===0 && total>0){
+          totalPages += 1;
+        }
+        else if(restEvents>0){
+          totalPages += 1;
+        }
+        seTotalEventPages(totalPages);
+    }
+
 
     const LogOut = () => {
         logOut();
@@ -37,7 +62,7 @@ function useGet(){
             setStudentList(response.data?.data.students);
         }
         catch(err){
-            const status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
@@ -51,21 +76,26 @@ function useGet(){
             console.log((response.data?.data.student))
         }
         catch(err){
-            const status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
         }
     };
 
-    const getAllEvents=async()=>{
+    const getAllEvents=async(range)=>{
         try{
-            const response = await axios(`${baseUrl}/events`,options);
+            if(range>5){
+                setInitRange(range)
+            }
+            const response = await axios(`${baseUrl}/events?from=${initRange}`,options);
             setEventsList(response.data?.data.events)
-            console.log(response.data?.data);
+            // totalCount: 10, lengthEventsSent:
+            const  {totalCount,lengthEventsSent}= response.data.data;
+            calculateTotalPages(totalCount);
         }
         catch(err){
-            const status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
@@ -104,7 +134,7 @@ function useGet(){
             },5000);
         }
       catch(err){
-        const status=err.response.status;
+        const {status}=err.response;
         if(status===401){
                 LogOut();
             }      
@@ -121,7 +151,8 @@ function useGet(){
         studentList,
         studentDetail,
         eventList,
-        adviserList
+        adviserList,
+        totalEventPages
     }
 
 }

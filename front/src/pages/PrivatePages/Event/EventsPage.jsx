@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import useGet from '../hooks/useGet';
 import functionsEvents from './functions/functionsEvents';
@@ -16,14 +16,13 @@ import useDelete from '../hooks/useDelete';
 function EventsPage() {
 
     const navigate = useNavigate();
-	const {getAllEvents,eventList}=useGet();
+	const [band,setBand]=useState(true);
 	const {deleteEvent}=useDelete(); 
-	const {converTime,convertDate}=functionsEvents();
-
+	const {getAllEvents,currentPage, converTime,convertDate,eventList,nextPage}=functionsEvents();
 	useEffect(()=>{
-		getAllEvents();
-	},[])
-		
+		getAllEvents(currentPage);
+	},[]);
+
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
@@ -55,8 +54,8 @@ function EventsPage() {
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>de </p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' />
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth'/>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left'/>
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
 					
                     <table className='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
