@@ -10,7 +10,7 @@ function functionEvents(){
     const [banSearch,SetBandSearch]=useState(true);
     const [initRange,setInitRange]=useState(0);
     const [search,SetSearch]=useState('');
-    const [currentPage,setCurrentPage]=useState(0);
+    let currentPage=0;
 
     const  convertDate = (date)=>{
       let convertDatestring=''
@@ -45,35 +45,35 @@ function functionEvents(){
     const nextPage = ()=> {
       setclickPrevButon(false);
       setclickNextButon(true);
-      if(currentPage<=totalEventPages){
-        console.log('entra condicion');
-        setInitRange(initRange+10)
-        setCurrentPage(currentPage+1);
+      if(currentPage<totalEventPages){
+        console.log('totalEventPages:'+totalEventPage);
+        console.log('entra condicion de nextButton '+(initRange+10));
+        setInitRange(initRange+10);
+        currentPage+=1
       }
 	  }
 
     const prevPage=()=> {
       setclickNextButon(false);
       setclickPrevButon(true);
-      if(currentPage>1){
-        console.log('se le resta'+ initRange);
-        console.log('prev page init range'+initRange-10);
+      if(currentPage>=0 && initRange>0){
+        console.log('se le resta'+ (initRange-10));
+        console.log('prev page init range'+(initRange-10));
         setInitRange(initRange-10)
-        setCurrentPage(currentPage-1)
+        currentPage+=1
       }
     }
 
     useEffect(()=>{
-      if(currentPage>1){
-        console.log('la pagina ahora es'+currentPage);
-        console.log('rango donde empieza'+initRange);
-        getAllEvents(initRange);
-      }
-      else{
-        console.log('la pagina ahora es'+currentPage);
-        console.log('rango donde empieza'+initRange);
-        getAllEvents(initRange)
-      }
+        console.log('useEfect la pagina ahora es '+currentPage);
+        console.log('useefect rango donde empieza '+initRange);
+        if(currentPage<=totalEventPages ){
+          getAllEvents(initRange);
+        }
+        else if(initRange===0){
+          console.log('inir range es igual a 0');
+          getAllEvents(initRange);
+        }
     },[currentPage])
    
     return {
