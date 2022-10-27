@@ -18,6 +18,7 @@ function useGet(){
     const [errorMsg,setErrorMsg]=useState('');
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
+    const [adviserDetail, setAdviserDetail] = useState()
     const navigate = useNavigate();
 
     const LogOut = () => {
@@ -85,6 +86,23 @@ function useGet(){
         }
     };
 
+
+    const getOneAdviser = async(id)=>{
+        try{
+             const response = await axios(`${baseUrl}/advisers/${id}`,options)
+             setAdviserDetail(response.data?.data.adviser)
+             console.log((response.data?.data.adviser))
+         }
+         catch(err){
+             let status=err.response.status;
+             if(status===401){
+                 LogOut();
+             }
+         }
+     };
+
+
+
     const getLastStudentAndRedirect= async() => {
       try{
         const response = await axios(`${baseUrl}/students`,options);
@@ -109,10 +127,12 @@ function useGet(){
         getAllEvents,
         getAllAdvisers,
         getLastStudentAndRedirect,
+        getOneAdviser,
         studentList,
         studentDetail,
         eventList,
-        adviserList
+        adviserList,
+        adviserDetail
     }
 
 }

@@ -54,6 +54,7 @@ function AssignAdviserPage() {
   useEffect(() => {
     getOneStudent(idStudent);
     getAllAdvisers();
+    
   }, []);
 
   //------
@@ -77,6 +78,35 @@ function AssignAdviserPage() {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
   };
+
+
+
+  //-----------
+
+  
+
+//----------
+
+/* const ref = useRef();
+
+
+const myFunction = () => {
+  const valueOption = (ref.current.value);
+  setValor(valueOption)
+  console.log(valor)
+ } */
+const [valor,setValor] = useState(1)
+const {adviserDetail, getOneAdviser} = useGet()
+useEffect(() => {
+/*  const valueOfOption = ref */
+  getOneAdviser(valor)
+}, []);
+
+
+
+
+
+
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -126,7 +156,7 @@ function AssignAdviserPage() {
                 }}
               >
                 {() => (
-                  <Form className='formulario'>
+                  <Form className='formulario' >
                     <div
                       className={
                         hideCard ||
@@ -140,33 +170,26 @@ function AssignAdviserPage() {
                           className='border-[1px] rounded-lg border-bordergray mt-4'
                           name='idAdviser'
                           as='select'
-                          onClick={() => setcardAdviserIsVisible(true)}
-                          /* ref={selectRef} */
-/*                           onChange={(e) => {
-                            const valueOption = e.target.value;
-                            setSele(valueOption); 
-                          }}  */
+                          /* onClick={myFunction} */ 
+                          onClick={() => setcardAdviserIsVisible(true)}    
+                            
+      
                         >
-                          <option hidden value='Seleccionar orientador'>
+                          <option   hidden value={0}>
                             Seleccionar orientador
                           </option>
                           {adviserList.map((elemento) => (
-                            
-                            <option
-                            /* onClick={clickRef} */
+                          
+                          <option /* ref={ref}  key={elemento.id}  */                          
+                          onChange={(e) => {
+                            const valueOption = e.target.value;
+                            setValor(valueOption); 
+                          }}   
+                          value={elemento.id}> {elemento.fullName}</option>
+                        ))}
 
+                       
 
-                              key={elemento.id}
-                              value={[
-                                `${elemento.id}`,
-                                `${elemento.fullName}`,
-                                `${elemento.email}`,
-                                `${elemento.phoneNumber}`,
-                              ]}
-                            >
-                              {elemento.fullName}
-                            </option>
-                          ))}
                         </Field>
                       </div>
                     </div>
@@ -176,10 +199,10 @@ function AssignAdviserPage() {
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
                         <CardShowAdviser
-                          avatar={''}
-                          fullName= 'nombre'
-                          email={selectOption && selectOption}
-                          phoneNumber='1125464851'
+                          avatar={adviserDetail && adviserDetail.avatar}
+                          fullName= {valor && valor}
+                          email={adviserDetail && adviserDetail.email}
+                          phoneNumber={adviserDetail && adviserDetail.phoneNumber}
                         />
                       </div>
                     </div>
