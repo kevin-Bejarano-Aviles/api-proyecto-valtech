@@ -49,7 +49,7 @@ function functionEvents(){
         console.log('totalEventPages:'+totalEventPage);
         console.log('entra condicion de nextButton '+(initRange+10));
         setInitRange(initRange+10);
-        currentPage+=1
+        currentPage=currentPage+1
       }
 	  }
 
@@ -60,7 +60,7 @@ function functionEvents(){
         console.log('se le resta'+ (initRange-10));
         console.log('prev page init range'+(initRange-10));
         setInitRange(initRange-10)
-        currentPage+=1
+        currentPage=currentPage+1
       }
     }
 
