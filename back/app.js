@@ -3,7 +3,8 @@ const express = require('express');
 
 const app = express();
 const cors = require('cors');
-const db = require('./models/index');
+const morgan = require('morgan');
+const db = require('./data/models/index');
 
 const port = process.env.PORT || 8000;
 // Use express static to declare our public folder
@@ -16,6 +17,7 @@ app.use(
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   }),
 );
+app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/admin/advisers', require('./routes/admin/adviser'));
@@ -31,7 +33,7 @@ const dbConnectionServerUp = async () => {
       console.log(`SERVER UP running in http://localhost:${port}`);
     });
   } catch (error) {
-    console.log(`The error is: ${error}`);
+    console.error(`The error is: ${error}`);
     throw new Error('Error when starting the database');
   }
 };

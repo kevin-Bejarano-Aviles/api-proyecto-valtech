@@ -1,5 +1,5 @@
 const { studentBy } = require('./findStudentBy');
-const { Advisers: AdviserModel, Students: StudentModel } = require('../models');
+const { Advisers: AdviserModel, Students: StudentModel } = require('../data/models');
 
 const existingEmail = async (email) => {
   const student = await studentBy('email', email);
@@ -36,9 +36,7 @@ const studentsInDb = async (studentsId) => {
     },
   });
   if (students.length !== studentsId.length) {
-    throw new Error(
-      'Uno o mas estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes',
-    );
+    throw new Error('Uno o mas estudiantes no encontrados, tiene que ingresar un id validos para los estudiantes');
   }
 };
 module.exports = {
