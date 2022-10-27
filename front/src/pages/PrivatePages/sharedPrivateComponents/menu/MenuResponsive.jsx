@@ -9,25 +9,14 @@ import Context from '../../../../context/Context';
 
 export default function MenuResponsive({ menu, setMenu }) {
   const navigate = useNavigate();
-  const { deslogearme } = useContext(Context);
+  const { logOut } = useContext(Context);
   const login = () => {
-    deslogearme();
+    logOut();
     navigate('/login', { replace: true });
   };
 
   const admin = JSON.parse(localStorage.getItem('admin'));
 
-  const getAll = async () => {
-    try {
-      let res = await axios.get('http://localhost:8000/admin/logOut', {
-        withCredentials: true,
-      });
-      console.log(res);
-      login();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <div className={`fixed top-0 felx flex-row ${menu ? 'block' : 'hidden'}`}>
       <div className='min-h-screen w-[1023px] flex items-center  bg-[#2E384D] bg-opacity-30 z-30'>
@@ -54,7 +43,7 @@ export default function MenuResponsive({ menu, setMenu }) {
             <MenuComponent />
           </div>
           <div className='absolute bottom-8 ml-8'>
-            <Link to='/login' onClick={getAll}>
+            <Link to='/login' onClick={login}>
               <h4 className='flex flex-row'>
                 <img className='mr-2' src={Logout} alt='' />
                 Cerrar sesión

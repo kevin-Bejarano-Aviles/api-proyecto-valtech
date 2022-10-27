@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useContext, useState } from "react";
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Context from "../../../context/Context";
+import Context from '../../../context/Context';
 
 
 function useGet(){
@@ -29,7 +29,7 @@ function useGet(){
     const options= {
         method: 'GET',
         headers: { 'Content-Type': 'multipart/form-data'
-        ,"x-token":`Bearer ${token}`},
+        ,'x-token':`Bearer ${token}`},
     };
 
     const calculateTotalPages = (totalEvent)=>{
