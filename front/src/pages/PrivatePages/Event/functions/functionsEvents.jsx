@@ -1,5 +1,5 @@
-import { useEffect,useState } from "react";
-import useGet from "../../hooks/useGet";
+import { useEffect,useState } from 'react';
+import useGet from '../../hooks/useGet';
 
 function functionEvents(){
     const {getAllEvents,getAllEventsByFilter,eventList,totalPagesEvent,totalEventsGet,totalEvents}=useGet();
@@ -8,7 +8,8 @@ function functionEvents(){
     const [search,SetSearch] = useState('');
     const [bandSearch,SetBandSearch]=useState(true);
 
-    const  convertDate = (date)=>{
+    const  convertDate = (Date)=>{
+      const date=Date.split('T')[0]
       let convertDatestring=''
       // eslint-disable-next-line no-plusplus
       for (let index = 0; index < date.length; index++) {
@@ -69,7 +70,6 @@ function functionEvents(){
 
     useEffect(()=>{
       if (search.length>1) {
-        console.log(search);
         getAllEventsByFilter(search,limit)
       }
       else{
