@@ -1,21 +1,12 @@
 const bcryptjs = require('bcryptjs');
-const StudentModel = require('../../models').Students;
-const db = require('../../models/index');
+const StudentModel = require('../../data/models').Students;
+const db = require('../../data/models/index');
 const { studentBy } = require('../../helpers/findStudentBy');
+const logger = require('../../utils/logger');
 // Method to add a student
 const addStudent = async (req, res) => {
   const {
-    fullName,
-    email,
-    phoneNumber,
-    program,
-    dni,
-    school,
-    age,
-    address,
-    motive,
-    user,
-    pass,
+    fullName, email, phoneNumber, program, dni, school, age, address, motive, user, pass,
   } = req.body;
   try {
     const avatar = req.files[0].filename;
@@ -43,7 +34,7 @@ const addStudent = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 // Method to get all students
@@ -58,7 +49,7 @@ const getAllStudent = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 // Method to get one student
@@ -79,7 +70,7 @@ const getStudent = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 module.exports = {

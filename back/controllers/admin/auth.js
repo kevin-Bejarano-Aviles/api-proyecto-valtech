@@ -1,6 +1,7 @@
 const { generateJWT } = require('../../helpers/generate-jwt');
 const { adminBy } = require('../../helpers/findAdminBy');
 const { checkPassword } = require('../../helpers/checkCredentials');
+const logger = require('../../utils/logger');
 // Method to login our admin
 const login = async (req, res) => {
   const { email, pass } = req.body;
@@ -35,7 +36,7 @@ const login = async (req, res) => {
     res.status(500).json({
       message: 'Server Error',
     });
-    console.error(error);
+    logger.error(error);
   }
 };
 module.exports = {

@@ -11,7 +11,6 @@ import TimeInput from './components/TimeInput/TimeInput';
 import DurationInput from './components/DurationInput';
 import DetailInput from './components/DetailInput';
 import Button from '../sharedPrivateComponents/button/Button';
-import './CreateEventPage.css';
 import useGet from '../hooks/useGet';
 import usePost from '../hooks/usePost';
 
@@ -23,16 +22,16 @@ function CreateEventPage() {
     studentsId: false,
     date: false,
     time: false,
-    duration: false
+    duration: false,
   };
   const [areInputVisible, setAreInputVisible] = useState(initialValues);
 
   useEffect(() => {
     getAllStudents();
     getAllAdvisers();
-  },[]);
+  }, []);
 
-  const handleAreInputVisible = newState => {
+  const handleAreInputVisible = (newState) => {
     setAreInputVisible(newState);
   };
 
@@ -47,22 +46,29 @@ function CreateEventPage() {
       detail: '',
     },
     validationSchema: getValidationSchema(),
-    onSubmit: values => {
+    onSubmit: (values) => {
       postEvent(values);
-    }
+    },
   });
 
   return (
-    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
+    <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]'>
       <Menu />
       <div>
         <HeaderAdmin Title='Orientados' />
-        <main className='pb-12 mx-12'>
+        <main className='mb-12 mx-12'>
           <h1 className='mt-12 text-2xl'>Crear un evento</h1>
-          <p className='text-lg'>Puedes crear un primer encuentro entre Orientadores y Orientados.</p>
-          <form onSubmit={formik.handleSubmit}>
-            <section className='mt-12 mb-8'>
-              <h2 className='my-4 font-medium'>01. Información sobre el evento</h2>
+          <p className='text-lg'>
+            Puedes crear un primer encuentro entre Orientadores y Orientados.
+          </p>
+          <form
+            onSubmit={formik.handleSubmit}
+            className='flex flex-col gap-9 mt-12'
+          >
+            <section>
+              <h2 className='mb-4 font-medium'>
+                01. Información sobre el evento
+              </h2>
               <div className='flex gap-4 mobile:flex-col lap_tablet:flex-row'>
                 <NameInput
                   label='Nombre del evento'
@@ -97,8 +103,10 @@ function CreateEventPage() {
               </div>
             </section>
             <hr />
-            <section className='mt-8 mb-8'>
-              <h2 className='my-4 font-medium'>02. Días y Horarios disponibles</h2>
+            <section>
+              <h2 className='mb-4 font-medium'>
+                02. Días y Horarios disponibles
+              </h2>
               <div className='flex gap-4 mobile:flex-col lap_tablet:flex-row'>
                 <DateInput
                   label='Fecha'
@@ -132,8 +140,8 @@ function CreateEventPage() {
               </div>
             </section>
             <hr />
-            <section className='mt-8 mb-12'>
-              <h2 className='my-4 font-medium'>03. Detalle</h2>
+            <section>
+              <h2 className='mb-4 font-medium'>03. Detalle</h2>
               <DetailInput
                 label='Comentarios del evento'
                 name='detail'
@@ -152,8 +160,7 @@ function CreateEventPage() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
 export default CreateEventPage;
-

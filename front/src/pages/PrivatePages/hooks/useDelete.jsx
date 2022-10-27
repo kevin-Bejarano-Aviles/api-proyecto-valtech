@@ -16,7 +16,10 @@ function useDelete() {
           'x-token': `Bearer ${token}`,
         },
       };
+      
       const response = await axios(`${url}/admin/events/${id}`, options);
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
       setSubmitState('accept');
     } catch (err) {
       setSubmitState('refuse');
