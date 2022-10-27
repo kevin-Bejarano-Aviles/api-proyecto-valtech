@@ -6,8 +6,8 @@ import functionsEvents from './functions/functionsEvents';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import Icon_arrow_left from '../../../assets/icons/Icon_arrow-left.svg'
-import Icon_arrow_rigth from '../../../assets/icons/Icon_arrow-right.svg'
+import IconArrowLeft from '../../../assets/icons/Icon_arrow-left.svg'
+import IconArrowRigth from '../../../assets/icons/Icon_arrow-right.svg'
 import Search from '../sharedPrivateComponents/Search';
 import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
 import useDelete from '../hooks/useDelete';
@@ -53,8 +53,8 @@ function EventsPage() {
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{limit+1}-{totalEventsGet+limit} de {totalEvents}</p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>prevPage()}/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
+						<img src={IconArrowLeft} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>prevPage()}/>
+						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
 					
                     <table className='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
@@ -115,8 +115,8 @@ function EventsPage() {
 											
 										</tr>
 
-										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-5'>
-											<div className='flex items-center  justify-between flex-row w-4/5 border rounded-md p-5 border-slate-400'>
+										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-2'>
+											<div className='flex items-center  justify-between flex-col w-4/5 border rounded-md p-5 border-slate-400'>
 												<div className='flex  justify-start flex-col '>
 													<div className='w-full flex justify-start flex-row'>
 														<div className='flex items-start mr-2 flex-col '>
@@ -132,9 +132,12 @@ function EventsPage() {
 													<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
 															{eve.name}
 													</p>
+													
 												</div>
-												<img className='cursor-pointer w-14 h-14' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
-
+												<div className='bg-red-400' onClick={()=>deleteEvent(eve.id)} role='presentation' onKeyUp={()=>deleteEvent(eve.id)}>
+														<p>Eliminar evento</p>
+														<img className='cursor-pointer w-7 h-7' src={iconDelete} alt=""/>									
+												</div>
 											</div>
 										</div>		
 										</>						
@@ -146,8 +149,8 @@ function EventsPage() {
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
 						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1 -2 </p>
 						<div className='flex '>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
+						<img src={IconArrowLeft} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
+						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
 					</div>
 					<div className='flex tablet:hidden mt-16 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button
