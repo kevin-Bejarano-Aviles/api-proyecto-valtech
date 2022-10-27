@@ -15,7 +15,6 @@ function useGet(){
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
     const [studentDetail, setStudentDetail] = useState();
-    const [initRange,setInitRange]=useState(0);
     const [totalEventPages,seTotalEventPages]=useState(0);
     const [totalEventsShow,setTotalEventshow]=useState(0);
 
@@ -83,15 +82,12 @@ function useGet(){
         }
     };
 
-    const getAllEvents=async(range)=>{
+    const getAllEvents=async(limit)=>{
         try{
-            if(range>5){
-                setInitRange(range)
-            }
-            const response = await axios(`${baseUrl}/events?from=${initRange}`,options);
+            const response = await axios(`${baseUrl}/events?from=${limit}`,options);
             setEventsList(response.data?.data.events)
-            // totalCount: 10, lengthEventsSent:
-            const  {totalCount,lengthEventsSent}= response.data.data;
+            console.log('entra en la petcion al event llamado');
+            const  {totalCount}= response.data.data;
             calculateTotalPages(totalCount);
         }
         catch(err){
