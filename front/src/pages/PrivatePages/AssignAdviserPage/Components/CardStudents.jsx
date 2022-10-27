@@ -7,7 +7,7 @@ export default function CardStudents({
   email,
   school,
   phoneNumber,
-  program
+  program,
 }) {
   return (
     <div className='min-w-[365px] py-4 flex flex-row mobile:h-[475px]  mobile:mx-auto  tablet:h-auto  mt-4  mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
@@ -21,7 +21,6 @@ export default function CardStudents({
           }
           alt='avatar'
         />
-        
       </div>
       <div className=' laptop:max-w-[823px] h-[178px] ml-8 mobile:flex-col mobileL:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
         <div className=' w-full mobile:mx-auto lap_tablet:mx-auto  tablet:mx-auto'>
