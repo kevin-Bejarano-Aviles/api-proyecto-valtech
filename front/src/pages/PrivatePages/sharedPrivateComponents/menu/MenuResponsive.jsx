@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Icon } from "@iconify/react";
-import ProfilePictureHeader from "../../../../assets/admins/ProfilePictureHeader.svg";
+import Avatar from "../../../../assets/admins/default.jpg";
 import MenuComponent from "./MenuComponent";
 import Logout from "../../../../assets/icons/privatePage/Icon_logout.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ export default function MenuResponsive({ menu, setMenu }) {
             <div className="">
               <img
                 className="h-[70px] ml-8 rounded-full"
-                src={ProfilePictureHeader}
+                src={Avatar}
                 alt="Profile_picture_admin"
               />
             </div>
