@@ -2,12 +2,13 @@ import { useEffect,useState } from "react";
 import useGet from "../../hooks/useGet";
 
 function functionEvents(){
-    const {getAllEvents,eventList,totalEventPages}=useGet();
+    const {getAllEvents,eventList,totalPagesEvent,totalEventsGet,totalEvents}=useGet();
     const [limit,setLimit]=useState(0);
     const [currentPage,setCurrentPage]=useState(1);
 
     const  convertDate = (date)=>{
       let convertDatestring=''
+      // eslint-disable-next-line no-plusplus
       for (let index = 0; index < date.length; index++) {
           const element = date[index];
           if(element==='-'){
@@ -22,12 +23,12 @@ function functionEvents(){
 
     const  converTime = (time)=>{
       const timeArray=time.split(':')
-      const timeString= timeArray[0]+':'+timeArray[2]
+      const timeString= `${timeArray[0]}:${timeArray[2]}`
       return timeString;
     }
 
     const nextPage = ()=> {
-      if(currentPage<totalEventPages){
+      if(currentPage<totalPagesEvent){
         setLimit(limit+10)
         setCurrentPage(currentPage+1);
       }
@@ -51,7 +52,11 @@ function functionEvents(){
         converTime,
         convertDate,
         currentPage,
-        eventList
+        eventList,
+        totalEventsGet,
+        totalPagesEvent,
+        totalEvents,
+        limit
     }
 }
 

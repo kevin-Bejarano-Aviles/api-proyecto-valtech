@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Context from "../../../context/Context";
 
@@ -15,10 +15,22 @@ function useGet(){
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
     const [studentDetail, setStudentDetail] = useState();
-    const [totalEventPages,seTotalEventPages]=useState(0);
-
+    const [totalPagesEvent,seTotalPagesEvent]=useState(0);
+    const [totalEventsGet,setTotalEventsGet]=useState();
+    const [totalEvents,setTotalEvents]=useState();
 
     const navigate = useNavigate();
+
+    const LogOut = () => {
+        logOut();
+        navigate('/login', { replace: true })
+    }
+
+    const options= {
+        method: 'GET',
+        headers: { 'Content-Type': 'multipart/form-data'
+        ,"x-token":`Bearer ${token}`},
+    };
 
     const calculateTotalPages = (totalEvent)=>{
         let totalPages=0
@@ -37,20 +49,8 @@ function useGet(){
         else if(restEvents>0){
           totalPages += 1;
         }
-        seTotalEventPages(totalPages);
+        seTotalPagesEvent(totalPages);
     }
-
-
-    const LogOut = () => {
-        logOut();
-        navigate('/login', { replace: true })
-    }
-
-    const options= {
-        method: 'GET',
-        headers: { 'Content-Type': 'multipart/form-data'
-        ,"x-token":`Bearer ${token}`},
-    };
     
     const getAllStudents = async () => {
         try{
@@ -82,8 +82,10 @@ function useGet(){
         try{
             const response = await axios(`${baseUrl}/events?from=${limit}`,options);
             setEventsList(response.data?.data.events)
-            const  {totalCount}= response.data.data;
+            const  {totalCount,lengthEventsSent}= response.data.data;
             calculateTotalPages(totalCount);
+            setTotalEventsGet(lengthEventsSent);
+            setTotalEvents(totalCount);
         }
         catch(err){
             const {status}=err.response;
@@ -108,7 +110,7 @@ function useGet(){
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
-            const status=err.response.status;
+            const {status} = err.response;
             if(status===401){
                 LogOut();
             }        
@@ -143,7 +145,9 @@ function useGet(){
         studentDetail,
         eventList,
         adviserList,
-        totalEventPages
+        totalPagesEvent,
+        totalEventsGet,
+        totalEvents
     }
 
 }
