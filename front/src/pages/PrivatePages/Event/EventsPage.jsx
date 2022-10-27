@@ -115,8 +115,8 @@ function EventsPage() {
 											
 										</tr>
 
-										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-5'>
-											<div className='flex items-center  justify-between flex-row w-4/5 border rounded-md p-5 border-slate-400'>
+										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-2'>
+											<div className='flex items-center  justify-between flex-col w-4/5 border rounded-md p-5 border-slate-400'>
 												<div className='flex  justify-start flex-col '>
 													<div className='w-full flex justify-start flex-row'>
 														<div className='flex items-start mr-2 flex-col '>
@@ -132,9 +132,12 @@ function EventsPage() {
 													<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
 															{eve.name}
 													</p>
+													
 												</div>
-												<img className='cursor-pointer w-14 h-14' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
-
+												<div className='bg-red-400' onClick={()=>deleteEvent(eve.id)} role='presentation' onKeyUp={()=>deleteEvent(eve.id)}>
+														<p>Eliminar evento</p>
+														<img className='cursor-pointer w-7 h-7' src={iconDelete} alt=""/>									
+												</div>
 											</div>
 										</div>		
 										</>						
