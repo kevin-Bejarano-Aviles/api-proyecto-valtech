@@ -16,10 +16,7 @@ function useGet(){
     const [adviserList,setAdviserList]=useState([]);
     const [studentDetail, setStudentDetail] = useState();
     const [totalEventPages,seTotalEventPages]=useState(0);
-    const [totalEventsShow,setTotalEventshow]=useState(0);
 
-    const [loading,setLoading]=useState('pending');
-    const [errorMsg,setErrorMsg]=useState('');
 
     const navigate = useNavigate();
 
@@ -72,7 +69,6 @@ function useGet(){
        try{
             const response = await axios(`${baseUrl}/students/${id}`,options)
             setStudentDetail(response.data?.data.student)
-            console.log((response.data?.data.student))
         }
         catch(err){
             const {status}=err.response;
@@ -86,7 +82,6 @@ function useGet(){
         try{
             const response = await axios(`${baseUrl}/events?from=${limit}`,options);
             setEventsList(response.data?.data.events)
-            console.log('entra en la petcion al event llamado');
             const  {totalCount}= response.data.data;
             calculateTotalPages(totalCount);
         }
