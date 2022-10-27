@@ -1,4 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
 import React from 'react';
 
 export default function CardStudents({
