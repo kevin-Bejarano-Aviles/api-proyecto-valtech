@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useParams, NavLink } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
@@ -9,14 +9,25 @@ import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
+import CardShowAdviser from './Components/CardShowAdviser'
 
 function AssignAdviserPage() {
   const baseUrl = process.env.REACT_APP_API_URL;
   const params = useParams();
   const idStudent = params.id;
   const token = localStorage.getItem('token');
+/*   const selectRef = useRef()
+  const mostrarRef = useRef(null)
+  
+  const clickRef = () =>{
+    alert(selectRef.current.value)
+  } */
+
+
+
   const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
-  /*   const [selectOption, setSelectOption] = useState(''); */
+  const [selectOption, setSelectOption] = useState('');
+  const [sele, setSele] = useState()
   const [isEmpty, setIsEmpty] = useState(true);
   /*  const [viewButton, setViewButton] = useState(true); */
   const [hideMessage, setHideMessage] = useState(true);
@@ -25,6 +36,7 @@ function AssignAdviserPage() {
   const handleClickShowAlert = () => {
     setShowAlert(!showAlert);
   };
+
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
@@ -129,21 +141,27 @@ function AssignAdviserPage() {
                           name='idAdviser'
                           as='select'
                           onClick={() => setcardAdviserIsVisible(true)}
+                          /* ref={selectRef} */
+/*                           onChange={(e) => {
+                            const valueOption = e.target.value;
+                            setSele(valueOption); 
+                          }}  */
                         >
                           <option hidden value='Seleccionar orientador'>
                             Seleccionar orientador
                           </option>
                           {adviserList.map((elemento) => (
+                            
                             <option
-                              /*                               onChange={(a) => {
-                                const valueOption = a.target.value;
-                                setSelectOption(valueOption); 
-                              }} */
+                            /* onClick={clickRef} */
+
+
                               key={elemento.id}
                               value={[
                                 `${elemento.id}`,
-                                ` ${elemento.email}`,
-                                ` ${elemento.phoneNumber}`,
+                                `${elemento.fullName}`,
+                                `${elemento.email}`,
+                                `${elemento.phoneNumber}`,
                               ]}
                             >
                               {elemento.fullName}
@@ -153,13 +171,14 @@ function AssignAdviserPage() {
                       </div>
                     </div>
 
+
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
-                        <CardAdivser
-                          avatar=''
-                          fullName='Nombre Orientador'
-                          email='Orientador@mail.com'
+                        <CardShowAdviser
+                          avatar={''}
+                          fullName= 'nombre'
+                          email={selectOption && selectOption}
                           phoneNumber='1125464851'
                         />
                       </div>
