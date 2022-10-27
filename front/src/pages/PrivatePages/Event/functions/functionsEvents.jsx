@@ -2,9 +2,11 @@ import { useEffect,useState } from "react";
 import useGet from "../../hooks/useGet";
 
 function functionEvents(){
-    const {getAllEvents,eventList,totalPagesEvent,totalEventsGet,totalEvents}=useGet();
+    const {getAllEvents,getAllEventsByFilter,eventList,totalPagesEvent,totalEventsGet,totalEvents}=useGet();
     const [limit,setLimit]=useState(0);
     const [currentPage,setCurrentPage]=useState(1);
+    const [search,SetSearch] = useState('');
+    const [bandSearch,SetBandSearch]=useState(true);
 
     const  convertDate = (date)=>{
       let convertDatestring=''
@@ -41,20 +43,50 @@ function functionEvents(){
       }
     }
 
+    const handleSearch = (event)=>{
+      SetSearch(event.target.value)
+      if (search) {
+        SetBandSearch(true);
+        if (search.length===1) {
+          setLimit(0);
+        }
+      }
+      else{
+        SetBandSearch(false);
+      }
+    }
+  
+
     useEffect(()=>{
+      if (!bandSearch) {
         getAllEvents(limit);
+      }
+      else if(bandSearch){
+        getAllEventsByFilter(search,limit)
+      }
     },[currentPage])
    
+
+    useEffect(()=>{
+      if (search.length>1) {
+        console.log(search);
+        getAllEventsByFilter(search,limit)
+      }
+      else{
+        getAllEvents(limit);
+      }
+    },[search])
+
     return {
         getAllEvents,
         nextPage,
         prevPage,
         converTime,
         convertDate,
+        handleSearch,
         currentPage,
         eventList,
         totalEventsGet,
-        totalPagesEvent,
         totalEvents,
         limit
     }

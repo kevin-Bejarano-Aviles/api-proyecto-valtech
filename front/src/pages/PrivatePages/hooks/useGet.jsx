@@ -95,14 +95,23 @@ function useGet(){
         }
     };
 
-    // const getAllEventsByFilter=async()=>{
-    //     try{
-
-    //     }
-    //     catch{
-            
-    //     }
-    // }
+    const getAllEventsByFilter=async(studentName,limit)=>{
+        try{
+            const response = await axios(`${baseUrl}/events?from=${limit}&student=${studentName}`,options);
+            setEventsList(response.data?.data.events)
+            const  {totalCount,lengthEventsSent}= response.data.data;
+            console.log(response.data?.data.events);
+            calculateTotalPages(totalCount);
+            setTotalEventsGet(lengthEventsSent);
+            setTotalEvents(totalCount);
+        }
+        catch(err){
+            const {status}=err.response;
+            if(status===401){
+                LogOut();
+            }
+        }
+    }
 
     const getAllAdvisers = async () => {
         try{
@@ -141,6 +150,7 @@ function useGet(){
         getAllEvents,
         getAllAdvisers,
         getLastStudentAndRedirect,
+        getAllEventsByFilter,
         studentList,
         studentDetail,
         eventList,

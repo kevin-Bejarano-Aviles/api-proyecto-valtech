@@ -16,9 +16,8 @@ import useDelete from '../hooks/useDelete';
 function EventsPage() {
 
     const navigate = useNavigate();
-	const [band,setBand]=useState(true);
 	const {deleteEvent}=useDelete(); 
-	const {totalEventsGet,totalEvents,totalEventsPage,limit,eventList,getAllEvents, converTime,convertDate,nextPage,prevPage}=functionsEvents();
+	const {totalEventsGet,totalEvents,limit,eventList,converTime,convertDate,nextPage,prevPage,getAllEvents,handleSearch}=functionsEvents();
 	useEffect(()=>{
 		getAllEvents(0);
 	},[]);
@@ -27,7 +26,7 @@ function EventsPage() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
         <div>
-            <HeaderAdmin Titulo='Eventos' />
+			<HeaderAdmin Title='Eventos'/>
             <main className='pb-12 mx-0 mobileL:mx-12'>  
 
             <div className='mt-5'>
@@ -49,7 +48,7 @@ function EventsPage() {
                 </div>
                 <div className='mt-5 mx-5 tablet:mx-0'>
                     <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
-					{/* <Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/> */}
+					<Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/>
 				</div>
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
