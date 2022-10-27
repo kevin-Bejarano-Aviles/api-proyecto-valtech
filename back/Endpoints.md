@@ -76,6 +76,11 @@ headers:{
 - Metodo http: 'GET'
 - Mostrar a todos los orientadores
 
+### URL: 'http://localhost:8000/admin/advisers/:id'
+- Metodo http: 'GET'
+- Mostrar un orientador
+- El params ':id' es el id del orientador
+
 ### URL: 'http://localhost:8000/admin/advisers/student/:id'
 - Metodo http: 'PUT'
 - Asignar un orientador a un estudiante

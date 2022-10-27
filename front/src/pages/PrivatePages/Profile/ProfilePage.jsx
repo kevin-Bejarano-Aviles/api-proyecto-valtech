@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import ProfilePictureHeader from '../../../assets/admins/ProfilePictureHeader.svg';
+import Avatar from '../../../assets/admins/default.jpg';
 import ProfilePicture from '../sharedPrivateComponents/ProfilePicture';
 
 function Profile() {
@@ -25,7 +25,7 @@ function Profile() {
             <div className='h-[320px] w-[325px] py-5 p-[100px] '>
               <ProfilePicture
                 styles='w-32 rounded-full'
-                picture={ProfilePictureHeader}
+                picture={Avatar}
                 alt='admin'
               />
             </div>

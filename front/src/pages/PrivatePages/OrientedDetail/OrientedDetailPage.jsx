@@ -1,36 +1,36 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import useGet from '../hooks/useGet';
 
-
 function Oriented() {
   const params = useParams();
   const idStudent = params.id;
   const [showAlert, setShowAlert] = useState(true);
-  const {studentDetail,getOneStudent}=useGet() 
+  const { studentDetail, getOneStudent } = useGet();
 
-  useEffect(()=>{
-    getOneStudent(idStudent) 
-  },[]);
-
+  useEffect(() => {
+    getOneStudent(idStudent);
+  }, []);
 
   return (
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
         <HeaderAdmin Title='Orientados' />
-        
-        {
-         studentDetail!==undefined ? (<main
+
+        {studentDetail !== undefined ? (
+          <main
             className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
               showAlert ? 'pb-24' : 'pb-7'
             }`}
           >
             <section>
-              <h2 className='mb-4 text-2xl font-bold'>01. Información básica</h2>
+              <h2 className='mb-4 text-2xl font-bold'>
+                01. Información básica
+              </h2>
               <div className='flex-col gap-3 tablet:flex-row tablet:gap-9 flex'>
                 <img
                   src={
@@ -52,7 +52,9 @@ function Oriented() {
                     <p>{studentDetail.phoneNumber}</p>
                   </div>
                   <div className='flex flex-col gap-2'>
-                    <p className='text-xs text-gray-400'>PROGRAMA POR INICIAR</p>
+                    <p className='text-xs text-gray-400'>
+                      PROGRAMA POR INICIAR
+                    </p>
                     <p>{studentDetail.program}</p>
                   </div>
                 </div>
@@ -125,8 +127,8 @@ function Oriented() {
                 onclick={() => setShowAlert(false)}
               />
             )} */}
-          </main>) : null
-        }
+          </main>
+        ) : null}
       </div>
     </div>
   );
