@@ -20,6 +20,7 @@
     ],
     "rules": {
         "quotes": ["error", "single"],
+        "object-shorthand": ["always"],
         "react/react-in-jsx-scope": "off",
         "global-require": "off",
         "no-dynamic-require":"off",
