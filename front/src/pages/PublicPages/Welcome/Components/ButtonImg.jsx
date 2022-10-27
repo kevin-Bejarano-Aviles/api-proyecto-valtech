@@ -1,5 +1,6 @@
 function ButtonImg({ index, currentIndex }) {
-  let active = index === currentIndex;
+  const active = index === currentIndex;
+
   return (
     <div
       key={index}
