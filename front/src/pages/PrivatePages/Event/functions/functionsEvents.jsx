@@ -8,7 +8,8 @@ function functionEvents(){
     const [search,SetSearch] = useState('');
     const [bandSearch,SetBandSearch]=useState(true);
 
-    const  convertDate = (date)=>{
+    const  convertDate = (Date)=>{
+      const date=Date.split('T')[0]
       let convertDatestring=''
       // eslint-disable-next-line no-plusplus
       for (let index = 0; index < date.length; index++) {
