@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Context from "../../../context/Context";
-import axios from "axios";
+import Context from '../../../context/Context';
 
 
 function useGet(){
@@ -9,15 +9,16 @@ function useGet(){
     const url=process.env.REACT_APP_API_URL;
     const baseUrl =`${url}/admin`;
     const token=localStorage.getItem('token');
-
     const { logOut } = useContext(Context);
 
     const [studentList,setStudentList]=useState([]);
-    const [loading,setLoading]=useState('pending');
-    const [studentDetail, setStudentDetail] = useState();
-    const [errorMsg,setErrorMsg]=useState('');
     const [eventList,setEventsList]=useState([]);
     const [adviserList,setAdviserList]=useState([]);
+    const [studentDetail, setStudentDetail] = useState();
+    const [totalPagesEvent,seTotalPagesEvent]=useState(0);
+    const [totalEventsGet,setTotalEventsGet]=useState();
+    const [totalEvents,setTotalEvents]=useState();
+
     const navigate = useNavigate();
 
     const LogOut = () => {
@@ -28,8 +29,28 @@ function useGet(){
     const options= {
         method: 'GET',
         headers: { 'Content-Type': 'multipart/form-data'
-        ,"x-token":`Bearer ${token}`},
+        ,'x-token':`Bearer ${token}`},
     };
+
+    const calculateTotalPages = (totalEvent)=>{
+        let totalPages=0
+        let restEvents=0
+        let total=totalEvent;
+        while(total>10){
+          if(total>10){
+            totalPages+=1
+          }
+          total-=10;
+          restEvents=totalPages;
+        }
+        if(restEvents===0 && total>0){
+          totalPages += 1;
+        }
+        else if(restEvents>0){
+          totalPages += 1;
+        }
+        seTotalPagesEvent(totalPages);
+    }
     
     const getAllStudents = async () => {
         try{
@@ -37,11 +58,10 @@ function useGet(){
             setStudentList(response.data?.data.students);
         }
         catch(err){
-            let status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
-           
         }
     };
 
@@ -51,25 +71,46 @@ function useGet(){
             setStudentDetail(response.data?.data.student)
         }
         catch(err){
-            let status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
         }
     };
 
-    const getAllEvents=async()=>{
+    const getAllEvents=async(limit)=>{
         try{
-            const response = await axios(`${baseUrl}/events`,options);
+            const response = await axios(`${baseUrl}/events?from=${limit}`,options);
             setEventsList(response.data?.data.events)
+            const  {totalCount,lengthEventsSent}= response.data.data;
+            calculateTotalPages(totalCount);
+            setTotalEventsGet(lengthEventsSent);
+            setTotalEvents(totalCount);
         }
         catch(err){
-            let status=err.response.status;
+            const {status}=err.response;
             if(status===401){
                 LogOut();
             }
         }
     };
+
+    const getAllEventsByFilter=async(studentName,limit)=>{
+        try{
+            const response = await axios(`${baseUrl}/events?from=${limit}&student=${studentName}`,options);
+            setEventsList(response.data?.data.events)
+            const  {totalCount,lengthEventsSent}= response.data.data;
+            calculateTotalPages(totalCount);
+            setTotalEventsGet(lengthEventsSent);
+            setTotalEvents(totalCount);
+        }
+        catch(err){
+            const {status}=err.response;
+            if(status===401){
+                LogOut();
+            }
+        }
+    }
 
     const getAllAdvisers = async () => {
         try{
@@ -77,7 +118,7 @@ function useGet(){
             setAdviserList(response.data?.data.advisers)
         }
         catch (err) {
-            const status=err.response.status;
+            const {status} = err.response;
             if(status===401){
                 LogOut();
             }        
@@ -92,12 +133,12 @@ function useGet(){
           setTimeout(() => {
               navigate(`/orientados/${lastUserId}`);
             },5000);
-      }
+        }
       catch(err){
-        const status=err.response.status;
+        const {status}=err.response;
         if(status===401){
-            LogOut();
-        }      
+                LogOut();
+            }      
         }
   
     };
@@ -108,10 +149,14 @@ function useGet(){
         getAllEvents,
         getAllAdvisers,
         getLastStudentAndRedirect,
+        getAllEventsByFilter,
         studentList,
         studentDetail,
         eventList,
-        adviserList
+        adviserList,
+        totalPagesEvent,
+        totalEventsGet,
+        totalEvents
     }
 
 }

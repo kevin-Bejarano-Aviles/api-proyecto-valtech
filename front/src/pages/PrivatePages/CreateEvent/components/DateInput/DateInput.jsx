@@ -3,10 +3,18 @@ import Calendar from 'react-calendar';
 import iconCalendar from '../../../../../assets/icons/privatePage/icon-calendar.svg';
 import './DateInput.css';
 
-const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibility }) => {
+function DateInput({
+  label,
+  name,
+  areInputVisible,
+  formik,
+  errorCreateEventObject,
+  initialValues,
+  handleAreInputVisible,
+}) {
   const [selectedDate, setSelectedDate] = useState('');
 
-  const handleSelectedDate = date => {
+  const handleSelectedDate = (date) => {
     const selectedDay = ('0' + date.getDate()).slice(-2);
     const selectedMonth = ('0' + (date.getMonth() + 1)).slice(-2);
     const selectedYear = date.getFullYear();
@@ -15,28 +23,41 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
 
   const handleValidateErrors = () => {
     selectedDate === ''
-    ? formik.setErrors({ ...formik.errors, date: 'Required'})
-    : formik.setErrors({ ...formik.errors, date: ''});
+      ? formik.setErrors({ ...formik.errors, date: 'Required' })
+      : formik.setErrors({ ...formik.errors, date: '' });
   };
 
   const handleChangeFormikValue = () => {
-    formik.values.date = selectedDate.replaceAll('/','-');
+    formik.values.date = selectedDate.replaceAll('/', '-');
   };
 
   useEffect(() => {
     handleValidateErrors();
     handleChangeFormikValue();
-  },[selectedDate]);
+  }, [selectedDate]);
+
+  const handleClick = () => {
+    handleAreInputVisible({
+      ...initialValues,
+      date: !areInputVisible.date,
+    });
+  };
 
   return (
     <div className='relative flex flex-col tablet:max-w-[320px] gap-1 tablet:grow'>
-      <label htmlFor={name} className='text-sm'>{label}</label>
-      <div className={`${areInputVisible.date ? 'border-green' : ''} ${selectedDate === '' ? 'text-lightgray' : 'bg-inputbackground'} flex items-center h-10 rounded-lg cursor-pointer border-2`}>
+      <label htmlFor={name} className='text-sm'>
+        {label}
+      </label>
+      <div
+        className={`${areInputVisible.date ? 'border-green' : ''} ${
+          selectedDate === '' ? 'text-lightgray' : 'bg-inputbackground'
+        } flex items-center h-10 rounded-lg cursor-pointer border-2`}
+      >
         <div
           name={name}
           id={name}
           className='mobile:w-full tablet:max-w-[320px] pl-3 pr-2 text-sm appearance-none select-none'
-          onClick={onChangeInputVisibility}
+          onClick={handleClick}
           tabIndex='0'
           onBlur={formik.handleBlur}
         >
@@ -52,6 +73,9 @@ const DateInput = ({ label, name, areInputVisible, formik, onChangeInputVisibili
       />
       {formik.touched.date && formik.errors.date ? (
         <div className='text-red-500'>{formik.errors.date}</div>
+      ) : null}
+      {errorCreateEventObject.date ? (
+        <div className='text-red-500'>{errorCreateEventObject.date.msg}</div>
       ) : null}
     </div>
   );
