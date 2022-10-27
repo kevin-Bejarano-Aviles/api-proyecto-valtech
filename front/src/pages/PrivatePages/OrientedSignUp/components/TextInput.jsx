@@ -1,8 +1,6 @@
 import warningImg from '../../../../assets/icons/icon_warning.svg'
 
 function TextInput ({ errorPost=null,error,label,touched, ...props })  {
-  console.log(label);  
-  console.log(touched);  
   
   return (
       <div className='flex flex-col gap-1 tablet:grow tablet:max-w-[320px] mb-8'>

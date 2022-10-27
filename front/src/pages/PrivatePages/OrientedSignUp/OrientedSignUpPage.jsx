@@ -165,6 +165,8 @@ function OrientedSignUpPage() {
 							name='motive'
 							placeholder='Escribe un comentario'
 							onChange={handleChange}
+							onBlur={handleBlur}
+							touched={touched.motive}
 							value={values.motive}
 							error={errors.motive}
 						/>
