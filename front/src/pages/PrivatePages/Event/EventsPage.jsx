@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import useGet from '../hooks/useGet';
+import functionsEvents from './functions/functionsEvents';
 
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -15,170 +15,78 @@ import useDelete from '../hooks/useDelete';
 
 function EventsPage() {
 
+    const navigate = useNavigate();
+	const {deleteEvent}=useDelete(); 
+	const {totalEventsGet,totalEvents,limit,eventList,converTime,convertDate,nextPage,prevPage,getAllEvents,handleSearch}=functionsEvents();
+	useEffect(()=>{
+		getAllEvents(0);
+	},[]);
 
-    let navigate = useNavigate();
-	
-	const [cantEvents,setCantEvents]=useState(0);
-	const [banSearch,SetBandSearch]=useState(true);
-	const [initrange,setRange]=useState(0)
-	const [orderListband,SetOrderListband]=useState(true);
-	const [showAll, setShowAll] = useState(false);
-	const [search,SetSearch] = useState('');
-	const {getAllEvents,adviserList,eventList}=useGet();
-	const {deleteEvent}=useDelete();
-	
-
-	const handleSearch = (event)=>{
-		SetSearch(event.target.value)
-		if (search) {
-		  setShowAll(false)
-		  SetBandSearch(true)
-		}
-		else{
-		  setShowAll(true)
-		  SetBandSearch(false)
-		}
-	}
-
-	function arrowRigth() {
-		if(initrange+eventsToShow.length < cantEvents ){
-			setRange(initrange+8)
-		}
-	}
-
-	function arrowLeft() {
-		if(initrange!==0){
-			setRange(initrange-8)
-		}
-	}
-
-	function newArray(arrayList,init,end){
-		let arrayLimitEvent=[]
-		if(end>arrayList.length){
-			end=arrayList.length;
-		}
-		for (let index = init; index < end; index++) {
-			const element = arrayList[index];
-			arrayLimitEvent.push(element)
-		}
-		return arrayLimitEvent
-	}
-
-
-	function convertDate(date){
-        let convertDatestring=''
-        for (let index = 0; index < date.length; index++) {
-            const element = date[index];
-            if(element==='-'){
-                convertDatestring=convertDatestring+'/'
-            }
-            else{
-                convertDatestring=convertDatestring+element;
-            }
-        }
-        return convertDatestring;
-    }
-
-	function converTime(time){
-		let timeArray=time.split(':')
-		let timeString=timeArray[0]+':'+timeArray[2]
-		return timeString;
-
-	}
-
-	let eventsToShow=(showAll || search.length<1) 
-	
-	? newArray(eventList,initrange,initrange+8) 
-	: (eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())).length>8 
-		? newArray(eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase())),initrange,initrange+8) 
-		: eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()))) ;
-
-		useEffect(()=>{
-			if(search.length>1){
-				let cant= eventList.filter(event => (event.adviser.fullName.toLowerCase()).includes(search.toLowerCase()));
-				setCantEvents(cant.length);
-				setRange(0);
-			}
-			else{
-				let cant=eventList.length
-				setCantEvents(cant)		}
-		},[search])
-	
-		useEffect(()=>{
-			let cant=eventList.length
-			setCantEvents(cant)
-		},[eventList])
-	
-		useEffect(()=>{
-			getAllEvents();
-		},[])
-		
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
         <Menu />
         <div>
-            <HeaderAdmin Titulo='Eventos' />
+			<HeaderAdmin Title='Eventos'/>
             <main className='pb-12 mx-0 mobileL:mx-12'>  
 
             <div className='mt-5'>
                 <div className='flex justify-between flex-col-reverse mobileL:flex-row '>
                     <div className='relative h-8 w-56 mt-8 mb-3 mx-5 mobileL:my-0 tablet:mx-0'>
                         <h1 className='text-blue absolute w-56 z-20 text-2xl font-normal '>Todos los eventos</h1>
-                        <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'></div>
+                        <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'/>
                     </div>
                     <div className='hidden tablet:flex  mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button
 								type='button'
 								name='Agendar evento'
-								classN={true}
 								handleFunction={()=>{navigate('/eventos/crear-evento')
 								}
-								}
+							}
 							/>
                     </div>
                     
                 </div>
                 <div className='mt-5 mx-5 tablet:mx-0'>
                     <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
-					<Search placeholder={'Buscar eventos por nombre y apellido del orientado'} handleChange={handleSearch}/>
+					<Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/>
 				</div>
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
+						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{limit+1}-{totalEventsGet+limit} de {totalEvents}</p>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>prevPage()}/>
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
 					
-                    <table class='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
+                    <table className='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
 						<thead className=' w-full border-b'>
 							<tr className='  hidden tablet:table-row'>
-								<th onClick={()=> toggle()}
-									class='mobileM:px-5 px-1 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+								<th
+									className='mobileM:px-5 px-1 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Fecha
 								</th>
 								<th
-									class=' px-3 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									className=' px-3 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Horario
 								</th>
 								<th
-									class=' px-3 mobileM:px-6 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									className=' px-3 mobileM:px-6 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Evento
 								</th>
 								
 								<th
-									class=' px-1 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
+									className=' px-1 mobileM:px-5 py-3    text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Participante
 								</th>
                                 <th
-									class=' px-2 mobileM:px-5 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
-									  
+									className=' px-2 mobileM:px-5 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>		  
+									{' '}
 								</th>
 							</tr>
 						</thead>
 						<tbody className='table-row-group'>
+
 							{
-								cantEvents===0 ? ((!showAll && search.length<1) ? <p className='mt-5 text-blue '>No hay eventos cargados</p> : <p className='mt-5 w-full text-blue  ml-5'>No se encontro el evento con el orientado</p> )
-								: (eventsToShow.map((eve,index)=>(
+								 (eventList.map((eve)=>(
 									<>
 										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
 											<td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
@@ -197,13 +105,12 @@ function EventsPage() {
 												<td className='border-b border-gray-200  text-xs mobileM:text-sm px-1 mobileM:px-5 py-5 '>
 												<span
 													className='relative inline-block  text-blue leading-tight'>
-													<span aria-hidden
-														className='absolute inset-0 bg-green-200 opacity-50 rounded-full'></span>
-												<span className='relative'>{eve.Adviser.fullName}</span>
+													<span aria-hidden className='absolute inset-0 bg-green-200 opacity-50 rounded-full'/>
+													<span className='relative'>{eve.Adviser.fullName}</span>
 												</span>
 											</td>
 											<td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
-												<img className='cursor-pointer' src={iconDelete} alt=""  onClick={()=>deleteEvent(eve.id)} />									
+												<img className='cursor-pointer' src={iconDelete} alt=''  onClick={()=>deleteEvent(eve.id)} />									
 											</td>
 											
 										</tr>
@@ -237,16 +144,15 @@ function EventsPage() {
 						</tbody>
 					</table>
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{ (eventsToShow.length===0) ? 0 :initrange+1}-{eventsToShow.length+initrange} de { cantEvents }</p>
+						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1 -2 </p>
 						<div className='flex '>
-						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' onClick={()=>arrowLeft()}/>
-						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' onClick={()=>arrowRigth()}/>
+						<img src={Icon_arrow_left} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
+						<img src={Icon_arrow_rigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
 					</div>
 					<div className='flex tablet:hidden mt-16 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
 							<Button
 								type='button'
 								name='Agendar evento'
-								classN={true}
 								handleFunction={()=>{navigate('/eventos/crear-evento')}}
 							/>
                     </div>
