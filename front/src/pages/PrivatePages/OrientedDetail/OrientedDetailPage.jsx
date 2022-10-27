@@ -4,11 +4,11 @@ import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import useGet from '../hooks/useGet';
+import Alert from '../sharedPrivateComponents/Alert';
 
 function Oriented() {
   const params = useParams();
   const idStudent = params.id;
-  const [showAlert, setShowAlert] = useState(true);
   const { studentDetail, getOneStudent } = useGet();
 
   useEffect(() => {
@@ -23,9 +23,7 @@ function Oriented() {
 
         {studentDetail !== undefined ? (
           <main
-            className={`max-w-max mx-auto px-8 laptop:mx-12 mt-6 flex flex-col gap-10 ${
-              showAlert ? 'pb-24' : 'pb-7'
-            }`}
+            className='max-w-max mx-auto px-8 pb-7 laptop:mx-12 mt-6 flex flex-col gap-10'
           >
             <section>
               <h2 className='mb-4 text-2xl font-bold'>
@@ -33,11 +31,7 @@ function Oriented() {
               </h2>
               <div className='flex-col gap-3 tablet:flex-row tablet:gap-9 flex'>
                 <img
-                  src={
-                    studentDetail.avatar
-                      ? require(`../../../assets/students/${studentDetail.avatar}`)
-                      : 'https://i.imgur.com/b08hxPY.png'
-                  }
+                  src={require(`../../../assets/students/${studentDetail.avatar}`)}
                   alt='avatar'
                   className='w-[96px] h-[96px] rounded-full'
                 />
@@ -118,15 +112,10 @@ function Oriented() {
                 }`}
               />
             </Link>
-            {/* {
-              (Date.parse(new Date()) - Date.parse('2022-09-21T23:20:30') <
-              10000 ||
-              showAlert) && (
-              <Alert
-                message='El orientado fue ingresado con éxito.'
-                onclick={() => setShowAlert(false)}
-              />
-            )} */}
+            {Date.parse(new Date()) - Date.parse(studentDetail.createdAt) <
+              10000 && (
+              <Alert message='El orientado fue ingresado con éxito.' />
+            )}
           </main>
         ) : null}
       </div>

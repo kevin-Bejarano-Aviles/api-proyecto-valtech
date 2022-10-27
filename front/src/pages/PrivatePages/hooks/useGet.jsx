@@ -130,9 +130,8 @@ function useGet(){
         const response = await axios(`${baseUrl}/students`,options);
         const detailStudent= response.data.data.students;
         const lastUserId = detailStudent[detailStudent.length-1].id;
-          setTimeout(() => {
-              navigate(`/orientados/${lastUserId}`);
-            },5000);
+        navigate(`/orientados/${lastUserId}`);
+        window.location.reload();
         }
       catch(err){
         const {status}=err.response;
