@@ -11,5 +11,5 @@ export const getValidationSchema = () => {
     time: Yup.string().required('Requerido'),
     duration: Yup.string().required('Requerido'),
     detail: Yup.string().required('Requerido'),
-  })
+  });
 };
