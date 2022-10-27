@@ -51,7 +51,7 @@ function OrientedSignUpPage() {
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
-					{ errorSignUpObject.avatar?.msg !=undefined ? (
+					{ errorSignUpObject.avatar?.msg !== undefined ? (
 						<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
 								<img src={warningImg} className='w-5' alt="warning" />
 								<p className='ml-2'>{errorSignUpObject.avatar?.msg}</p>
@@ -68,7 +68,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar nombre completo'
 							onChange={handleChange}
 							onBlur={handleBlur}
-							touched={touched}
+							touched={touched.fullName}
 							values={values.fullName}
 							error={errors.fullName}
 						/>
@@ -78,7 +78,9 @@ function OrientedSignUpPage() {
 							name='email'
 							placeholder='Ingresar mail'
 							onChange={handleChange}
+							onBlur={handleBlur}
 							values={values.email}
+							touched={touched.email}
 							error={errors.email}
 							errorPost={errorSignUpObject.email?.msg}
 						/>
@@ -90,7 +92,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar numero'
 							onChange={handleChange}
 							onBlur={handleBlur}
-							touched={touched}
+							touched={touched.phoneNumber}
 							values={values.phoneNumber}
 							error={errors.phoneNumber}
 						/>
@@ -118,11 +120,10 @@ function OrientedSignUpPage() {
 								placeholder='Ingresar dni'
 								onChange={handleChange}
 								onBlur={handleBlur}
-								touched={touched}
+								touched={touched.dni}
 								values={values.dni}
 								error={errors.dni}
 								errorPost={errorSignUpObject.dni?.msg}
-								
 							/>
 							<TextInput
 								label='Ingresar edad'
@@ -130,7 +131,7 @@ function OrientedSignUpPage() {
 								placeholder='Ingresar edad'
 								onChange={handleChange}
 								onBlur={handleBlur}
-								touched={touched}
+								touched={touched.age}
 								values={values.age}
 								error={errors.age}
 							/>
@@ -143,7 +144,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar colegio'
 							onChange={handleChange}
 							onBlur={handleBlur}
-							touched={touched}
+							touched={touched.school}
 							values={values.school}
 							error={errors.school}
 						/>
@@ -153,7 +154,7 @@ function OrientedSignUpPage() {
 							placeholder='Ingresar domicilio'
 							onChange={handleChange}
 							onBlur={handleBlur}
-							touched={touched}
+							touched={touched.address}
 							values={values.address}
 							error={errors.address}
 						/>
@@ -179,7 +180,7 @@ function OrientedSignUpPage() {
 						placeholder='Ingresar DNI del Orientado'
 						onChange={handleChange}
 						onBlur={handleBlur}
-						touched={touched}
+						touched={touched.user}
 						values={values.user}
 						error={errors.user}
 						errorPost={errorSignUpObject.user?.msg}
@@ -191,7 +192,7 @@ function OrientedSignUpPage() {
 						type='password'
 						onChange={handleChange}
 						onBlur={handleBlur}
-						touched={touched}
+						touched={touched.pass}
 						values={values.pass}
 						error={errors.pass}
 
@@ -203,7 +204,7 @@ function OrientedSignUpPage() {
 						type='password'
 						onChange={handleChange}
 						onBlur={handleBlur}
-						touched={touched}
+						touched={touched.confirmPass}
 						values={values.confirmPass}
 						error={errors.confirmPass}
 					/>
