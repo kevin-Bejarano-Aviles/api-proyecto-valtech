@@ -51,6 +51,12 @@ function OrientedSignUpPage() {
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
+					{errors.avatar && 
+					<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
+						<img src={warningImg} className='w-5' alt="warning" />
+						<p className='ml-2'>{errors.avatar}</p>
+					</div>
+					}
 					{ errorSignUpObject.avatar?.msg !== undefined ? (
 						<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
 								<img src={warningImg} className='w-5' alt="warning" />
