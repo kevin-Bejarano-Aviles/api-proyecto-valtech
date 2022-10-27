@@ -100,7 +100,6 @@ function useGet(){
             const response = await axios(`${baseUrl}/events?from=${limit}&student=${studentName}`,options);
             setEventsList(response.data?.data.events)
             const  {totalCount,lengthEventsSent}= response.data.data;
-            console.log(response.data?.data.events);
             calculateTotalPages(totalCount);
             setTotalEventsGet(lengthEventsSent);
             setTotalEvents(totalCount);

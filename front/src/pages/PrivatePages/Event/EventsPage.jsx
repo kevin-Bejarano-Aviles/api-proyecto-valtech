@@ -86,7 +86,7 @@ function EventsPage() {
 						<tbody className='table-row-group'>
 
 							{
-								 (eventList.map((eve,index)=>(
+								 (eventList.map((eve)=>(
 									<>
 										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
 											<td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
