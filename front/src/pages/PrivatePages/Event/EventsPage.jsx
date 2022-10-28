@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import useGet from '../hooks/useGet';
 import functionsEvents from './functions/functionsEvents';
-
+import Alert from '../sharedPrivateComponents/Alert';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
@@ -22,6 +22,7 @@ function EventsPage() {
 	useEffect(()=>{
 		getAllEvents(0);
 	},[]);
+
 
     return ( 
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -162,6 +163,12 @@ function EventsPage() {
                     </div>
 				</div>
             </div>  
+						{Date.parse(new Date()) - Date.parse(eventList[eventList.length-1]?.createdAt) <
+              10000 && (
+              <Alert 
+								title='Encuentro agendado'
+								message='El encuentro está agendado en la fecha que sugeriste, el orientado podrá confirmarlo o elegir otra fecha. Te notificaremos la confirmación o modificación.' />
+            )}
             </main>
         </div>
     </div>
