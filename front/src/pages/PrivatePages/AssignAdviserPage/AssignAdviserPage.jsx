@@ -16,13 +16,8 @@ function AssignAdviserPage() {
   const params = useParams();
   const idStudent = params.id;
   const token = localStorage.getItem('token');
-
   const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
-  const [mostrarBoton, setMostrarBoton] = useState(false);
-    const clickButton = () => {
-      setMostrarBoton (!mostrarBoton);
-  } 
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -98,7 +93,6 @@ function AssignAdviserPage() {
             <h2 className='text-2xl text-blue   mt-8 '>
               Asignación de Orientador Referente
             </h2>
-
             <CardStudents
               avatar={studentDetail && studentDetail.avatar}
               ruta='students'
@@ -164,7 +158,6 @@ function AssignAdviserPage() {
                         </Field>
                       </div>
                     </div>
-
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
@@ -179,7 +172,7 @@ function AssignAdviserPage() {
                       </div>
                     </div>
                     {/* buttons to send the data */}
-                    <div className='ml-10 mt-16 mb-8 flex flex-row'>
+                    <div className='ml-10 mt-8 mb-8 flex flex-row'>
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
                           hideCard ||
@@ -188,7 +181,6 @@ function AssignAdviserPage() {
                             : 'hidden'
                         } `}
                       >
-                      <div onClick={() => setMostrarBoton(true)}>
                         <div className='relative left-[-40px]'>
                           <Button
                             type='submit'
@@ -197,10 +189,23 @@ function AssignAdviserPage() {
                             
                           />
                         </div>
-                      </div>
+                    
                       </div>
                       <div className='hidden'>.</div>
                     </div>
+                    <div /* onClick={() =>setShowAlert(true)} */>
+                     {showAlert
+                      ?
+                     (<div className='flex flex-row   mt-16 relative bottom-32 items-center'>
+                      <Button
+                        type='submit'
+                        name='Modificar orientador/a'
+                        
+                       />
+                      <div className='ml-4 underline'>
+                        <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
+                      </div>
+                  </div>) : ''}</div>
                   </Form>
                 )}
               </Formik>
@@ -241,12 +246,13 @@ function AssignAdviserPage() {
             </div>
             {/* show alert */}
             <div className='mt-24 ml-10'>
-     
                 {showAlert ? (
+                  <div className='z-80'>
                   <Alert
                   title='El orientado ya fue asignado a su referente.'
                   message='Recibirá una notificación para que contacte al Orientado.'
-                />
+                  />
+                  </div>
                 ) : (
                   ''
                 )}
