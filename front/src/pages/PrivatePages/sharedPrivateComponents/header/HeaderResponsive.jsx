@@ -1,6 +1,8 @@
+/* eslint-disable import/extensions */
 import { React, useState } from 'react';
 import { Icon } from '@iconify/react';
 import IconV from '../img/vnegro.svg';
+// eslint-disable-next-line import/no-unresolved
 import MenuResponsive from '../MenuResponsive';
 
 export default function HeaderResponsive() {
