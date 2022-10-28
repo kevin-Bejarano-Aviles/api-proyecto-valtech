@@ -11,7 +11,7 @@ function Footer() {
     'tablet:justify-evenly tablet:flex-row mobile:items-center';
   return (
     <footer
-      className={`bg-blue w-full flex h-full mobile:mt-8 mobile:flex-col ${desktopStyle} `}
+      className={`bg-blue w-full flex h-full  mobile:flex-col ${desktopStyle} `}
     >
       <div className='hidden tablet:flex mobile:flex-col mobile:justify-evenly mobile:h-52 mobile:mt-8 tablet:mb-12 '>
         <img className='' src={Icon} alt='' />

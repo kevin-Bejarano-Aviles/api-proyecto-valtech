@@ -5,7 +5,7 @@ function TextArea ({error, label,touched, ...props })  {
 	  <div className='flex flex-col gap-1 mb-8'>
 		<label htmlFor={props.name} className='text-sm'>{label}</label>
 		<textarea
-            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${error && touched ? 'border-red-500' : ''}`}
+            className={`border-2 mobile:w-full max-w-[656px] p-2 rounded-lg ${error && touched ? 'border-red-500' : ''} ${!error && touched ? 'bg-imgheader' : ''}`}
 		  	{...props}
 		/>
 		{ error && touched ? (
