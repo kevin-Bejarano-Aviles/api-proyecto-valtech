@@ -9,25 +9,17 @@ import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
-import CardShowAdviser from './Components/CardShowAdviser'
+import CardShowAdviser from './Components/CardShowAdviser';
 
 function AssignAdviserPage() {
   const baseUrl = process.env.REACT_APP_API_URL;
   const params = useParams();
   const idStudent = params.id;
   const token = localStorage.getItem('token');
-/*   const selectRef = useRef()
-  const mostrarRef = useRef(null)
-  
-  const clickRef = () =>{
-    alert(selectRef.current.value)
-  } */
-
-
 
   const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
   const [selectOption, setSelectOption] = useState('');
-  const [sele, setSele] = useState()
+  const [sele, setSele] = useState();
   const [isEmpty, setIsEmpty] = useState(true);
   /*  const [viewButton, setViewButton] = useState(true); */
   const [hideMessage, setHideMessage] = useState(true);
@@ -36,7 +28,6 @@ function AssignAdviserPage() {
   const handleClickShowAlert = () => {
     setShowAlert(!showAlert);
   };
-
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
@@ -54,7 +45,6 @@ function AssignAdviserPage() {
   useEffect(() => {
     getOneStudent(idStudent);
     getAllAdvisers();
-    
   }, []);
 
   //------
@@ -79,34 +69,18 @@ function AssignAdviserPage() {
     }
   };
 
+  const [valor, setValor] = useState(1);
+  const { adviserDetail, getOneAdviser } = useGet();
 
+  useEffect(() => {
+    getOneAdviser(valor);
+  }, [valor]);
 
-  //-----------
-
-  
-
-//----------
-
-/* const ref = useRef();
-
-
-const myFunction = () => {
-  const valueOption = (ref.current.value);
-  setValor(valueOption)
-  console.log(valor)
- } */
-const [valor,setValor] = useState(1)
-const {adviserDetail, getOneAdviser} = useGet()
-useEffect(() => {
-/*  const valueOfOption = ref */
-  getOneAdviser(valor)
-}, []);
-
-
-
-
-
-
+  const handleChange = (e, formik) => {
+    const valueOption = e.target.value;
+    setValor(valueOption);
+    formik.handleChange(e);
+  };
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -155,8 +129,8 @@ useEffect(() => {
                   assignAdviser(idAdviser);
                 }}
               >
-                {() => (
-                  <Form className='formulario' >
+                {(formik) => (
+                  <Form className='formulario'>
                     <div
                       className={
                         hideCard ||
@@ -170,39 +144,32 @@ useEffect(() => {
                           className='border-[1px] rounded-lg border-bordergray mt-4'
                           name='idAdviser'
                           as='select'
-                          /* onClick={myFunction} */ 
-                          onClick={() => setcardAdviserIsVisible(true)}    
-                            
-      
+                          /* onClick={myFunction} */
+                          onClick={() => setcardAdviserIsVisible(true)}
+                          onChange={(e) => handleChange(e, formik)}
                         >
-                          <option   hidden value={0}>
+                          <option hidden value={0}>
                             Seleccionar orientador
                           </option>
                           {adviserList.map((elemento) => (
-                          
-                          <option /* ref={ref}  key={elemento.id}  */                          
-                          onChange={(e) => {
-                            const valueOption = e.target.value;
-                            setValor(valueOption); 
-                          }}   
-                          value={elemento.id}> {elemento.fullName}</option>
-                        ))}
-
-                       
-
+                            <option key={elemento.id} value={elemento.id}>
+                              {elemento.fullName}
+                            </option>
+                          ))}
                         </Field>
                       </div>
                     </div>
-
 
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
                         <CardShowAdviser
                           avatar={adviserDetail && adviserDetail.avatar}
-                          fullName= {valor && valor}
+                          fullName={adviserDetail && adviserDetail.fullName}
                           email={adviserDetail && adviserDetail.email}
-                          phoneNumber={adviserDetail && adviserDetail.phoneNumber}
+                          phoneNumber={
+                            adviserDetail && adviserDetail.phoneNumber
+                          }
                         />
                       </div>
                     </div>
