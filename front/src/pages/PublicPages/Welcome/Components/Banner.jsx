@@ -50,7 +50,7 @@ function Banner() {
         ref={slideRef}
         className='w-full flex justify-center select-none relative'
       >
-        <div className='w-full overflow-hidden '>
+        <div className='w-full overflow-hidden object-fit'>
           <img
             className='w-[800px] h-[171px] tablet:w-full tablet:h-auto'
             src={featuredImg[currentIndex]}
