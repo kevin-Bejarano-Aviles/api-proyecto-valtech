@@ -24,7 +24,7 @@ function usePost() {
           'x-token': `Bearer ${token}`,
         },
         withCredentials: true,
-        data: data,
+        data: data
       };
       const response = await axios(`${url}/admin/students`, options);
       setNavigationStateStudent('accept');

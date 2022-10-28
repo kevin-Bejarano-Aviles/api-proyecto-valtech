@@ -7,12 +7,10 @@ import '../../../../index.css';
 import arrowLeft from '../../../../assets/icons/arrow_left.svg';
 import arrowRigth from '../../../../assets/icons/arrow_right.svg';
 
-// const featuredImg = [img1, img2, img3];
-
 const featuredImg = [
   {
     img: img1,
-    text: 'Alentamos tu multipotencialidad. Promovemos tu valor personal',
+    text: 'Alentamos tu multipotencialidad y promovemos tu valor personal',
   },
   {
     img: img2,
@@ -69,7 +67,7 @@ function Banner() {
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
-          <p className='text-'>{featuredImg[currentIndex].text}</p>
+          <p className='absolute top-5 w-full portatil:w-[180px] desktop:w-3/5 tablet:text-2xl portatil:text-3xl desktop:text-4xl pl-16 pr-24 tablet:pl-56 tablet:pr-96 text-white font-bold'>{featuredImg[currentIndex].text}</p>
         </div>
         <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick()}>
