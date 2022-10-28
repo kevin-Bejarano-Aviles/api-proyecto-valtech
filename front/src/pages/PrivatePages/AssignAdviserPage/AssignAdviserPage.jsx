@@ -19,12 +19,13 @@ function AssignAdviserPage() {
 
   const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
-  const [hideMessage, setHideMessage] = useState(true);
+  const [mostrarBoton, setMostrarBoton] = useState(false);
+    const clickButton = () => {
+      setMostrarBoton (!mostrarBoton);
+  } 
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const handleClickShowAlert = () => {
-    setShowAlert(!showAlert);
-  };
+
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
@@ -131,6 +132,7 @@ function AssignAdviserPage() {
                 }}
                 onSubmit={(idAdviser) => {
                   assignAdviser(idAdviser);
+                  setShowAlert(true);
                 }}
               >
                 {(formik) => (
@@ -186,13 +188,16 @@ function AssignAdviserPage() {
                             : 'hidden'
                         } `}
                       >
+                      <div onClick={() => setMostrarBoton(true)}>
                         <div className='relative left-[-40px]'>
                           <Button
                             type='submit'
                             name='Asignar orientador/a'
                             disabled={isEmpty}
+                            
                           />
                         </div>
+                      </div>
                       </div>
                       <div className='hidden'>.</div>
                     </div>
@@ -236,17 +241,16 @@ function AssignAdviserPage() {
             </div>
             {/* show alert */}
             <div className='mt-24 ml-10'>
-              <div className={!hideMessage ? 'hidden' : 'block'}>
+     
                 {showAlert ? (
                   <Alert
-                    message='El orientado ya fue asignado a su referente.'
-                    onclick={() => setHideMessage(false)}
-                  />
+                  title='El orientado ya fue asignado a su referente.'
+                  message='Recibirá una notificación para que contacte al Orientado.'
+                />
                 ) : (
                   ''
                 )}
               </div>
-            </div>
           </section>
         </main>
       </div>
