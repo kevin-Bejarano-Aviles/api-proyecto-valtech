@@ -40,7 +40,7 @@ function OrientedSignUpPage() {
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo='Orientados' />
+        <HeaderAdmin Title='Orientados' />
         <main className='pb-12 mx-12'>
           <form action="" onSubmit={handleSubmit}>
           <section className='mt-12'>
