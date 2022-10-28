@@ -41,8 +41,7 @@ function OrientedSignUpPage() {
     },
     validationSchema: getValidationSchema(),
     onSubmit: (data) => {
-      // postStudent(data);
-			console.log(data);
+      postStudent(data);
     },
   });
 
@@ -124,8 +123,8 @@ function OrientedSignUpPage() {
                       onBlur={handleBlur}
                       touched={touched.program}
                     >
-                      <option selected disabled='disabled'>
-                        seleccione opcion
+                      <option value='Default' hidden>
+                        Seleccionar opción
                       </option>
                       {programs.programs.map((program) => (
                         <option value={program.value} className='text-blue'>{program.name}</option>
