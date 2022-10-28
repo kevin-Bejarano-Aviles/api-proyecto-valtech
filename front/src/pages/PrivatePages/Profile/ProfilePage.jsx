@@ -24,7 +24,7 @@ function Profile() {
           <div className='h-[368px] w-[768px] absolute border-solid border-2 rounded-lg flex items-center justify-around mt-10 mobile:w-full mobile:h-[500px] mobile:flex-col mobile:mx-auto mobileM:w-[475px]  mobileL:mx-auto laptop:flex-row laptop:w-[700px] laptop:h-[400px]'>
             <div className='h-[320px] w-[325px] py-5 p-[100px] '>
               <ProfilePicture
-                styles='w-32 rounded-full'
+                styles='w-32 h-32 rounded-full'
                 picture={Avatar}
                 alt='admin'
               />
