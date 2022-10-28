@@ -51,7 +51,7 @@ function OrientedSignUpPage() {
 					 <PreviewImage file={values.avatar} change={(e)=>{
 						setFieldValue('avatar',e.target.files[0])
 					}}/>
-					{errors.avatar && 
+					{(errors.avatar && touched.avatar) && 
 					<div className='text-red-500 flex mt-2 w-full mobile:w-48'>
 						<img src={warningImg} className='w-5' alt="warning" />
 						<p className='ml-2'>{errors.avatar}</p>
@@ -104,10 +104,10 @@ function OrientedSignUpPage() {
 						/>
 			
 						<Select onChange={handleChange} error={errors.program} label='Programa' name='program' onBlur={handleBlur} touched={touched.program}>
-							<option value="" selected="true" disabled="disabled">seleccione opcion</option>
+							<option selected disabled="disabled">seleccione opcion</option>
 							{
 								programs.programs.map(program=>(
-									<option value={program.value} className='bg-backgroundGray'>{program.name}</option>
+									<option value={program.value} className='bg-backgroundGray text-blue'>{program.name}</option>
 								))
 							}
 						</Select>
@@ -182,6 +182,7 @@ function OrientedSignUpPage() {
 			<section>
 				<h2 className='my-4 text-2xl font-medium'>03. Crear usuario y contraseña</h2>
 				<div className='flex flex-col gap-3'>
+					
 					<TextInput
 						label='Repetir Dni del orientado'
 						name='user'
@@ -193,6 +194,7 @@ function OrientedSignUpPage() {
 						error={errors.user}
 						errorPost={errorSignUpObject.user?.msg}
 					/>
+
 					<TextInput
 						label='Contraseña'
 						name='pass'
