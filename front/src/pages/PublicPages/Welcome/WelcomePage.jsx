@@ -47,7 +47,7 @@ function Welcome() {
         </div>
       </div>
       <Proposal />
-      <div className='w-full flex flex-col justify-center items-center h-44 mobile:h-64  bg-graybackground '>
+      <div className='w-full flex flex-col justify-center items-center h-64 mobile:h-64  bg-graybackground '>
         <p className='text-blue font-medium font mobile:text-[22px] tablet:text-[32px]'>
           Viví tu transformación personal.
         </p>

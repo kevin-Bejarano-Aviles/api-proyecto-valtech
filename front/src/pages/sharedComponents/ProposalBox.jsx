@@ -10,7 +10,7 @@ export default function ProposalBox({ Title, description }) {
       <p className='h-16 mx-5 mr-auto p-2 relative top-8 text-[16px] leading-[19px] tablet:ml-4'>
         {description}
       </p>
-      <div className='h-10 w-4/5 mx-auto tablet:w-[184px] rounded-lg border-[1px] mt-12  border-black flex items-center justify-center text-[16px] leading-[24px] text-blue font-medium tablet:ml-4'>
+      <div className='mb-5 h-10 w-4/5 mx-auto tablet:w-[184px] rounded-lg border-[1px] mt-12  border-black flex items-center justify-center text-[16px] leading-[24px] text-blue font-medium tablet:ml-4'>
         <Link to='/'> Más Información</Link>
       </div>
     </div>
