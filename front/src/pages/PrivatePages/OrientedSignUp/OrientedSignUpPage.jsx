@@ -104,7 +104,7 @@ function OrientedSignUpPage() {
 						/>
 			
 						<Select onChange={handleChange} error={errors.program} label='Programa' name='program' onBlur={handleBlur} touched={touched.program}>
-							<option selected disabled="disabled">seleccione opcion</option>
+							<option value='Default' hidden>seleccione opcion</option>
 							{
 								programs.programs.map(program=>(
 									<option value={program.value} className='bg-backgroundGray text-blue'>{program.name}</option>
