@@ -1,16 +1,16 @@
 /* the animation that we want is not available inside tailwind css. */
 .fade-anim img {
-    animation: fadeAnim 0.5s ease-out;
+  animation: fadeAnim 0.5s ease-out;
+}
+@keyframes fadeAnim {
+  from {
+    opacity: 0;
   }
-  @keyframes fadeAnim {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
   }
-  
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

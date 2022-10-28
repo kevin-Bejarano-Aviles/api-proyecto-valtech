@@ -20,10 +20,31 @@
     ],
     "rules": {
         "quotes": ["error", "single"],
+        "object-shorthand": "off",
         "react/react-in-jsx-scope": "off",
         "global-require": "off",
-        "no-dynamic-require":"off",
+        "import/no-dynamic-require":"off",
         "react/prop-types": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "react/self-closing-comp": "off",
+        "no-shadow": "off",
+        "consistent-return": "off",
+        "arrow-body-style" : "off",
+        "react/function-component-definition": "off",
+        "no-use-before-define":"off",
+        "react/jsx-no-constructed-context-values":"off",
+        "import/prefer-default-export": "off",
+        "no-param-reassign": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/no-noninteractive-tabindex": "off",
+        "prefer-template":"off",
+        "no-unused-expressions": "off",
+        "no-plusplus":"off",
+        "react/button-has-type": "off",
+        "react/jsx-boolean-value":"off",
+        "no-nested-ternary":"off"
     }
 }

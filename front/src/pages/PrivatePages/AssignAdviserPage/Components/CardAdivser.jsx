@@ -1,13 +1,13 @@
 import React from 'react';
 
-export default function CardAdivser({ avatar,fullName,email,phoneNumber }) {
+export default function CardAdivser({ avatar, fullName, email, phoneNumber }) {
   return (
     <div className=' mobile:mx-auto py-4 flex flex-row relative bottom-10 ml-[46px] mr-6 mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center  border-2 border-graybackground rounded-lg '>
       <div className='w-[178px] h-[178px] flex justify-center items-center laptop:border-r-[1px]  laptop:border-bordergray'>
         <img
           className='w-[140px] h-[140px] rounded-full'
           src={
-                avatar
+            avatar
               ? require(`../../../../assets/adviser/${avatar}`)
               : 'https://i.imgur.com/b08hxPY.png'
           }
@@ -16,9 +16,7 @@ export default function CardAdivser({ avatar,fullName,email,phoneNumber }) {
       </div>
       <div className='laptop:max-w-[823px] h-[178px] ml-8  mobile:flex-col lap_tablet:flex-col  tablet:flex-col laptop:flex-row items-center'>
         <div className=' mobile:left-40  lap_tablet:mx-auto  tablet:mx-auto'>
-          <h2 className='text-2xl font-normal ml-6 '>
-            {fullName}
-          </h2>
+          <h2 className='text-2xl font-normal ml-6 '>{fullName}</h2>
           <h4 className='text-[15px] leading-[22px]  ml-6 text-lightgray'>
             Orientador
           </h4>

@@ -1,6 +1,6 @@
-import { React, useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import { React, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
+import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -18,10 +18,7 @@ function AssignAdviserPage() {
   const token = localStorage.getItem('token');
 
   const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
-  const [selectOption, setSelectOption] = useState('');
-  const [sele, setSele] = useState();
   const [isEmpty, setIsEmpty] = useState(true);
-  /*  const [viewButton, setViewButton] = useState(true); */
   const [hideMessage, setHideMessage] = useState(true);
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -33,14 +30,14 @@ function AssignAdviserPage() {
     setIsEmpty(!cardAdviserIsVisible);
   });
 
-  /* I bring the oriented data */
+  // I bring the oriented data
   const { studentDetail, getOneStudent } = useGet();
 
-  /* I bring the data of the advisers  */
+  // I bring the data of the advisers
 
   const { adviserList, getAllAdvisers } = useGet();
 
-  //---
+  //------
 
   useEffect(() => {
     getOneStudent(idStudent);
@@ -49,6 +46,25 @@ function AssignAdviserPage() {
 
   //------
 
+  // Selected guiding sample
+
+  const [valor, setValor] = useState(1);
+  const { adviserDetail, getOneAdviser } = useGet();
+
+  //------
+  useEffect(() => {
+    getOneAdviser(valor);
+  }, [valor]);
+  //------
+
+  // I get the id of the selected guide
+  const handleChange = (e, formik) => {
+    const valueOption = e.target.value;
+    setValor(valueOption);
+    formik.handleChange(e);
+  };
+
+  // Selected Guiding Shipment
   const assignAdviser = async (idAdviser) => {
     try {
       const options = {
@@ -67,19 +83,6 @@ function AssignAdviserPage() {
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  };
-
-  const [valor, setValor] = useState(1);
-  const { adviserDetail, getOneAdviser } = useGet();
-
-  useEffect(() => {
-    getOneAdviser(valor);
-  }, [valor]);
-
-  const handleChange = (e, formik) => {
-    const valueOption = e.target.value;
-    setValor(valueOption);
-    formik.handleChange(e);
   };
 
   return (
@@ -144,7 +147,6 @@ function AssignAdviserPage() {
                           className='border-[1px] rounded-lg border-bordergray mt-4'
                           name='idAdviser'
                           as='select'
-                          /* onClick={myFunction} */
                           onClick={() => setcardAdviserIsVisible(true)}
                           onChange={(e) => handleChange(e, formik)}
                         >
@@ -174,10 +176,7 @@ function AssignAdviserPage() {
                       </div>
                     </div>
                     {/* buttons to send the data */}
-                    <div
-                      className='ml-10 mt-16 mb-8 flex flex-row '
-                      /* onClick={() => setViewButton(false)} */
-                    >
+                    <div className='ml-10 mt-16 mb-8 flex flex-row'>
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
                           hideCard ||
@@ -191,7 +190,6 @@ function AssignAdviserPage() {
                             type='submit'
                             name='Asignar orientador/a'
                             disabled={isEmpty}
-                            /* handleFunction={handleClickShowAlert} */
                           />
                         </div>
                       </div>

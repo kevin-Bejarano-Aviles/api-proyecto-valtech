@@ -1,8 +1,9 @@
 import { React, useState } from 'react';
-import Avatar from '../../../../assets/admins/default.jpg';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Icon } from '@iconify/react';
+import ProfilePictureHeader from '../../../../assets/admins/ProfilePictureHeader.svg';
 import ProfilePicture from '../ProfilePicture';
 import Logout from '../button/Logout';
-import { Icon } from '@iconify/react';
 import IconV from '../../../../assets/logo/vnegro.svg';
 import MenuResponsive from '../menu/MenuResponsive';
 
@@ -26,7 +27,7 @@ function HeaderAdmin({ Title }) {
           <div className='relative'>
             <ProfilePicture
               styles='h-12 w-[46px] rounded-full cursor-pointer'
-              picture={Avatar}
+              picture={ProfilePictureHeader}
               alt='User'
               event={clickPhoto}
             />

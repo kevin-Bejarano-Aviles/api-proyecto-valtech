@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import Context from '../../../../context/Context';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Context from '../../../../context/Context';
 import IconUser from '../../../../assets/icons/privatePage/Icon_user.svg';
 import IconLogouat from '../../../../assets/icons/privatePage/Icon_logout.svg';
 
@@ -24,7 +23,7 @@ export default function Logout() {
         </Link>
       </div>
       <div className='h-10 w-full bg-white hover:bg-hoverlogout rounded-b-[10px] border-x-2 border-b-2 border-gray-400 flex items-center'>
-        <Link to='/login' onClick={() => getAll()}>
+        <Link to='/login' onClick={() => login()}>
           <p className='ml-4 flex flex-row text-blue'>
             <img src={IconLogouat} alt='' className='mr-2' />
             Cerrar sesión

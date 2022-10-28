@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-
 import HomePage from '../pages/PrivatePages/Home/HomePage';
 import LoginPage from '../pages/PublicPages/Login/LoginPage';
 import OrientedSignUpPage from '../pages/PrivatePages/OrientedSignUp/OrientedSignUpPage';
@@ -15,29 +14,95 @@ import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 
 function RoutersElement() {
-    return (
-      <Routes>
-        
+  return (
+    <Routes>
+      <Route
+        path='/'
+        element={
+          <PublicRoutes>
+            <WelcomePage />
+          </PublicRoutes>
+        }
+      />
+      <Route
+        path='/login'
+        element={
+          <PublicRoutes>
+            <LoginPage />
+          </PublicRoutes>
+        }
+      />
 
-        <Route path='/' element={<PublicRoutes><WelcomePage /></PublicRoutes>}  />
-        <Route path='/login' element={<PublicRoutes><LoginPage /></PublicRoutes>} />
-        
-        <Route path='/inicio' element={<PrivateRoutes><HomePage /></PrivateRoutes>}/>
-          <Route path='mi-perfil' element={<PrivateRoutes><ProfilePage/></PrivateRoutes>} />
-        
-        <Route path='/orientados' element={<PrivateRoutes><OrientedsPage /></PrivateRoutes>} />
-        {/* <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} /> */}
-        <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} />
-        <Route path='/orientados/:id' element={<PrivateRoutes><OrientedDetail /></PrivateRoutes>} />
-        <Route path='/orientados/:id/asignar-orientador' element={<PrivateRoutes><AssignAdviserPage /></PrivateRoutes>} /> 
-        <Route path='/eventos' element={<PrivateRoutes><EventsPage/></PrivateRoutes>} />
-        <Route path='/eventos/crear-evento' element={<PrivateRoutes><CreateEventPage /></PrivateRoutes>} />
+      <Route
+        path='/inicio'
+        element={
+          <PrivateRoutes>
+            <HomePage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path='mi-perfil'
+        element={
+          <PrivateRoutes>
+            <ProfilePage />
+          </PrivateRoutes>
+        }
+      />
 
+      <Route
+        path='/orientados'
+        element={
+          <PrivateRoutes>
+            <OrientedsPage />
+          </PrivateRoutes>
+        }
+      />
+      {/* <Route path='/orientados/alta-orientado' element={<PrivateRoutes><OrientedSignUpPage /></PrivateRoutes>} /> */}
+      <Route
+        path='/orientados/alta-orientado'
+        element={
+          <PrivateRoutes>
+            <OrientedSignUpPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path='/orientados/:id'
+        element={
+          <PrivateRoutes>
+            <OrientedDetail />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path='/orientados/:id/asignar-orientador'
+        element={
+          <PrivateRoutes>
+            <AssignAdviserPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path='/eventos'
+        element={
+          <PrivateRoutes>
+            <EventsPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path='/eventos/crear-evento'
+        element={
+          <PrivateRoutes>
+            <CreateEventPage />
+          </PrivateRoutes>
+        }
+      />
 
-        <Route path='*' element={<ErrorPage />} />
+      <Route path='*' element={<ErrorPage />} />
+    </Routes>
+  );
+}
 
-      </Routes>
-    );
-  }
-
-  export default RoutersElement;
+export default RoutersElement;

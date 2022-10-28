@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useGet from '../hooks/useGet';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
@@ -10,7 +10,7 @@ import OrientedList from '../sharedPrivateComponents/OrientedList';
 
 // see orientedList
 function Orienteds() {
-  const {studentList,getAllStudents}=useGet();
+  const { studentList, getAllStudents } = useGet();
   const [search, SetSearch] = useState('');
   const [showAll, setShowAll] = useState(true);
 
@@ -25,7 +25,7 @@ function Orienteds() {
 
   useEffect(() => {
     getAllStudents();
-  },[]);
+  }, []);
 
   const studentsListShow = showAll
     ? studentList
@@ -57,7 +57,7 @@ function Orienteds() {
               placeholder='Buscar orientado por nombre y apellido'
               handleChange={handleSearch}
             />
-            <OrientedList  users={studentsListShow} />
+            <OrientedList users={studentsListShow} />
           </div>
         </main>
       </div>
