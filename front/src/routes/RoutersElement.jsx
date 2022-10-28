@@ -42,7 +42,7 @@ function RoutersElement() {
         }
       />
       <Route
-        path='mi-perfil'
+        path='/inicio/mi-perfil'
         element={
           <PrivateRoutes>
             <ProfilePage />

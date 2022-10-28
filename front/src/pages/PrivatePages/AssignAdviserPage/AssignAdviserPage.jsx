@@ -7,10 +7,9 @@ import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Button from '../sharedPrivateComponents/button/Button';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
-import usePut from '../hooks/usePut';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
-import CardShowAdviser from './Components/CardShowAdviser';
+
 
 function AssignAdviserPage() {
   const baseUrl = process.env.REACT_APP_API_URL;
@@ -167,7 +166,7 @@ function AssignAdviserPage() {
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
-                        <CardShowAdviser
+                        <CardAdivser
                           avatar={adviserDetail && adviserDetail.avatar}
                           fullName={adviserDetail && adviserDetail.fullName}
                           email={adviserDetail && adviserDetail.email}
@@ -223,7 +222,7 @@ function AssignAdviserPage() {
                     : 'hidden'
                 }
               >
-                <div className='flex flex-row ml-10 mt-16 relative bottom-10 items-center'>
+                <div className='flex flex-row  mt-16 relative bottom-10 items-center'>
                   <Button
                     type='button'
                     handleFunction={() => setHideCard(true)}
