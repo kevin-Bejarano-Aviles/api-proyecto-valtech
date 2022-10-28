@@ -12,10 +12,10 @@ export const getValidationSchema = () => Yup.object().shape({
       .max(500,'Entre 3 y 500 caracteres')
       .required('Campo requerido'),
     phoneNumber: Yup.string()
-      .matches(/^[0-9]\d{10,50}$/, 'Sólo números entre 10 y 50 dígitos'),
+      .matches(/^[0-9]\d{9,50}$/, 'Sólo números entre 10 y 50 dígitos'),
     program: Yup.string().required('Selecciona una opción'),
     dni: Yup.string()
-      .matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos')
+      .matches(/^[0-9]\d{7,50}$/, 'Sólo números entre 8 y 50 dígitos')
       .oneOf([Yup.ref('user')],'Los dni no coinciden').required('Campo requerido'),
     age: Yup.number('Ingresar solo numeros')
       .required('Campo requerido')
@@ -34,7 +34,7 @@ export const getValidationSchema = () => Yup.object().shape({
       .min(3,'Entre 3 y 500 caracteres')
       .max(500,'Entre 3 y 500 caracteres'),
     user: Yup.string()
-      .matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos')
+      .matches(/^[0-9]\d{7,50}$/, 'Sólo números entre 8 y 50 dígitos')
       .oneOf([Yup.ref('dni')],'Los dni no coinciden').required('Campo requerido'),
     pass: Yup.string()
       .required('Campo requerido')

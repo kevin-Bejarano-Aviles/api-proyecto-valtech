@@ -14,7 +14,7 @@ function usePost() {
   const [submit, setSubmitState] = useState('');
   const token = localStorage.getItem('token');
 
-  const postStudent = async (data) => {
+  const postStudent = async (newStudent) => {
     setNavigationStateStudent('pending');
     try {
       const options = {
@@ -24,7 +24,7 @@ function usePost() {
           'x-token': `Bearer ${token}`,
         },
         withCredentials: true,
-        data: data
+        data: newStudent,
       };
       const response = await axios(`${url}/admin/students`, options);
       setNavigationStateStudent('accept');
