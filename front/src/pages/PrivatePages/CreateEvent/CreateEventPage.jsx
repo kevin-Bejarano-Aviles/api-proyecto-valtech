@@ -55,7 +55,7 @@ function CreateEventPage() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]'>
       <Menu />
       <div>
-        <HeaderAdmin Title='Orientados' />
+        <HeaderAdmin Title='Eventos' />
         <main className='mb-12 mx-12'>
           <h1 className='mt-12 text-2xl'>Crear un evento</h1>
           <p className='text-lg'>
