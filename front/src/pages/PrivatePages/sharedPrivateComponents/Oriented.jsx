@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import icon_user from '../../../assets/icons/privatePage/Icon_user.svg';
+import iconUser from '../../../assets/icons/privatePage/Icon_user.svg';
 
 function Oriented({ info, asignOriented = false }) {
   const navigate = useNavigate();
-  let oriented = info.adviserId;
+  const oriented = info.adviserId;
 
   return (
     <div
@@ -27,7 +27,7 @@ function Oriented({ info, asignOriented = false }) {
         <div
           className={`flex mb-12 mr-4 w-4 h-4  ${!asignOriented && 'hiden'}`}
         >
-          <img src={icon_user} alt='iconUser' />
+          <img src={iconUser} alt='iconUser' />
         </div>
       )}
     </div>

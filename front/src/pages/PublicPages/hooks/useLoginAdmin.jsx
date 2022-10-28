@@ -25,7 +25,7 @@ function useLoginAdmin() {
         localStorage.setItem('token', response?.data.data.token);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setErrorrMessage(error.response.data.message);
       });
   };

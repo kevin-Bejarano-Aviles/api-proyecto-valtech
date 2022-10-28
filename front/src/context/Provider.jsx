@@ -1,21 +1,20 @@
+/* eslint-disable no-use-before-define */
 import { useReducer } from 'react';
 import Context from './Context';
 import Reducer from './Reducer';
 import types from './types';
 
-const init=()=>{
-    return{
+const init=()=>({
         state:!!localStorage.getItem('state')
-    }
-}
+    })
 
-const Provider = ({children}) =>{
+function Provider({children}) {
     const logIn =()=>{
         const action={
             type:types.login
         }
         localStorage.setItem('state',true)
-        dispatch(action)
+        dispatch(action);
     }
 
     const logOut =()=>{
@@ -25,10 +24,11 @@ const Provider = ({children}) =>{
         localStorage.removeItem('token');
         localStorage.removeItem('admin');
         localStorage.removeItem('state');
-        dispatch(action)
+        dispatch(action);
     }
     const [loggedIn,dispatch]=useReducer(Reducer,{},init)
     return(
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
         <Context.Provider value={{
             ...loggedIn,
                 logIn,

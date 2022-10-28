@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import ButtonImg from './ButtonImg';
 import img1 from '../../../../assets/banner/banner_img1.png';
 import img2 from '../../../../assets/banner/banner_img2.png';
 import img3 from '../../../../assets/banner/banner_img3.png';
 import '../../../../index.css';
-import arrow_left from '../../../../assets/icons/arrow_left.svg';
-import arrow_rigth from '../../../../assets/icons/arrow_right.svg';
-import ButtonImg from '../Components/ButtonImg';
+import arrowLeft from '../../../../assets/icons/arrow_left.svg';
+import arrowRigth from '../../../../assets/icons/arrow_right.svg';
+
 const featuredImg = [img1, img2, img3];
 
 function Banner() {
@@ -60,10 +59,10 @@ function Banner() {
         </div>
         <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick()}>
-            <img src={arrow_left} alt='' />
+            <img src={arrowLeft} alt='' />
           </button>
           <button onClick={() => handleOneNextClick()}>
-            <img src={arrow_rigth} alt='' />
+            <img src={arrowRigth} alt='' />
           </button>
         </div>
         <div className='absolute w-full flex justify-center inset-x-0 bottom-3'>

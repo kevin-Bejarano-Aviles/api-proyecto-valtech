@@ -6,8 +6,9 @@ import Alert from '../sharedPrivateComponents/Alert';
 import Button from '../sharedPrivateComponents/button/Button';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Menu from '../sharedPrivateComponents/menu/Menu';
-import IconArrowLeft from '../../../assets/icons/Icon_arrow-left.svg'
-import IconArrowRigth from '../../../assets/icons/Icon_arrow-right.svg'
+import IconArrowLeft from '../../../assets/icons/Icon_arrow-left.svg';
+import IconArrowRigth from '../../../assets/icons/Icon_arrow-right.svg';
+import iconDeleteWhite from '../../../assets/icons/privatePage/Icon_delete_white.svg';
 import Search from '../sharedPrivateComponents/Search';
 import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
 import useDelete from '../hooks/useDelete';
@@ -58,9 +59,9 @@ function EventsPage() {
 						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
 					
-                    <table className='mt-2 min-w-full leading-normal border rounded-full border-gray-200 '>
+                    <table className='mt-2 min-w-full leading-normal tablet:border rounded-full tablet:border-gray-200 '>
 						<thead className=' w-full border-b'>
-							<tr className='  hidden tablet:table-row'>
+							<tr className=' hidden tablet:table-row'>
 								<th
 									className='mobileM:px-5 px-1 py-3     text-left text-xs mobileM:text-sm font-semibold text-green uppercase tracking-wider'>
 									Fecha
@@ -116,28 +117,28 @@ function EventsPage() {
 											
 										</tr>
 
-										<div className='flex items-center justify-center tablet:hidden w-full bg-transparent my-2'>
-											<div className='flex items-center  justify-between flex-col w-4/5 border rounded-md p-5 border-slate-400'>
-												<div className='flex  justify-start flex-col '>
-													<div className='w-full flex justify-start flex-row'>
-														<div className='flex items-start mr-2 flex-col '>
+										<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent '>
+											<div className='flex items-center   flex-col w-4/5 border rounded-md pt-5  border-slate-400'>
+												<div className='w-full flex flex-col '>
+													<div className='w-full flex items-center justify-around flex-row'>
+														<div className='flex items-center mr-2 flex-col '>
 															<p className='text-green font-medium'>Fecha</p>
 
 															<p className='text-blue'>{convertDate(eve.date)} </p>
 														</div>
-														<div className='flex ml-10 flex-col  items-start'>
+														<div className='flex ml-10 flex-col items-start'>
 															<p className='text-green font-medium'>Horario</p>
 															<p className='text-blue'>{converTime(eve.time)} hs</p>
 														</div>
 													</div>
-													<p className='w-full mt-3 mb-1 text-blue whitespace-no-wrap font-semibold text-lg text-start'>
+													<p className='w-full mt-3 mb-1 ml-5 mr-1 text-blue  font-semibold text-lg '>
 															{eve.name}
 													</p>
 													
 												</div>
-												<div className='bg-red-400' onClick={()=>deleteEvent(eve.id)} role='presentation' onKeyUp={()=>deleteEvent(eve.id)}>
-														<p>Eliminar evento</p>
-														<img className='cursor-pointer w-7 h-7' src={iconDelete} alt=""/>									
+												<div className=' font-semibold h-10 w-full mt-5 bg-red-500 rounded-b-md flex justify-center items-center ' onClick={()=>deleteEvent(eve.id)} role='presentation' onKeyUp={()=>deleteEvent(eve.id)}>
+														<p className='text-white mr-5'>Eliminar evento</p>
+														<img className='w-7 h-7' src={iconDeleteWhite} alt=""/>									
 												</div>
 											</div>
 										</div>		
@@ -148,7 +149,7 @@ function EventsPage() {
 						</tbody>
 					</table>
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>1 -2 </p>
+						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{limit+1}-{totalEventsGet+limit} de {totalEvents}</p>
 						<div className='flex '>
 						<img src={IconArrowLeft} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
 						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
