@@ -39,9 +39,7 @@ function useGet() {
     let restEvents = 0;
     let total = totalEvent;
     while (total > 10) {
-      if (total > 10) {
-        totalPages += 1;
-      }
+      totalPages += 1;
       total -= 10;
       restEvents = totalPages;
     }
