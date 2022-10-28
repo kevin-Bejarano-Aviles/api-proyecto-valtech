@@ -30,7 +30,7 @@ export default function MenuResponsive({ menu, setMenu }) {
           <div className='flex flex-row items-center mt-3'>
             <div className=''>
               <img
-                className='h-[70px] ml-8 rounded-full'
+                className='h-[70px] w-[70px] ml-8 rounded-full'
                 src={Avatar}
                 alt='Profile_picture_admin'
               />

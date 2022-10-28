@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Icon } from '@iconify/react';
-import ProfilePictureHeader from '../../../../assets/admins/ProfilePictureHeader.svg';
+import Avatar from '../../../../assets/admins/default.jpg';
 import ProfilePicture from '../ProfilePicture';
 import Logout from '../button/Logout';
 import IconV from '../../../../assets/logo/vnegro.svg';
@@ -27,7 +27,7 @@ function HeaderAdmin({ Title }) {
           <div className='relative'>
             <ProfilePicture
               styles='h-12 w-[46px] rounded-full cursor-pointer'
-              picture={ProfilePictureHeader}
+              picture={Avatar}
               alt='User'
               event={clickPhoto}
             />
