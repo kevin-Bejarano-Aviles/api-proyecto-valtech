@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
-export const getValidationSchema = () => {
-  return Yup.object().shape({
+// eslint-disable-next-line import/prefer-default-export
+export const getValidationSchema = () => Yup.object().shape({
     fullName: Yup.string('Campo inválido')
       .min(2,'Entre 2 y 500 caracteres')
       .max(500,'')
@@ -16,7 +16,7 @@ export const getValidationSchema = () => {
     program: Yup.string().required('Selecciona una opción'),
     dni: Yup.string()
       .matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos')
-      .oneOf([Yup.ref('user')],'Los dni no coinciden'),
+      .oneOf([Yup.ref('user')],'Los dni no coinciden').required('Campo requerido'),
     age: Yup.number('Ingresar solo numeros')
       .required('Campo requerido')
       .min(18,'Edad Mínima: 18')
@@ -35,7 +35,7 @@ export const getValidationSchema = () => {
       .max(500,'Entre 3 y 500 caracteres'),
     user: Yup.string()
       .matches(/^[0-9]\d{8,50}$/, 'Sólo números entre 8 y 50 dígitos')
-      .oneOf([Yup.ref('dni')],'Los dni no coinciden'),
+      .oneOf([Yup.ref('dni')],'Los dni no coinciden').required('Campo requerido'),
     pass: Yup.string()
       .required('Campo requerido')
       .min(8,'Mínimo 8 caracteres')
@@ -45,5 +45,4 @@ export const getValidationSchema = () => {
       .oneOf([Yup.ref('pass')],'Las contraseñas no coinciden')
       .required('Campo requerido'),
     avatar: Yup.mixed().required('Es requerido'),
-  })
-};
+  });
