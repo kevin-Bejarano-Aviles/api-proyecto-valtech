@@ -67,7 +67,7 @@ function Banner() {
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
-          <p className='absolute top-5 w-full portatil:w-[180px] desktop:w-3/5 tablet:text-2xl portatil:text-3xl desktop:text-4xl pl-16 pr-24 tablet:pl-56 tablet:pr-96 text-white font-bold'>{featuredImg[currentIndex].text}</p>
+          <p className='absolute top-5 w-full portatil:text-3xl portatil:pl-56 portatil:pr-46 portatil:w-[180px] desktop:w-3/5 tablet:text-xl lap_tablet:text-2xl desktop:text-4xl pl-16 pr-24 lap_tablet:pl-56 tablet:pl-56 tablet:pr-96 text-white font-bold'>{featuredImg[currentIndex].text}</p>
         </div>
         <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick()}>
