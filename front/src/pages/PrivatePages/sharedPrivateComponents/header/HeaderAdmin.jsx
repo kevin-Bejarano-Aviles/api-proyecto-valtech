@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Icon } from '@iconify/react';
-import ProfilePictureHeader from '../../../../assets/admins/ProfilePictureHeader.svg';
+import ProfilePictureHeader from '../../../../assets/admins/default.jpg';
 import ProfilePicture from '../ProfilePicture';
 import Logout from '../button/Logout';
 import IconV from '../../../../assets/logo/vnegro.svg';

@@ -7,12 +7,10 @@ import '../../../../index.css';
 import arrowLeft from '../../../../assets/icons/arrow_left.svg';
 import arrowRigth from '../../../../assets/icons/arrow_right.svg';
 
-// const featuredImg = [img1, img2, img3];
-
 const featuredImg = [
   {
     img: img1,
-    text: 'Alentamos tu multipotencialidad. Promovemos tu valor personal',
+    text: 'Alentamos tu multipotencialidad y promovemos tu valor personal',
   },
   {
     img: img2,

@@ -7,6 +7,7 @@ function useGet() {
   const url = process.env.REACT_APP_API_URL;
   const baseUrl = `${url}/admin`;
   const token = localStorage.getItem('token');
+
   const { logOut } = useContext(Context);
 
   const [studentList, setStudentList] = useState([]);
@@ -16,6 +17,7 @@ function useGet() {
   const [totalPagesEvent, seTotalPagesEvent] = useState(0);
   const [totalEventsGet, setTotalEventsGet] = useState();
   const [totalEvents, setTotalEvents] = useState();
+  const [adviserDetail, setAdviserDetail] = useState();
 
   const navigate = useNavigate();
 
@@ -37,9 +39,7 @@ function useGet() {
     let restEvents = 0;
     let total = totalEvent;
     while (total > 10) {
-      if (total > 10) {
-        totalPages += 1;
-      }
+      totalPages += 1;
       total -= 10;
       restEvents = totalPages;
     }
@@ -125,6 +125,18 @@ function useGet() {
     }
   };
 
+  const getOneAdviser = async (id) => {
+    try {
+      const response = await axios(`${baseUrl}/advisers/${id}`, options);
+      setAdviserDetail(response.data?.data.adviser);
+    } catch (err) {
+      const { status } = err.response;
+      if (status === 401) {
+        LogOut();
+      }
+    }
+  };
+
   const getLastStudentAndRedirect = async () => {
     try {
       const response = await axios(`${baseUrl}/students`, options);
@@ -147,6 +159,7 @@ function useGet() {
     getAllAdvisers,
     getLastStudentAndRedirect,
     getAllEventsByFilter,
+    getOneAdviser,
     studentList,
     studentDetail,
     eventList,
@@ -154,7 +167,7 @@ function useGet() {
     totalPagesEvent,
     totalEventsGet,
     totalEvents,
+    adviserDetail,
   };
 }
-
 export default useGet;
