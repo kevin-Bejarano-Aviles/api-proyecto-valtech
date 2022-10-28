@@ -28,16 +28,18 @@ export default function MenuResponsive({ menu, setMenu }) {
             </div>
           </div>
           <div className='flex flex-row items-center mt-3'>
-            <div className=''>
-              <img
-                className='h-[70px] ml-8 rounded-full'
-                src={Avatar}
-                alt='Profile_picture_admin'
-              />
+            <div>
+              <Link to='/inicio/mi-perfil'>
+                <img
+                  className='h-[70px] ml-8 rounded-full'
+                  src={Avatar}
+                  alt='Profile_picture_admin'
+                />
+              </Link>
             </div>
             <div className='ml-3.5'>
               <h4>¡Bienvenido!</h4>
-              {/* <h4 className='text-lightgray'>{admin.fullName}</h4> */}
+             <Link to='/inicio/mi-perfil'><h4 className='text-lightgray'>{admin.fullName}</h4></Link>  
             </div>
           </div>
           <div className='mt-10'>

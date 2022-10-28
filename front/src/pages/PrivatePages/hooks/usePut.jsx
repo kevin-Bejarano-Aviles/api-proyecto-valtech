@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Context from '../../../context/Context';
 
 function usePut() {
   const [submitState, setSubmitState] = useState('pending');
 
   const url = process.env.REACT_APP_API_URL;
-  const baseUrl = `${url}/admin`;
   const token = localStorage.getItem('token');
+  const { logOut } = useContext(Context);
+  const navigate = useNavigate();
+  const LogOut = () => {
+    logOut();
+    navigate('/login', { replace: true });
+  };
   const putCounselor = async (data, id) => {
     try {
-      let options = {
+      const options = {
         method: 'PUT',
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -22,15 +29,15 @@ function usePut() {
         `${url}/admin/advisers/student/${id}`,
         options
       );
-      setSubmitState('accept');
     } catch (err) {
-      setSubmitState('refuse');
-      console.log(err);
+      const { status } = err.response;
+      if (status === 401) {
+        LogOut();
+      }
     }
   };
   return {
     putCounselor,
-    sumbitState,
   };
 }
 
