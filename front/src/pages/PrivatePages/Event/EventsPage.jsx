@@ -30,8 +30,8 @@ function EventsPage() {
 			<HeaderAdmin Title='Eventos'/>
             <main className='pb-12 mx-0 mobileL:mx-12'>  
 
-            <div className='mt-5'>
-                <div className='flex justify-between flex-col-reverse mobileL:flex-row '>
+            <div className='mt-8'>
+                <div className='flex justify-between flex-col-reverse mobileL:flex-row mt-5'>
                     <div className='relative h-8 w-56 mt-8 mb-3 mx-5 mobileL:my-0 tablet:mx-0'>
                         <h1 className='text-blue absolute w-56 z-20 text-2xl font-normal '>Todos los eventos</h1>
                         <div className='absolute z-10 inset-x-0 bottom-0 h-3.5 w-56  bg-backgroundGray'/>
@@ -48,12 +48,12 @@ function EventsPage() {
                     
                 </div>
                 <div className='mt-5 mx-5 tablet:mx-0'>
-                    <p className='text-blue text-xl font-semibold mb-5 tablet:my-0'>Buscar eventos de un orientado</p>
+                    <p className='text-blue text-xl font-semibold mb-5 tablet:my-2'>Buscar eventos de un orientado</p>
 					<Search placeholder='Buscar eventos por nombre y apellido del orientado' handleChange={handleSearch}/>
 				</div>
           
 				<div className='w-full hidden tablet:flex flex-row items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{limit+1}-{totalEventsGet+limit} de {totalEvents}</p>
+						<p className='ml-2 mr-2 my-5 mobileM:my-8 text-xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{totalEvents!==0 ? limit+1 : 0}-{totalEventsGet+limit} de {totalEvents}</p>
 						<img src={IconArrowLeft} className='cursor-pointer mx-2 w-5 h-5 tablet:w-5 ' alt='icon arrow left' onClick={()=>prevPage()}/>
 						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-5 h-5' alt='icon arrow rigth' onClick={()=>nextPage()}/>
 				</div>
@@ -84,9 +84,9 @@ function EventsPage() {
 								</th>
 							</tr>
 						</thead>
-						<tbody className='table-row-group'>
+						<tbody className={` ${totalEvents===0 ? 'border border-transparent' : 'table-row-group'}`}>
 
-							{
+							{	totalEvents!==0 ?
 								 (eventList.map((eve)=>(
 									<>
 										<tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={eve.id}>
@@ -143,12 +143,12 @@ function EventsPage() {
 										</div>		
 										</>						
 									))
-								)
+								) : <p className='mt-5 font-semibold text-center'>No se encontraron eventos</p>
 							}
 						</tbody>
 					</table>
 					<div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
-						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{limit+1}-{totalEventsGet+limit} de {totalEvents}</p>
+						<p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>{totalEvents!==0 ? limit+1 : 0}-{totalEventsGet+limit} de {totalEvents}</p>
 						<div className='flex '>
 						<img src={IconArrowLeft} className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 ' alt='icon arrow left' />
 						<img src={IconArrowRigth} className='cursor-pointer mx-2 w-10 h-10' alt='icon arrow rigth' />
