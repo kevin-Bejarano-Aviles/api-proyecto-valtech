@@ -37,7 +37,7 @@ function Orienteds() {
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Titulo='Orientados' />
+        <HeaderAdmin Title='Orientados' />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='mobile:flex-col mobile:gap-4 lap_tablet:flex-row flex items-center'>
             <div>
