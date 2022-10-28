@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Icon } from '@iconify/react';
 import Avatar from '../../../../assets/admins/default.jpg';
 import MenuComponent from './MenuComponent';
 import Logout from '../../../../assets/icons/privatePage/Icon_logout.svg';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Context from '../../../../context/Context';
 
 export default function MenuResponsive({ menu, setMenu }) {
