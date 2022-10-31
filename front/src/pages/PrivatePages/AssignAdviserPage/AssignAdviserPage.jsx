@@ -1,44 +1,39 @@
 import { React, useEffect, useState } from 'react';
+import { useParams, NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { Formik, Form, Field } from 'formik';
 import Menu from '../sharedPrivateComponents/menu/Menu';
 import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
-import axios from 'axios';
 import Button from '../sharedPrivateComponents/button/Button';
-import { useParams, NavLink } from 'react-router-dom';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
-import { Formik, Form, Field } from 'formik';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
 
-function AssignAdviserPage() {
-  const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
-  const [selectOption, setSelectOption] = useState('');
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [viewButton, setViewButton] = useState(true);
-  const [hideMessage, setHideMessage] = useState(true);
-  const [hideCard, setHideCard] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const baseUrl = process.env.REACT_APP_API_URL;
-  const handleClickShowAlert = () => {
-    setShowAlert(!showAlert);
-  };
 
+function AssignAdviserPage() {
+  const baseUrl = process.env.REACT_APP_API_URL;
   const params = useParams();
   const idStudent = params.id;
   const token = localStorage.getItem('token');
+  const [cardAdviserIsVisible, setcardAdviserIsVisible] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [hideCard, setHideCard] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
   });
 
-  /* I bring the oriented data*/
+  // I bring the oriented data
   const { studentDetail, getOneStudent } = useGet();
 
-  /* I bring the data of the advisers  */
+  // I bring the data of the advisers
 
   const { adviserList, getAllAdvisers } = useGet();
 
-  //---
+  //------
 
   useEffect(() => {
     getOneStudent(idStudent);
@@ -47,9 +42,29 @@ function AssignAdviserPage() {
 
   //------
 
+  // Selected guiding sample
+
+  const [valor, setValor] = useState(1);
+  const { adviserDetail, getOneAdviser } = useGet();
+
+  //------
+  useEffect(() => {
+    getOneAdviser(valor);
+  }, [valor]);
+  //------
+
+  // I get the id of the selected guide
+  const handleChange = (e, formik) => {
+    const valueOption = e.target.value;
+    setValor(valueOption);
+    formik.handleChange(e);
+  };
+
+  // Selected Guiding Shipment
+
   const assignAdviser = async (idAdviser) => {
     try {
-      let options = {
+      const options = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
@@ -65,7 +80,7 @@ function AssignAdviserPage() {
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  };
+  }; 
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -78,10 +93,9 @@ function AssignAdviserPage() {
             <h2 className='text-2xl text-blue   mt-8 '>
               Asignación de Orientador Referente
             </h2>
-
             <CardStudents
               avatar={studentDetail && studentDetail.avatar}
-              ruta={'students'}
+              ruta='students'
               fullName={studentDetail && studentDetail.fullName}
               email={studentDetail && studentDetail.email}
               school={studentDetail && studentDetail.school}
@@ -95,12 +109,13 @@ function AssignAdviserPage() {
             <h2 className='text-2xl text-blue  mt-8'>
               Selección de un Orientador Referente
             </h2>
-            <div  className={
-                        hideCard ||
-                        (studentDetail && studentDetail.adviserId === null)
-                          ? 'block'
-                          : 'hidden'
-                      }>
+            <div
+              className={
+                hideCard || (studentDetail && studentDetail.adviserId === null)
+                  ? 'block'
+                  : 'hidden'
+              }
+            >
               <h4>Referente</h4>
             </div>
 
@@ -111,9 +126,10 @@ function AssignAdviserPage() {
                 }}
                 onSubmit={(idAdviser) => {
                   assignAdviser(idAdviser);
+                  setShowAlert(true);
                 }}
               >
-                {() => (
+                {(formik) => (
                   <Form className='formulario'>
                     <div
                       className={
@@ -129,46 +145,34 @@ function AssignAdviserPage() {
                           name='idAdviser'
                           as='select'
                           onClick={() => setcardAdviserIsVisible(true)}
+                          onChange={(e) => handleChange(e, formik)}
                         >
-                          <option hidden value='Seleccionar orientador'>
+                          <option hidden value={0}>
                             Seleccionar orientador
                           </option>
                           {adviserList.map((elemento) => (
-                            <option
-                              onChange={(a) => {
-                                const valueOption = a.target.value;
-                                setSelectOption(valueOption);
-                              }}
-                              key={elemento.id}
-                              value={[
-                                `${elemento.id}`,
-                                ` ${elemento.email}`,
-                                ` ${elemento.phoneNumber}`,
-                              ]}
-                            >
+                            <option key={elemento.id} value={elemento.id}>
                               {elemento.fullName}
                             </option>
                           ))}
                         </Field>
                       </div>
                     </div>
-
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
                       {/* show the data of the adviser */}
                       <div className='mt-16'>
                         <CardAdivser
-                          avatar={''}
-                          fullName={'Nombre Orientador'}
-                          email={'Orientador@mail.com'}
-                          phoneNumber={'1125464851'}
+                          avatar={adviserDetail && adviserDetail.avatar}
+                          fullName={adviserDetail && adviserDetail.fullName}
+                          email={adviserDetail && adviserDetail.email}
+                          phoneNumber={
+                            adviserDetail && adviserDetail.phoneNumber
+                          }
                         />
                       </div>
                     </div>
                     {/* buttons to send the data */}
-                    <div
-                      className='ml-10 mt-16 mb-8 flex flex-row '
-                      onClick={() => setViewButton(false)}
-                    >
+                    <div className='ml-10 mt-8 mb-8 flex flex-row'>
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
                           hideCard ||
@@ -182,11 +186,26 @@ function AssignAdviserPage() {
                             type='submit'
                             name='Asignar orientador/a'
                             disabled={isEmpty}
+                            
                           />
                         </div>
+                    
                       </div>
                       <div className='hidden'>.</div>
                     </div>
+                    <div /* onClick={() =>setShowAlert(true)} */>
+                     {showAlert
+                      ?
+                     (<div className='flex flex-row   mt-16 relative bottom-32 items-center'>
+                      <Button
+                        type='submit'
+                        name='Modificar orientador/a'
+                        
+                       />
+                      <div className='ml-4 underline'>
+                        <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
+                      </div>
+                  </div>) : ''}</div>
                   </Form>
                 )}
               </Formik>
@@ -213,7 +232,7 @@ function AssignAdviserPage() {
                     : 'hidden'
                 }
               >
-                <div className='flex flex-row ml-10 mt-16 relative bottom-10 items-center'>
+                <div className='flex flex-row  mt-16 relative bottom-10 items-center'>
                   <Button
                     type='button'
                     handleFunction={() => setHideCard(true)}
@@ -227,17 +246,17 @@ function AssignAdviserPage() {
             </div>
             {/* show alert */}
             <div className='mt-24 ml-10'>
-              <div className={!hideMessage ? 'hidden' : 'block'}>
                 {showAlert ? (
+                  <div className='z-80'>
                   <Alert
-                    message='El orientado ya fue asignado a su referente.'
-                    onclick={() => setHideMessage(false)}
+                  title='El orientado ya fue asignado a su referente.'
+                  message='Recibirá una notificación para que contacte al Orientado.'
                   />
+                  </div>
                 ) : (
                   ''
                 )}
               </div>
-            </div>
           </section>
         </main>
       </div>

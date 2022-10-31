@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING(500),
       },
       phoneNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(500),
       },
       program: {
         type: Sequelize.STRING(100),
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING(100),
       },
       dni: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(500),
       },
       school: {
         type: Sequelize.STRING(500),
