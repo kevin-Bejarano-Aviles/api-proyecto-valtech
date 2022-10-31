@@ -45,14 +45,20 @@ function Banner() {
             {featuredImg[currentIndex].text}
           </p>
         </div>
-        <button onClick={() => handleOneNextClick(featuredImg)}>
-          <img src={arrowRigth} alt='' className='w-10' />
-        </button>
-      </div>
-      <div className='relative z-10 flex justify-center mb-4'>
-        {featuredImg.map((user, index) => (
-          <ButtonImg index={index} currentIndex={currentIndex} />
-        ))}
+        <div className='absolute z-3 w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
+          <button onClick={() => handleOnePrevClick(featuredImg)}>
+            <img src={arrowLeft} alt='' />
+          </button>
+          <button onClick={() => handleOneNextClick(featuredImg)}>
+            <img src={arrowRigth} alt='' />
+          </button>
+        </div>
+        <div className='absolute w-full flex justify-center inset-x-0 bottom-3'>
+          {featuredImg.map((img, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ButtonImg key={index} index={index} currentIndex={currentIndex} />
+          ))}
+        </div>
       </div>
     </div>
   );

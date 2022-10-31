@@ -64,7 +64,7 @@ function OrientedSignUpPage() {
                       setFieldValue('avatar', e.target.files[0]);
                     }}
                   />
-                  {errors.avatar && touched.avatar && (
+                  {(errors.avatar && touched.avatar) && (
                     <div className='text-red-500 flex mt-2 w-full mobile:w-48'>
                       <img src={warningImg} className='w-5' alt='warning' />
                       <p className='ml-2'>{errors.avatar}</p>
@@ -244,7 +244,7 @@ function OrientedSignUpPage() {
             <Button
               type='submit'
               name='Ingresar orientado'
-              disabled={!isValid}
+              disabled={Object.values(values).some((value) => value === '') && !isValid}
             />
           </form>
         </main>

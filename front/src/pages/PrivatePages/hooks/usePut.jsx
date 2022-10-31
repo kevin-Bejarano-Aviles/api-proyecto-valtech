@@ -6,7 +6,7 @@ import Context from '../../../context/Context';
 function usePut() {
   const [submitState, setSubmitState] = useState('pending');
 
-  const url = process.env.REACT_APP_API_URL;
+  const baseUrl = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem('token');
   const { logOut } = useContext(Context);
   const navigate = useNavigate();
@@ -14,30 +14,27 @@ function usePut() {
     logOut();
     navigate('/login', { replace: true });
   };
-  const putCounselor = async (data, id) => {
+  const assignAdviser = async (idAdviser,idStudent) => {
     try {
       const options = {
         method: 'PUT',
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json; charset=utf-8',
           'x-token': `Bearer ${token}`,
         },
         withCredentials: true,
-        data: data,
+        data: idAdviser,
       };
       const response = await axios(
-        `${url}/admin/advisers/student/${id}`,
+        `${baseUrl}/admin/student/${idStudent}/adviser`,
         options
       );
     } catch (err) {
-      const { status } = err.response;
-      if (status === 401) {
-        LogOut();
-      }
+      console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  };
+  }; 
   return {
-    putCounselor,
+    assignAdviser
   };
 }
 

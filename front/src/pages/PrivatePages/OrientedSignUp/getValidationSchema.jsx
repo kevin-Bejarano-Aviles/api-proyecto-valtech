@@ -12,7 +12,7 @@ export const getValidationSchema = () => Yup.object().shape({
       .max(500,'Entre 3 y 500 caracteres')
       .required('Campo requerido'),
     phoneNumber: Yup.string()
-      .matches(/^[0-9]\d{9,50}$/, 'Sólo números entre 10 y 50 dígitos'),
+      .matches(/^[0-9]\d{9,50}$/, 'Sólo números entre 10 y 50 dígitos').required('Campo requerido'),
     program: Yup.string().required('Selecciona una opción'),
     dni: Yup.string()
       .matches(/^[0-9]\d{7,50}$/, 'Sólo números entre 8 y 50 dígitos')
