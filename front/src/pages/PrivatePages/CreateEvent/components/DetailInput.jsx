@@ -1,3 +1,5 @@
+import warningImg from '../../../../assets/icons/icon_warning.svg';
+
 function DetailInput({
   label,
   name,
@@ -16,7 +18,6 @@ function DetailInput({
         {label}
       </label>
       <textarea
-        cols='60'
         rows='5'
         name={name}
         id={name}
@@ -24,16 +25,24 @@ function DetailInput({
         onBlur={formik.handleBlur}
         value={formik.values.detail}
         className={`${
+          (formik.touched.detail && formik.errors.detail) ||
+          errorCreateEventObject.detail
+            ? 'border-red-500 focus:outline-red-500'
+            : ''
+        } ${
           formik.values.detail ? 'bg-inputbackground' : ''
-        } w-full block p-2 text-sm rounded-lg border-2 focus:outline-green`}
+        } mobile:w-full lap_tablet:w-[656px] block p-2 text-sm rounded-lg border-2 focus:outline-green`}
         placeholder='Escribe un comentario'
         onClick={handleClick}
       />
-      {formik.touched.detail && formik.errors.detail ? (
-        <div className='text-red-500'>{formik.errors.detail}</div>
-      ) : null}
-      {errorCreateEventObject.detail ? (
-        <div className='text-red-500'>{errorCreateEventObject.detail.msg}</div>
+      {(formik.touched.detail && formik.errors.detail) ||
+      errorCreateEventObject.detail ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.detail && formik.errors.detail
+            ? formik.errors.detail
+            : errorCreateEventObject.detail.msg}
+        </div>
       ) : null}
     </div>
   );

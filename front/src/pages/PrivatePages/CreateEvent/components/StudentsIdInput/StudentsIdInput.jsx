@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import iconSearch from '../../../../../assets/icons/privatePage/icon-search.svg';
 import './StudentsIdInput.css';
+import warningImg from '../../../../../assets/icons/icon_warning.svg';
 
 function StudentsIdInput({
   label,
@@ -63,7 +64,12 @@ function StudentsIdInput({
         {label}
       </label>
       <div
-        className={`${areInputVisible.studentsId ? 'border-green' : ''} ${
+        className={`${
+          (formik.touched.studentsId && formik.errors.studentsId) ||
+          errorCreateEventObject.studentsId
+            ? 'border-red-500'
+            : ''
+        } ${areInputVisible.studentsId ? 'border-green' : ''} ${
           selectedStudents.ids.length === 0
             ? 'text-lightgray'
             : 'bg-inputbackground'
@@ -118,12 +124,13 @@ function StudentsIdInput({
           </li>
         ))}
       </ul>
-      {formik.touched.studentsId && formik.errors.studentsId ? (
-        <div className='text-red-500'>{formik.errors.studentsId}</div>
-      ) : null}
-      {errorCreateEventObject.studentsId ? (
-        <div className='text-red-500'>
-          {errorCreateEventObject.studentsId.msg}
+      {(formik.touched.studentsId && formik.errors.studentsId) ||
+      errorCreateEventObject.studentsId ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.studentsId && formik.errors.studentsId
+            ? formik.errors.studentsId
+            : errorCreateEventObject.studentsId.msg}
         </div>
       ) : null}
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import iconArrow from '../../../../../assets/icons/privatePage/list-control.svg';
+import warningImg from '../../../../../assets/icons/icon_warning.svg';
 import timeInputValues from './timeInputValues.json';
 
 function TimeInput({
@@ -13,7 +14,7 @@ function TimeInput({
 }) {
   const [selectedTime, setSelectedTime] = useState({
     hour: null,
-    minute: null,
+    minute: '00',
   });
 
   const handleChangeHour = (newHour) => {
@@ -30,9 +31,9 @@ function TimeInput({
     });
   };
 
-  const handleValidateErrors = () => {
+  const handleValitimeErrors = () => {
     Object.values(selectedTime).some((value) => value === null)
-      ? formik.setErrors({ ...formik.errors, time: 'Required' })
+      ? formik.setErrors({ ...formik.errors, time: 'Requerido' })
       : formik.setErrors({ ...formik.errors, time: '' });
   };
 
@@ -44,7 +45,7 @@ function TimeInput({
 
   useEffect(() => {
     handleChangeFormikValue();
-    handleValidateErrors();
+    handleValitimeErrors();
   }, [selectedTime]);
 
   const handleClick = () => {
@@ -60,7 +61,12 @@ function TimeInput({
         {label}
       </label>
       <div
-        className={`${areInputVisible.time ? 'border-green' : ''} ${
+        className={`${
+          (formik.touched.time && formik.errors.time) ||
+          errorCreateEventObject.time
+            ? 'border-red-500'
+            : ''
+        } ${areInputVisible.time ? 'border-green' : ''} ${
           Object.values(selectedTime).some((value) => value === null)
             ? 'text-lightgray'
             : 'bg-inputbackground'
@@ -112,11 +118,14 @@ function TimeInput({
           ))}
         </ul>
       </div>
-      {formik.touched.time && formik.errors.time ? (
-        <div className='text-red-500'>{formik.errors.time}</div>
-      ) : null}
-      {errorCreateEventObject.time ? (
-        <div className='text-red-500'>{errorCreateEventObject.time.msg}</div>
+      {(formik.touched.time && formik.errors.time) ||
+      errorCreateEventObject.time ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.time && formik.errors.time
+            ? formik.errors.time
+            : errorCreateEventObject.time.msg}
+        </div>
       ) : null}
     </div>
   );
