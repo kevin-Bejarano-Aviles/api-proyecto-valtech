@@ -244,7 +244,7 @@ function OrientedSignUpPage() {
             <Button
               type='submit'
               name='Ingresar orientado'
-              disabled={!isValid}
+              disabled={Object.values(values).some((value) => value === '') && !isValid}
             />
           </form>
         </main>
