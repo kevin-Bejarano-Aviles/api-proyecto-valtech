@@ -32,14 +32,14 @@ function functionEvents(){
 
     const nextPage = ()=> {
       if(currentPage<totalPagesEvent){
-        setLimit(limit+10)
+        setLimit(limit+8)
         setCurrentPage(currentPage+1);
       }
 	  }
 
     const prevPage=()=> {
       if(currentPage>1){
-        setLimit(limit-10)
+        setLimit(limit-8)
         setCurrentPage(currentPage-1)
       }
     }
