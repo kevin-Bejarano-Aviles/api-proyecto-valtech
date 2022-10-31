@@ -60,7 +60,7 @@ function AssignAdviserPage() {
         data: idAdviser,
       };
       const response = await axios(
-        `${baseUrl}/admin/advisers/student/${params.id}`,
+        `${baseUrl}/admin/students/${params.id}/adviser`,
         options
       );
     } catch (err) {
