@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import functionsBanner from '../functions';
 import ButtonImg from './ButtonImg';
 import img1 from '../../../../assets/banner/banner_img1.png';
 import img2 from '../../../../assets/banner/banner_img2.png';
@@ -23,37 +23,7 @@ const featuredImg = [
 ];
 
 function Banner() {
-  const slideRef = useRef();
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleOneNextClick = () => {
-    const productsLength = featuredImg.length;
-    if (currentIndex === productsLength - 1) {
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex(currentIndex + 1);
-    }
-    slideRef.current.classList.add('fade-anim');
-  };
-
-  const handleOnePrevClick = () => {
-    const productsLength = featuredImg.length;
-    if (currentIndex === 0) {
-      setCurrentIndex(productsLength - 1);
-    } else {
-      setCurrentIndex(currentIndex - 1);
-    }
-    slideRef.current.classList.add('fade-anim');
-  };
-
-  const removeAnimation = () => {
-    slideRef.current.classList.remove('fade-anim');
-  };
-
-  useEffect(() => {
-    slideRef.current.addEventListener('animationend', removeAnimation);
-  }, [currentIndex]);
+  const {handleOneNextClick,handleOnePrevClick,currentIndex,slideRef}=functionsBanner();
 
   return (
     <div className='w-full  m-auto'>
@@ -70,10 +40,10 @@ function Banner() {
           <p className='absolute z-2 top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>{featuredImg[currentIndex].text}</p>          
         </div>
         <div className='absolute z-3 w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
-          <button onClick={() => handleOnePrevClick()}>
+          <button onClick={() => handleOnePrevClick(featuredImg)}>
             <img src={arrowLeft} alt='' />
           </button>
-          <button onClick={() => handleOneNextClick()}>
+          <button onClick={() => handleOneNextClick(featuredImg)}>
             <img src={arrowRigth} alt='' />
           </button>
         </div>
