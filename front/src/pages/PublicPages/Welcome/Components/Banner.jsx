@@ -3,7 +3,7 @@ import ButtonImg from './ButtonImg';
 import img1 from '../../../../assets/banner/banner_img1.png';
 import img2 from '../../../../assets/banner/banner_img2.png';
 import img3 from '../../../../assets/banner/banner_img3.png';
-import '../../../../index.css';
+import './Banner.css';
 import arrowLeft from '../../../../assets/icons/arrow_left.svg';
 import arrowRigth from '../../../../assets/icons/arrow_right.svg';
 
@@ -14,11 +14,11 @@ const featuredImg = [
   },
   {
     img: img2,
-    text: 'Desarrollamos y creamos como estilo de vida',
+    text: 'Desarrollamos y creamos procesos como si fuera nuestro estilo de vida',
   },
   {
     img: img3,
-    text: 'Unite a la comunidad de aprendizaje',
+    text: 'Unite a nuestra comunidad y sé parte de un gran aprendizaje',
   },
 ];
 
@@ -27,18 +27,21 @@ function Banner() {
     functionsBanner();
 
   return (
-    <div className='w-full  m-auto'>
-      <div
-        ref={slideRef}
-        className='w-full flex justify-center select-none relative '
-      >
-        <div className='w-full overflow-hidden  z-1 bg-black'>
-          <img
-            className=' w-[800px] h-[171px] opacity-70  object-cover tablet:w-full tablet:h-auto tablet:opacity-100'
-            src={featuredImg[currentIndex].img}
-            alt={currentIndex}
-          />
-          <p className='absolute z-2 top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>
+    <div
+      ref={slideRef}
+      className='mobile:h-56 tablet:h-[350px] relative w-full flex flex-col justify-end mobile:gap-10 tablet:gap-20 select-none overflow-hidden'
+    >
+      <img
+        className='absolute object-cover w-full h-full'
+        src={featuredImg[currentIndex].img}
+        alt={currentIndex}
+      />
+      <div className='flex justify-between items-center mx-4 transform'>
+        <div className='flex mobile:gap-4 tablet:gap-10'>
+          <button onClick={() => handleOnePrevClick(featuredImg)}>
+            <img src={arrowLeft} alt='' className='w-10' />
+          </button>
+          <p className='w-[270px] mobile:text-2xl tablet:text-4xl text-white text-shadow'>
             {featuredImg[currentIndex].text}
           </p>
         </div>

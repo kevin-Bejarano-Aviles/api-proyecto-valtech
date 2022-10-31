@@ -20,7 +20,7 @@ const createEvent = async (req, res) => {
       adviser_event_id,
     });
     await event.addStudent(studentsId);
-    res.status(200).json({
+    res.status(201).json({
       message: 'Event created',
       data: '',
     });
@@ -55,7 +55,7 @@ const getAllEventsByFilters = async (req, res) => {
       distinct: true,
     });
     if (totalCount < 1) {
-      return res.status(404).json({
+      return res.status(204).json({
         message: 'No results found',
         data: '',
       });
@@ -78,19 +78,24 @@ const getAllEventsByFilters = async (req, res) => {
 const deleteEvent = async (req, res) => {
   const { id } = req.params;
   try {
-    await EventModel.destroy({
+    const event = await EventModel.destroy({
       where: {
         id,
       },
     });
+    if (event < 1) {
+      logger.warn(`ID Event: '${id}' not found in db. Method: DELETE. Url: ${req.originalUrl}.`);
+      return res.status(204).json({
+        message: 'Event not found',
+        data: '',
+      });
+    }
     res.status(200).json({
-      status: '200 OK',
       message: 'Deleted event',
-      data: '',
+      data: event,
     });
   } catch (error) {
     res.status(500).json({
-      status: '500 Internar server error',
       message: 'Server Error',
     });
     logger.error(error);
