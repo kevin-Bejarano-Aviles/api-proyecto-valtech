@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import iconCalendar from '../../../../../assets/icons/privatePage/icon-calendar.svg';
+import warningImg from '../../../../../assets/icons/icon_warning.svg';
 import './DateInput.css';
 
 function DateInput({
@@ -49,7 +50,12 @@ function DateInput({
         {label}
       </label>
       <div
-        className={`${areInputVisible.date ? 'border-green' : ''} ${
+        className={`${
+          (formik.touched.date && formik.errors.date) ||
+          errorCreateEventObject.date
+            ? 'border-red-500'
+            : ''
+        } ${areInputVisible.date ? 'border-green' : ''} ${
           selectedDate === '' ? 'text-lightgray' : 'bg-inputbackground'
         } flex items-center h-10 rounded-lg cursor-pointer border-2`}
       >
@@ -71,11 +77,14 @@ function DateInput({
         onChange={handleSelectedDate}
         className={`${areInputVisible.date ? '' : 'hidden'} absolute w-[320px]`}
       />
-      {formik.touched.date && formik.errors.date ? (
-        <div className='text-red-500'>{formik.errors.date}</div>
-      ) : null}
-      {errorCreateEventObject.date ? (
-        <div className='text-red-500'>{errorCreateEventObject.date.msg}</div>
+      {(formik.touched.date && formik.errors.date) ||
+      errorCreateEventObject.date ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.date && formik.errors.date
+            ? formik.errors.date
+            : errorCreateEventObject.date.msg}
+        </div>
       ) : null}
     </div>
   );

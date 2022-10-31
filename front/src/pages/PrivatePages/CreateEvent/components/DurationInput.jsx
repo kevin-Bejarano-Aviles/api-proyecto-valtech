@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import iconArrow from '../../../../assets/icons/privatePage/list-control.svg';
+import warningImg from '../../../../assets/icons/icon_warning.svg';
 
 function DurationInput({
   label,
@@ -60,7 +61,12 @@ function DurationInput({
         {label}
       </label>
       <div
-        className={`${areInputVisible.duration ? 'border-green' : ''} ${
+        className={`${
+          (formik.touched.duration && formik.errors.duration) ||
+          errorCreateEventObject.duration
+            ? 'border-red-500 focus:outline-red-500'
+            : ''
+        } ${areInputVisible.duration ? 'border-green' : ''} ${
           selectedDuration === '' ? 'text-lightgray' : 'bg-inputbackground'
         } flex items-center h-10 rounded-lg cursor-pointer border-2`}
       >
@@ -95,12 +101,13 @@ function DurationInput({
           </li>
         ))}
       </ul>
-      {formik.touched.duration && formik.errors.duration ? (
-        <div className='text-red-500'>{formik.errors.duration}</div>
-      ) : null}
-      {errorCreateEventObject.duration ? (
-        <div className='text-red-500'>
-          {errorCreateEventObject.duration.msg}
+      {(formik.touched.duration && formik.errors.duration) ||
+      errorCreateEventObject.duration ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.duration && formik.errors.duration
+            ? formik.errors.duration
+            : errorCreateEventObject.duration.msg}
         </div>
       ) : null}
     </div>

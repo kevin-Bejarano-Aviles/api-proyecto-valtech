@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import iconSearch from '../../../../assets/icons/privatePage/icon-search.svg';
+import warningImg from '../../../../assets/icons/icon_warning.svg';
 
 function AdviserEventIdInput({
   label,
@@ -34,7 +35,12 @@ function AdviserEventIdInput({
         {label}
       </label>
       <div
-        className={`${areInputVisible.adviser_event_id ? 'border-green' : ''} ${
+        className={`${
+          (formik.touched.adviser_event_id && formik.errors.adviser_event_id) ||
+          errorCreateEventObject.adviser_event_id
+            ? 'border-red-500'
+            : ''
+        } ${areInputVisible.adviser_event_id ? 'border-green' : ''} ${
           selectedAdviser === null ? 'text-lightgray' : 'bg-inputbackground'
         } flex items-center h-10 rounded-lg cursor-pointer border-2`}
       >
@@ -72,16 +78,17 @@ function AdviserEventIdInput({
           </li>
         ))}
       </ul>
-      {formik.touched.adviser_event_id && formik.errors.adviser_event_id ? (
-        <div className='text-red-500'>{formik.errors.adviser_event_id}</div>
-      ) : null}
-      {errorCreateEventObject.adviser_event_id ? (
-        <div className='text-red-500'>
-          {errorCreateEventObject.adviser_event_id.msg}
+      {(formik.touched.adviser_event_id && formik.errors.adviser_event_id) ||
+      errorCreateEventObject.adviser_event_id ? (
+        <div className='flex gap-1 text-red-500'>
+          <img src={warningImg} alt='' />
+          {formik.touched.adviser_event_id && formik.errors.adviser_event_id
+            ? formik.errors.adviser_event_id
+            : errorCreateEventObject.adviser_event_id.msg}
         </div>
       ) : null}
     </div>
   );
-};
+}
 
 export default AdviserEventIdInput;
