@@ -59,17 +59,17 @@ function Banner() {
     <div className='w-full  m-auto'>
       <div
         ref={slideRef}
-        className='w-full flex justify-center select-none relative'
+        className='w-full flex justify-center select-none relative '
       >
-        <div className='w-full overflow-hidden before:bg-black after:bg-white'>
+        <div className='w-full overflow-hidden  z-1 bg-black'>
           <img
-            className='w-[800px] h-[171px] tablet:w-full tablet:h-auto object-cover'
+            className=' w-[800px] h-[171px] opacity-75  object-cover tablet:w-full tablet:h-auto tablet:opacity-100'
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
-          <p className='absolute top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>{featuredImg[currentIndex].text}</p>          
+          <p className='absolute z-2 top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>{featuredImg[currentIndex].text}</p>          
         </div>
-        <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
+        <div className='absolute z-3 w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick()}>
             <img src={arrowLeft} alt='' />
           </button>
