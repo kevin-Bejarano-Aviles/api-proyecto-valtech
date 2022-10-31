@@ -61,13 +61,13 @@ function Banner() {
         ref={slideRef}
         className='w-full flex justify-center select-none relative'
       >
-        <div className='w-full overflow-hidden'>
+        <div className='w-full overflow-hidden before:bg-black after:bg-white'>
           <img
             className='w-[800px] h-[171px] tablet:w-full tablet:h-auto object-cover'
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
-          <p className='absolute top-5 w-full portatil:text-3xl portatil:pl-56 portatil:pr-46 portatil:w-[180px] desktop:w-3/5 tablet:text-xl lap_tablet:text-2xl desktop:text-4xl pl-16 pr-24 lap_tablet:pl-56 tablet:pl-56 tablet:pr-96 text-white font-bold'>{featuredImg[currentIndex].text}</p>
+          <p className='absolute top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>{featuredImg[currentIndex].text}</p>          
         </div>
         <div className='absolute w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick()}>
