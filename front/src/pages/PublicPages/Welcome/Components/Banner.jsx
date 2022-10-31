@@ -63,7 +63,7 @@ function Banner() {
       >
         <div className='w-full overflow-hidden  z-1 bg-black'>
           <img
-            className=' w-[800px] h-[171px] opacity-75  object-cover tablet:w-full tablet:h-auto tablet:opacity-100'
+            className=' w-[800px] h-[171px] opacity-70  object-cover tablet:w-full tablet:h-auto tablet:opacity-100'
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
