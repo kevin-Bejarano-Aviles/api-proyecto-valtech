@@ -31,12 +31,12 @@ module.exports = [
     .matches(correctTime)
     .withMessage('Tiene que ingresar una hora correcta')
     .custom((value) => {
-      if (value > '23:59') {
+      if (value > '08:00') {
         return false;
       }
       return true;
     })
-    .withMessage('Horario no valido'),
+    .withMessage('El evento tiene que tener una duracion de 8 hrs como maximo'),
   check('adviser_event_id')
     .notEmpty().withMessage('El evento debe tener un orientador')
     .isInt()
