@@ -8,7 +8,7 @@ function usePost() {
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_URL;
   const [errorSignUpObject, seteErrorSignUpObject] = useState({});
-  const [errorCreateEventObject, seteErrorCreateEventObject] = useState({});
+  const [errorCreateEventObject, setErrorCreateEventObject] = useState({});
   const [navigationStateStudent, setNavigationStateStudent] = useState('');
   const [navigationStateEvent, setNavigationStateEvent] = useState('');
   const [submit, setSubmitState] = useState('');
@@ -49,7 +49,7 @@ function usePost() {
       navigate('/eventos');
       setSubmitState('accept');
     } catch (err) {
-      seteErrorCreateEventObject(err.response?.data.data.errors);
+      setErrorCreateEventObject(err.response?.data.data.errors);
       setSubmitState('reject');
     }
   };
