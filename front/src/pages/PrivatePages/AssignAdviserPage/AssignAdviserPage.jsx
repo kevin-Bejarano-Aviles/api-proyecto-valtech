@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { React, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import axios from 'axios';
@@ -19,6 +20,7 @@ function AssignAdviserPage() {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [modifyAlert, setModifyAlert] = useState(false);
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
@@ -123,7 +125,7 @@ function AssignAdviserPage() {
                     >
                       <div>
                         <Field
-                          className='border-[1px] rounded-lg border-bordergray mt-4'
+                          className='border-[2px] w-[320px] h-10  rounded-lg border-graybackground mt-4 focus:outline-green' 
                           name='idAdviser'
                           as='select'
                           onClick={() => setcardAdviserIsVisible(true)}
@@ -153,7 +155,7 @@ function AssignAdviserPage() {
                       </div>
                     </div>
 
-                    <div className='ml-10 mt-8 mb-8 flex flex-row'>
+                    <div className='ml-10 mt-8 mb-8  flex flex-row'>
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
                           hideCard ||
@@ -162,7 +164,7 @@ function AssignAdviserPage() {
                             : 'hidden'
                         } `}
                       >
-                        <div className='relative left-[-40px]'>
+                        <div className='relative  bottom-4 left-[-40px]'>
                           <Button
                             type='submit'
                             name='Asignar orientador/a'
@@ -174,8 +176,12 @@ function AssignAdviserPage() {
                     </div>
                     <div>
                       {showAlert ? (
-                        <div className='flex flex-row   mt-16 relative bottom-32 items-center'>
-                          <Button type='submit' name='Modificar orientador/a' />
+                        <div className='flex flex-row   mt-24 relative bottom-32 items-center'>
+                          <Button
+                            type='submit'
+                            name='Modificar orientador/a'
+                            handleFunction={() => setModifyAlert(true)}
+                          />
                           <div className='ml-4 underline'>
                             <NavLink to={`/orientados/${params.id}`}>
                               Volver
@@ -210,7 +216,7 @@ function AssignAdviserPage() {
                     : 'hidden'
                 }
               >
-                <div className='flex flex-row  mt-16 relative bottom-10 items-center'>
+                <div className='flex flex-row  bottom-2 relative  items-center'>
                   <Button
                     type='button'
                     handleFunction={() => setHideCard(true)}
@@ -225,6 +231,17 @@ function AssignAdviserPage() {
 
             <div className='mt-24 ml-10'>
               {showAlert ? (
+                <div className='z-80'>
+                  <Alert
+                    title='El orientado ya fue asignado a su referente.'
+                    message='Recibirá una notificación para que contacte al Orientado.'
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+
+              {modifyAlert ? (
                 <div className='z-80'>
                   <Alert
                     title='El orientado ya fue asignado a su referente.'
