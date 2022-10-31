@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { React, useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import axios from 'axios';
@@ -10,7 +11,6 @@ import useGet from '../hooks/useGet';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
 
-
 function AssignAdviserPage() {
   const baseUrl = process.env.REACT_APP_API_URL;
   const params = useParams();
@@ -20,47 +20,33 @@ function AssignAdviserPage() {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hideCard, setHideCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
+  const [modifyAlert, setModifyAlert] = useState(false);
 
   useEffect(() => {
     setIsEmpty(!cardAdviserIsVisible);
   });
 
-  // I bring the oriented data
   const { studentDetail, getOneStudent } = useGet();
 
-  // I bring the data of the advisers
-
   const { adviserList, getAllAdvisers } = useGet();
-
-  //------
 
   useEffect(() => {
     getOneStudent(idStudent);
     getAllAdvisers();
   }, []);
 
-  //------
-
-  // Selected guiding sample
-
   const [valor, setValor] = useState(1);
   const { adviserDetail, getOneAdviser } = useGet();
 
-  //------
   useEffect(() => {
     getOneAdviser(valor);
   }, [valor]);
-  //------
 
-  // I get the id of the selected guide
   const handleChange = (e, formik) => {
     const valueOption = e.target.value;
     setValor(valueOption);
     formik.handleChange(e);
   };
-
-  // Selected Guiding Shipment
 
   const assignAdviser = async (idAdviser) => {
     try {
@@ -80,7 +66,7 @@ function AssignAdviserPage() {
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  }; 
+  };
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -88,7 +74,6 @@ function AssignAdviserPage() {
       <div>
         <HeaderAdmin Title='Orientados' />
         <main className='mobile:max-w-max mobile:mx-auto laptop:mx-8  '>
-          {/* I show the data of the oriented */}
           <section>
             <h2 className='text-2xl text-blue   mt-8 '>
               Asignación de Orientador Referente
@@ -105,7 +90,6 @@ function AssignAdviserPage() {
           </section>
 
           <section>
-            {/* select adviser */}
             <h2 className='text-2xl text-blue  mt-8'>
               Selección de un Orientador Referente
             </h2>
@@ -141,7 +125,7 @@ function AssignAdviserPage() {
                     >
                       <div>
                         <Field
-                          className='border-[1px] rounded-lg border-bordergray mt-4'
+                          className='border-[2px] w-[320px] h-10  rounded-lg border-graybackground mt-4 focus:outline-green' 
                           name='idAdviser'
                           as='select'
                           onClick={() => setcardAdviserIsVisible(true)}
@@ -159,7 +143,6 @@ function AssignAdviserPage() {
                       </div>
                     </div>
                     <div className={cardAdviserIsVisible ? 'block' : 'hidden'}>
-                      {/* show the data of the adviser */}
                       <div className='mt-16'>
                         <CardAdivser
                           avatar={adviserDetail && adviserDetail.avatar}
@@ -171,8 +154,8 @@ function AssignAdviserPage() {
                         />
                       </div>
                     </div>
-                    {/* buttons to send the data */}
-                    <div className='ml-10 mt-8 mb-8 flex flex-row'>
+
+                    <div className='ml-10 mt-8 mb-8  flex flex-row'>
                       <div
                         className={`${showAlert ? 'hidden' : 'block'} ${
                           hideCard ||
@@ -181,37 +164,39 @@ function AssignAdviserPage() {
                             : 'hidden'
                         } `}
                       >
-                        <div className='relative left-[-40px]'>
+                        <div className='relative  bottom-4 left-[-40px]'>
                           <Button
                             type='submit'
                             name='Asignar orientador/a'
                             disabled={isEmpty}
-                            
                           />
                         </div>
-                    
                       </div>
                       <div className='hidden'>.</div>
                     </div>
-                    <div /* onClick={() =>setShowAlert(true)} */>
-                     {showAlert
-                      ?
-                     (<div className='flex flex-row   mt-16 relative bottom-32 items-center'>
-                      <Button
-                        type='submit'
-                        name='Modificar orientador/a'
-                        
-                       />
-                      <div className='ml-4 underline'>
-                        <NavLink to={`/orientados/${params.id}`}>Volver</NavLink>
-                      </div>
-                  </div>) : ''}</div>
+                    <div>
+                      {showAlert ? (
+                        <div className='flex flex-row   mt-24 relative bottom-32 items-center'>
+                          <Button
+                            type='submit'
+                            name='Modificar orientador/a'
+                            handleFunction={() => setModifyAlert(true)}
+                          />
+                          <div className='ml-4 underline'>
+                            <NavLink to={`/orientados/${params.id}`}>
+                              Volver
+                            </NavLink>
+                          </div>
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
                   </Form>
                 )}
               </Formik>
             </div>
 
-            {/* I show the data of the selected adviser */}
             <div className={hideCard ? 'hidden' : 'block'}>
               {studentDetail && studentDetail.adviserId !== null ? (
                 <CardAdivser
@@ -224,7 +209,6 @@ function AssignAdviserPage() {
                 ''
               )}
 
-              {/* button 'Volver' */}
               <div
                 className={
                   studentDetail && studentDetail.adviserId !== null
@@ -232,7 +216,7 @@ function AssignAdviserPage() {
                     : 'hidden'
                 }
               >
-                <div className='flex flex-row  mt-16 relative bottom-10 items-center'>
+                <div className='flex flex-row  bottom-2 relative  items-center'>
                   <Button
                     type='button'
                     handleFunction={() => setHideCard(true)}
@@ -244,19 +228,30 @@ function AssignAdviserPage() {
                 </div>
               </div>
             </div>
-            {/* show alert */}
+
             <div className='mt-24 ml-10'>
-                {showAlert ? (
-                  <div className='z-80'>
+              {showAlert ? (
+                <div className='z-80'>
                   <Alert
-                  title='El orientado ya fue asignado a su referente.'
-                  message='Recibirá una notificación para que contacte al Orientado.'
+                    title='El orientado ya fue asignado a su referente.'
+                    message='Recibirá una notificación para que contacte al Orientado.'
                   />
-                  </div>
-                ) : (
-                  ''
-                )}
-              </div>
+                </div>
+              ) : (
+                ''
+              )}
+
+              {modifyAlert ? (
+                <div className='z-80'>
+                  <Alert
+                    title='El orientado ya fue asignado a su referente.'
+                    message='Recibirá una notificación para que contacte al Orientado.'
+                  />
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
           </section>
         </main>
       </div>

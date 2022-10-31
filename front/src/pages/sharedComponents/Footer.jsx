@@ -36,27 +36,63 @@ function Footer() {
           11 5 6788 2355
         </p>
         <div className='mt-[18px] flex flex-row mobile:justify-between'>
-          <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center bg-letrafooter'>
-            <img src={Facebook} className='mobile:w-4' alt='' />
-          </div>
-          <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center ml-2 mr-2 bg-letrafooter'>
-            <img src={Instagram} className='mobile:w-4' alt='' />
-          </div>
-          <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center bg-letrafooter'>
-            <img src={LinkedIn} className='mobile:w-4' alt='' />
-          </div>
+          <a
+            href='https://www.facebook.com/people/Valtech-Digital-Argentina/100066766578674/'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center bg-letrafooter'>
+              <img src={Facebook} className='mobile:w-4' alt='' />
+            </div>
+          </a>
+          <a
+            href='https://www.instagram.com/valtech_argentina/?hl=es'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center ml-2 mr-2 bg-letrafooter'>
+              <img src={Instagram} className='mobile:w-4' alt='' />
+            </div>
+          </a>
+          <a
+            href='https://ar.linkedin.com/company/valtech'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <div className='mx-5 h-10 w-10 rounded-full flex items-center justify-center bg-letrafooter'>
+              <img src={LinkedIn} className='mobile:w-4' alt='' />
+            </div>
+          </a>
         </div>
       </div>
       <div className='w-full h-20 flex flex-row justify-evenly items-center tablet:hidden'>
-        <div className='h-10 w-10  rounded-full flex items-center justify-center bg-letrafooter'>
-          <img src={Facebook} className='w-4' alt='' />
-        </div>
-        <div className='h-10  w-10  rounded-full flex items-center justify-center ml-2 mr-2 bg-letrafooter'>
-          <img src={Instagram} className='w-4' alt='' />
-        </div>
-        <div className='h-10  w-10  rounded-full flex items-center justify-center bg-letrafooter'>
-          <img src={LinkedIn} className='w-4' alt='' />
-        </div>
+        <a
+          href='https://www.facebook.com/people/Valtech-Digital-Argentina/100066766578674/'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <div className='h-10 w-10  rounded-full flex items-center justify-center bg-letrafooter'>
+            <img src={Facebook} className='w-4' alt='' />
+          </div>
+        </a>
+        <a
+          href='https://www.instagram.com/valtech_argentina/?hl=es'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <div className='h-10  w-10  rounded-full flex items-center justify-center ml-2 mr-2 bg-letrafooter'>
+            <img src={Instagram} className='w-4' alt='' />
+          </div>
+        </a>
+        <a
+          href='https://ar.linkedin.com/company/valtech'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <div className='h-10  w-10  rounded-full flex items-center justify-center bg-letrafooter'>
+            <img src={LinkedIn} className='w-4' alt='' />
+          </div>
+        </a>
       </div>
     </footer>
   );
