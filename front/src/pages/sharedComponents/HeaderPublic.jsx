@@ -9,7 +9,7 @@ function HeaderPublic() {
     navigate('/login');
   };
   return (
-    <header className='sticky top-0 z-20 w-full h-[72px] flex items-center justify-around flex-row bg-white'>
+    <header className='sticky top-0 z-20 w-full h-[72px] flex items-center justify-around bg-white shadow-md'>
       <img src={Icon} alt='icon' />
       {/* send to login page */}
       <div>
