@@ -38,9 +38,9 @@ function useGet() {
     let totalPages = 0;
     let restEvents = 0;
     let total = totalEvent;
-    while (total > 10) {
+    while (total > 8) {
       totalPages += 1;
-      total -= 10;
+      total -= 8;
       restEvents = totalPages;
     }
     if (restEvents === 0 && total > 0) {
@@ -77,7 +77,7 @@ function useGet() {
 
   const getAllEvents = async (limit) => {
     try {
-      const response = await axios(`${baseUrl}/events?from=${limit}`, options);
+      const response = await axios(`${baseUrl}/events?from=${limit}&limit=8`, options);
       setEventsList(response.data?.data.events);
       const { totalCount, lengthEventsSent } = response.data.data;
       calculateTotalPages(totalCount);
@@ -94,7 +94,7 @@ function useGet() {
   const getAllEventsByFilter = async (studentName, limit) => {
     try {
       const response = await axios(
-        `${baseUrl}/events?from=${limit}&student=${studentName}`,
+        `${baseUrl}/events?from=${limit}&student=${studentName}&limit=8`,
         options
       );
       setEventsList(response.data?.data.events);
