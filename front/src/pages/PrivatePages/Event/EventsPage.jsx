@@ -15,7 +15,6 @@ import iconDelete from '../../../assets/icons/privatePage/Icon_delete.svg';
 import useDelete from '../hooks/useDelete';
 
 function EventsPage() {
-  const [isVisibleCards, setIsVisibleCards] = useState(false);
   const navigate = useNavigate();
   const { deleteEvent } = useDelete();
 
