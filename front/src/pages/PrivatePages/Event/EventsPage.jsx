@@ -35,20 +35,6 @@ function EventsPage() {
     getAllEvents(0);
   }, []);
 
-  // const mediaqueryList = window.matchMedia('(min-width: 640px)');
-
-  const mediaqueryList = window.matchMedia('(max-width: 920px)');
-  
-  mediaqueryList.addEventListener((EventoMediaQueryList) => {
-	if (EventoMediaQueryList.matches) {
-		setIsVisibleCards(true)
-	}
-	else{
-		setIsVisibleCards(false)
-	}
-    console.log('Ejecutado el listener', isVisibleCards);
-  });
-
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -176,13 +162,15 @@ function EventsPage() {
                   <p className='mt-5 font-semibold text-center'>
                     No se encontraron eventos
                   </p>
-                )}
+                )
+				}
 
               </tbody>
             </table>
-			{	totalEvents!==0 ?
-			(eventList.map((eve,index)=>{
-				<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent' key={eve.index}>
+			{totalEvents!==0 ? ( 
+				eventList.map((eve,index) => (
+				
+				<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent' key={index}>
                         <div className='flex items-center   flex-col w-4/5 border rounded-md pt-5  border-slate-400'>
                           <div className='w-full flex flex-col '>
                             <div className='w-full flex items-center justify-around flex-row'>
@@ -221,8 +209,11 @@ function EventsPage() {
                           </div>
                         </div>
                       </div>
-			}))
-			: <p className='mt-5 font-semibold text-center'>No se encontraron eventos</p>}
+					)
+				)
+			)
+			: <p className='mt-5 font-semibold text-center'>No se encontraron eventos</p>
+			}
 			
 			<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent'>
 
