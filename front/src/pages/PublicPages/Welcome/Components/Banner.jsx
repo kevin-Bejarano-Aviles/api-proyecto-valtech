@@ -51,8 +51,9 @@ function Banner() {
           </button>
         </div>
         <div className='absolute w-full flex justify-center inset-x-0 bottom-3'>
-          {featuredImg.map((user, index) => (
-            <ButtonImg index={index} currentIndex={currentIndex} />
+          {featuredImg.map((img, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <ButtonImg key={index} index={index} currentIndex={currentIndex} />
           ))}
         </div>
       </div>
