@@ -26,7 +26,7 @@ function usePut() {
         data: idAdviser,
       };
       const response = await axios(
-        `${baseUrl}/admin/advisers/student/${idStudent}`,
+        `${baseUrl}/admin/student/${idStudent}/adviser`,
         options
       );
     } catch (err) {
