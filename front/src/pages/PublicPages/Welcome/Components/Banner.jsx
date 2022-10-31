@@ -14,16 +14,17 @@ const featuredImg = [
   },
   {
     img: img2,
-    text: 'Desarrollamos y creamos como estilo de vida'
+    text: 'Desarrollamos y creamos como estilo de vida',
   },
   {
     img: img3,
-    text: 'Unite a la comunidad de aprendizaje'
-  }
+    text: 'Unite a la comunidad de aprendizaje',
+  },
 ];
 
 function Banner() {
-  const {handleOneNextClick,handleOnePrevClick,currentIndex,slideRef}=functionsBanner();
+  const { handleOneNextClick, handleOnePrevClick, currentIndex, slideRef } =
+    functionsBanner();
 
   return (
     <div className='w-full  m-auto'>
@@ -37,7 +38,9 @@ function Banner() {
             src={featuredImg[currentIndex].img}
             alt={currentIndex}
           />
-          <p className='absolute z-2 top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>{featuredImg[currentIndex].text}</p>          
+          <p className='absolute z-2 top-5 text-white font-bold pl-16 w-64 tablet:text-xl tablet:pl-32 tablet:w-96 lap_tablet:text-2xl lap_tablet:pl-48 lap_tablet:pr:-32 lap_tablet:w-3/5 desktop:text-4xl desktop:pr:-46 desktop:w-2/5'>
+            {featuredImg[currentIndex].text}
+          </p>
         </div>
         <div className='absolute z-3 w-full tablet:w-4/5 top-1/2 transform -translate-y-1/2 px-3 flex justify-between items-center'>
           <button onClick={() => handleOnePrevClick(featuredImg)}>
