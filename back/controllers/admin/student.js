@@ -59,7 +59,7 @@ const getStudent = async (req = request, res = response) => {
     const student = await studentBy('id', req.params.id);
     if (!student) {
       logger.warn(`ID Student: '${req.params.id}' not found in db. Method: GET. Url: ${req.originalUrl}.`);
-      return res.status(204).json({
+      return res.status(404).json({
         message: 'user not found',
         data: '',
       });
@@ -91,7 +91,7 @@ const assignAdviser = async (req, res) => {
     );
     if (student < 1) {
       logger.warn(`ID Student: '${id}', not found in db. Method: PUT.  Url: ${req.originalUrl}.`);
-      return res.status(204).json({
+      return res.status(404).json({
         message: 'Student not found',
         data: '',
       });

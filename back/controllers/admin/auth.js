@@ -9,13 +9,13 @@ const login = async (req, res) => {
     const admin = await adminBy('email', email);
     if (!admin) {
       return res.status(400).json({
-        message: 'Invalid credentials',
+        message: 'Credenciales invalidas',
         data: '',
       });
     }
     if (!checkPassword(pass, admin.password)) {
       return res.status(400).json({
-        message: 'Invalid credentials',
+        message: 'Credenciales invalidas',
         data: '',
       });
     }
