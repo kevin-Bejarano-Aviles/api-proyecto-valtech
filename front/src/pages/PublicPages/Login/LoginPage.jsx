@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 import { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage, useField } from 'formik';
+import { Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import Button from '../../PrivatePages/sharedPrivateComponents/button/Button';
 import warningImg from '../../../assets/icons/icon_warning.svg';
 import ilustration from '../../../assets/ilustration/login/ilustration.svg';
@@ -47,7 +47,7 @@ function LoginPage() {
   const inputMobileView = 'w-72';
 
   return (
-    <div className={`flex flex-col tablet:flex-row`}>
+    <div className='flex flex-col tablet:flex-row'>
       <div
         className={`fixed z-0 left-0 right-0 top-24 bottom-0 ${deskTopviewIlustration} ${tabletviewIlustration}`}
       >
@@ -120,7 +120,7 @@ function LoginPage() {
             </ErrorMessage>
 
             {error && (
-              <div className={`flex text-red-500`}>
+              <div className='flex text-red-500'>
                 <img className='mr-2' src={warningImg} alt='' />
                 <p className='font-bold tablet:font-normal'>{error}</p>
               </div>
