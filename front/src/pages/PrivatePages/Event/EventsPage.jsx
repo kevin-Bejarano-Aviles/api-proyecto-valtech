@@ -34,7 +34,6 @@ function EventsPage() {
     getAllEvents(0);
   }, []);
 
-
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
@@ -118,105 +117,55 @@ function EventsPage() {
               >
                 {totalEvents !== 0 ? (
                   eventList.map((eve, index) => (
-                    <tr className='bg-transparent hover:bg-bgTable hidden tablet:table-row' key={index}>
-                        <td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
-                          <div className='flex items-center'>
-                            <p className='text-blue'>
-                              {convertDate(eve.date)}{' '}
-                            </p>
-                          </div>
-                        </td>
-                        <td className='border-b border-gray-200   text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
-                          <p className='text-blue whitespace-no-wrap'>
-                            {converTime(eve.time)} hs
-                          </p>
-                        </td>
-                        <td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
-                          <p className='text-blue whitespace-no-wrap'>
-                            {eve.name}
-                          </p>
-                        </td>
-                        <td className='border-b border-gray-200  text-xs mobileM:text-sm px-1 mobileM:px-5 py-5 '>
-                          <span className='relative inline-block  text-blue leading-tight'>
-                            <span
-                              aria-hidden
-                              className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
-                            />
-                            <span className='relative'>
-                              {eve.Adviser.fullName}
-                            </span>
-                          </span>
-                        </td>
-                        <td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
-                          <img
-                            className='cursor-pointer'
-                            src={iconDelete}
-                            alt=''
-                            onClick={() => deleteEvent(eve.id)}
+                    <tr
+                      className='bg-transparent hover:bg-bgTable hidden tablet:table-row'
+                      key={index}
+                    >
+                      <td className='border-b border-gray-200 text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
+                        <div className='flex items-center'>
+                          <p className='text-blue'>{convertDate(eve.date)} </p>
+                        </div>
+                      </td>
+                      <td className='border-b border-gray-200   text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
+                        <p className='text-blue whitespace-no-wrap'>
+                          {converTime(eve.time)} hs
+                        </p>
+                      </td>
+                      <td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 px-1 py-5 '>
+                        <p className='text-blue whitespace-no-wrap'>
+                          {eve.name}
+                        </p>
+                      </td>
+                      <td className='border-b border-gray-200  text-xs mobileM:text-sm px-1 mobileM:px-5 py-5 '>
+                        <span className='relative inline-block  text-blue leading-tight'>
+                          <span
+                            aria-hidden
+                            className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
                           />
-                        </td>
-                      </tr>
+                          <span className='relative'>
+                            {eve.Adviser.fullName}
+                          </span>
+                        </span>
+                      </td>
+                      <td className='border-b border-gray-200  text-xs mobileM:text-sm mobileM:px-5 py-5 '>
+                        <img
+                          className='cursor-pointer'
+                          src={iconDelete}
+                          alt=''
+                          onClick={() => deleteEvent(eve.id)}
+                        />
+                      </td>
+                    </tr>
                   ))
                 ) : (
                   <p className='mt-5 font-semibold text-center'>
                     No se encontraron eventos
                   </p>
-                )
-				}
-
+                )}
               </tbody>
             </table>
-			{totalEvents!==0 ? ( 
-				eventList.map((eve,index) => (
-				
-				<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent' key={index}>
-                        <div className='flex items-center   flex-col w-4/5 border rounded-md pt-5  border-slate-400'>
-                          <div className='w-full flex flex-col '>
-                            <div className='w-full flex items-center justify-around flex-row'>
-                              <div className='flex items-center mr-2 flex-col '>
-                                <p className='text-green font-medium'>Fecha</p>
 
-                                <p className='text-blue'>
-                                  {convertDate(eve.date)}{' '}
-                                </p>
-                              </div>
-                              <div className='flex ml-10 flex-col items-start'>
-                                <p className='text-green font-medium'>
-                                  Horario
-                                </p>
-                                <p className='text-blue'>
-                                  {converTime(eve.time)} hs
-                                </p>
-                              </div>
-                            </div>
-                            <p className='w-full mt-3 mb-1 ml-5 mr-1 text-blue  font-semibold text-lg '>
-                              {eve.name}
-                            </p>
-                          </div>
-                          <div
-                            className=' font-semibold h-10 w-full mt-5 bg-red-500 rounded-b-md flex justify-center items-center '
-                            onClick={() => deleteEvent(eve.id)}
-                            role='presentation'
-                            onKeyUp={() => deleteEvent(eve.id)}
-                          >
-                            <p className='text-white mr-5'>Eliminar evento</p>
-                            <img
-                              className='w-7 h-7'
-                              src={iconDeleteWhite}
-                              alt=''
-                            />
-                          </div>
-                        </div>
-                      </div>
-					)
-				)
-			)
-			: <p className='mt-5 font-semibold text-center'>No se encontraron eventos</p>
-			}
-			
-			<div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent'>
-
-			</div>
+            <div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent'></div>
 
             <div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
               <p className='ml-2 mr-2 my-5 tablet:my-8 text-2xl text-blue lap_tablet:text-lg lap_tablet:my-0'>
