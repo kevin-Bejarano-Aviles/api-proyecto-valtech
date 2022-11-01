@@ -23,13 +23,13 @@ export default function CardAdivser({ avatar, fullName, email, phoneNumber }) {
         </div>
         <div className='flex flex-row  h-auto mobile:flex-col tablet:flex-row'>
           <div className='max-w-1/2 pl-6 h-auto '>
-            <h5 className=' text-xs text-lightgray'>mail</h5>
+            <h5 className=' text-xs text-lightgray'>MAIL</h5>
             <p className='w-auto h-auto text-[16px] leading-[26px] text-blue flex justify-center items-center'>
               {email}
             </p>
           </div>
           <div className='max-w-1/2   px-6 mobile:flex-col tablet:flex-row'>
-            <h5 className=' text-xs text-lightgray'>Telefono</h5>
+            <h5 className=' text-xs text-lightgray'>TELÉFONO</h5>
             <p className=' text-[16pxpx] leading-[26px] text-blue '>
               {phoneNumber}
             </p>

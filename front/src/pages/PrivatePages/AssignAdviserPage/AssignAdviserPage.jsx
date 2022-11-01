@@ -8,6 +8,7 @@ import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Button from '../sharedPrivateComponents/button/Button';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
+import usePut from '../hooks/usePut';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
 
@@ -30,6 +31,8 @@ function AssignAdviserPage() {
 
   const { adviserList, getAllAdvisers } = useGet();
 
+/*   const {assignAdviser } = usePut() */
+
   useEffect(() => {
     getOneStudent(idStudent);
     getAllAdvisers();
@@ -48,7 +51,19 @@ function AssignAdviserPage() {
     formik.handleChange(e);
   };
 
-  const assignAdviser = async (idAdviser) => {
+
+
+
+/*   const {assignAdviser} = usePut()
+  
+  useEffect((idAdviser,  idStudent) => {
+    assignAdviser(idAdviser,  idStudent);
+   
+  }, [idStudent]); */
+
+
+
+   const assignAdviser = async (idAdviser) => {
     try {
       const options = {
         method: 'PUT',
@@ -66,7 +81,7 @@ function AssignAdviserPage() {
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  };
+  }; 
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -111,6 +126,7 @@ function AssignAdviserPage() {
                 onSubmit={(idAdviser) => {
                   assignAdviser(idAdviser);
                   setShowAlert(true);
+                  
                 }}
               >
                 {(formik) => (
@@ -128,14 +144,15 @@ function AssignAdviserPage() {
                           className='border-[2px] w-[320px] h-10  rounded-lg border-graybackground mt-4 focus:outline-green' 
                           name='idAdviser'
                           as='select'
-                          onClick={() => setcardAdviserIsVisible(true)}
+                          
                           onChange={(e) => handleChange(e, formik)}
                         >
                           <option hidden value={0}>
                             Seleccionar orientador
                           </option>
                           {adviserList.map((elemento) => (
-                            <option key={elemento.id} value={elemento.id}>
+                            
+                            <option  key={elemento.id} value={elemento.id}>
                               {elemento.fullName}
                             </option>
                           ))}

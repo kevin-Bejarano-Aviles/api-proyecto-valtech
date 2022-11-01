@@ -31,17 +31,17 @@ export default function CardStudents({
         </div>
         <div className='flex flex-row mobile:flex-col mobile:h-auto tablet:flex-row'>
           <div className='w-1/2 px-6 mobile:flex-col  tablet:flex-row'>
-            <h5 className='text-xs text-lightgray '>mail</h5>
+            <h5 className='text-xs text-lightgray '>MAIL</h5>
             <p className='text-[16pxpx] leading-[26px] text-blue '>{email}</p>
-            <h5 className='text-xs text-lightgray'>Colegio</h5>
+            <h5 className='text-xs text-lightgray'>COLEGIO</h5>
             <p className='text-[16pxpx] leading-[26px] text-blue'>{school}</p>
           </div>
           <div className='w-1/2 px-6 mobile:flex-col'>
-            <h5 className='text-xs text-lightgray'>Telefono</h5>
+            <h5 className='text-xs text-lightgray'>TELÉFONO</h5>
             <p className='text-[16pxpx] leading-[26px] text-blue'>
               {phoneNumber}
             </p>
-            <h5 className='text-xs text-lightgray'>Programa</h5>
+            <h5 className='text-xs text-lightgray'>PROGRAMA</h5>
             <p className='text-[16pxpx] leading-[26px] text-blue'>{program}</p>
           </div>
         </div>
