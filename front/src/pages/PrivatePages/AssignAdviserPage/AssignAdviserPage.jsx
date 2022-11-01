@@ -30,6 +30,7 @@ function AssignAdviserPage() {
 
   const { adviserList, getAllAdvisers } = useGet();
 
+
   useEffect(() => {
     getOneStudent(idStudent);
     getAllAdvisers();
@@ -48,7 +49,8 @@ function AssignAdviserPage() {
     formik.handleChange(e);
   };
 
-  const assignAdviser = async (idAdviser) => {
+
+   const assignAdviser = async (idAdviser) => {
     try {
       const options = {
         method: 'PUT',
@@ -66,7 +68,7 @@ function AssignAdviserPage() {
     } catch (err) {
       console.error(`${err.response.status}: ${err.response.statusText}`);
     }
-  };
+  }; 
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -111,6 +113,7 @@ function AssignAdviserPage() {
                 onSubmit={(idAdviser) => {
                   assignAdviser(idAdviser);
                   setShowAlert(true);
+                  
                 }}
               >
                 {(formik) => (
