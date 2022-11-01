@@ -4,6 +4,16 @@ import Oriented from './Oriented';
 function OrientedList({ users }) {
   const [seeMore, setSeeMore] = useState(false);
 
+  users.sort((a, b) => {
+    if (a.adviserId < b.adviserId) {
+      return -1;
+    }
+    if (a.adviserId > b.adviserId) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <div>
       <ul className='grid mobile:grid-cols-1 lap_tablet:grid-cols-2 desktop:grid-cols-3 gap-4 mt-8 mb-2 max-w-max'>
