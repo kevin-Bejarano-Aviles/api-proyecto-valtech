@@ -20,7 +20,6 @@ function HeaderAdmin({ Title }) {
 
   return (
     <header className='sticky top-0 z-40 w-full'>
-      {/* Desktop header */}
       <div className='pl-12 bg-blue'>
         <div className='hidden laptop:flex justify-between items-center w-5/6 h-[112px]'>
           <h1 className='text-[32px] text-white'>{Title}</h1>
@@ -37,7 +36,6 @@ function HeaderAdmin({ Title }) {
           </div>
         </div>
       </div>
-      {/* Mobile header */}
       <div className='flex laptop:hidden pl-6 items-center h-14 border-b-2 border-gray bg-white'>
         <Icon
           icon='ci:menu-alt-01'
@@ -49,7 +47,6 @@ function HeaderAdmin({ Title }) {
         />
         <img className='mx-auto' src={IconV} alt='' />
       </div>
-      {/* Show Menubar */}
       <div className='laptop:hidden'>
         <MenuResponsive menu={menu} setMenu={setMenu} />
       </div>

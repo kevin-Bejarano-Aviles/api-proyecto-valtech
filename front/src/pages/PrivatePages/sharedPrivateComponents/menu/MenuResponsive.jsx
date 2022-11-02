@@ -38,7 +38,7 @@ export default function MenuResponsive({ menu, setMenu }) {
               </Link>
             </div>
             <div className='ml-3.5'>
-              <h4>¡Bienvenido!</h4>
+              <h4>¡Bienvenido/a!</h4>
              <Link to='/inicio/mi-perfil'><h4 className='text-lightgray'>{admin.fullName}</h4></Link>  
             </div>
           </div>
