@@ -31,8 +31,6 @@ function AssignAdviserPage() {
 
   const { adviserList, getAllAdvisers } = useGet();
 
-  const { assignAdviser} = usePut();
-
 
   useEffect(() => {
     getOneStudent(idStudent);
@@ -52,25 +50,26 @@ function AssignAdviserPage() {
     formik.handleChange(e);
   };
 
-  // const assignAdviser = async (idAdviser) => {
-  //   try {
-  //     const options = {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json; charset=utf-8',
-  //         'x-token': `Bearer ${token}`,
-  //       },
-  //       withCredentials: true,
-  //       data: idAdviser,
-  //     };
-  //     const response = await axios(
-  //       `${baseUrl}/admin/students/${params.id}/adviser`,
-  //       options
-  //     );
-  //   } catch (err) {
-  //     console.error(`${err.response.status}: ${err.response.statusText}`);
-  //   }
-  // };
+
+   const assignAdviser = async (idAdviser) => {
+    try {
+      const options = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'x-token': `Bearer ${token}`,
+        },
+        withCredentials: true,
+        data: idAdviser,
+      };
+      const response = await axios(
+        `${baseUrl}/admin/students/${params.id}/adviser`,
+        options
+      );
+    } catch (err) {
+      console.error(`${err.response.status}: ${err.response.statusText}`);
+    }
+  }; 
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr]  gap-0'>
@@ -115,6 +114,7 @@ function AssignAdviserPage() {
                 onSubmit={(idAdviser) => {
                   assignAdviser(idAdviser,idStudent);
                   setShowAlert(true);
+                  
                 }}
               >
                 {(formik) => (

@@ -20,7 +20,7 @@ export default function MenuResponsive({ menu, setMenu }) {
 
   return (
     <div className={`fixed top-0 felx flex-row ${menu ? 'block' : 'hidden'}`}>
-      <div className='min-h-screen w-[1023px] flex items-center  bg-[#2E384D] bg-opacity-30 z-30'>
+      <div className='min-h-screen w-[1023px] flex items-center  bg-[#2E384D] bg-opacity-30 z-30' onClick={() => setMenu(false)}>
         <div className='relative flex flex-col min-w-[275px] max-w-[325px] h-screen bg-white border-r border-bordergray'>
           <div className='flex flex-row-reverse mt-3 pr-3 '>
             <div onClick={() => setMenu(false)}>

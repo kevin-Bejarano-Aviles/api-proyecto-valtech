@@ -55,7 +55,7 @@ const getAllEventsByFilters = async (req, res) => {
       distinct: true,
     });
     if (totalCount < 1) {
-      return res.status(204).json({
+      return res.status(404).json({
         message: 'No results found',
         data: '',
       });
@@ -85,7 +85,7 @@ const deleteEvent = async (req, res) => {
     });
     if (event < 1) {
       logger.warn(`ID Event: '${id}' not found in db. Method: DELETE. Url: ${req.originalUrl}.`);
-      return res.status(204).json({
+      return res.status(404).json({
         message: 'Event not found',
         data: '',
       });
