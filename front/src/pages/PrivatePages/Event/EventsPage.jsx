@@ -29,6 +29,7 @@ function EventsPage() {
     getAllEvents,
     handleSearch,
   } = functionsEvents();
+
   useEffect(() => {
     getAllEvents(0);
   }, []);
@@ -164,7 +165,7 @@ function EventsPage() {
                   ))
                 ) : (
 				<tr>
-					<td className='mt-5 font-semibold text-center hidden tablet:block'>
+					<td className=  'mt-5 text-2xl text-red-500 font-semibold hidden tablet:block'>
                     No se encontraron eventos
                   </td>
 				</tr>
@@ -209,7 +210,7 @@ function EventsPage() {
 					</div>
 				))
 				) : (
-				<p className='mt-5 font-semibold text-center block tablet:hidden'>
+				<p className='mt-12 text-2xl text-red-500 font-semibold text-center block tablet:hidden'>
 					No se encontraron eventos
 				</p>
 				)
