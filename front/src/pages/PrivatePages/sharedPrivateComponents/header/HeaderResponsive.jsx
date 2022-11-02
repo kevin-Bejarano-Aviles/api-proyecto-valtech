@@ -14,8 +14,6 @@ export default function HeaderResponsive() {
     <div className='hidden mobile:hid'>
       <div className='h-16 w-[1023px] flex items-center border-b-2 border-gray'>
         <div onClick={clickmenu}>
-          {' '}
-          {/* clicking on this icon will scroll the menu */}
           <Icon
             className='ml-2'
             icon='ci:menu-alt-01'

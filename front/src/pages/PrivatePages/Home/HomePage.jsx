@@ -20,7 +20,7 @@ function HomePage() {
     <div className='grid grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
       <Menu />
       <div>
-        <HeaderAdmin Title={`¡Bienvenida, ${adminFirstName}!`} />
+        <HeaderAdmin Title={`¡Bienvenido/a, ${adminFirstName}!`} />
         <main className='max-w-max mx-auto laptop:mx-12 pb-12 mt-6'>
           <div className='flex-col gap-4 lap_tablet:flex-row flex items-center justify-between'>
             <h4 className='flex items-center justify-center h-[58px] w-[187px] py-3 border-b-4 border-green'>
