@@ -52,7 +52,7 @@ function Banner() {
       <div className='relative z-10 flex justify-center mb-4'>
         {featuredImg.map((user, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <ButtonImg index={index} currentIndex={currentIndex} />
+          <ButtonImg key={index} index={index} currentIndex={currentIndex} />
         ))}
       </div>
     </div>

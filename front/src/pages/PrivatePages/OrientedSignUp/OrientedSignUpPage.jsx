@@ -126,8 +126,9 @@ function OrientedSignUpPage() {
                       <option value='Default' hidden>
                         Seleccionar opción
                       </option>
-                      {programs.programs.map((program) => (
-                        <option value={program.value} className='text-blue'>{program.name}</option>
+                      {programs.programs.map((program,index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <option value={program.value} key={index} className='text-blue'>{program.name}</option>
                       ))}
                     </Select>
                   </div>
