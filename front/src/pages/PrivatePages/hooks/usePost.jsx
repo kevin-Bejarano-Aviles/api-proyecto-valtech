@@ -11,7 +11,6 @@ function usePost() {
   const [errorCreateEventObject, setErrorCreateEventObject] = useState({});
   const [navigationStateStudent, setNavigationStateStudent] = useState('');
   const [navigationStateEvent, setNavigationStateEvent] = useState('');
-  const [submit, setSubmitState] = useState('');
   const token = localStorage.getItem('token');
 
   const postStudent = async (newStudent) => {
@@ -35,7 +34,6 @@ function usePost() {
   };
 
   const postEvent = async (values) => {
-    setSubmitState('pending');
     try {
       const options = {
         method: 'POST',
@@ -46,11 +44,10 @@ function usePost() {
         data: values,
       };
       const response = await axios(`${url}/admin/events`, options);
+      localStorage.setItem('showAlert', true)
       navigate('/eventos');
-      setSubmitState('accept');
     } catch (err) {
       setErrorCreateEventObject(err.response?.data.data.errors);
-      setSubmitState('reject');
     }
   };
 
@@ -60,12 +57,6 @@ function usePost() {
       setNavigationStateStudent('');
     }
   }, [navigationStateStudent]);
-
-  useEffect(() => {
-    if (navigationStateEvent === 'accept') {
-      setSubmitState('');
-    }
-  }, [navigationStateEvent]);
 
   return {
     postEvent,

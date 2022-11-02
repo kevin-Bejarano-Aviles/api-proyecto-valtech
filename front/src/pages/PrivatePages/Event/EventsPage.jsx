@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useGet from '../hooks/useGet';
 import functionsEvents from './functions/functionsEvents';
 import Alert from '../sharedPrivateComponents/Alert';
 import Button from '../sharedPrivateComponents/button/Button';
@@ -33,6 +32,12 @@ function EventsPage() {
   useEffect(() => {
     getAllEvents(0);
   }, []);
+
+  if (localStorage.getItem('showAlert')) {
+    setTimeout(() => {
+      localStorage.setItem('showAlert', false);
+    }, 2000);
+  }
 
   return (
     <div className='grid mobile:grid-cols-1 laptop:grid-cols-[234px_1fr] gap-0'>
@@ -239,14 +244,13 @@ function EventsPage() {
               </div>
             </div>
           </div>
-          {Date.parse(new Date()) -
-            Date.parse(eventList[eventList.length - 1]?.createdAt) <
-            10000 && (
+          {
+            localStorage.getItem('showAlert') === 'true' &&
             <Alert
               title='Encuentro agendado'
               message='El encuentro está agendado en la fecha que sugeriste, el orientado podrá confirmarlo o elegir otra fecha. Te notificaremos la confirmación o modificación.'
             />
-          )}
+          }
         </main>
       </div>
     </div>
