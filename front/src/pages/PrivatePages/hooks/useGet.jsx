@@ -72,6 +72,9 @@ function useGet() {
       if (status === 401) {
         LogOut();
       }
+      else if(status===404){
+        navigate('/error');
+      }
     }
   };
 
