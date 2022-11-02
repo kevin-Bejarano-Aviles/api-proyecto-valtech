@@ -8,7 +8,6 @@ import HeaderAdmin from '../sharedPrivateComponents/header/HeaderAdmin';
 import Button from '../sharedPrivateComponents/button/Button';
 import Alert from '../sharedPrivateComponents/Alert';
 import useGet from '../hooks/useGet';
-import usePut from '../hooks/usePut';
 import CardStudents from './Components/CardStudents';
 import CardAdivser from './Components/CardAdivser';
 
