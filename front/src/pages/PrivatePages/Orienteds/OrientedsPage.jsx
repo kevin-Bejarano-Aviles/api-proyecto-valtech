@@ -45,7 +45,7 @@ function Orienteds() {
                 Nuevos usuarios a orientar
               </h2>
             </div>
-            <div className='w-full flex justify-end py-3'>
+            <div className='w-full flex justify-end py-3 mobile:pr-16'>
               <Link to='/orientados/alta-orientado'>
                 <Button type='button' name='Ingresar orientado' />
               </Link>
