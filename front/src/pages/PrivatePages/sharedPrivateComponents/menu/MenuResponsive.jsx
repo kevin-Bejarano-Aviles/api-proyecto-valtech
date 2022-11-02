@@ -31,7 +31,7 @@ export default function MenuResponsive({ menu, setMenu }) {
             <div>
               <Link to='/inicio/mi-perfil'>
                 <img
-                  className='h-[70px] ml-8 rounded-full'
+                  className='h-[70px] w-[70px] ml-8 rounded-full'
                   src={Avatar}
                   alt='Profile_picture_admin'
                 />
