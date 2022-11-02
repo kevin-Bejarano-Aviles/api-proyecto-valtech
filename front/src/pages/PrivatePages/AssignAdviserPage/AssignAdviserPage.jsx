@@ -111,7 +111,7 @@ function AssignAdviserPage() {
                   idAdviser: '',
                 }}
                 onSubmit={(idAdviser) => {
-                  assignAdviser(idAdviser,idStudent);
+                  assignAdviser(idAdviser);
                   setShowAlert(true);
                   
                 }}
