@@ -227,11 +227,13 @@ function EventsPage() {
                   src={IconArrowLeft}
                   className='cursor-pointer mx-2 w-10 h-10 tablet:w-5 '
                   alt='icon arrow left'
-                />
+				  onClick={() => prevPage()}
+				  />
                 <img
                   src={IconArrowRigth}
                   className='cursor-pointer mx-2 w-10 h-10'
                   alt='icon arrow rigth'
+				  onClick={()=>nextPage()}
                 />
               </div>
               <div className='flex tablet:hidden mt-16 tablet:my-0 mobileL:w-full justify-center  mobileL:justify-end mobileL:mr-28 tablet:mr-25'>
