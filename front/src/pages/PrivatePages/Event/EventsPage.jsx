@@ -158,13 +158,57 @@ function EventsPage() {
                     </tr>
                   ))
                 ) : (
-                  <p className='mt-5 font-semibold text-center'>
+				<tr>
+					<td className='mt-5 font-semibold text-center hidden tablet:block'>
                     No se encontraron eventos
-                  </p>
+                  </td>
+				</tr>
+                  
                 )}
               </tbody>
             </table>
 
+			{totalEvents !== 0 ? (
+				eventList.map((eve, index) => (
+					<div
+					className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent'
+					key={index}
+					>
+					<div className='flex items-center   flex-col w-4/5 border rounded-md pt-5  border-slate-400'>
+						<div className='w-full flex flex-col '>
+						<div className='w-full flex items-center justify-around flex-row'>
+							<div className='flex items-center mr-2 flex-col '>
+							<p className='text-green font-medium'>Fecha</p>
+
+							<p className='text-blue'>{convertDate(eve.date)} </p>
+							</div>
+							<div className='flex ml-10 flex-col items-start'>
+							<p className='text-green font-medium'>Horario</p>
+							<p className='text-blue'>{converTime(eve.time)} hs</p>
+							</div>
+						</div>
+						<p className='w-full mt-3 mb-1 ml-5 mr-1 text-blue  font-semibold text-lg '>
+							{eve.name}
+						</p>
+						</div>
+						<div
+						className=' font-semibold h-10 w-full mt-5 bg-red-500 rounded-b-md flex justify-center items-center '
+						onClick={() => deleteEvent(eve.id)}
+						role='presentation'
+						onKeyUp={() => deleteEvent(eve.id)}
+						>
+						<p className='text-white mr-5'>Eliminar evento</p>
+						<img className='w-7 h-7' src={iconDeleteWhite} alt='' />
+						</div>
+					</div>
+					</div>
+				))
+				) : (
+				<p className='mt-5 font-semibold text-center block tablet:hidden'>
+					No se encontraron eventos
+				</p>
+				)
+			}
             <div className='flex my-8 items-center justify-center tablet:hidden w-full bg-transparent'></div>
 
             <div className='w-full flex flex-col tablet:hidden items-center justify-center tablet:justify-end  '>
